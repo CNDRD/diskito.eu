@@ -1,0 +1,10 @@
+.rank-icon{height: 4.75rem;}
+.p{display: block;margin: 0 auto; height: 4rem; border-radius: 10%;}
+thead{-webkit-user-select: none;-moz-user-select: -moz-none;-ms-user-select: none;user-select: none;}
+
+.rank{
+  height: 4rem;
+}
+.maxRank{
+  height: 3.5rem;
+}

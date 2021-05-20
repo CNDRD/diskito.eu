@@ -1,0 +1,70 @@
+@font-face {
+  font-family: '47 Bold';
+  src: url('/0/fonts/Free To Use/47-Bold.ttf');
+}
+.t-47bold { font-family: '47 Bold'; }
+
+@font-face {
+  font-family: '47 Bold Italic';
+  src: url('/0/fonts/Free To Use/47-BoldItalic.ttf');
+}
+.t-47italic { font-family: '47 Italic'; }
+
+@font-face {
+  font-family: 'Colus Regular';
+  src: url('/0/fonts/Free To Use/Colus-Regular.ttf');
+}
+.t-colus { font-family: 'Colus Regular'; }
+
+@font-face {
+  font-family: 'Roneous Caps';
+  src: url('/0/fonts/Free To Use/RONEOUS_Caps.ttf');
+}
+.t-roneous { font-family: 'Roneous Caps'; }
+
+
+
+@font-face {
+  font-family: 'Hooligan';
+  src: url('/0/fonts/Non-Commercial only/hooligan-font.ttf');
+}
+.t-hooligan { font-family: 'Hooligan'; }
+
+@font-face {
+  font-family: 'Spaceland Ten';
+  src: url('/0/fonts/Non-Commercial only/Pepper Type - Spaceland-Ten.otf');
+}
+.t-spacelandten { font-family: 'Spaceland Ten'; }
+
+@font-face {
+  font-family: 'Therok Regular';
+  src: url('/0/fonts/Non-Commercial only/Therok-RegPersonal.otf');
+}
+.t-therokreg { font-family: 'Therok Regular'; }
+@font-face {
+  font-family: 'Therok Thin';
+  src: url('/0/fonts/Non-Commercial only/Therok-ThinPersonal.otf');
+}
+.t-therokthin { font-family: 'Therok Thin'; }
+
+@font-face {
+  font-family: 'Wensley';
+  src: url('/0/fonts/Non-Commercial only/WensleyDemo.ttf');
+}
+.t-wensley { font-family: 'Wensley'; }
+
+@font-face {
+  font-family: 'Zeniq';
+  src: url('/0/fonts/Non-Commercial only/Zeniq.ttf');
+}
+.t-zeniq { font-family: 'Zeniq'; }
+@font-face {
+  font-family: 'Zeniq Nano';
+  src: url('/0/fonts/Non-Commercial only/Zeniq Nano.ttf');
+}
+.t-zeniqnano { font-family: 'Zeniq Nano'; }
+@font-face {
+  font-family: 'Zeniq Tech';
+  src: url('/0/fonts/Non-Commercial only/Zeniq Tech.ttf');
+}
+.t-zeniqtech { font-family: 'Zeniq Tech'; }

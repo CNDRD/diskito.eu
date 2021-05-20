@@ -15,7 +15,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="#111417" />
   <meta name="theme-color" content="#111417" />
   <meta name="twitter:dnt" content="on" />
-  <meta name="twitter:url" content="https://diskito.eu/voice" />
+  <meta name="twitter:url" content="https://diskito.eu/" />
   <meta name="twitter:title" content="Diskíto Website">
   <meta name="twitter:description" content="Oooga booga click and see you fuckwit.." />
   <meta name="twitter:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
@@ -23,7 +23,7 @@
   <!-- Discord Meta Tags -->
   <meta property="og:title" content="Diskíto Website" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://diskito.eu/voice" />
+  <meta property="og:url" content="https://diskito.eu/" />
   <meta property="og:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
   <meta property="og:description" content="Oooga booga click and see you fuckwit.." />
   <meta name="theme-color" content="#0be881" />
@@ -39,27 +39,22 @@
   <meta name="msapplication-TileColor" content="#b91d47" />
   <meta name="msapplication-config" content="../0/resources/icons/browserconfig.xml" />
   <meta name="theme-color" content="#ffffff" />
-  <title id="title">Diskíto Voice Stats</title>
+  <title>Diskíto</title>
   <!-- Halfmoon CSS -->
   <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css" rel="stylesheet" />
   <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <!-- Firebase JS -->
+  <!-- Firebase JS-->
   <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-auth.js"></script>
   <!-- Initialize Firebase -->
   <script src="../0/js/0-fb.js"></script>
+  <script src="../0/js/ccCheck.js"></script>
   <!-- Custom CSS -->
   <link rel="stylesheet" href="../0/css/main.css" />
   <!-- Navbar JS -->
   <script src="/0/js/0-navbar.js" charset="utf-8"></script>
-  <!-- amCharts 4 -->
-  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-
-  <style> .amChartDiv{ width:100%; height:25em; } </style>
 
 </head>
 <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode">
@@ -77,43 +72,44 @@
 
     <!-- Content wrapper start -->
     <div class="content-wrapper">
-      <!-- Container-fluid start -->
-      <div class="container-fluid">
-        <!-- Content start -->
-        <div class="content">
+      <!-- Madness start -->
+      <div class="middel">
 
-          <h2 class='text-center hidden-md-and-up'>For the best viewing experience I'd suggest turning your device on the side</h2>
+        <div class="card">
+          <h1 class="content-title font-size-24">Credit Card Checker</h1>
+          <form class="form-group mb-0" name="ccCheck" action="javascript:doCcCheck()" onsubmit="" id="ccCheck">
 
-          <div class="card shadow">
-            <h3 class="text-center" id="dailyChartH3">Daily Voice this year</h3>
-            <div class="amChartDiv" id="dailyChartdiv"></div>
-          </div>
+            <label for="name">Name on card</label>
+            <input type="text" class="form-control mb-10" name="name" id="name" placeholder="John Doe / Jane Doe" />
 
-          <div class="card shadow">
-            <h3 class="text-center" id="totalChartH3">Total Time Spent per User</h3>
-            <div class="amChartDiv" id="totalChartdiv"></div>
-          </div>
+            <label for="number">Card number</label>
+            <input type="number" class="form-control mb-10" name="number" id="number" min="0000000000000000" max="9999999999999999" placeholder="0000 0000 0000 0000" />
 
-          <div class="card shadow">
-            <h3 class="text-center" id="lvsChartH3">Longest Voice Sessions</h3>
-            <div class="amChartDiv" id="lvsChartdiv"></div>
-          </div>
+            <div class="form-row row-eq-spacing">
+              <div class="col">
+                <label for="expiry">Expiry date</label>
+                <input type="text" class="form-control" name="expiry" id="expiry"placeholder="MM / YY" />
+              </div>
+              <div class="col">
+                <label for="security">Security code</label>
+                <input type="number" class="form-control" name="security" id="security" min="0" max="999" placeholder="000" />
+              </div>
+            </div>
 
-          <div class="card shadow">
-            <h3 class="text-center" id="totalTotalChartH3">Total Time Spent per User since ever</h3>
-            <div class="amChartDiv" id="totalTotalChartdiv"></div>
-          </div>
+            <label for="zip">ZIP / Postal code</label>
+            <input type="number" class="form-control mb-10" name="zip" id="zip" placeholder="000 00" />
 
-        </div><!-- Content end -->
-      </div><!-- Container-fluid end -->
+            <input class="btn btn-block btn-success mt-20" type="submit" value="Check my Credit Card!" />
+
+          </form>
+        </div>
+
+      </div><!-- Madness end -->
     </div><!-- Content wrapper end -->
-
   </div><!-- Page wrapper end -->
 
   <!-- Import Functions -->
   <script src="../0/js/0-myFunctions.js"></script>
-  <!-- My Script -->
-  <script src="../0/js/voice.js"></script>
   <!-- Halfmoon JS -->
   <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
   <!-- Alerts JS -->

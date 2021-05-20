@@ -1,0 +1,54 @@
+
+<!-- Branding -->
+<a href="/" class="navbar-brand mr-5 mr-sm-10">
+  <img src="/0/resources/diskito_pfp.jpg" alt=":)" />
+  <span class="mt-5 text-white font-size-30 align-text-bottom t-zeniqnano">Diskíto</span>
+</a><!-- Branding -->
+
+<!-- Navbar nav (wideboye) -->
+<ul class="navbar-nav d-none d-md-flex hidden-sm-and-down text-uppercase">
+  <li class="nav-item" id="diskito"><a href="/diskito.html" class="nav-link">Server Stats</a></li>
+  <li class="nav-item" id="leader"><a href="/leader.html" class="nav-link">Leaderboards</a></li>
+  <li class="nav-item" id="siege"><a href="/siege.html" class="nav-link">Siege Stats</a></li>
+  <li class="nav-item" id="voice"><a href="/voice.html" class="nav-link">Voice Stats‏‏‎</a></li>
+  <li class="nav-item" id="quotes"><a href="/quotes.html" class="nav-link">Quotes‏‏‎</a></li>
+  <li class="nav-item" id="help"><a href="/help.html" class="nav-link">Bot Help</a></li>
+</ul><!-- Navbar nav (wideboye) -->
+
+<!-- Navbar nav (dropdown-boye) -->
+<div class="navbar-content ml-auto">
+
+  <!-- Invite Link start -->
+  <a href="https://discord.gg/sXDbtp4" class="btn btn-success hidden-sm-and-down">Invite Link</a>
+  <!-- Invite Link end -->
+
+  <!-- Dropdown -->
+  <div class="dropdown with-arrow hidden-md-and-up">
+
+    <button class="btn navbar-menu-btn" data-toggle="dropdown" type="button" id="navbar-dropdown-toggle-btn" aria-haspopup="true" aria-expanded="false">
+      <span class="text">Menu</span>
+    </button>
+
+    <div class="dropdown-menu dropdown-menu-right text-uppercase" aria-labelledby="navbar-dropdown-toggle-btn">
+      <a href="/diskito.html" class="dropdown-item">Server Stats</a>
+      <a href="/leader.html" class="dropdown-item">Leaderboards</a>
+      <a href="/siege.html" class="dropdown-item">Siege Stats</a>
+      <a href="/voice.html" class="dropdown-item">Voice Stats</a>
+      <a href="/quotes.html" class="dropdown-item">Quotes</a>
+      <a href="/help.html" class="dropdown-item">Bot Help</a>
+      <div class="dropdown-divider"></div>
+      <div class="dropdown-content">
+        <a href="https://discord.gg/sXDbtp4" class="btn btn-block btn-success btn-download-sm" role="button">Invite Link</a>
+      </div>
+    </div>
+
+  </div><!-- Dropdown -->
+</div><!-- Navbar nav (dropdown-boye) -->
+
+<script type="text/javascript">
+  let stinky = window.location.pathname;
+  if (stinky != "/") { $(`#${stinky.replace('/','')}`).addClass('active'); }
+</script>
+
+<!-- Fonts CSS -->
+<link rel="stylesheet" href="/0/css/fonts.css" />

@@ -15,7 +15,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="#111417" />
   <meta name="theme-color" content="#111417" />
   <meta name="twitter:dnt" content="on" />
-  <meta name="twitter:url" content="https://diskito.eu/voice" />
+  <meta name="twitter:url" content="https://diskito.eu/siege" />
   <meta name="twitter:title" content="Diskíto Website">
   <meta name="twitter:description" content="Oooga booga click and see you fuckwit.." />
   <meta name="twitter:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
@@ -23,7 +23,7 @@
   <!-- Discord Meta Tags -->
   <meta property="og:title" content="Diskíto Website" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://diskito.eu/voice" />
+  <meta property="og:url" content="https://diskito.eu/siege" />
   <meta property="og:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
   <meta property="og:description" content="Oooga booga click and see you fuckwit.." />
   <meta name="theme-color" content="#0be881" />
@@ -39,30 +39,35 @@
   <meta name="msapplication-TileColor" content="#b91d47" />
   <meta name="msapplication-config" content="../0/resources/icons/browserconfig.xml" />
   <meta name="theme-color" content="#ffffff" />
-  <title id="title">Diskíto Voice Stats</title>
+  <title>Diskíto CS:GO Stats</title>
   <!-- Halfmoon CSS -->
   <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css" rel="stylesheet" />
   <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <!-- Firebase JS -->
+  <!-- Firebase JS-->
   <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-database.js"></script>
   <!-- Initialize Firebase -->
   <script src="../0/js/0-fb.js"></script>
+  <!-- SortTable -->
+  <script src="../0/js/0-sorttable.js"></script>
   <!-- Custom CSS -->
   <link rel="stylesheet" href="../0/css/main.css" />
   <!-- Navbar JS -->
   <script src="/0/js/0-navbar.js" charset="utf-8"></script>
-  <!-- amCharts 4 -->
-  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 
-  <style> .amChartDiv{ width:100%; height:25em; } </style>
+  <!-- Style -->
+  <style media="screen">
+    .p{display: block;margin: 0 auto; height: 55px;}
+    thead{-webkit-user-select: none;-moz-user-select: -moz-none;-ms-user-select: none;user-select: none;}
+  </style>
 
 </head>
 <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode">
+
+  <!-- Modals start -->
+  <div id='modals'></div>
+  <!-- Modals end -->
 
   <!-- Page wrapper start -->
   <div class="page-wrapper with-navbar">
@@ -77,43 +82,39 @@
 
     <!-- Content wrapper start -->
     <div class="content-wrapper">
-      <!-- Container-fluid start -->
-      <div class="container-fluid">
-        <!-- Content start -->
-        <div class="content">
 
-          <h2 class='text-center hidden-md-and-up'>For the best viewing experience I'd suggest turning your device on the side</h2>
+      <!-- Siege Table start -->
+      <table class="table table-hover sortable">
+        <thead class='sticky'>
+					<tr>
+            <th class='text-white font-weight-normal text-center w-25 sorttable_nosort hidden-sm-and-down'>🤡</th>
+            <th class='text-white font-weight-normal w-75 sorttable_nosort'>Peep</th>
+            <th class='text-white font-weight-normal text-center w-50 sorttable_numeric'>K/D</th>
+            <th class='text-white font-weight-normal text-center w-50 sorttable_numeric'>W/L</th>
+            <th class='text-white font-weight-normal text-center w-50 sorttable_numeric'>HS%</th>
+            <th class='text-white font-weight-normal text-center w-50 sorttable_numeric'>Shots Acc.</th>
+            <th class='text-white font-weight-normal text-center w-50 sorttable_numeric'>Planted</th>
+            <th class='text-white font-weight-normal text-center w-50 sorttable_numeric'>Defused</th>
+            <th class='text-white font-weight-normal text-center w-75 sorttable_numeric'>Damage</th>
+            <th class='text-white font-weight-normal text-center w-75 sorttable_numeric'>Total Money</th>
+            <th class='text-white font-weight-normal text-center w-50 sorttable_numeric'>MVPs</th>
+            <th class='text-white font-weight-normal text-center w-125 sorttable_numeric'><span class="hidden-lg-and-down">Total</span> Time Played</th>
+					</tr>
+				</thead>
 
-          <div class="card shadow">
-            <h3 class="text-center" id="dailyChartH3">Daily Voice this year</h3>
-            <div class="amChartDiv" id="dailyChartdiv"></div>
-          </div>
+        <tbody id='stats'></tbody>
 
-          <div class="card shadow">
-            <h3 class="text-center" id="totalChartH3">Total Time Spent per User</h3>
-            <div class="amChartDiv" id="totalChartdiv"></div>
-          </div>
+      </table><!-- Siege Table end -->
 
-          <div class="card shadow">
-            <h3 class="text-center" id="lvsChartH3">Longest Voice Sessions</h3>
-            <div class="amChartDiv" id="lvsChartdiv"></div>
-          </div>
+      <div class="d-flex justify-content-center align-content-center text-muted" id="private"></div>
 
-          <div class="card shadow">
-            <h3 class="text-center" id="totalTotalChartH3">Total Time Spent per User since ever</h3>
-            <div class="amChartDiv" id="totalTotalChartdiv"></div>
-          </div>
-
-        </div><!-- Content end -->
-      </div><!-- Container-fluid end -->
     </div><!-- Content wrapper end -->
-
   </div><!-- Page wrapper end -->
 
   <!-- Import Functions -->
   <script src="../0/js/0-myFunctions.js"></script>
   <!-- My Script -->
-  <script src="../0/js/voice.js"></script>
+  <script src="../0/js/csgo.js"></script>
   <!-- Halfmoon JS -->
   <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
   <!-- Alerts JS -->

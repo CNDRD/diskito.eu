@@ -1,0 +1,253 @@
+:root{
+  --blurple: hsl(227, 58%, 65%); /* #7289da */
+  --blurple-l: hsl(227, 47%, 66%); /* #8092d1 */
+  --white: hsl(0, 0%, 100%); /* #ffffff */
+  --bj-gold: hsl(48, 37%, 62%); /* #c2b47a */
+  /* Role Colors  */
+  --role-muted: hsl(202, 4%, 61%); /* #979c9f */
+  --role-snowman: hsl(0, 0%, 100%); /* #ffffff */
+  --role-fudge-supreme: hsl(101, 88%, 45%); /* #4fd60e */
+  --role-lord-farquaad: hsl(340, 82%, 52%); /* #e91e63 */
+  --role-veteran-memer: hsl(281, 46%, 44%); /* #843da4 */
+  /* Default Role Colors */
+  --dr-light-cyan: hsl(168, 76%, 42%); /* #1abc9c */
+  --dr-light-green: hsl(145, 63%, 49%); /* #2ecc71 */
+  --dr-light-blue: hsl(204, 70%, 53%); /* #3498db */
+  --dr-light-purple: hsl(283, 39%, 53%); /* #9b59b6 */
+  --dr-light-red: hsl(340, 82%, 52%); /* #e91e63 */
+  --dr-light-yellow: hsl(48, 89%, 50%); /* #f1c40f */
+  --dr-light-gold: hsl(28, 80%, 52%); /* #e67e22 */
+  --dr-light-orange: hsl(6, 78%, 57%); /* #e74c3c */
+  --dr-light-grey: hsl(184, 9%, 62%); /* #95a5a6 */
+  --dr-dark-cyan: hsl(168, 77%, 28%); /* #11806a */
+  --dr-dark-green: hsl(145, 64%, 33%); /* #1f8b4c */
+  --dr-dark-blue: hsl(204, 64%, 35%); /* #206694 */
+  --dr-dark-purple:	hsl(282, 44%, 38%); /* #71368a */
+  --dr-dark-red: hsl(334, 79%, 38%); /* #ad1457 */
+  --dr-dark-yellow:	hsl(37, 87%, 41%); /* #c27c0e */
+  --dr-dark-gold:	hsl(24, 100%, 33%); /* #a84300 */
+  --dr-dark-orange: hsl(6, 64%, 37%); /* #992d22 */
+  --dr-dark-grey: hsl(202, 4%, 61%); /* #979c9f */
+
+  /**//**//**//**//**//**//**//**//**/
+  /* Start of customization madness */
+  /**//**//**//**//**//**//**//**//**/
+
+  /* Navbar */
+  --navbar-height: 4.5rem;
+  --dm-navbar-link-active-text-color: var(--secondary-color);
+  --dm-navbar-link-text-color-hover: var(--secondary-color);
+  --dm-navbar-link-active-text-color-hover: var(--secondary-color);
+
+  /* Scrollbar */
+  --webkit-scrollbar-width-height: 1.1rem;
+
+  /* Colors */
+
+  --blue-color: hsl(210, 85%, 56%);
+  --blue-color-light: hsla(210, 85%, 56%, 0.8);
+
+  --red-color: hsl(341, 88%, 50%);
+  --red-color-light: hsla(341, 88%, 50%, 0.8);
+
+  --yellow-color: hsl(55, 92%, 58%);
+  --yellow-color-light: hsla(55, 92%, 58%, 0.8);
+}
+
+
+
+/* Navbar */
+.navbar {
+  padding-left: 0;
+}
+.navbar-brand img{
+  width: var(--navbar-height);
+  height: var(--navbar-height);
+}
+
+
+
+/* Role Texts & Role Groups */
+.role-muted         {color: var(--role-muted) !important;}
+.role-snowman       {color: var(--role-snowman) !important;}
+.role-fudge-supreme {color: var(--role-fudge-supreme) !important;}
+.role-lord-farquaad {color: var(--role-lord-farquaad) !important;}
+.role-veteran-memer {color: var(--role-veteran-memer) !important;}
+.role-jeetard       {color: var(--dr-dark-green) !important;}
+.role-homie         {color: var(--dr-light-blue) !important}
+.role-group-stuff   {color: var(--dr-light-yellow) !important;}
+.role-group-games   {color: var(--dr-dark-gold) !important;}
+.role-group-levels  {color: var(--dr-dark-cyan) !important;}
+
+/* Discord Badge */
+.badge.badge-discord {
+  color: #ffffff;
+  background-color: var(--blurple);
+  border-color: var(--blurple);
+}
+
+/* Text Discord (Dark Mode only) */
+.text-discord {color: var(--blurple) !important;}
+a.text-discord:hover {color: var(--blurple-l) !important;}
+a.text-discord:focus {color: var(--blurple-l) !important;}
+
+/* Gone, Reduced to atoms */
+.is-gone {display: none !important;}
+
+/* Cursors and selecting */
+.pls-no-click {
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.navbar {
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: auto;
+}
+.navbar.navbar-nav.nav-item {
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.siege-table {
+  cursor: crosshair;
+}
+
+/* More widths (1-700rem +-25) */
+.w-1{width: 0.1rem !important;}.w-25{width: 2.5rem !important;}.w-50{width: 5.0rem !important;}.w-75{width: 7.5rem !important;}
+.w-100{width: 10.0rem !important;}.w-125{width: 12.5rem !important;}.w-150{width: 15.0rem !important;}.w-175{width: 17.5rem !important;}
+.w-200{width: 20.0rem !important;}.w-225{width: 22.5rem !important;}.w-250{width: 25.0rem !important;}.w-275{width: 27.5rem !important;}
+.w-300{width: 30.0rem !important;}.w-325{width: 32.5rem !important;}.w-350{width: 35.0rem !important;}.w-375{width: 37.5rem !important;}
+.w-400{width: 40.0rem !important;}.w-425{width: 42.5rem !important;}.w-450{width: 45.0rem !important;}.w-475{width: 47.5rem !important;}
+.w-500{width: 50.0rem !important;}.w-525{width: 52.5rem !important;}.w-550{width: 55.0rem !important;}.w-575{width: 57.5rem !important;}
+.w-600{width: 60.0rem !important;}.w-625{width: 62.5rem !important;}.w-650{width: 65.0rem !important;}.w-675{width: 67.5rem !important;}
+.w-700{width: 70.0rem !important;}
+
+/* Fancy widths */
+.w-third{width: 33.3333333333% !important;}
+.w-two-thirds{width: 66.6666666667% !important;}
+
+@media (min-width: 577px) {
+  .w-sm-third{width: 33.3333333333% !important;}
+  .w-sm-two-thirds{width: 66.6666666667% !important;}
+}
+@media (min-width: 769px) {
+  .w-md-third{width: 33.3333333333% !important;}
+  .w-md-two-thirds{width: 66.6666666667% !important;}
+}
+@media (min-width: 993px) {
+  .w-lg-third{width: 33.3333333333% !important;}
+  .w-lg-two-thirds{width: 66.6666666667% !important;}
+}
+@media (min-width: 1201px) {
+  .w-xl-third{width: 33.3333333333% !important;}
+  .w-xl-two-thirds{width: 66.6666666667% !important;}
+}
+
+/* More heights (1-700rem +-25) */
+.h-1{height: 0.1rem !important;}.h-25{height: 2.5rem !important;}.h-50{height: 5.0rem !important;}.h-75{height: 7.5rem !important;}
+.h-100{height: 10.0rem !important;}.h-125{height: 12.5rem !important;}.h-150{height: 15.0rem !important;}.h-175{height: 17.5rem !important;}
+.h-200{height: 20.0rem !important;}.h-225{height: 22.5rem !important;}.h-250{height: 25.0rem !important;}.h-275{height: 27.5rem !important;}
+.h-300{height: 30.0rem !important;}.h-325{height: 32.5rem !important;}.h-350{height: 35.0rem !important;}.h-375{height: 37.5rem !important;}
+.h-400{height: 40.0rem !important;}.h-425{height: 42.5rem !important;}.h-450{height: 45.0rem !important;}.h-475{height: 47.5rem !important;}
+.h-500{height: 50.0rem !important;}.h-525{height: 52.5rem !important;}.h-550{height: 55.0rem !important;}.h-575{height: 57.5rem !important;}
+.h-600{height: 60.0rem !important;}.h-625{height: 62.5rem !important;}.h-650{height: 65.0rem !important;}.h-675{height: 67.5rem !important;}
+.h-700{height: 70.0rem !important;}
+
+/* Font sizes (0.1rem - 5.0rem) */
+.font-size-1 {font-size: 0.1rem !important;}.font-size-2 {font-size: 0.2rem !important;}.font-size-3 {font-size: 0.3rem !important;}.font-size-4 {font-size: 0.4rem !important;}
+.font-size-5 {font-size: 0.5rem !important;}.font-size-6 {font-size: 0.6rem !important;}.font-size-7 {font-size: 0.7rem !important;}.font-size-8 {font-size: 0.8rem !important;}
+.font-size-9 {font-size: 0.9rem !important;}.font-size-10 {font-size: 1.0rem !important;}.font-size-11 {font-size: 1.1rem !important;}.font-size-12 {font-size: 1.2rem !important;}
+.font-size-13 {font-size: 1.3rem !important;}.font-size-14 {font-size: 1.4rem !important;}.font-size-15 {font-size: 1.5rem !important;}.font-size-16 {font-size: 1.6rem !important;}
+.font-size-17 {font-size: 1.7rem !important;}.font-size-18 {font-size: 1.8rem !important;}.font-size-19 {font-size: 1.9rem !important;}.font-size-20 {font-size: 2.0rem !important;}
+.font-size-21 {font-size: 2.1rem !important;}.font-size-22 {font-size: 2.2rem !important;}.font-size-23 {font-size: 2.3rem !important;}.font-size-24 {font-size: 2.4rem !important;}
+.font-size-25 {font-size: 2.5rem !important;}.font-size-26 {font-size: 2.6rem !important;}.font-size-27 {font-size: 2.7rem !important;}.font-size-28 {font-size: 2.8rem !important;}
+.font-size-29 {font-size: 2.9rem !important;}.font-size-30 {font-size: 3.0rem !important;}.font-size-31 {font-size: 3.1rem !important;}.font-size-32 {font-size: 3.2rem !important;}
+.font-size-33 {font-size: 3.3rem !important;}.font-size-34 {font-size: 3.4rem !important;}.font-size-35 {font-size: 3.5rem !important;}.font-size-36 {font-size: 3.6rem !important;}
+.font-size-37 {font-size: 3.7rem !important;}.font-size-38 {font-size: 3.8rem !important;}.font-size-39 {font-size: 3.9rem !important;}.font-size-41 {font-size: 4.1rem !important;}
+.font-size-42 {font-size: 4.2rem !important;}.font-size-43 {font-size: 4.3rem !important;}.font-size-44 {font-size: 4.4rem !important;}.font-size-45 {font-size: 4.5rem !important;}
+.font-size-46 {font-size: 4.6rem !important;}.font-size-47 {font-size: 4.7rem !important;}.font-size-48 {font-size: 4.8rem !important;}.font-size-49 {font-size: 4.9rem !important;}
+.font-size-40 {font-size: 4.0rem !important;}.font-size-51 {font-size: 5.1rem !important;}.font-size-52 {font-size: 5.2rem !important;}.font-size-53 {font-size: 5.3rem !important;}
+.font-size-54 {font-size: 5.4rem !important;}.font-size-55 {font-size: 5.5rem !important;}.font-size-56 {font-size: 5.6rem !important;}.font-size-57 {font-size: 5.7rem !important;}
+.font-size-58 {font-size: 5.8rem !important;}.font-size-59 {font-size: 5.9rem !important;}.font-size-50 {font-size: 5.0rem !important;}.font-size-61 {font-size: 6.1rem !important;}
+.font-size-62 {font-size: 6.2rem !important;}.font-size-63 {font-size: 6.3rem !important;}.font-size-64 {font-size: 6.4rem !important;}.font-size-65 {font-size: 6.5rem !important;}
+.font-size-66 {font-size: 6.6rem !important;}.font-size-67 {font-size: 6.7rem !important;}.font-size-68 {font-size: 6.8rem !important;}.font-size-69 {font-size: 6.9rem !important;}
+.font-size-70 {font-size: 7.0rem !important;}.font-size-71 {font-size: 7.1rem !important;}.font-size-72 {font-size: 7.2rem !important;}.font-size-73 {font-size: 7.3rem !important;}
+.font-size-74 {font-size: 7.4rem !important;}.font-size-75 {font-size: 7.5rem !important;}.font-size-76 {font-size: 7.6rem !important;}.font-size-77 {font-size: 7.7rem !important;}
+.font-size-78 {font-size: 7.8rem !important;}.font-size-79 {font-size: 7.9rem !important;}.font-size-80 {font-size: 8.0rem !important;}.font-size-81 {font-size: 8.1rem !important;}
+.font-size-82 {font-size: 8.2rem !important;}.font-size-83 {font-size: 8.3rem !important;}.font-size-84 {font-size: 8.4rem !important;}.font-size-85 {font-size: 8.5rem !important;}
+.font-size-86 {font-size: 8.6rem !important;}.font-size-87 {font-size: 8.7rem !important;}.font-size-88 {font-size: 8.8rem !important;}.font-size-89 {font-size: 8.9rem !important;}
+.font-size-90 {font-size: 9.0rem !important;}.font-size-91 {font-size: 9.1rem !important;}.font-size-92 {font-size: 9.2rem !important;}.font-size-93 {font-size: 9.3rem !important;}
+.font-size-94 {font-size: 9.4rem !important;}.font-size-95 {font-size: 9.5rem !important;}.font-size-96 {font-size: 9.6rem !important;}.font-size-97 {font-size: 9.7rem !important;}
+.font-size-98 {font-size: 9.8rem !important;}.font-size-99 {font-size: 9.9rem !important;}.font-size-100 {font-size: 10.0rem !important;}
+
+/* More margins (1,2,3,4) */
+
+.m-1{margin:0.1rem !important;}.m-2{margin:0.2rem !important;}.m-3{margin:0.3rem !important;}.m-4{margin:0.4rem !important;}
+.p-1{padding:0.1rem !important;}.p-2{padding:0.2rem !important;}.p-3{padding:0.3rem !important;}.p-4{padding:0.4rem !important;}
+.mt-1{margin-top:0.1rem !important;}.mt-2{margin-top:0.2rem !important;}.mt-3{margin-top:0.3rem !important;}.mt-4{margin-top:0.4rem !important;}
+.pt-1{padding-top:0.1rem !important;}.pt-2{padding-top:0.2rem !important;}.pt-3{padding-top:0.3rem !important;}.pt-4{padding-top:0.4rem !important;}
+.ml-1{margin-left:0.1rem !important;}.ml-2{margin-left:0.2rem !important;}.ml-3{margin-left:0.3rem !important;}.ml-4{margin-left:0.4rem !important;}
+.pl-1{padding-left:0.1rem !important;}.pl-2{padding-left:0.2rem !important;}.pl-3{padding-left:0.3rem !important;}.pl-4{padding-left:0.4rem !important;}
+.mr-1{margin-right:0.1rem !important;}.mr-2{margin-right:0.2rem !important;}.mr-3{margin-right:0.3rem !important;}.mr-4{margin-right:0.4rem !important;}
+.pr-1{padding-right:0.1rem !important;}.pr-2{padding-right:0.2rem !important;}.pr-3{padding-right:0.3rem !important;}.pr-4{padding-right:0.4rem !important;}
+.mb-1{margin-bottom:0.1rem !important;}.mb-2{margin-bottom:0.2rem !important;}.mb-3{margin-bottom:0.3rem !important;}.mb-4{margin-bottom:0.4rem !important;}
+.pb-1{padding-bottom:0.1rem !important;}.pb-2{padding-bottom:0.2rem !important;}.pb-3{padding-bottom:0.3rem !important;}.pb-4{padding-bottom:0.4rem !important;}
+
+/* Dumbest shit ever */
+.midel{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+.middel{ display:grid; place-items:center; height:100%; }
+
+/* Sticky Table Headers */
+thead.sticky th{
+  position:sticky;
+  top:0;
+  background-color: #25282c;
+  z-index: 12;
+}
+
+/* Margin for Index footer */
+.mb-footer { margin-bottom: 5.0rem !important; }
+
+/* Google Fonts Icons Sizes */
+.material-icons.mi-18 { font-size: 18px; }
+.material-icons.mi-24 { font-size: 24px; } /* Default */
+.material-icons.mi-30 { font-size: 30px; } /* Apparently Not Allowed */
+.material-icons.mi-36 { font-size: 36px; }
+.material-icons.mi-48 { font-size: 48px; }
+
+.material-icons-round.mi-18 { font-size: 18px; }
+.material-icons-round.mi-24 { font-size: 24px; } /* Default */
+.material-icons-round.mi-30 { font-size: 30px; } /* Apparently Not Allowed */
+.material-icons-round.mi-36 { font-size: 36px; }
+.material-icons-round.mi-48 { font-size: 48px; }
+
+.material-icons-sharp.mi-18 { font-size: 18px; }
+.material-icons-sharp.mi-24 { font-size: 24px; } /* Default */
+.material-icons-sharp.mi-30 { font-size: 30px; } /* Apparently Not Allowed */
+.material-icons-sharp.mi-36 { font-size: 36px; }
+.material-icons-sharp.mi-48 { font-size: 48px; }
+
+.material-icons-outlined.mi-18 { font-size: 18px; }
+.material-icons-outlined.mi-24 { font-size: 24px; } /* Default */
+.material-icons-outlined.mi-30 { font-size: 30px; } /* Apparently Not Allowed */
+.material-icons-outlined.mi-36 { font-size: 36px; }
+.material-icons-outlined.mi-48 { font-size: 48px; }
+
+.material-icons-two-tone.mi-18 { font-size: 18px; }
+.material-icons-two-tone.mi-24 { font-size: 24px; } /* Default */
+.material-icons-two-tone.mi-30 { font-size: 30px; } /* Apparently Not Allowed */
+.material-icons-two-tone.mi-36 { font-size: 36px; }
+.material-icons-two-tone.mi-48 { font-size: 48px; }
+
+
+/* IMG Object */
+.object-cover { object-fit: cover; }

@@ -1,0 +1,68 @@
+@font-face {
+  font-family: 'ScoutCond-Bold';
+  src: url('/0/fonts/ScoutCond/ScoutCond-Bold.ttf');
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'ScoutCond-BoldItalic';
+  src: url('/0/fonts/ScoutCond/ScoutCond-BoldItalic.ttf');
+  font-weight: bold;
+}
+
+.pepegos {
+  font-family: 'ScoutCond-BoldItalic';
+}
+
+.ops {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+.op{
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  user-select: none;
+
+  min-width: 11%;
+  display: flex;
+  flex-flow: column;
+  flex-wrap: wrap;
+  margin: 1rem;
+  padding: 1rem 0rem 0.7rem 0rem;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff0d;
+  border-radius: 0.4rem;
+  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.4) !important;
+
+  will-change: transform;
+  transition: transform 250ms ease;
+}
+.op:hover {
+  transform: scale(1.07);
+}
+
+.op-img {
+  width: 12rem;
+}
+.op-txt {
+  font-size: 4rem;
+}
+
+.midl {
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+
+.loader {
+  background-color: #25282c !important;
+  z-index: 1000000;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

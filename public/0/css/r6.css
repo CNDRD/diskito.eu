@@ -1,0 +1,56 @@
+.r6 {
+  font-family: 'Bebas Neue', cursive;
+}
+.pfp {
+  display: block;
+  height: 10rem;
+  border-radius: 10%;
+}
+.current_rank {
+  height: 8rem;
+}
+.max_rank {
+  height: 6rem;
+}
+.text-season {
+  color: #ac0000;
+}
+.row .col-3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#overall-div .row .col-3 :first-child {
+  border-bottom: 1px solid;
+  font-size: 1.7rem;
+}
+.row .col-3 img {
+  border-bottom: none !important;
+  width: 7rem;
+}
+
+
+.midel-r6 {
+  display:grid; place-items:center; height:90%;
+}
+
+.loader {
+  background-color: #25282c !important;
+  z-index: 1000000;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+
+.r6-stat-select:hover {
+  border-style: none none solid none;
+  border-color: var(--dm-button-secondary-bg-color);
+  color: var(--dm-button-secondary-bg-color);
+}
+.r6-stat-select.r6-active {
+  border-style: none none solid none;
+  border-color: var(--dm-button-secondary-bg-color);
+  color: var(--dm-button-secondary-bg-color);
+}

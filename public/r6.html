@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta tags -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <meta name="viewport" content="width=device-width" />
+  <!-- https://gist.github.com/lancejpollard/1978404 Tags -->
+  <meta http-equiv="Expires" content="0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Cache-Control" content="no-cache" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#111417" />
+  <meta name="theme-color" content="#111417" />
+  <meta name="twitter:dnt" content="on" />
+  <meta name="twitter:url" content="https://diskito.eu/covid" />
+  <meta name="twitter:title" content="R6S Stats Page">
+  <meta name="twitter:description" content="Custom player Siege stat page" />
+  <meta name="twitter:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
+  <meta name="twitter:image:alt" content=":)" />
+  <!-- Discord Meta Tags -->
+  <meta property="og:title" content="R6S Stats Page" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://diskito.eu/covid" />
+  <meta property="og:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
+  <meta property="og:description" content="Custom player Siege stat page" />
+  <meta name="theme-color" content="#0be881" />
+  <!-- Discord Meta Tags -->
+
+  <!-- https://realfavicongenerator.net/ Favicons & Title -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../0/resources/icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../0/resources/icons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../0/resources/icons/favicon-16x16.png" />
+  <link rel="manifest" href="../0/resources/icons/site.webmanifest" />
+  <link rel="mask-icon" href="../0/resources/icons/safari-pinned-tab.svg" color="#5bbad5" />
+  <link rel="shortcut icon" href="../0/resources/icons/favicon.ico" />
+  <meta name="msapplication-TileColor" content="#b91d47" />
+  <meta name="msapplication-config" content="../0/resources/icons/browserconfig.xml" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Rainbow Six: Siege Stats</title>
+  <!-- Halfmoon CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css" rel="stylesheet" />
+  <!-- Halfmoon JS -->
+  <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
+  <!-- Google Fonts (Font & Icons) -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Firebase JS-->
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+  <!-- Initialize Firebase -->
+  <script src="../0/js/0-fb.js"></script>
+  <!-- SortTable -->
+  <script src="../0/js/0-sorttable.js"></script>
+  <!-- Custom CSS & JS -->
+  <link rel="stylesheet" href="../0/css/main.css" />
+  <link rel="stylesheet" href="../0/css/r6.css">
+  <script src="../0/js/0-myFunctions.js"></script>
+  <script src="../0/js/r6.js"></script>
+  <!-- Alerts JS -->
+  <script src="../0/js/0-alerts.js"></script>
+  <!-- Navbar JS -->
+  <script src="/0/js/0-navbar.js" charset="utf-8"></script>
+
+</head>
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode">
+
+  <!-- Page wrapper start -->
+  <div class="page-wrapper with-navbar">
+
+    <!-- Navbar start -->
+    <nav class="navbar" id="navbar"></nav>
+    <!-- Navbar end -->
+
+    <!-- Alerts appear here -->
+    <div class="sticky-alerts mt-15"></div>
+    <!-- Alerts appear here -->
+
+    <!-- Content wrapper start -->
+    <div class="content-wrapper font-weight-normal">
+      <!-- Container start -->
+      <div class="container-xl">
+
+        <!-- User Header start -->
+        <div class="r6 d-flex flex-row flex-wrap justify-content-center justify-content-md-between align-items-baseline mt-20">
+
+          <div class="d-flex flex-row flex-wrap justify-content-center justify-content-md-start align-items-baseline">
+            <div class="d-flex flex-row justify-content-start align-items-baseline">
+              <div>
+                <img class="pfp" id="profile_picture" src="https://firebasestorage.googleapis.com/v0/b/chuckwalla-69.appspot.com/o/default.png?alt=media&token=3afa0408-5779-4b03-88a4-0450b21b1842" />
+              </div>
+              <div class="font-size-75 text-white ml-10" id="username">
+                Username
+              </div>
+            </div>
+            <div class="d-flex flex-row justify-content-start align-items-baseline">
+              <div class="ml-10 d-flex flex-row align-items-baseline" data-toggle='tooltip' data-title='Level'>
+                <span class="material-icons mi-36">military_tech</span>
+                <span class="font-size-40" id="level">0</span>
+              </div>
+              <div class="ml-10 d-flex flex-row align-items-baseline"  data-toggle='tooltip' data-title='Alpha Pack %'>
+                <span class="material-icons mi-36">credit_card</span>
+                <span class="font-size-40 ml-5" id="alpha_pack">0%</span>
+              </div>
+            </div>
+          </div>
+
+          <span class="badge-group mb-20 mb-md-10 mx-10 pls-no-click">
+            <a href="#" class="badge font-size-18 px-15 py-10" id="r6stats">r6stats</a>
+            <a href="#" class="badge font-size-18 px-15 py-10" id="tab">tabstats</a>
+            <a href="#" class="badge font-size-18 px-15 py-10" id="trn">trn</a>
+          </span>
+
+        </div><!-- User Header end -->
+
+
+        <hr class="mt-0" />
+
+
+        <!-- Selectors start -->
+        <div class="r6 d-flex flex-row justify-content-center justify-content-md-between align-items-baseline font-size-30 ml-5 h-50 w-full">
+          <div class="r6 d-flex flex-row flex-nowrap justify-content-md-start">
+            <span class="px-10 d-block pls-no-click r6-stat-select r6-active" onclick="bigSelect('overall')" id="overall">Overall</span>
+            <span class="px-10 d-block pls-no-click r6-stat-select" onclick="bigSelect('operators')" id="operators">Operators</span>
+          </div>
+
+          <div class="r6 d-none flex-column flex-nowrap align-items-end ml-20" id="maps-switcher">
+            <div class="d-flex flex-row flex-nowrap">
+              <span class="px-10 d-block pls-no-click r6-stat-select r6-active" onclick="mapSelect('all')" id="all-map">All</span>
+              <span class="px-10 d-block pls-no-click r6-stat-select" onclick="mapSelect('ranked')" id="ranked-map">Ranked</span>
+              <span class="px-10 d-block pls-no-click r6-stat-select" onclick="mapSelect('unranked')" id="unranked-map">Unranked</span>
+              <span class="px-10 d-block pls-no-click r6-stat-select" onclick="mapSelect('casual')" id="casual-map">Casual</span>
+            </div>
+          </div>
+        </div><!-- Selectors end -->
+
+        <!-- Overall DIV start -->
+        <div class="r6" id="overall-div">
+
+          <!-- 1st Row Flexbox start -->
+          <div class="d-flex flex-row flex-wrap justify-content-start">
+
+            <!-- Seasonal Card start -->
+            <div class="card p-15 pl-20 m-5 w-full w-md-third">
+
+              <div class="d-flex flex-row flex-nowrap justify-content-between border-bottom">
+                <div class="card-title font-size-35 font-italic text-center text-season text-nowrap" id="season_name">
+                  Current Operation
+                </div>
+                <div class="btn-group font-size-18 mb-10 pls-no-click">
+                  <button class="btn btn-primary" type="button" name="button" onclick="omegakokot('ranked')" id="ranked">Ranked</button>
+                  <button class="btn" type="button" name="button" onclick="omegakokot('casual')" id="casual">Casual</button>
+                </div>
+              </div>
+
+              <div class="midel-r6">
+
+                <div class="d-none" id="casualCard">
+                  <div class="d-flex flex-row flex-nowrap">
+
+                    <div class="d-flex flex-column flex-nowrap justify-content-center align-items-center p-20">
+                      <div class="d-flex flex-column justify-content-center text-center">
+                        <div class="font-size-20 text-nowrap" id="next_rank_mmr_casual">0</div>
+                        <img class="current_rank" id="current_rank_img_casual" src="https://firebasestorage.googleapis.com/v0/b/chuckwalla-69.appspot.com/o/R6%20Ranks%2FUnranked.png?alt=media&token=295b2528-9813-4add-a46f-9e5c7e2a13c8" />
+                        <span class="font-size-20 mt-5 text-nowrap" id="prev_rank_mmr_casual">0</span>
+                      </div>
+                      <span class="font-size-20 mt-5 text-nowrap" id="current_rank_name_casual">
+                        Unranked
+                      </span>
+                      <span class="text-muted font-italic font-size-16 mt-15 text-nowrap">
+                        Current MMR
+                      </span>
+                      <div class="d-flex flex-row flex-nowrap justify-content-center align-items-center">
+                        <span class="font-size-23 text-default mr-5 text-nowrap" id="last_mmr_change_casual">0</span>
+                        <span class="font-size-25 text-nowrap" id="current_rank_mmr_casual">0</span>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-nowrap justify-content-center align-items-center ml-15 font-size-28 p-20">
+                      <div class="d-flex flex-row flex-nowrap justify-content-center align-items-center">
+                        <span class="text-nowrap" id="seasonal_kd_casual">0</span>
+                        <span class="font-size-20 ml-5 text-nowrap">KD</span>
+                      </div>
+                      <div class="d-flex flex-row flex-nowrap justify-content-center align-items-center">
+                        <span class="text-nowrap" id="seasonal_wl_casual">0%</span>
+                        <span class="font-size-20 ml-5 text-nowrap">WL</span>
+                      </div>
+                      <div class="d-flex flex-row flex-nowrap justify-content-center align-items-center">
+                        <span class="text-nowrap" id="seasonal_games_casual">0</span>
+                        <span class="font-size-20 ml-5 text-nowrap">matches</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="" id="rankedCard">
+                  <div class="d-flex flex-row flex-nowrap">
+                    <div class="d-flex flex-column flex-nowrap justify-content-center align-items-center p-20">
+                      <div class="d-flex flex-column justify-content-center text-center">
+                        <div class="font-size-20 text-nowrap" id="next_rank_mmr">0</div>
+                        <img class="current_rank" id="current_rank_img" src="https://firebasestorage.googleapis.com/v0/b/chuckwalla-69.appspot.com/o/R6%20Ranks%2FUnranked.png?alt=media&token=295b2528-9813-4add-a46f-9e5c7e2a13c8" />
+                        <span class="font-size-20 mt-5 text-nowrap" id="prev_rank_mmr">0</span>
+                      </div>
+                      <span class="font-size-20 mt-5 text-nowrap" id="current_rank_name">
+                        Unranked
+                      </span>
+                      <span class="text-muted font-italic font-size-16 mt-15 text-nowrap">
+                        Current MMR
+                      </span>
+                      <div class="d-flex flex-row flex-nowrap justify-content-center align-items-center">
+                        <span class="font-size-23 text-default mr-5 text-nowrap" id="last_mmr_change">0</span>
+                        <span class="font-size-25 text-nowrap" id="current_rank_mmr">0</span>
+                      </div>
+                    </div>
+                    <div class="d-flex flex-column flex-nowrap justify-content-center align-items-center ml-15 font-size-28 p-20">
+                      <div class="d-flex flex-row flex-nowrap justify-content-center align-items-center">
+                        <span class="text-nowrap" id="seasonal_kd">0</span>
+                        <span class="font-size-20 ml-5 text-nowrap">KD</span>
+                      </div>
+                      <div class="d-flex flex-row flex-nowrap justify-content-center align-items-center">
+                        <span class="text-nowrap" id="seasonal_wl">0%</span>
+                        <span class="font-size-20 ml-5 text-nowrap">WL</span>
+                      </div>
+                      <div class="d-flex flex-row flex-nowrap justify-content-center align-items-center">
+                        <span class="text-nowrap" id="seasonal_games">0</span>
+                        <span class="font-size-20 ml-5 text-nowrap">matches</span>
+                      </div>
+                      <hr class="w-full mb-10 mt-0" />
+                      <div class="d-flex flex-column justify-content-center align-items-center font-size-22">
+                        <span class="text-nowrap">top mmr</span>
+                        <img class="max_rank text-nowrap" id="max_rank_img" src="https://firebasestorage.googleapis.com/v0/b/chuckwalla-69.appspot.com/o/R6%20Ranks%2FUnranked.png?alt=media&token=295b2528-9813-4add-a46f-9e5c7e2a13c8" />
+                        <span class="font-size-20 mt-5 text-nowrap" id="max_mmr_name">Unranked</span>
+                        <span class="font-size-25 mt-5 text-nowrap" id="max_mmr">0 MMR</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div><!-- Seasonal Card end -->
+
+            <!-- Queue Card start -->
+            <div class="card p-15 m-5 flex-grow-1">
+
+              <div class="card-title font-size-35 font-italic text-white ml-20">
+                <div class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline border-bottom">
+                  <span>Ranked stats</span>
+                  <span class="text-muted font-size-20" id="ranked_playtime">0h 0m 0s</span>
+                </div>
+              </div>
+
+              <div class="row font-size-25 pt-20">
+                <div class="col-3">
+                  <span class="text-muted">KD</span>
+                  <span class="text-nowrap" id="ranked_kd">0.00</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Kills</span>
+                  <span class="text-nowrap" id="ranked_kills">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Deaths</span>
+                  <span class="text-nowrap" id="ranked_deaths">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Games</span>
+                  <span class="text-nowrap" id="ranked_games">0</span>
+                </div>
+              </div>
+
+
+
+              <div class="card-title font-size-35 font-italic text-white ml-20 mt-10">
+                <div class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline border-bottom">
+                  <span>Casual stats</span>
+                  <span class="text-muted font-size-20" id="unranked_playtime">0h 0m 0s</span>
+                </div>
+              </div>
+
+              <div class="row font-size-25 pt-20">
+                <div class="col-3">
+                  <span class="text-muted">KD</span>
+                  <span class="text-nowrap" id="unranked_kd">0.00</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Kills</span>
+                  <span class="text-nowrap" id="unranked_kills">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Deaths</span>
+                  <span class="text-nowrap" id="unranked_deaths">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Games</span>
+                  <span class="text-nowrap" id="unranked_games">0</span>
+                </div>
+              </div>
+
+
+
+              <div class="card-title font-size-35 font-italic text-white ml-20 mt-10">
+                <div class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline border-bottom">
+                  <span>Discovery stats</span>
+                  <span class="text-muted font-size-20" id="discovery_playtime">0h 0m 0s</span>
+                </div>
+              </div>
+
+              <div class="row font-size-25 pt-20">
+                <div class="col-3">
+                  <span class="text-muted">KD</span>
+                  <span class="text-nowrap" id="discovery_kd">0.00</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Kills</span>
+                  <span class="text-nowrap" id="discovery_kills">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Deaths</span>
+                  <span class="text-nowrap" id="discovery_deaths">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Games</span>
+                  <span class="text-nowrap" id="discovery_games">0</span>
+                </div>
+              </div>
+
+            </div><!-- Queue Card end -->
+
+          </div><!-- 1st Row Flexbox end -->
+
+
+          <!-- 2nd Row Flexbox start -->
+          <div class="d-flex flex-row flex-wrap justify-content-start">
+
+            <!-- General Card start -->
+            <div class="card p-15 m-5 flex-grow-1">
+              <div class="card-title font-size-35 font-italic text-center text-white border-bottom">
+                General stats
+              </div>
+
+              <div class="row font-size-25 pt-20">
+                <div class="col-3">
+                  <span class="text-muted">KD</span>
+                  <span class="text-nowrap" id="general_kd">0.00</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Kills</span>
+                  <span class="text-nowrap" id="general_kills">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Deaths</span>
+                  <span class="text-nowrap" id="general_deaths">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Assists</span>
+                  <span class="text-nowrap" id="general_assists">0</span>
+                </div>
+              </div>
+
+              <div class="row font-size-25">
+                <div class="col-3">
+                  <span class="text-muted">WL</span>
+                  <span class="text-nowrap" id="general_wl">0.00%</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Wins</span>
+                  <span class="text-nowrap" id="general_wins">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Losses</span>
+                  <span class="text-nowrap" id="general_losses">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Matches</span>
+                  <span class="text-nowrap" id="general_matches">0</span>
+                </div>
+              </div>
+
+              <div class="row font-size-25">
+                <div class="col-3">
+                  <div class="text-muted">Headshots</div>
+                  <div class="text-nowrap" id="general_headshots">0</div>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">HS%</span>
+                  <span class="text-nowrap" id="general_hs">0.00%</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">DBNOs</span>
+                  <span class="text-nowrap" id="general_dbnos">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Suicides</span>
+                  <span class="text-nowrap" id="general_suicides">0</span>
+                </div>
+              </div>
+
+              <div class="row font-size-25">
+                <div class="col-3">
+                  <div class="text-muted">Melees</div>
+                  <div class="text-nowrap" id="general_melees">0</div>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Penetrations</span>
+                  <span class="text-nowrap" id="general_penetrations">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Barricades</span>
+                  <span class="text-nowrap" id="general_barricades">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Reinforcements</span>
+                  <span class="text-nowrap" id="general_reinforcements">0</span>
+                </div>
+              </div>
+
+            </div><!-- General Card end -->
+
+
+            <!-- Operator Card start -->
+            <div class="card p-15 m-5 w-full w-md-third">
+              <div class="card-title font-size-35 font-italic text-center text-white border-bottom">
+                Top Operator stats
+              </div>
+
+              <div class="row font-size-25 pt-20">
+                <div class="col-3" data-toggle='tooltip' data-title='Recruit GSG 9' id="operator_name_1">
+                  <img src="https://i.imgur.com/mF8eGXj.png" id="operator_img_1" />
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">KD</span>
+                  <span class="text-nowrap" id="operator_kd_1">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">WL</span>
+                  <span class="text-nowrap" id="operator_wl_1">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Playtime</span>
+                  <span class="text-nowrap" id="operator_playtime_1">0</span>
+                </div>
+              </div>
+
+              <div class="row font-size-25">
+                <div class="col-3" data-toggle='tooltip' data-title='Recruit Spetsnaz' id="operator_name_2">
+                  <img src="https://i.imgur.com/MEvmmGf.png" id="operator_img_2" />
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">KD</span>
+                  <span class="text-nowrap" id="operator_kd_2">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">WL</span>
+                  <span class="text-nowrap" id="operator_wl_2">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Playtime</span>
+                  <span class="text-nowrap" id="operator_playtime_2">0</span>
+                </div>
+              </div>
+
+              <div class="row font-size-25">
+                <div class="col-3" data-toggle='tooltip' data-title='Recruit FBI SWAT' id="operator_name_3">
+                  <img src="https://i.imgur.com/Pd7krMT.png" id="operator_img_3" />
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">KD</span>
+                  <span class="text-nowrap" id="operator_kd_3">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">WL</span>
+                  <span class="text-nowrap" id="operator_wl_3">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Playtime</span>
+                  <span class="text-nowrap" id="operator_playtime_3">0</span>
+                </div>
+              </div>
+
+              <div class="row font-size-25">
+                <div class="col-3" data-toggle='tooltip' data-title='Recruit GIGN' id="operator_name_4">
+                  <img src="https://i.imgur.com/D05DqQW.png" id="operator_img_4" />
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">KD</span>
+                  <span class="text-nowrap" id="operator_kd_4">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">WL</span>
+                  <span class="text-nowrap" id="operator_wl_4">0</span>
+                </div>
+                <div class="col-3">
+                  <span class="text-muted">Playtime</span>
+                  <span class="text-nowrap" id="operator_playtime_4">0</span>
+                </div>
+              </div>
+
+            </div><!-- Operator Card end -->
+
+          </div><!-- 2nd Row Flexbox end -->
+
+        </div><!-- Overall DIV end -->
+
+        <!-- Operators DIV start -->
+        <div class="d-none" id="operators-div">
+          <table class="table table-hover sortable">
+            <thead class="sticky pls-no-click">
+              <th class='text-white font-weight-normal font-size-25 w-75 text-center sorttable_nosort'><span class="material-icons mi-30">portrait</span></th>
+              <th class="text-white font-weight-normal font-size-25 w-100 sorttable_nosort hidden-sm-and-down">Operator</th>
+              <th class='text-white font-weight-normal font-size-25 text-center w-100 sorttable_numeric'>KD</th>
+              <th class='text-white font-weight-normal font-size-25 text-center w-100 sorttable_numeric'>WL</th>
+              <th class='text-white font-weight-normal font-size-25 text-center w-100 sorttable_numeric'>HS%</th>
+              <th class='text-white font-weight-normal font-size-25 text-center w-100 sorttable_numeric hidden-lg-and-down'>DBNOs</th>
+              <th class='text-white font-weight-normal font-size-25 text-center w-100 sorttable_numeric hidden-lg-and-down'>Melees</th>
+              <th class='text-white font-weight-normal font-size-25 w-125 text-center sorttable_numeric hidden-sm-and-down'>Playtime</th>
+            </thead>
+            <tbody id="operator_table"></tbody>
+          </table>
+        </div><!-- Operators DIV end -->
+
+        <!-- Maps DIV start -->
+        <div class="r6 d-none" id="maps-div">
+          <div class="d-flex flex-column" id="all-maps">
+            <div class="mb-10"><!-- Spacer --></div>
+          </div>
+          <div class="d-none flex-column" id="ranked-maps">
+            <div class="mb-10"><!-- Spacer --></div>
+          </div>
+          <div class="d-none flex-column" id="unranked-maps">
+            <div class="mb-10"><!-- Spacer --></div>
+          </div>
+          <div class="d-none flex-column" id="casual-maps">
+            <div class="mb-10"><!-- Spacer --></div>
+          </div>
+        </div><!-- Maps DIV end -->
+
+        <!-- Bottom spacer --><div class="h-50"></div>
+
+      </div><!-- Container end -->
+    </div><!-- Content wrapper end -->
+  </div><!-- Page wrapper end -->
+
+
+  <div class="loader middel">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <img src="/0/resources/loader.svg" alt="loading animation :)">
+      <!-- https://loading.io/ -->
+      <span>Loading your stats..</span>
+    </div>
+  </div>
+
+
+</body>
+</html>

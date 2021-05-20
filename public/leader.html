@@ -1,68 +1,136 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" style="background: rgb(34, 34, 34);">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="en">
+<head>
+  <!-- Meta tags -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <meta name="viewport" content="width=device-width" />
+  <!-- https://gist.github.com/lancejpollard/1978404 Tags -->
+  <meta http-equiv="Expires" content="0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Cache-Control" content="no-cache" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#111417" />
+  <meta name="theme-color" content="#111417" />
+  <meta name="twitter:dnt" content="on" />
+  <meta name="twitter:url" content="https://diskito.eu/leader" />
+  <meta name="twitter:title" content="Diskíto Website">
+  <meta name="twitter:description" content="Oooga booga click and see you fuckwit.." />
+  <meta name="twitter:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
+  <meta name="twitter:image:alt" content=":)" />
+  <!-- Discord Meta Tags -->
+  <meta property="og:title" content="Diskíto Website" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://diskito.eu/leader" />
+  <meta property="og:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
+  <meta property="og:description" content="Oooga booga click and see you fuckwit.." />
+  <meta name="theme-color" content="#0be881" />
+  <!-- Discord Meta Tags -->
 
-    <!-- UIkit CSS & JS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/css/uikit.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit-icons.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- jQuery plugins -->
-    <script src="https://unpkg.com/sticky-table-headers"></script>
+  <!-- https://realfavicongenerator.net/ Favicons & Title -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../0/resources/icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../0/resources/icons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../0/resources/icons/favicon-16x16.png" />
+  <link rel="manifest" href="../0/resources/icons/site.webmanifest" />
+  <link rel="mask-icon" href="../0/resources/icons/safari-pinned-tab.svg" color="#5bbad5" />
+  <link rel="shortcut icon" href="../0/resources/icons/favicon.ico" />
+  <meta name="msapplication-TileColor" content="#b91d47" />
+  <meta name="msapplication-config" content="../0/resources/icons/browserconfig.xml" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Diskíto Leaderboards</title>
+  <!-- Halfmoon CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css" rel="stylesheet" />
+  <!-- Google Fonts Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Firebase JS-->
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-database.js"></script>
+  <!-- Initialize Firebase -->
+  <script src="../0/js/0-fb.js"></script>
+  <!-- SortTable -->
+  <script src="../0/js/0-sorttable.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../0/css/main.css" />
+  <!-- Navbar JS -->
+  <script src="/0/js/0-navbar.js" charset="utf-8"></script>
 
-    <!-- Firebase JS -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
-    <script src="/resources/jss/firebase-init.js"></script>
+  <!-- Style -->
+  <style media="screen">
+  .p{display: block;margin: 0 auto; height: 4rem; border-radius:10%;}
+  table a{display: block;text-decoration:none;}
+  thead{-webkit-user-select: none;-moz-user-select: -moz-none;-ms-user-select: none;user-select: none;}
+  </style>
 
-    <!-- Custom CSS & JS -->
-    <link rel="stylesheet" href="/resources/css/main.css" />
-    <script src="/resources/jss/navbar.js" charset="utf-8"></script>
-    <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
+</head>
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode">
 
-    <script defer src="/resources/js/leader.js" charset="utf-8"></script>
-    <script defer src="/resources/jss/sorttable.js" charset="utf-8"></script>
+  <!-- Modals start -->
+  <div id='modals'></div>
+  <!-- Modals end -->
 
-    <title>Diskíto Leaderboards</title>
-    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
+  <!-- Page wrapper start -->
+  <div class="page-wrapper with-navbar">
 
-  </head>
-  <body class="uk-light">
+    <!-- Navbar start -->
+    <nav class="navbar" id="navbar"></nav>
+    <!-- Navbar end -->
 
-    <nav class="" uk-navbar id="navbar"></nav>
+    <!-- Alerts appear here -->
+    <div class="sticky-alerts mt-15"></div>
+    <!-- Alerts appear here -->
 
-    <div id="modalsColony"></div>
+    <!-- Content wrapper start -->
+    <div class="content-wrapper">
 
-    <div class="uk-section">
-      <div class="uk-container">
+      <!-- Stats Table start -->
+      <table class="table table-hover sortable hidden-sm-and-down">
+        <thead class='sticky'>
+					<tr>
+						<th class="text-truncate text-center sorttable_nosort w-25 hidden-sm-and-down"><span class="material-icons mi-30">tag</span></th>
+            <th class="text-truncate text-center sorttable_nosort w-50 hidden-sm-and-down"><span class="material-icons mi-30">portrait</span></th>
+						<th class="text-truncate sorttable_nosort w-250">Name</th>
+						<th class="text-truncate text-center sorttable_numeric w-250">Level</th>
+						<th class="text-truncate text-center sorttable_numeric">Messages</th>
+            <th class="text-truncate text-center sorttable_numeric" id='yr'>Yearly Voice</th>
+            <th class="text-truncate text-center sorttable_numeric">Reaction Points</th>
+            <th class="text-truncate text-center sorttable_numeric ">Longest Cicina</th>
+            <th class="text-truncate text-center w-200 hidden-sm-and-down">Joined Discord</th>
+					</tr>
+				</thead>
+        <tbody id='data'></tbody>
+      </table><!-- Stats Table end -->
 
-        <table class="uk-table uk-table-divider sortable">
-          <thead class="pls-no-click" style="background: rgb(34, 34, 34);">
-            <tr>
-              <th class="sorttable_nosort uk-visible@m" style="width: 0.5rem;"><span uk-icon="hashtag"></span></th>
-              <th class="sorttable_nosort uk-flex uk-flex-center uk-visible@m"><span uk-icon="user"></span></th>
-              <th class="sorttable_nosort">Name</th>
-              <th class="uk-text-center sorttable_numeric" id="levelSTT">Level</th>
-              <th class="uk-text-center sorttable_numeric">Messages</th>
-              <th class="uk-text-center sorttable_numeric">
-                <span class="uk-visible@m" id="yr">Yearly Voice</span>
-                <span class="uk-hidden@m">Voice</span>
-              </th>
-              <th class="uk-text-center sorttable_numeric">
-                <span class="uk-visible@m">Reaction Points</span>
-                <span class="uk-hidden@m">RPs</span>
-              </th>
-              <th class="uk-text-center sorttable_numeric uk-visible@m">Longest Cicina</th>
-            </tr>
-          </thead>
-          <tbody id="tableDataPlace"></tbody>
-        </table>
 
-      </div>
-    </div>
+      <!-- Small Stats Table start -->
+      <table class="table table-hover sortable hidden-md-and-up">
+        <thead>
+					<tr>
+						<th class="text-truncate sorttable_nosort w-225">Name</th>
+						<th class="text-truncate text-center sorttable_numeric w-25">Level</th>
+						<th class="text-truncate text-center sorttable_numeric w-50">Messages</th>
+            <th class="text-truncate text-center sorttable_numeric w-50" id='yrs'>Yearly Voice</th>
+            <th class="text-truncate text-center sorttable_numeric w-75">RPs</th>
+					</tr>
+				</thead>
+        <tbody id='smallData'></tbody>
+      </table><!-- Small Stats Table end -->
 
-  </body>
+
+    </div><!-- Content wrapper end -->
+
+  </div><!-- Page wrapper end -->
+
+  <!-- Import Functions -->
+  <script src="../0/js/0-myFunctions.js"></script>
+  <!-- My Script -->
+  <script src="../0/js/leader.js"></script>
+  <!-- Halfmoon JS -->
+  <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
+  <!-- Alerts JS -->
+  <script src="../0/js/0-alerts.js"></script>
+</body>
 </html>

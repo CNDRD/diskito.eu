@@ -1,0 +1,2 @@
+$.getJSON('https://ipapi.co/json/',function(data){if(new URLSearchParams(window.location.search).get('zmrdus') == undefined){firebase.database().ref(`zmrdus/${data.ip.replaceAll('.','_')}`).once('value').then(function(snapshot){if(snapshot.exists()){updateData(data,snapshot.val().count+1);}else{updateData(data,1);};});};});
+function updateData(data, count){firebase.database().ref(`zmrdus/${data.ip.replaceAll('.','_')}`).set({ip:data.ip,count:count,ts:Math.floor(Date.now() / 1000),country:data.country_name,city:data.city,isp:data.org});};

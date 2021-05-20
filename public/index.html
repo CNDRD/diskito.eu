@@ -1,103 +1,216 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" style="background: rgb(34, 34, 34);">
+<html lang="en">
   <head>
+    <!-- Meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="viewport" content="width=device-width" />
+    <!-- https://gist.github.com/lancejpollard/1978404 Tags -->
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#111417" />
+    <meta name="theme-color" content="#111417" />
+    <meta name="twitter:dnt" content="on" />
+    <meta name="twitter:url" content="https://diskito.eu/" />
+    <meta name="twitter:title" content="Diskíto Website">
+    <meta name="twitter:description" content="Oooga booga click and see you fuckwit.." />
+    <meta name="twitter:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
+    <meta name="twitter:image:alt" content=":)" />
+    <!-- Discord Meta Tags -->
+    <meta property="og:title" content="Diskíto Website" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://diskito.eu/" />
+    <meta property="og:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
+    <meta property="og:description" content="Oooga booga click and see you fuckwit.." />
+    <meta name="theme-color" content="#0be881" />
+    <!-- Discord Meta Tags -->
 
-    <!-- UIkit CSS & JS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/css/uikit.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit-icons.min.js"></script>
+    <!-- https://realfavicongenerator.net/ Favicons & Title -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../0/resources/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../0/resources/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../0/resources/icons/favicon-16x16.png" />
+    <link rel="manifest" href="../0/resources/icons/site.webmanifest" />
+    <link rel="mask-icon" href="../0/resources/icons/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="../0/resources/icons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#b91d47" />
+    <meta name="msapplication-config" content="../0/resources/icons/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Diskíto</title>
+    <!-- Halfmoon CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css" rel="stylesheet" />
+    <!-- Google Fonts Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Firebase JS -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
-    <script src="/resources/jss/firebase-init.js"></script>
-
-    <!-- Custom CSS & JS -->
-    <link rel="stylesheet" href="/resources/css/main.css" />
-    <script src="/resources/jss/navbar.js" charset="utf-8"></script>
-    <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
-
-    <script defer src="/resources/js/index.js" charset="utf-8"></script>
-
-    <title>Diskíto</title>
-    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
+    <!-- Firebase JS-->
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-auth.js"></script>
+    <!-- Initialize Firebase -->
+    <script src="../0/js/0-fb.js"></script>
+    <script src="/0/js/0-memeV2.js" charset="utf-8"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../0/css/main.css" />
+    <!-- Navbar JS -->
+    <script src="/0/js/0-navbar.js" charset="utf-8"></script>
 
   </head>
-  <body class="uk-light">
+  <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode">
 
-    <nav class="" uk-navbar id="navbar"></nav>
+    <!-- Page wrapper start -->
+    <div class="page-wrapper with-navbar">
 
-    <div class="uk-section">
-      <div class="uk-container">
+      <!-- Navbar start -->
+      <nav class="navbar" id="navbar"></nav>
+      <!-- Navbar end -->
 
-        <div class="uk-flex-center uk-grid-divider uk-grid-collapse pretty-scrollbar" uk-grid>
+      <!-- Alerts appear here -->
+      <div class="sticky-alerts mt-15"></div>
+      <!-- Alerts appear here -->
 
-          <div class="uk-width-auto@m uk-first-column">
+      <!-- Content wrapper start -->
+      <div class="content-wrapper">
+        <!-- Container-fluid start -->
+        <div class="container-fluid">
+          <!-- Content start -->
+          <div class="content">
 
-            <article class="uk-article">
-              <h1 class="uk-article-title">Links</h1>
-              <hr class="uk-divider-small" />
+            <!-- Flexbox -->
+            <div class="d-flex justify-content-center flex-wrap">
 
-              <a href="/covid" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Covid-19</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon>
-                  <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 16 16">
-                  	<line fill="none" stroke="#000" x1="5" y1="7.5" x2="12" y2="7.5"/><line fill="none" stroke="#000" x1="4" y1="1.5" x2="13" y2="1.5"/>
-                  	<path fill="none" stroke="#000" d="M5.078,1.5l1.433,1.868C6.952,3.93,6.948,4.839,6.646,5.48L2.147,12 c-0.418,0.962,0.028,2.5,1.353,2.5h10c1.328,0,1.777-1.538,1.359-2.5L10.4,5.479c-0.303-0.641-0.31-1.55,0.136-2.112L11.922,1.5"/>
-                  	<circle fill="#000" cx="10.5" cy="9.5" r="0.5"/><circle fill="#000" cx="11.5" cy="11.5" r="0.5"/><circle fill="#000" cx="8.5" cy="11.5" r="0.5"/>
-                  </svg>
-                </span>
-              </a>
-              <a href="/who_asked" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Who Asked</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: question; ratio: 1.5"></span>
-              </a>
+              <!-- Links Card -->
+              <div class="w-400 mw-full">
+                <div class="card shadow p-0">
+                  <div class="content text-center">
 
-              <hr class="uk-divider-small" />
+                    <h1 class="content-title font-size-24">
+                      Links
+                    </h1>
 
-              <a target="_blank" href="https://github.com/CNDRD/Diskito" class="uk-flex uk-flex-row uk-flex-middle uk-disabled">
-                <span class="uk-text-warning uk-text-lead">Website</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: github; ratio: 1.5"></span>
-              </a>
-              <a target="_blank" href="https://github.com/CNDRD/Bruce" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Bruce</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: github; ratio: 1.5"></span>
-              </a>
+                    <div class="font-size-23 my-5 d-flex flex-row flex-nowrap align-items-center justify-content-center">
+                      <a href="../covid.html" class="text-secondary font-weight-light mr-5">
+                        COVID-19
+                      </a>
+                      <span class="material-icons mi-30">coronavirus</span>
+                    </div>
 
-              <hr class="uk-divider-small" />
+                    <div class="font-size-25 my-5 d-flex flex-row flex-nowrap align-items-center justify-content-center">
+                      <a href="../who_asked.html" class="text-secondary font-weight-light mr-5">
+                        Who Asked
+                      </a>
+                      <span class="material-icons mi-30">help_outline</span>
+                    </div>
 
-              <a target="_blank" href="https://www.curseforge.com/minecraft/texture-packs/diskito" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Resource Pack</span>
-                <span class="uk-margin-small-left uk-badge">15K+<span uk-icon="download"></span></span>
-                <span class="uk-icon" uk-icon="icon: link; ratio: 1.5"></span>
-              </a>
-              <a target="_blank" href="https://discord.gg/sXDbtp4" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">discord.gg/sXDbtp4</span>
-                <span class="uk-margin-small-left uk-badge">60+<span uk-icon="users"></span></span>
-                <span class="uk-icon" uk-icon="icon: link; ratio: 1.5"></span>
-              </a>
+                    <div class="font-size-25 my-5 d-flex flex-row flex-nowrap align-items-center justify-content-center">
+                      <a href="../cc_check.html" class="text-secondary font-weight-light mr-5">
+                        Credit Card Checker
+                      </a>
+                      <span class="material-icons mi-30">credit_card</span>
+                    </div>
 
-            </article>
-          </div>
+                    <div class="font-size-25 my-5 d-flex flex-row flex-nowrap align-items-center justify-content-center">
+                      <a href="../siege_operator_names.html" class="text-secondary font-weight-light mr-5">
+                        Siege Operator Names
+                      </a>
+                      <span class="material-icons mi-30">sports_esports</span>
+                    </div>
 
-          <div id="inVoice" hidden></div>
+                    <hr class='my-20' />
 
-          <div class="uk-width-auto@m">
-            <article class="uk-article">
-              <h1 class="uk-article-title" id='nowOnline'>Now Online</h1>
-              <hr class="uk-divider-small" />
-              <div class="uk-height-large uk-overflow-auto" id="widget"></div>
-            </article>
+                    <div class="font-size-25 my-5 d-flex flex-row flex-nowrap align-items-center justify-content-center">
+                      <a target="_blank" href="https://www.curseforge.com/minecraft/texture-packs/diskito" class="text-secondary font-weight-light mr-5">
+                        Resource Pack
+                      </a>
+                      <span class="material-icons mi-24 text-muted">open_in_new</span>
+                    </div>
+
+                    <div class="font-size-25 my-5 d-flex flex-row flex-nowrap align-items-center justify-content-center">
+                      <a target='_blank' href="https://discord.gg/sXDbtp4" class='text-secondary font-weight-light mr-5'>
+                        discord.gg/sXDbtp4
+                      </a>
+                      <span class="material-icons mi-24 text-muted">open_in_new</span>
+                    </div>
+
+                  </div>
+                </div>
+              </div><!-- Links Card -->
+
+              <!-- People Currently In Voice -->
+              <div id="inVoice"></div>
+              <!-- People Currently In Voice -->
+
+              <!-- Widget Card -->
+              <div class="w-400 mw-full mb-footer">
+                <div class="card shadow p-0 h-450 overflow-y-auto">
+                  <div class="content text-center">
+                    <h1 class="content-title font-size-24" id='nowOnline'>Now Online</h1>
+                    <div id="widget"></div>
+                  </div>
+                </div>
+              </div><!-- Widget Card -->
+
+            </div><!-- Flexbox -->
+          </div><!-- Content end -->
+        </div><!-- Container-fluid end -->
+
+        <div class="position-fixed bottom-0 h-50 w-full bg-dark d-flex align-items-center justify-content-between flex-nowrap">
+
+          <span class="ml-10">
+
+            <form class="input-group input-group-sm" name="powice" action="javascript:formSubmitted()" onsubmit="" id="loginOrButton">
+              <input type="password" name="pw" class="form-control" required />
+              <div class="input-group-append">
+                <input class="btn" type="submit" value="👮‍♂️" />
+              </div>
+            </form>
+
+          </span>
+
+          <div class="d-flex align-items-center text-muted mr-10">
+            <span class="material-icons mr-5">code</span>
+            with
+            <span class="material-icons text-danger mx-5">favorite</span>
+            &
+            <span class="material-icons ml-5 text-primary">nightlight</span>
           </div>
 
         </div>
 
+      </div><!-- Content wrapper end -->
+
+    </div><!-- Page wrapper end -->
+
+
+    <div class="modal modal-full" id="NGXnYvqnEq9CK7C6" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <a href="#" class="close" role="button" aria-label="Close"> <span aria-hidden="true">&times;</span> </a>
+          <div class="container" id="kontysh"></div>
+        </div>
       </div>
     </div>
 
+
+    <!-- Import Functions -->
+    <script src="../0/js/0-myFunctions.js"></script>
+    <!-- My Script -->
+    <script src="../0/js/index.js"></script>
+    <!-- Halfmoon JS -->
+    <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
+    <!-- Alerts JS -->
+    <script src="../0/js/0-alerts.js"></script>
   </body>
 </html>
+<!--
+Made with:
+https://www.gethalfmoon.com/
+https://firebase.google.com/
+https://stackoverflow.com/
+https://fonts.google.com/
+https://jquery.com/
+https://atom.io/
+-->

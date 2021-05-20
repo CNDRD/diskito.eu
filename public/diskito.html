@@ -1,112 +1,231 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" style="background: rgb(34, 34, 34);">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="en">
+<head>
+  <!-- Meta tags -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <meta name="viewport" content="width=device-width" />
+  <!-- https://gist.github.com/lancejpollard/1978404 Tags -->
+  <meta http-equiv="Expires" content="0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Cache-Control" content="no-cache" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#111417" />
+  <meta name="theme-color" content="#111417" />
+  <meta name="twitter:dnt" content="on" />
+  <meta name="twitter:url" content="https://diskito.eu/diskito" />
+  <meta name="twitter:title" content="Diskíto Website">
+  <meta name="twitter:description" content="Oooga booga click and see you fuckwit.." />
+  <meta name="twitter:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
+  <meta name="twitter:image:alt" content=":)" />
+  <!-- Discord Meta Tags -->
+  <meta property="og:title" content="Diskíto Website" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://diskito.eu/diskito" />
+  <meta property="og:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
+  <meta property="og:description" content="Oooga booga click and see you fuckwit.." />
+  <meta name="theme-color" content="#0be881" />
+  <!-- Discord Meta Tags -->
 
-    <!-- UIkit CSS & JS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/css/uikit.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit-icons.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- https://realfavicongenerator.net/ Favicons & Title -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../0/resources/icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../0/resources/icons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../0/resources/icons/favicon-16x16.png" />
+  <link rel="manifest" href="../0/resources/icons/site.webmanifest" />
+  <link rel="mask-icon" href="../0/resources/icons/safari-pinned-tab.svg" color="#5bbad5" />
+  <link rel="shortcut icon" href="../0/resources/icons/favicon.ico" />
+  <meta name="msapplication-TileColor" content="#b91d47" />
+  <meta name="msapplication-config" content="../0/resources/icons/browserconfig.xml" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Server Stats</title>
+  <!-- Halfmoon CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css" rel="stylesheet" />
+  <!-- Google Fonts Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Humanize Duration -->
+  <script src="../0/js/0-humanize-duration.js"></script>
+  <!-- Firebase JS -->
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-database.js"></script>
+  <!-- Initialize Firebase -->
+  <script src="../0/js/0-fb.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../0/css/main.css" />
+  <!-- Navbar JS -->
+  <script src="/0/js/0-navbar.js" charset="utf-8"></script>
 
-    <!-- Firebase JS -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
-    <script src="/resources/jss/firebase-init.js"></script>
+</head>
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode">
 
-    <!-- Custom CSS & JS -->
-    <link rel="stylesheet" href="/resources/css/main.css" />
-    <script src="/resources/jss/navbar.js" charset="utf-8"></script>
-    <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
+  <!-- Page wrapper start -->
+  <div class="page-wrapper with-navbar">
 
-    <script defer src="/resources/js/diskito.js" charset="utf-8"></script>
+    <!-- Navbar start -->
+    <nav class="navbar" id="navbar"></nav>
+    <!-- Navbar end -->
 
-    <title>Server Stats</title>
-    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
+    <!-- Alerts appear here -->
+    <div class="sticky-alerts mt-15"></div>
+    <!-- Alerts appear here -->
 
-  </head>
-  <body class="uk-light">
+    <!-- Content wrapper start -->
+    <div class="content-wrapper">
 
-    <nav class="" uk-navbar id="navbar"></nav>
+      <!-- Lifetime Server Stats Container-fluid start -->
+      <div class="container-fluid">
+        <div class="content">
+          <h1 class="content-title font-size-35 text-center text-white">
+            Lifetime Server Stats
+          </h1>
 
-    <div class="uk-section">
+          <!-- Flexbox -->
+          <div class="d-flex justify-content-center flex-wrap">
 
-      <div class="uk-container">
-        <h1 class="uk-heading-small">Lifetime Stats</h1>
-        <div class="uk-child-width-1-2@m" uk-grid>
-          <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light">
-            <h1 class="uk-card-title uk-text-center uk-text-large">Chat Totals</h1>
-            <div class="uk-flex-column uk-flex-center">
-              <div class="uk-flex uk-flex-middle uk-flex-center">
-                <span class="uk-text-warning uk-text-large" id='msNum'>∞</span>
-                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>Messages</span>
+            <!-- Chat Totals Card -->
+            <div class="card shadow w-auto text-center">
+
+              <h2 class="card-title font-size-30 text-white">Chat Totals</h2>
+
+              <div class="d-flex flex-column justify-content-around align-items-center align-content-around flex-nowrap">
+                <div class="d-flex flex-row mb-5">
+                  <span class='text-secondary font-size-25' id='msNum'>∞</span>
+                  <span class='text-default font-size-25 ml-5 font-weight-light'>Messages</span>
+                </div>
               </div>
-              <div class="uk-flex uk-flex-middle uk-flex-center">
-                <span class="uk-text-warning uk-text-large" id='rpNum'>∞</span>
-                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>Reaction Points</span>
+
+              <div class="d-flex flex-column justify-content-around align-items-center align-content-around flex-nowrap">
+                <div class="d-flex flex-row mb-5">
+                  <span class='text-secondary font-size-25' id='rpNum'>∞</span>
+                  <span class='text-default font-size-25 ml-5 font-weight-light'>Reaction Points</span>
+                </div>
               </div>
-              <div class="uk-flex uk-flex-middle uk-flex-center">
-                <span class="uk-text-warning uk-text-large" id='xpNum'>∞</span>
-                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>XP</span>
+
+              <div class="d-flex flex-column justify-content-around align-items-center align-content-around flex-nowrap">
+                <div class="d-flex flex-row mb-5">
+                  <span class='text-secondary font-size-25' id='xpNum'>∞</span>
+                  <span class='text-default font-size-25 ml-5 font-weight-light'>XP</span>
+                </div>
               </div>
-              <div class="uk-flex uk-flex-middle uk-flex-center">
-                <span class="uk-text-warning uk-text-large" id='lvNum'>∞</span>
-                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>Levels</span>
+
+              <div class="d-flex flex-column justify-content-around align-items-center align-content-around flex-nowrap">
+                <div class="d-flex flex-row mb-5">
+                  <span class='text-secondary font-size-25' id='lvNum'>∞</span>
+                  <span class='text-default font-size-25 ml-5 font-weight-light'>Levels</span>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light">
-            <h1 class="uk-card-title uk-text-center uk-text-large">Voice Totals</h1>
-            <div class="uk-flex-column uk-flex-center">
-              <div class="uk-flex uk-flex-middle uk-flex-center">
-                <span class="uk-text-warning uk-text-large" id='sec'>∞</span>
-                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>seconds</span>
+
+            </div><!-- Chat Totals Card -->
+
+            <!-- Voice Totals Card -->
+            <div class="card shadow w-auto text-center">
+
+              <h2 class="card-title font-size-30 text-white">Voice Totals</h2>
+
+              <div class="d-flex flex-column justify-content-around align-items-center align-content-around flex-nowrap">
+                <div class="d-flex flex-row mb-5">
+                  <span class='text-secondary font-size-25' id='sec'>∞</span>
+                  <span class='text-default font-size-25 ml-5 font-weight-light'>seconds</span>
+                </div>
               </div>
-              <div class="uk-flex uk-flex-middle uk-flex-center">
-                <span class="uk-text-warning uk-text-large" id='min'>∞</span>
-                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>minutes</span>
+
+              <div class="d-flex flex-column justify-content-around align-items-center align-content-around flex-nowrap">
+                <div class="d-flex flex-row mb-5">
+                  <span class='text-secondary font-size-25' id='min'>∞</span>
+                  <span class='text-default font-size-25 ml-5 font-weight-light'>minutes</span>
+                </div>
               </div>
-              <div class="uk-flex uk-flex-middle uk-flex-center">
-                <span class="uk-text-warning uk-text-large" id='hrs'>∞</span>
-                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>hours</span>
+
+              <div class="d-flex flex-column justify-content-around align-items-center align-content-around flex-nowrap">
+                <div class="d-flex flex-row mb-5">
+                  <span class='text-secondary font-size-25' id='hrs'>∞</span>
+                  <span class='text-default font-size-25 ml-5 font-weight-light'>hours</span>
+                </div>
               </div>
-              <div class="uk-flex uk-flex-middle uk-flex-center">
-                <span class="uk-text-warning uk-text-large" id='day'>∞</span>
-                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>days</span>
+
+              <div class="d-flex flex-column justify-content-around align-items-center align-content-around flex-nowrap">
+                <div class="d-flex flex-row mb-5">
+                  <span class='text-secondary font-size-25' id='day'>∞</span>
+                  <span class='text-default font-size-25 ml-5 font-weight-light'>days</span>
+                </div>
               </div>
-            </div>
-          </div>
+
+            </div><!-- Voice Totals Card -->
+
+          </div><!-- Flexbox -->
         </div>
-      </div>
+      </div><!-- Diskíto Overall Stats Container-fluid END -->
 
-      <div class="uk-container uk-margin-medium-top">
-        <h1 class="uk-heading-small">Emojis Usage Count</h1>
-        <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light uk-flex uk-flex-wrap uk-flex-center">
-          <div id="emojiUsageCount"></div>
-        </div>
-      </div>
+      <!-- All Emoji Uses Container-fluid start -->
+      <div class="container-fluid">
 
-      <div class="uk-container uk-margin-medium-top uk-margin-medium-bottom">
-        <h1 class="uk-heading-small uk-margin-remove-bottom">Yearly Voice Stats</h1>
-        <span class="uk-text-small uk-text-muted uk-margin-small-bottom">Top voice numbers from each year</span>
-        <div class="uk-child-width-1-2@m uk-flex uk-flex-row" uk-grid>
+        <!-- All Emoji Uses -->
+        <h1 class="content-title font-size-35 text-center pt-20 mt-20">
+          All Emojis Count
+        </h1>
 
-          <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light uk-flex uk-flex-column uk-flex-center" id="yearsGrid">
-            <h1 class="uk-card-title uk-text-lead uk-text-primary uk-margin-remove-bottom">¯\_( ͡° ͜ʖ ͡°)_/¯</h1>
-            <ul class="uk-list">
-              <li class="uk-text-large uk-text-light"> How strange </li>
-              <li class="uk-text-large uk-text-light"> There's nothing here </li>
-              <li class="uk-text-large uk-text-light"> That can mean only one thing! </li>
-              <li class="uk-text-large uk-text-light"> Google done fucked up again </li>
-            </ul>
+        <!-- Flexbox -->
+        <div class="d-flex justify-content-center flex-wrap">
+          <!-- All Emoji Uses Card start -->
+          <div class="card shadow w-auto text-center d-flex flex-row flex-wrap justify-content-center w-three-quarter">
+            <div id="allEmojiUses"></div>
           </div>
+          <!-- All Emoji Uses Card end -->
+        </div><!-- Flexbox -->
+      </div><!-- All Emoji Uses Container-fluid END -->
 
-        </div>
-      </div>
+      <!-- Year Cards Container-fluid start -->
+      <div class="container-fluid">
 
-    </div>
+        <h1 class="content-title font-size-35 text-center pt-20 mt-20">
+          Yearly Voice Stats
+        </h1>
 
-  </body>
+        <!-- Loading spinny thingy -->
+        <div class="d-flex justify-content-center flex-wrap" id="deleteMe">
+          <i class="fas fa-circle-notch fa-spin fa-7x mt-20"></i>
+        </div><!-- Loading spinny thingy -->
+
+        <!-- Year Cards Flexbox -->
+        <div class="d-flex justify-content-center flex-column-reverse" id="yearCards">
+
+          <!-- 2020 Card -->
+          <div class="card shadow text-center font-size-20 font-weight-light">
+            <p>
+              In <span class='text-success font-size-24 font-weight-normal'>2020</span> we spent
+              a total of <span class='text-success font-weight-normal'>2 432</span> hours in voice, with an average of <span class='text-success font-weight-normal'>94</span> hours per user.
+            </p>
+            <p>
+              The <span class="material-icons mi-30 text-success">military_tech</span> for most hours in voice takes <span class='text-success font-weight-normal'>CNDRD</span>
+              with <span class='text-success font-weight-normal'>697.37</span> hours spent in voice channels.
+            </p>
+            <p>
+              <span class="material-icons mi-30 text-success ">military_tech</span> for longest single session in voice channels is for <span class='text-success font-weight-normal'>CNDRD</span>,
+              who spent <span class='text-success font-weight-normal'>16.12</span> hours in one sitting.
+            </p>
+            <p>
+              On <span class='text-success font-weight-normal'>9.11. 2020</span> there was <span class='text-success font-weight-normal'>74</span> total hours spent among the users.
+              That's the most in a single day this year.
+            </p>
+          </div><!-- 2020 Card -->
+
+        </div><!-- Year Cards Flexbox -->
+
+      </div><!-- Year Cards Container-fluid END -->
+
+    </div><!-- Content wrapper end -->
+  </div><!-- Page wrapper end -->
+
+  <!-- Import Functions -->
+  <script src="../0/js/0-myFunctions.js"></script>
+  <!-- My Script -->
+  <script src="../0/js/diskito.js"></script>
+  <!-- Halfmoon JS -->
+  <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
+  <!-- Alerts JS -->
+  <script src="../0/js/0-alerts.js"></script>
+</body>
 </html>

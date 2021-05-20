@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta tags -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <meta name="viewport" content="width=device-width" />
+  <!-- https://gist.github.com/lancejpollard/1978404 Tags -->
+  <meta http-equiv="Expires" content="0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Cache-Control" content="no-cache" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#111417" />
+  <meta name="theme-color" content="#111417" />
+  <meta name="twitter:dnt" content="on" />
+  <meta name="twitter:url" content="https://diskito.eu/help" />
+  <meta name="twitter:title" content="Diskíto Website">
+  <meta name="twitter:description" content="Oooga booga click and see you fuckwit.." />
+  <meta name="twitter:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
+  <meta name="twitter:image:alt" content=":)" />
+  <!-- Discord Meta Tags -->
+  <meta property="og:title" content="Diskíto Website" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://diskito.eu/help" />
+  <meta property="og:image" content="https://diskito.eu/0/resources/diskito_pfp_fullres.jpg" />
+  <meta property="og:description" content="Oooga booga click and see you fuckwit.." />
+  <meta name="theme-color" content="#0be881" />
+  <!-- Discord Meta Tags -->
+
+  <!-- https://realfavicongenerator.net/ Favicons & Title -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../0/resources/icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../0/resources/icons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../0/resources/icons/favicon-16x16.png" />
+  <link rel="manifest" href="../0/resources/icons/site.webmanifest" />
+  <link rel="mask-icon" href="../0/resources/icons/safari-pinned-tab.svg" color="#5bbad5" />
+  <link rel="shortcut icon" href="../0/resources/icons/favicon.ico" />
+  <meta name="msapplication-TileColor" content="#b91d47" />
+  <meta name="msapplication-config" content="../0/resources/icons/browserconfig.xml" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Bruce Help Page</title>
+  <!-- Halfmoon CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css" rel="stylesheet" />
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Halfmoon JS -->
+  <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
+  <!-- Google Fonts Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Custom CSS & JS -->
+  <link rel="stylesheet" href="../0/css/main.css" />
+  <script src="/0/js/help.js" charset="utf-8"></script>
+  <!-- Navbar JS -->
+  <script src="/0/js/0-navbar.js" charset="utf-8"></script>
+
+</head>
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars dark-mode">
+
+  <!-- Page wrapper start -->
+  <div class="page-wrapper with-navbar">
+
+    <!-- Navbar start -->
+    <nav class="navbar" id="navbar"></nav>
+    <!-- Navbar end -->
+
+    <!-- Alerts appear here -->
+    <div class="sticky-alerts mt-15"></div>
+    <!-- Alerts appear here -->
+
+    <!-- Content wrapper start -->
+    <div class="content-wrapper">
+      <!-- Container-fluid start -->
+      <div class="container-fluid">
+        <!-- Content start -->
+        <div class="content">
+
+          <!-- Header -->
+          <div class="font-size-24 text-center">
+            <h1 class="content-title">
+              <!-- Flexbox -->
+              <div class="d-flex flex-row flex-wrap justify-content-center font-size-24 text-white">
+                Help for<span class='text-discord mx-5' id="Bot">Bruce</span>commands
+              </div><!-- Flexbox -->
+            </h1>
+            <div class="btn-group font-size-18 mb-10">
+              <button class="btn btn-primary" type="button" name="button" onclick="zmrdus('bruce')" id="bruce">Bruce</button>
+              <button class="btn" type="button" name="button" onclick="zmrdus('liquid')" id="liquid">Liquid</button>
+            </div>
+            <div class="font-size-12 text-muted">
+              <code>[argument]</code> is required | <code>&ltargument&gt</code> is optional
+            </div>
+          </div><!-- Header -->
+
+          <!-- Liquid Flexbox -->
+          <div class="d-none" id="liquidCards">
+            <div class="d-flex flex-row flex-wrap justify-content-center font-weight-light">
+
+              <!-- remove -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">=remove [queue position]</h2>
+                <div class="alert alert-default" role="alert">
+                  Removes song from queue at [queue position]
+                </div>
+                <div class="alert alert-secondary mt-5" role="alert">
+                  <div class="d-flex flex-row flex-nowrap align-items-center">
+                    <span class="material-icons mr-20">people_alt</span>
+                    <span>Alias is <code>=r</code></span>
+                  </div>
+                </div>
+                <div class="alert alert-danger mt-5" role="alert">
+                  <div class="d-flex flex-row flex-nowrap align-items-center">
+                    <span class="material-icons mr-20">warning</span>
+                    <span>Requires <span class='font-weight-semi-bold'>Liquid</span> role</span>
+                  </div>
+                </div>
+              </div><!-- remove -->
+
+              <!-- remove -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">=ping</h2>
+                <div class="alert alert-default" role="alert">
+                  Show bots ping
+                </div>
+              </div><!-- remove -->
+
+            </div>
+          </div>
+          <!-- Liquid Flexbox -->
+
+          <!-- Bruce Flexbox -->
+          <div class="" id="bruceCards">
+
+            <div class="d-flex flex-row flex-wrap justify-content-center font-weight-light">
+
+              <!-- vanish -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">,vanish</h2>
+                <div class="alert alert-default" role="alert">
+                  Poof. You are no more
+                </div>
+              </div><!-- vanish -->
+
+              <!-- cicina -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">,cicina</h2>
+                <div class="alert alert-default" role="alert">
+                  Shows you your cicina size<br>
+                  <span class='text-muted font-size-12'>Resets at midnight CET/CEST</span>
+                </div>
+              </div><!-- cicina -->
+
+              <!-- ping -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">,ping</h2>
+                <div class="alert alert-default" role="alert">
+                  Show bots ping
+                </div>
+              </div><!-- ping -->
+
+              <!-- code -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">,code</h2>
+                <div class="alert alert-default" role="alert">
+                  Replies with a <a href="https://github.com/CNDRD/Bruce">link</a> to the GitHub repo
+                </div>
+              </div><!-- code -->
+
+              <!-- stats_update -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">,stats_update</h2>
+                <div class="alert alert-default" role="alert">
+                  Manually update Games stats
+                </div>
+                <div class="alert alert-secondary mt-5" role="alert">
+                  <div class="d-flex flex-row flex-nowrap align-items-center">
+                    <span class="material-icons mr-20">people_alt</span>
+                    <span>Alias is <code>,su</code></span>
+                  </div>
+                </div>
+                <div class="alert alert-danger mt-5" role="alert">
+                  <div class="d-flex flex-row flex-nowrap align-items-center">
+                    <span class="material-icons mr-20">warning</span>
+                    <span>Requires <span class='font-weight-semi-bold'>Diagnostics</span> role</span>
+                  </div>
+                </div>
+              </div><!-- stats_update -->
+
+              <!-- coinflip -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">,coinflip &ltA&gt &ltB&gt</h2>
+                <div class="alert alert-default" role="alert">
+                  Flips a coin for you
+                </div>
+                <div class="alert alert-default mt-5" role="alert">
+                  <code>&ltA&gt</code> & <code>&ltB&gt</code><br>
+                  Is for your custom outcomes
+                </div>
+                <div class="alert alert-secondary mt-5" role="alert">
+                  <div class="d-flex flex-row flex-nowrap align-items-center">
+                    <span class="material-icons mr-20">people_alt</span>
+                    <span>Aliases are <code>,coin</code> & <code>,flip</code></span>
+                  </div>
+                </div>
+              </div><!-- coinflip -->
+
+              <!-- clear -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">,clear &ltamount&gt</h2>
+                <div class="alert alert-default" role="alert">
+                  Clears the <code>&ltamount&gt</code> of messages + 1
+                </div>
+                <div class="alert alert-default mt-5" role="alert">
+                  <code>&ltamount&gt</code> defaults to 1<br>
+                  <span class='text-muted'>(+1 to account for the command itself)</span>
+                </div>
+                <div class="alert alert-danger mt-5" role="alert">
+                  <div class="d-flex flex-row flex-nowrap align-items-center">
+                    <span class="material-icons mr-20">warning</span>
+                    <span>Requires <span class='font-weight-semi-bold text-nowrap'>Diagnostics</span> or <span class='font-weight-semi-bold text-nowrap'>Lord Farquaad</span> role</span>
+                  </div>
+                </div>
+              </div><!-- clear -->
+
+              <!-- say -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">,say [content]</h2>
+                <div class="alert alert-default" role="alert">
+                  The bot will send the <code>[content]</code> into the current channel
+                </div>
+                <div class="alert alert-danger mt-5" role="alert">
+                  <div class="d-flex flex-row flex-nowrap align-items-center">
+                    <span class="material-icons mr-20">warning</span>
+                    <span>Requires <span class='font-weight-semi-bold text-nowrap'>Diagnostics</span> or <span class='font-weight-semi-bold text-nowrap'>Lord Farquaad</span> role</span>
+                  </div>
+                </div>
+              </div><!-- say -->
+
+              <!-- edit -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">,edit [content]</h2>
+                <div class="alert alert-default" role="alert">
+                  Edits the message this command replies to with <code>[content]</code>
+                </div>
+                <div class="alert alert-danger mt-5" role="alert">
+                  <div class="d-flex flex-row flex-nowrap align-items-center">
+                    <span class="material-icons mr-20">warning</span>
+                    <span>Requires <span class='font-weight-semi-bold text-nowrap'>Diagnostics</span> or <span class='font-weight-semi-bold text-nowrap'>Lord Farquaad</span> role</span>
+                  </div>
+                </div>
+              </div><!-- edit -->
+
+              <!-- add_reaction -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">,add_reaction [emoji]</h2>
+                <div class="alert alert-default" role="alert">
+                  Adds <code>[emoji]</code> to the message this command replies to
+                </div>
+                <div class="alert alert-secondary mt-5" role="alert">
+                  <div class="d-flex flex-row flex-nowrap align-items-center">
+                    <span class="material-icons mr-20">people_alt</span>
+                    <span>Alias is <code>,add</code></span>
+                  </div>
+                </div>
+                <div class="alert alert-danger mt-5" role="alert">
+                  <div class="d-flex flex-row flex-nowrap align-items-center">
+                    <span class="material-icons mr-20">warning</span>
+                    <span>Requires <span class='font-weight-semi-bold text-nowrap'>Diagnostics</span> or <span class='font-weight-semi-bold text-nowrap'>Lord Farquaad</span> role</span>
+                  </div>
+                </div>
+              </div><!-- add_reaction -->
+
+              <!-- status -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">,status &ltactivity&gt [message]</h2>
+                <div class="alert alert-default" role="alert">
+                  Sets the bots status message
+                </div>
+                <div class="alert alert-default mt-5" role="alert">
+                  <code>&ltactivity&gt</code><br>
+                  "watching" / "playing" / "listening"<br>
+                  Defaults to "playing"
+                  <hr>
+                  <code class='mr-5'>[message]</code>is the message the bot will show
+                </div>
+                <div class="alert alert-danger mt-5" role="alert">
+                  <div class="d-flex flex-row flex-nowrap align-items-center">
+                    <span class="material-icons mr-20">warning</span>
+                    <span>Requires <span class='font-weight-semi-bold'>Diagnostics</span> role</span>
+                  </div>
+                </div>
+              </div><!-- status -->
+
+              <!-- quote -->
+              <div class="card shadow w-350 mw-full">
+                <h2 class="card-title font-weight-semi-bold">,quote [quote]</h2>
+                <div class="alert alert-default" role="alert">
+                  <code class='mr-5'>[quote]</code><br>
+                  The quote itself / the <code class='mr-5'>quote_ID</code>
+                </div>
+                <div class="alert alert-default mt-5" role="alert">
+                  If you send the <code>quote_ID</code> the quote will be deleted
+                </div>
+                <div class="alert alert-default mt-5" role="alert">
+                  <span class='text-muted font-size-12'>Optional</span><br>
+                  You have 10 seconds to reply with the author of the quote
+                </div>
+                <div class="alert alert-default mt-5" role="alert">
+                  <span class='text-muted font-size-12'>Optional</span><br>
+                  If you replied with an author you have 20 seconds to reply with the date of the quote <span class='text-muted font-size-12'>(dd.mm.yyyy)</span>
+                </div>
+
+              </div><!-- quote -->
+
+            </div><!-- Bruce Flexbox -->
+          </div>
+
+        </div><!-- Content end -->
+      </div><!-- Container-fluid end -->
+    </div><!-- Content wrapper end -->
+
+  </div><!-- Page wrapper end -->
+</body>
+</html>
