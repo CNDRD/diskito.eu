@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" style="background: rgb(34, 34, 34);">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- UIkit CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/css/uikit.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit-icons.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Custom CSS & JS -->
+    <link rel="stylesheet" href="/resources/css/main.css" />
+    <script src="/resources/jss/navbar.js" charset="utf-8"></script>
+
+    <title>Diskíto v2</title>
+    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
+
+  </head>
+  <body class="uk-light">
+
+    <nav class="" uk-navbar id="navbar"></nav>
+
+    <div class="uk-section">
+      <div class="uk-container">
+        <div class="uk-flex-center">
+          <article class="uk-article">
+            <h1 class="uk-article-title">404</h1>
+            <hr class="uk-divider-small" />
+            <div class="uk-dropcap uk-width-1-2">
+              You fucked up the URI champ.
+              Or you tried to get somewhere you're not supposed to huh..
+              What's so interesting about <span id="stinky">this page</span> you just have to explore?
+
+              <div class="uk-margin-medium-top" uk-grid>
+                <a href="/" class="uk-button uk-button-default uk-width-2-3 uk-margin-small-right">Home</a>
+                <button onclick="window.history.back();" class="uk-button uk-button-default uk-width-expand">Back</button>
+              </div>
+
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+
+  </body>
+
+  <!-- I ain't puttin' this in a separate file doode -->
+  <script type="text/javascript">
+    $('#stinky').replaceWith(`<code class="uk-text-success">${window.location.pathname}</code>`);
+  </script>
+
+</html>

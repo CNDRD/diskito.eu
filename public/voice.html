@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" style="background: rgb(34, 34, 34);">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- UIkit CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/css/uikit.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit-icons.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Firebase JS -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script src="/resources/jss/firebase-init.js"></script>
+
+    <!-- amCharts 4 -->
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <style> .amChartDiv{ width:100%; height:25em; } </style>
+
+    <!-- Custom CSS & JS -->
+    <link rel="stylesheet" href="/resources/css/main.css" />
+    <script src="/resources/jss/navbar.js" charset="utf-8"></script>
+    <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
+
+    <script src="/resources/js/voice.js" charset="utf-8"></script>
+
+    <title>Diskíto Voice Stats</title>
+    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
+
+  </head>
+  <body class="uk-light">
+
+    <nav class="" uk-navbar id="navbar"></nav>
+
+    <div class="uk-section">
+      <div class="uk-container">
+
+        <div class="uk-card uk-card-body">
+          <h3 class="uk-text-center uk-card-title" id="dailyChartH3">Daily Voice this year</h3>
+          <div class="amChartDiv" id="dailyChartdiv"></div>
+        </div>
+
+        <div class="uk-card uk-card-body">
+          <h3 class="uk-text-center uk-card-title" id="totalChartH3">Total Time Spent per User</h3>
+          <div class="amChartDiv" id="totalChartdiv"></div>
+        </div>
+
+        <div class="uk-card uk-card-body">
+          <h3 class="uk-text-center uk-card-title" id="lvsChartH3">Longest Voice Sessions</h3>
+          <div class="amChartDiv" id="lvsChartdiv"></div>
+        </div>
+
+        <div class="uk-card uk-card-body">
+          <h3 class="uk-text-center uk-card-title" id="totalTotalChartH3">Total Time Spent per User since ever</h3>
+          <div class="amChartDiv" id="totalTotalChartdiv"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+</html>

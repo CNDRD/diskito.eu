@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" style="background: rgb(34, 34, 34);">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- UIkit CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/css/uikit.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit-icons.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- jQuery plugins -->
+    <script src="https://unpkg.com/sticky-table-headers"></script>
+
+    <!-- Firebase JS -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script src="/resources/jss/firebase-init.js"></script>
+
+    <!-- Custom CSS & JS -->
+    <link rel="stylesheet" href="/resources/css/main.css" />
+    <script src="/resources/jss/navbar.js" charset="utf-8"></script>
+    <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
+
+    <script defer src="/resources/js/quotes.js" charset="utf-8"></script>
+
+    <title>Diskíto Quotes</title>
+    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
+
+  </head>
+  <body class="uk-light">
+
+    <nav class="" uk-navbar id="navbar"></nav>
+
+    <div class="uk-position-relative uk-position-medium uk-position-bottom-right">
+      <label>
+        <input type="checkbox" class="uk-checkbox" id="idSwitch" onClick='idSwitch()' />
+        <span class="uk-text-muted" id="idSwitchLabel">Show ID's</span>
+      </label>
+    </div>
+
+    <div class="uk-section uk-padding-remove-top">
+      <div class="uk-container">
+
+        <div uk-grid class="uk-grid-large uk-flex-center" id="quotesContainer"></div>
+
+      </div>
+    </div>
+
+  </body>
+</html>

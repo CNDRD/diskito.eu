@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" style="background: rgb(34, 34, 34);">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- UIkit CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/css/uikit.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit-icons.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Firebase JS -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script src="/resources/jss/firebase-init.js"></script>
+
+    <!-- Custom CSS & JS -->
+    <link rel="stylesheet" href="/resources/css/main.css" />
+    <script src="/resources/jss/navbar.js" charset="utf-8"></script>
+    <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
+
+    <script defer src="/resources/js/index.js" charset="utf-8"></script>
+
+    <title>Diskíto</title>
+    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
+
+  </head>
+  <body class="uk-light">
+
+    <nav class="" uk-navbar id="navbar"></nav>
+
+    <div class="uk-section">
+      <div class="uk-container">
+
+        <div class="uk-flex-center uk-grid-divider uk-grid-collapse pretty-scrollbar" uk-grid>
+
+          <div class="uk-width-auto@m uk-first-column">
+
+            <article class="uk-article">
+              <h1 class="uk-article-title">Links</h1>
+              <hr class="uk-divider-small" />
+
+              <a href="/covid" class="uk-flex uk-flex-row uk-flex-middle">
+                <span class="uk-text-warning uk-text-lead">Covid-19</span>
+                <span class="uk-margin-small-left uk-icon" uk-icon>
+                  <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 16 16">
+                  	<line fill="none" stroke="#000" x1="5" y1="7.5" x2="12" y2="7.5"/><line fill="none" stroke="#000" x1="4" y1="1.5" x2="13" y2="1.5"/>
+                  	<path fill="none" stroke="#000" d="M5.078,1.5l1.433,1.868C6.952,3.93,6.948,4.839,6.646,5.48L2.147,12 c-0.418,0.962,0.028,2.5,1.353,2.5h10c1.328,0,1.777-1.538,1.359-2.5L10.4,5.479c-0.303-0.641-0.31-1.55,0.136-2.112L11.922,1.5"/>
+                  	<circle fill="#000" cx="10.5" cy="9.5" r="0.5"/><circle fill="#000" cx="11.5" cy="11.5" r="0.5"/><circle fill="#000" cx="8.5" cy="11.5" r="0.5"/>
+                  </svg>
+                </span>
+              </a>
+              <a href="/who_asked" class="uk-flex uk-flex-row uk-flex-middle">
+                <span class="uk-text-warning uk-text-lead">Who Asked</span>
+                <span class="uk-margin-small-left uk-icon" uk-icon="icon: question; ratio: 1.5"></span>
+              </a>
+
+              <hr class="uk-divider-small" />
+
+              <a target="_blank" href="https://github.com/CNDRD/Diskito" class="uk-flex uk-flex-row uk-flex-middle uk-disabled">
+                <span class="uk-text-warning uk-text-lead">Website</span>
+                <span class="uk-margin-small-left uk-icon" uk-icon="icon: github; ratio: 1.5"></span>
+              </a>
+              <a target="_blank" href="https://github.com/CNDRD/Bruce" class="uk-flex uk-flex-row uk-flex-middle">
+                <span class="uk-text-warning uk-text-lead">Bruce</span>
+                <span class="uk-margin-small-left uk-icon" uk-icon="icon: github; ratio: 1.5"></span>
+              </a>
+
+              <hr class="uk-divider-small" />
+
+              <a target="_blank" href="https://www.curseforge.com/minecraft/texture-packs/diskito" class="uk-flex uk-flex-row uk-flex-middle">
+                <span class="uk-text-warning uk-text-lead">Resource Pack</span>
+                <span class="uk-margin-small-left uk-badge">15K+<span uk-icon="download"></span></span>
+                <span class="uk-icon" uk-icon="icon: link; ratio: 1.5"></span>
+              </a>
+              <a target="_blank" href="https://discord.gg/sXDbtp4" class="uk-flex uk-flex-row uk-flex-middle">
+                <span class="uk-text-warning uk-text-lead">discord.gg/sXDbtp4</span>
+                <span class="uk-margin-small-left uk-badge">60+<span uk-icon="users"></span></span>
+                <span class="uk-icon" uk-icon="icon: link; ratio: 1.5"></span>
+              </a>
+
+            </article>
+          </div>
+
+          <div id="inVoice" hidden></div>
+
+          <div class="uk-width-auto@m">
+            <article class="uk-article">
+              <h1 class="uk-article-title" id='nowOnline'>Now Online</h1>
+              <hr class="uk-divider-small" />
+              <div class="uk-height-large uk-overflow-auto" id="widget"></div>
+            </article>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" style="background: rgb(34, 34, 34);">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- UIkit CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/css/uikit.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit-icons.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Firebase JS -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script src="/resources/jss/firebase-init.js"></script>
+
+    <!-- Custom CSS & JS -->
+    <link rel="stylesheet" href="/resources/css/main.css" />
+    <script src="/resources/jss/navbar.js" charset="utf-8"></script>
+    <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
+
+    <script defer src="/resources/js/diskito.js" charset="utf-8"></script>
+
+    <title>Server Stats</title>
+    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
+
+  </head>
+  <body class="uk-light">
+
+    <nav class="" uk-navbar id="navbar"></nav>
+
+    <div class="uk-section">
+
+      <div class="uk-container">
+        <h1 class="uk-heading-small">Lifetime Stats</h1>
+        <div class="uk-child-width-1-2@m" uk-grid>
+          <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light">
+            <h1 class="uk-card-title uk-text-center uk-text-large">Chat Totals</h1>
+            <div class="uk-flex-column uk-flex-center">
+              <div class="uk-flex uk-flex-middle uk-flex-center">
+                <span class="uk-text-warning uk-text-large" id='msNum'>∞</span>
+                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>Messages</span>
+              </div>
+              <div class="uk-flex uk-flex-middle uk-flex-center">
+                <span class="uk-text-warning uk-text-large" id='rpNum'>∞</span>
+                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>Reaction Points</span>
+              </div>
+              <div class="uk-flex uk-flex-middle uk-flex-center">
+                <span class="uk-text-warning uk-text-large" id='xpNum'>∞</span>
+                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>XP</span>
+              </div>
+              <div class="uk-flex uk-flex-middle uk-flex-center">
+                <span class="uk-text-warning uk-text-large" id='lvNum'>∞</span>
+                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>Levels</span>
+              </div>
+            </div>
+          </div>
+          <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light">
+            <h1 class="uk-card-title uk-text-center uk-text-large">Voice Totals</h1>
+            <div class="uk-flex-column uk-flex-center">
+              <div class="uk-flex uk-flex-middle uk-flex-center">
+                <span class="uk-text-warning uk-text-large" id='sec'>∞</span>
+                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>seconds</span>
+              </div>
+              <div class="uk-flex uk-flex-middle uk-flex-center">
+                <span class="uk-text-warning uk-text-large" id='min'>∞</span>
+                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>minutes</span>
+              </div>
+              <div class="uk-flex uk-flex-middle uk-flex-center">
+                <span class="uk-text-warning uk-text-large" id='hrs'>∞</span>
+                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>hours</span>
+              </div>
+              <div class="uk-flex uk-flex-middle uk-flex-center">
+                <span class="uk-text-warning uk-text-large" id='day'>∞</span>
+                <span class='uk-text-primary uk-text-large uk-margin-small-left uk-text-light'>days</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="uk-container uk-margin-medium-top">
+        <h1 class="uk-heading-small">Emojis Usage Count</h1>
+        <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light uk-flex uk-flex-wrap uk-flex-center">
+          <div id="emojiUsageCount"></div>
+        </div>
+      </div>
+
+      <div class="uk-container uk-margin-medium-top uk-margin-medium-bottom">
+        <h1 class="uk-heading-small uk-margin-remove-bottom">Yearly Voice Stats</h1>
+        <span class="uk-text-small uk-text-muted uk-margin-small-bottom">Top voice numbers from each year</span>
+        <div class="uk-child-width-1-2@m uk-flex uk-flex-row" uk-grid>
+
+          <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light uk-flex uk-flex-column uk-flex-center" id="yearsGrid">
+            <h1 class="uk-card-title uk-text-lead uk-text-primary uk-margin-remove-bottom">¯\_( ͡° ͜ʖ ͡°)_/¯</h1>
+            <ul class="uk-list">
+              <li class="uk-text-large uk-text-light"> How strange </li>
+              <li class="uk-text-large uk-text-light"> There's nothing here </li>
+              <li class="uk-text-large uk-text-light"> That can mean only one thing! </li>
+              <li class="uk-text-large uk-text-light"> Google done fucked up again </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

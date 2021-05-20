@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" style="background: rgb(34, 34, 34);">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- UIkit CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/css/uikit.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit-icons.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- jQuery plugins -->
+    <script src="https://unpkg.com/sticky-table-headers"></script>
+
+    <!-- Firebase JS -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script src="/resources/jss/firebase-init.js"></script>
+
+    <!-- Custom CSS & JS -->
+    <link rel="stylesheet" href="/resources/css/main.css" />
+    <script src="/resources/jss/navbar.js" charset="utf-8"></script>
+    <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
+
+    <script defer src="/resources/js/siege.js" charset="utf-8"></script>
+    <script defer src="/resources/jss/sorttable.js" charset="utf-8"></script>
+
+    <title>Diskíto  Siege Stats</title>
+    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
+
+  </head>
+  <body class="uk-light">
+
+    <nav class="" uk-navbar id="navbar"></nav>
+
+    <div class="uk-section uk-padding-remove-bottom">
+      <div class="uk-container">
+
+        <table class="uk-table uk-table-divider sortable">
+          <thead class="pls-no-click" style="background: rgb(34, 34, 34);">
+            <tr>
+              <th class="sorttable_numeric uk-flex uk-flex-center uk-visible@m"><span uk-icon="image"></span></th>
+              <th class="sorttable_alpha">Peep</th>
+              <th class="sorttable_numeric uk-text-center">Rank <span class="uk-text-muted uk-visible@m">(max)</span></th>
+              <th class="sorttable_numeric uk-text-center">MMR</th>
+              <th class="sorttable_numeric uk-text-center" uk-tooltip="Seasonal">K/D</th>
+              <th class="sorttable_numeric uk-text-center" uk-tooltip="Seasonal">W/L</th>
+              <th class="sorttable_numeric uk-text-center uk-visible@m">Alpha pack</th>
+              <th class="sorttable_numeric uk-text-center uk-visible@m">Top Operators</th>
+              <th class="sorttable_numeric uk-text-center uk-visible@m" uk-tooltip="Total"> Time Played</th>
+              <th class="sorttable_numeric uk-text-center uk-visible@m">HS %</th>
+            </tr>
+          </thead>
+          <tbody id="tableDataPlace"></tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <div class="uk-section">
+      <div class="uk-container">
+        <div class="uk-text-center uk-text-middle uk-text-muted">
+          <span>Last update: <div id="lastUpdated" uk-spinner="ratio: 0.5"></div> minutes ago</span>
+          <br/>
+          <span>These stats <i>should</i> be updated every 30 minutes</span>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
