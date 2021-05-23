@@ -233,3 +233,7 @@ function getTodayFirebaseString() {
   let day = dateObj[0];
   return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`.replaceAll(' ','')
 };
+
+
+
+firebase.database().ref('serverTotals').on('value', snapshot => { $('#userCount').text(snapshot.val().users); });
