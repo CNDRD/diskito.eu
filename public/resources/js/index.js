@@ -237,3 +237,17 @@ function getTodayFirebaseString() {
 
 
 firebase.database().ref('serverTotals').on('value', snapshot => { $('#userCount').text(snapshot.val().users); });
+
+
+
+window.onload = function (){
+  let cookieAlert = 'IMo9Dd8nuF';
+  if(!localStorage.getItem(cookieAlert)) {
+    UIkit.notification({
+      message: `<img src="../resources/img/wantacookie.jpg" class="uk-width-1-1 uk-align-left uk-margin-remove uk-margin-small-bottom" />
+                <span class="uk-text-large">Cookies are used here, but it's only so alerts don't bother you everytime you show your face around here</span>`,
+      pos: 'top-right', timeout: 7500
+    });
+    localStorage.setItem(cookieAlert, 'true');
+  };
+};
