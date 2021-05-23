@@ -82,10 +82,8 @@ function copyTextToClipboard(text) {
   document.body.appendChild(textArea);
   textArea.focus();
   textArea.select();
-
   document.execCommand('copy');
-
-  $(`#${text}`).text(`Copied!`);
-
   document.body.removeChild(textArea);
+
+  UIkit.notification({ message: 'Quote ID Succesfully Copied!', pos: 'top-center', timeout: 4500 });
 };
