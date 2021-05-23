@@ -39,27 +39,29 @@
     <div class="uk-section">
       <div class="uk-container">
 
-        <table class="uk-table uk-table-divider sortable">
-          <thead class="pls-no-click" style="background: rgb(34, 34, 34);">
-            <tr>
-              <th class="sorttable_nosort uk-visible@m" style="width: 0.5rem;"><span uk-icon="hashtag"></span></th>
-              <th class="sorttable_nosort uk-flex uk-flex-center uk-visible@m"><span uk-icon="user"></span></th>
-              <th class="sorttable_nosort">Name</th>
-              <th class="uk-text-center sorttable_numeric" id="levelSTT">Level</th>
-              <th class="uk-text-center sorttable_numeric">Messages</th>
-              <th class="uk-text-center sorttable_numeric">
-                <span class="uk-visible@m" id="yr">Yearly Voice</span>
-                <span class="uk-hidden@m">Voice</span>
-              </th>
-              <th class="uk-text-center sorttable_numeric">
-                <span class="uk-visible@m">Reaction Points</span>
-                <span class="uk-hidden@m">RPs</span>
-              </th>
-              <th class="uk-text-center sorttable_numeric uk-visible@m">Longest Cicina</th>
-            </tr>
-          </thead>
-          <tbody id="tableDataPlace"></tbody>
-        </table>
+        <div class="uk-overflow-auto">
+          <table class="uk-table uk-table-divider sortable">
+            <thead class="pls-no-click" style="background: rgb(34, 34, 34);">
+              <tr>
+                <th class="sorttable_nosort uk-visible@m" style="width: 0.5rem;"><span uk-icon="hashtag"></span></th>
+                <th class="sorttable_nosort uk-flex uk-flex-center uk-visible@m"><span uk-icon="user"></span></th>
+                <th class="sorttable_nosort">Name</th>
+                <th class="uk-text-center sorttable_numeric" id="levelSTT">Level</th>
+                <th class="uk-text-center sorttable_numeric">Messages</th>
+                <th class="uk-text-center sorttable_numeric">
+                  <span class="uk-visible@m" id="yr">Yearly Voice</span>
+                  <span class="uk-hidden@m">Voice</span>
+                </th>
+                <th class="uk-text-center sorttable_numeric">
+                  <span class="uk-visible@m">Reaction Points</span>
+                  <span class="uk-hidden@m">RPs</span>
+                </th>
+                <th class="uk-text-center sorttable_numeric uk-visible@m">Longest Cicina</th>
+              </tr>
+            </thead>
+            <tbody id="tableDataPlace"></tbody>
+          </table>
+        </div>
 
       </div>
     </div>
