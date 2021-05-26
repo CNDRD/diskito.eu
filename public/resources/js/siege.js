@@ -14,14 +14,22 @@ userDataRef.once("value").then(snapshot => {
   ranked.sort(function(a,b){return b.currentMMR - a.currentMMR})
   unranked.sort(function(a,b){return b.currentMMR - a.currentMMR})
 
-  ranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown)); clown++; });
-  unranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, true)); clown++; });
+  ranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown)); $("#bnaom9s1BB").append(getPfpModal(u)); clown++; });
+  unranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, true)); $("#bnaom9s1BB").append(getPfpModal(u)); clown++; });
 });
 
 let lastUpdateRef = firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`);
 lastUpdateRef.once('value').then(snapshot => { $("#lastUpdated").text( `~${diff_minutes(new Date(snapshot.val()*1000), new Date())}` ); });
 
-
+function getPfpModal(u) {
+  return `
+  <div id="${createPfpModalRef(u.ubisoftID)}" class="uk-flex-top" uk-modal>
+    <div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical">
+      <button class="uk-modal-close-outside" type="button" uk-close></button>
+      <img src="https://ubisoft-avatars.akamaized.net/${u.ubisoftID}/default_256_256.png" />
+    </div>
+  </div>`;
+};
 function getStatsRow(u, clown, unrank=false) {
   let pfpLink = `https://ubisoft-avatars.akamaized.net/${u.ubisoftID}/default_256_256.png`;
   let kd = unrank ? 0 : roundTwo(u.sKills / u.sDeaths);
@@ -35,7 +43,9 @@ function getStatsRow(u, clown, unrank=false) {
   let a = `
     <tr>
       <td class="uk-visible@m uk-text-middle uk-text-center" sorttable_customkey="${clown}">
-        <img style="height: 4rem;" class="uk-preserve-width" src="${pfpLink}" />
+        <a href="#${createPfpModalRef(u.ubisoftID)}" uk-toggle>
+          <img style="height: 4rem;" class="uk-preserve-width" src="${pfpLink}" />
+        </a>
       </td>
 
       <td class="uk-text-middle" style="min-width: 5rem;" sorttable_customkey="${u.currentMMR}">
@@ -90,6 +100,9 @@ function getStatsRow(u, clown, unrank=false) {
   return a
 };
 
+function createPfpModalRef(uID) {
+  return `bnaom9s1BB_${uID}`.replaceAll("-","_");
+};
 function diff_minutes(dt2, dt1) {
   // https://www.w3resource.com/javascript-exercises/javascript-date-exercise-44.php
   var diff =(dt2.getTime() - dt1.getTime()) / 1000;
