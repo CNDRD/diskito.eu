@@ -1,3 +1,5 @@
+$("table").stickyTableHeaders();
+
 let VERSION = 8;
 
 let ranked = [];
