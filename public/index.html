@@ -18,7 +18,6 @@
 
     <!-- Custom CSS & JS -->
     <link rel="stylesheet" href="/resources/css/main.css" />
-    <script src="/resources/jss/navbar.js" charset="utf-8"></script>
     <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
 
     <script defer src="/resources/js/index.js" charset="utf-8"></script>
@@ -29,7 +28,62 @@
   </head>
   <body class="uk-light">
 
-    <nav class="" uk-navbar id="navbar"></nav>
+    <nav uk-navbar>
+      <div class="uk-navbar-left">
+        <ul class="uk-navbar-nav uk-hidden@s">
+          <li>
+            <a href="index.html" class="uk-navbar-item uk-logo uk-padding-remove-left">
+              <img src="resources/img/diskito_pfp.jpg" width="80" height="80" class="logo" alt="😀" />
+              <span class="uk-text-large uk-text-primary uk-margin-small-left">Diskíto</span>
+            </a>
+          </li>
+        </ul>
+        <ul class="uk-navbar-nav uk-visible@s pls-no-click">
+          <li>
+            <a href="index.html" class="uk-navbar-item uk-logo uk-padding-remove-left">
+              <img src="resources/img/diskito_pfp.jpg" width="80" height="80" class="logo" alt="😀" />
+            </a>
+          </li>
+          <li><a href="/diskito.html"><span class="uk-button-text">Server Stats</span></a></li>
+          <li><a href="/leader.html"><span class="uk-button-text">Leaderboards</span></a></li>
+          <li><a href="/siege.html"><span class="uk-button-text">Siege Stats</span></a></li>
+          <li><a href="/voice.html"><span class="uk-button-text">Voice Stats</span></a></li>
+          <li><a href="/quotes.html"><span class="uk-button-text">Quotes</span></a></li>
+        </ul>
+      </div>
+      <div class="uk-navbar-right">
+        <ul class="uk-navbar-nav uk-visible@s">
+          <div class="uk-navbar-item">
+            <a class="uk-button uk-button-danger uk-flex uk-flex-row uk-flex-middle uk-text-bold" href="https://discord.gg/sXDbtp4">
+              Join <span class="uk-margin-small-left uk-icon" uk-icon="icon: discord; ratio: 1.5"></span>
+            </a>
+          </div>
+        </ul>
+        <ul class="uk-navbar-nav uk-hidden@s">
+          <li>
+            <a class="uk-navbar-toggle uk-icon uk-navbar-toggle-icon" href="#offcanvas-primary-nav-flip" uk-navbar-toggle-icon="" uk-toggle="" aria-expanded="false"></a>
+            <div id="offcanvas-primary-nav-flip" uk-offcanvas="flip: true; overlay: true">
+              <button class="uk-offcanvas-close" type="button" uk-close></button>
+              <div class="uk-offcanvas-bar uk-flex uk-flex-column">
+                <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+                  <li><a href="/diskito.html">Server Stats</a></li>
+                  <li><a href="/leader.html">Leaderboards</a></li>
+                  <li><a href="/siege.html">Siege Stats</a></li>
+                  <li><a href="/voice.html">Voice Stats‏‏‎</a></li>
+                  <li><a href="/quotes.html">Quotes‏‏‎</a></li>
+                  <li class="uk-divider-icon"></li>
+                  <li>
+                    <a class="uk-button uk-button-danger uk-text-emphasis uk-flex uk-flex-row uk-flex-middle uk-text-bold" href="https://discord.gg/sXDbtp4">
+                      Join <span class="uk-margin-small-left uk-icon" uk-icon="icon: discord; ratio: 1.5"></span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
     <div class="uk-section">
       <div class="uk-container">
