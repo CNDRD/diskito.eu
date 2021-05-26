@@ -51,7 +51,9 @@ function getStatsRow(u, clown, unrank=false) {
       </td>
 
       <td class="uk-text-middle" style="min-width: 5rem;" sorttable_customkey="${u.currentMMR}">
-        ${u.ubisoftUsername}
+        <a href="/r6?id=${u.ubisoftID}">
+          <span uk-icon="link">${u.ubisoftUsername}</span>
+        </a>
       </td>
 
       <td class="uk-text-middle uk-text-center uk-padding-remove-horizontal">
@@ -66,20 +68,20 @@ function getStatsRow(u, clown, unrank=false) {
           <span style="font-size: 0.8rem;" class='uk-text-muted'>${u.nextRankMMR}</span>
         </div>
         <div class="uk-flex uk-flex-row uk-flex-middle uk-flex-around">
-          <span style="font-size: 1.5rem;" class='uk-text-nowrap'>${addSpaces(parseInt(u.currentMMR))}</span>
+          <span style="font-size: 1.5rem;" class="uk-text-nowrap uk-text-emphasis">${addSpaces(parseInt(u.currentMMR))}</span>
           <span class="${mmrChangeColor} uk-text-small">${mmrChange}</span>
         </div>
       </td>
 
-      <td class="uk-text-middle uk-text-center" uk-tooltip="${u.sKills} / ${u.sDeaths}">
+      <td class="uk-text-middle uk-text-center uk-text-emphasis" uk-tooltip="${u.sKills} / ${u.sDeaths}">
         ${kd}
       </td>
 
-      <td class="uk-text-middle uk-text-center" uk-tooltip="${u.sWins} / ${u.sLosses}<br/>${u.sWins+u.sLosses} total">
+      <td class="uk-text-middle uk-text-center uk-text-emphasis" uk-tooltip="${u.sWins} / ${u.sLosses}<br/>${u.sWins+u.sLosses} total">
         ${wl}%
       </td>
 
-      <td class="uk-text-middle uk-text-center uk-visible@m">
+      <td class="uk-text-middle uk-text-center uk-text-emphasis uk-visible@m">
         ${u.alphapackProbability == undefined ? "0" : u.alphapackProbability/100}%
       </td>
 
@@ -90,11 +92,11 @@ function getStatsRow(u, clown, unrank=false) {
         </div>
       </td>
 
-      <td class="uk-text-middle uk-text-center uk-visible@m" sorttable_customkey="${u.totalPlaytime}">
+      <td class="uk-text-middle uk-text-center uk-text-emphasis uk-visible@m" sorttable_customkey="${u.totalPlaytime}">
         ${playtime}
       </td>
 
-      <td class="uk-text-middle uk-text-center uk-visible@m">
+      <td class="uk-text-middle uk-text-center uk-text-emphasis uk-visible@m">
         ${roundTwo(u.hs)}%
       </td>
 

@@ -23,8 +23,8 @@
     <script src="/resources/jss/navbar.js" charset="utf-8"></script>
     <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
 
-    <script defer src="/resources/js/siege.js" charset="utf-8"></script>
-    <script defer src="/resources/jss/sorttable.js" charset="utf-8"></script>
+    <script src="/resources/js/siege.js" charset="utf-8"></script>
+    <script src="/resources/jss/sorttable.js" charset="utf-8"></script>
 
     <title>Diskíto Siege Stats</title>
     <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
@@ -64,13 +64,19 @@
 
     <div class="uk-section">
       <div class="uk-container">
-        <div class="uk-text-center uk-text-middle uk-text-muted uk-margin-small-bottom">
-          Click on the profile picture to make it bigger.
-        </div>
-        <div class="uk-text-center uk-text-middle uk-text-muted">
-          <span>Last update: <div id="lastUpdated" uk-spinner="ratio: 0.5"></div> minutes ago</span>
-          <br/>
-          <span>These stats <i>should</i> be updated every 30 minutes</span>
+        <div class="uk-flex uk-flex-around uk-flex-wrap">
+
+          <div class="uk-text-center uk-text-middle uk-text-muted uk-margin-small-bottom">
+            Click on the profile picture to make it bigger.
+            <br />
+            Click on a users name to see a more detailed page!
+          </div>
+          <div class="uk-text-center uk-text-middle uk-text-muted">
+            <span>Last update: <div id="lastUpdated" uk-spinner="ratio: 0.5"></div> minutes ago</span>
+            <br/>
+            <span>These stats <i>should</i> be updated every 30 minutes</span>
+          </div>
+
         </div>
       </div>
     </div>
