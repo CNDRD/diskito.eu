@@ -52,7 +52,7 @@ function getStatsRow(u, clown, unrank=false) {
 
       <td class="uk-text-middle" style="min-width: 5rem;" sorttable_customkey="${u.currentMMR}">
         <a href="/r6?id=${u.ubisoftID}">
-          <span uk-icon="link">${u.ubisoftUsername}</span>
+          ${u.ubisoftUsername}<span class="uk-visible@m" uk-icon="link"></span>
         </a>
       </td>
 
