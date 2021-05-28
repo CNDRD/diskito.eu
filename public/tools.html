@@ -20,9 +20,9 @@
     <link rel="stylesheet" href="/resources/css/main.css" />
     <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
 
-    <script defer src="/resources/js/index.js" charset="utf-8"></script>
+    <script src="/resources/js/tools.js" charset="utf-8"></script>
 
-    <title>Diskíto</title>
+    <title>Diskíto Tools</title>
     <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
 
   </head>
@@ -87,67 +87,28 @@
 
     <div class="uk-section">
       <div class="uk-container">
+        <div class="uk-flex uk-flex-center uk-child-width-1-3@m">
 
-        <div class="uk-flex-center uk-grid-divider uk-grid-collapse pretty-scrollbar" uk-grid>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light">
+              <h3 class="uk-card-title">Base64 <span class="uk-text-muted uk-text-small">Encode / Decode</span> </h3>
 
-          <div class="uk-width-auto@m uk-first-column">
+              <form class="uk-grid-small" name="base64" action="javascript:doBase64()" uk-grid>
+                <fieldset class="uk-fieldset uk-width-1-1">
+                  <textarea name="B64text" class="uk-textarea uk-width-1-1" placeholder="Put your Base64/plaintext message here"></textarea>
+                  <div class="uk-flex uk-flex-row uk-flex-center uk-margin-small uk-width-1-1 uk-child-width-1-2">
+                    <label><input class="uk-radio uk-text-center" type="radio" name="B64encodedecode" checked> Encode</label>
+                    <label><input class="uk-radio uk-text-center" type="radio" name="B64encodedecode"> Decode</label>
+                  </div>
+                  <button class="uk-button uk-button-default uk-width-1-1" type="submit" name="button">Do the thing</button>
+                  <textarea hidden id="B64output" name="B64output" class="uk-textarea uk-width-1-1 uk-margin-small-top"></textarea>
+                </fieldset>
+              </form>
 
-            <article class="uk-article">
-              <h1 class="uk-article-title">Links</h1>
-              <hr class="uk-divider-small" />
-
-              <a href="/who_asked" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Who Asked</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: question; ratio: 1.5"></span>
-              </a>
-              <a href="/siege_ops" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Siege Operator Names</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: tag; ratio: 1.5"></span>
-              </a>
-              <a href="/tools" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Tools</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: cog; ratio: 1.5"></span>
-              </a>
-
-              <hr class="uk-divider-small" />
-
-              <a target="_blank" href="https://github.com/CNDRD/Diskito-Website" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Website</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: github; ratio: 1.5"></span>
-              </a>
-              <a target="_blank" href="https://github.com/CNDRD/Bruce" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Bruce</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: github; ratio: 1.5"></span>
-              </a>
-
-              <hr class="uk-divider-small" />
-
-              <a target="_blank" href="https://www.curseforge.com/minecraft/texture-packs/diskito" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Resource Pack</span>
-                <span class="uk-margin-small-left uk-badge">15K+<span uk-icon="download"></span></span>
-                <span class="uk-icon" uk-icon="icon: link; ratio: 1.5"></span>
-              </a>
-              <a target="_blank" href="https://discord.gg/sXDbtp4" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">discord.gg/sXDbtp4</span>
-                <span class="uk-margin-small-left uk-badge"><span id="userCount">60+</span><span uk-icon="users"></span></span>
-                <span class="uk-icon" uk-icon="icon: link; ratio: 1.5"></span>
-              </a>
-
-            </article>
-          </div>
-
-          <div id="inVoice" hidden></div>
-
-          <div style="min-width: 30%;" class="uk-width-auto@m">
-            <article class="uk-article">
-              <h1 class="uk-article-title" id='nowOnline'>Now Online</h1>
-              <hr class="uk-divider-small" />
-              <div class="uk-height-large uk-overflow-auto" id="widget"></div>
-            </article>
+            </div>
           </div>
 
         </div>
-
       </div>
     </div>
 
