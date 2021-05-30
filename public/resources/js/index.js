@@ -1,26 +1,30 @@
 const discordWidget = 'https://discord.com/api/guilds/402356550133350411/widget.json'
-const botUsernames = [`Giveaways '%'`, `Hydra '-'`, `Bruce`, `Bruce Too`, `Ban Logger`]
+const botUsernames = [`Giveaways '%'`, `Hydra '-'`, `Hydra`, `Bruce`, `Bruce Too`, `Ban Logger`, `Ban Logger 'bl?'`]
 
 $.getJSON(discordWidget, function(data) {
   let users = data['members']
 
-  $('#nowOnline').text(`${parseInt(data['presence_count']) - 3} Online`)
+  $('#nowOnline').text(`${parseInt(data['presence_count'])} Online`)
 
   users.forEach(function(chS){
-    if (!botUsernames.includes(chS.username)){
-      let a = `
-        <!-- ${chS.username} -->
-        <div class='uk-flex uk-flex-between'>
-          <div>
-            <span class='${getStatus(chS.status)} col'>${chS.username}</span>
-          </div>
-          <div class="uk-flex uk-flex-row uk-flex-nowrap">
-            ${getVoiceIcons(chS)}
-            <div class='uk-text-muted' style="margin-left: 5px">${shortenGameNames(chS.game)}</div>
-          </div>
-        </div>`;
-      $('#widget').append(a);
+    let botBadge = "";
+    let voiceIcons = getVoiceIcons(chS);
+    if (botUsernames.includes(chS.username)){
+      botBadge = `<span class="badge badge-discord">BOT</span>`;
+      voiceIcons = "";
     };
+    let a = `
+      <!-- ${chS.username} -->
+      <div class="uk-flex uk-flex-between">
+        <div>
+          <span class="${getStatus(chS.status)} col">${chS.username} ${botBadge}</span>
+        </div>
+        <div class="uk-flex uk-flex-row uk-flex-nowrap">
+          ${voiceIcons}
+          <div class="uk-text-muted" style="margin-left: 5px">${shortenGameNames(chS.game)}</div>
+        </div>
+      </div>`;
+    $("#widget").append(a);
   });
 });
 

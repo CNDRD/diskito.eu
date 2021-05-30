@@ -1,5 +1,17 @@
-/* Pretty Scrollbar */
+:root {
+  --blurple: hsl(227, 58%, 65%); /* #7289da */
+  --blurple-l: hsl(227, 47%, 66%); /* #8092d1 */
+  --white: hsl(0, 0%, 100%); /* #ffffff */
+  --gray: rgba(255, 255, 255, 0.6);
+  --bj-gold: hsl(48, 37%, 62%); /* #c2b47a */
 
+  --uk-primary: #1e87f0;
+  --uk-success: #32d296;
+  --uk-warning: #faa05a;
+  --uk-danger: #f0506e;
+}
+
+/* Pretty Scrollbar */
 .pretty-scrollbar *::-webkit-scrollbar {
   width: 1rem;
   height: 1rem;
@@ -53,5 +65,66 @@
 
 /* Background Danger */
 .uk-background-danger {
-  background-color: #f0506e;
+  background-color: var(--uk-danger);
+}
+
+/* Labels */
+/*
+For some reason UIKit is made in a way
+that they lose color when you use `.uk-light`
+*/
+.label {
+  display: inline-block;
+  padding: 0 10px;
+  background: var(--uk-primary);
+  line-height: 1.5;
+  font-size: 0.875rem;
+  color: var(--white);
+  vertical-align: middle;
+  white-space: nowrap;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+.label-success {
+  background-color: var(--uk-success);
+  color: var(--white);
+}
+.label-warning {
+  background-color: var(--uk-warning);
+  color: var(--white);
+}
+.label-danger {
+  background-color: var(--uk-danger);
+  color: var(--white);
+}
+
+/* Badges */
+.badge {
+  box-sizing: border-box;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 500px;
+  vertical-align: middle;
+  background: var(--uk-primary);
+  color: var(--white);
+  font-size: 0.875rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+.badge:hover,
+.badge:focus {
+  color: var(--white);
+  text-decoration: none;
+  outline: none;
+}
+
+.badge-discord {
+  background: var(--blurple);
+  color: var(--white);
+}
+.badge-discord:hover,
+.badge-discord:focus {
+  color: var(--white);
 }
