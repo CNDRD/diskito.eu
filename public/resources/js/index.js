@@ -1,11 +1,10 @@
 const discordWidget = 'https://discord.com/api/guilds/402356550133350411/widget.json'
-const botUsernames = [`Giveaways '%'`, `Hydra '-'`, `Bruce`, `Bruce Too`]
+const botUsernames = [`Giveaways '%'`, `Hydra '-'`, `Bruce`, `Bruce Too`, `Ban Logger`]
 
 $.getJSON(discordWidget, function(data) {
   let users = data['members']
 
-  // '-2' because of the 2 Bots
-  $('#nowOnline').text(`${parseInt(data['presence_count']) - 2} Online`)
+  $('#nowOnline').text(`${parseInt(data['presence_count']) - 3} Online`)
 
   users.forEach(function(chS){
     if (!botUsernames.includes(chS.username)){
