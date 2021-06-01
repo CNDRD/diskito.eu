@@ -61,7 +61,7 @@ function getStatsDataRow(i, u) {
         <img class="uk-preserve-width uk-align-center" src="${u.avatarURL}" width="40" />
       </td>
       <td class="uk-text-middle">
-        <a href="#${u.user_name.replace('#','_')}" class="uk-text-warning" uk-toggle>
+        <a href="#xd${u.discordID}" class="uk-text-warning" uk-toggle>
           ${reduceNameLength(splitname[0])}
         </a>
       </td>
@@ -114,7 +114,7 @@ function getModal(u) {
 
   let a = `
   <!-- ${u.user_name} -->
-  <div id="${u.user_name.replace('#','_')}" class="uk-flex-top" uk-modal>
+  <div id="xd${u.discordID}" class="uk-flex-top" uk-modal>
     <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical" style="background: rgb(34, 34, 34);">
 
       <button class="uk-modal-close-default" type="button" uk-close></button>
