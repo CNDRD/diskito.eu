@@ -239,7 +239,10 @@ function getTodayFirebaseString() {
 
 
 
-firebase.database().ref('serverTotals').on('value', snapshot => { $('#userCount').text(snapshot.val().users); });
+firebase.database().ref('serverTotals').on('value', snapshot => {
+  $('#userCount').text(snapshot.val().users);
+  $("#rpDownloads").text(snapshot.val().rpDownloads);
+});
 
 
 
