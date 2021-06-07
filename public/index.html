@@ -14,13 +14,15 @@
     <!-- Firebase JS -->
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
     <script src="/resources/jss/firebase-init.js"></script>
 
     <!-- Custom CSS & JS -->
     <link rel="stylesheet" href="/resources/css/main.css" />
     <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
 
-    <script defer src="/resources/js/index.js" charset="utf-8"></script>
+    <script src="/resources/js/index.js" charset="utf-8"></script>
+    <script defer src="/resources/jss/loginSignup.js" charset="utf-8"></script>
 
     <title>Diskíto</title>
     <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
@@ -33,7 +35,7 @@
         <ul class="uk-navbar-nav uk-hidden@s">
           <li>
             <a href="index.html" class="uk-navbar-item uk-logo uk-padding-remove-left">
-              <img src="resources/img/diskito_pfp.jpg" width="80" height="80" class="logo" alt="😀" />
+              <img src="/resources/img/diskito_pfp.jpg" width="80" height="80" class="logo" alt="😀" />
               <span class="uk-text-large uk-text-primary uk-margin-small-left">Diskíto</span>
             </a>
           </li>
@@ -41,7 +43,7 @@
         <ul class="uk-navbar-nav uk-visible@s pls-no-click">
           <li>
             <a href="index.html" class="uk-navbar-item uk-logo uk-padding-remove-left">
-              <img src="resources/img/diskito_pfp.jpg" width="80" height="80" class="logo" alt="😀" />
+              <img src="/resources/img/diskito_pfp.jpg" width="80" height="80" class="logo" alt="😀" />
             </a>
           </li>
           <li><a href="/diskito.html"><span class="uk-button-text">Server Stats</span></a></li>
@@ -54,8 +56,10 @@
       <div class="uk-navbar-right">
         <ul class="uk-navbar-nav uk-visible@s">
           <div class="uk-navbar-item">
-            <a class="uk-button uk-button-danger uk-flex uk-flex-row uk-flex-middle uk-text-bold" href="https://discord.gg/sXDbtp4">
-              Join <span class="uk-margin-small-left uk-icon" uk-icon="icon: discord; ratio: 1.5"></span>
+            <div id="userButtonNormal" class="userButton uk-button-group uk-margin-small-right" hidden>
+            </div>
+            <a class="loginButton uk-button uk-button-default uk-text-emphasis uk-flex uk-flex-row uk-flex-middle" type="button" uk-toggle="target: #user-modal">
+              Login <span class="uk-margin-small-left uk-icon" uk-icon="icon: user; ratio: 1.2"></span>
             </a>
           </div>
         </ul>
@@ -73,9 +77,11 @@
                   <li><a href="/quotes.html">Quotes‏‏‎</a></li>
                   <li class="uk-divider-icon"></li>
                   <li>
-                    <a class="uk-button uk-button-danger uk-text-emphasis uk-flex uk-flex-row uk-flex-middle uk-text-bold" href="https://discord.gg/sXDbtp4">
-                      Join <span class="uk-margin-small-left uk-icon" uk-icon="icon: discord; ratio: 1.5"></span>
+                    <a class="loginButton uk-button uk-button-default uk-text-emphasis uk-flex uk-flex-row uk-flex-middle" type="button" uk-toggle="target: #user-modal">
+                      Login <span class="uk-margin-small-left uk-icon" uk-icon="icon: user; ratio: 1.2"></span>
                     </a>
+                    <div id="userButtonMobile" class="userButton" hidden>
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -152,6 +158,66 @@
 
         </div>
 
+      </div>
+    </div>
+
+    <div id="user-modal" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical" style="background: rgb(34, 34, 34);">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <ul uk-tab>
+          <li><a href="#">Login</a></li>
+          <li><a href="#">Sign Up</a></li>
+        </ul>
+        <ul class="uk-switcher uk-margin">
+          <!-- LOGIN -->
+          <li>
+            <div class="uk-modal-body">
+              <form id="loginForm" class="uk-child-width-1-1 uk-grid-small" uk-grid>
+                <div>
+                  <div class="uk-inline">
+                    <span class="uk-form-icon" uk-icon="icon: mail"></span>
+                    <input class="uk-input uk-form-width-large uk-text-light" id="loginEmail" type="text" placeholder="Email" required />
+                  </div>
+                  <span id="loginEmailFuckup" class="uk-text-danger uk-text-light uk-text-small" hidden>This isn't a valid email address chief..</span>
+                </div>
+                <div>
+                  <div class="uk-inline">
+                    <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                    <input class="uk-input uk-form-width-large uk-text-light" id="loginPassw" type="password" placeholder="Password" required />
+                  </div>
+                  <span id="loginPasswFuckup" class="uk-text-danger uk-text-light uk-text-small" hidden>8-25 characters, lowercase & uppercase, number, special character</span>
+                </div>
+                <div>
+                  <button class="uk-button uk-button-default uk-width-1-1">Login</button>
+                </div>
+              </form>
+            </div>
+          </li>
+          <!-- SIGNUP -->
+          <li>
+            <div class="uk-modal-body">
+              <form id="signupForm" class="uk-child-width-1-1 uk-grid-small" uk-grid>
+                <div>
+                  <div class="uk-inline">
+                    <span class="uk-form-icon" uk-icon="icon: mail"></span>
+                    <input class="uk-input uk-form-width-large uk-text-light" id="signupEmail" type="text" placeholder="Email" required />
+                  </div>
+                  <span id="signupEmailFuckup" class="uk-text-danger uk-text-light uk-text-small" hidden>This isn't a valid email address chief..</span>
+                </div>
+                <div>
+                  <div class="uk-inline">
+                    <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                    <input class="uk-input uk-form-width-large uk-text-light" id="signupPassw" type="password" placeholder="Password" required />
+                  </div>
+                  <span id="signupPasswFuckup" class="uk-text-danger uk-text-light uk-text-small" hidden>8-25 characters, lowercase & uppercase, number, special character</span>
+                </div>
+                <div>
+                  <button class="uk-button uk-button-default uk-width-1-1">Sign Up</button>
+                </div>
+              </form>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
 
