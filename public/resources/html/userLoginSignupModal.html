@@ -1,0 +1,61 @@
+<div id="user-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical" style="background: rgb(34, 34, 34);">
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+
+    <ul uk-tab>
+      <li><a href="#">Login</a></li>
+      <li><a href="#">Sign Up</a></li>
+    </ul>
+
+    <ul class="uk-switcher uk-margin">
+      <!-- LOGIN -->
+      <li>
+        <div class="uk-modal-body">
+          <form id="loginForm" class="uk-child-width-1-1 uk-grid-small" uk-grid>
+            <div>
+              <div class="uk-inline">
+                <span class="uk-form-icon" uk-icon="icon: mail"></span>
+                <input class="uk-input uk-form-width-large uk-text-light" id="loginEmail" type="text" placeholder="Email" required />
+              </div>
+              <span id="loginEmailFuckup" class="uk-text-danger uk-text-light uk-text-small" hidden>This isn't a valid email address chief..</span>
+            </div>
+            <div>
+              <div class="uk-inline">
+                <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                <input class="uk-input uk-form-width-large uk-text-light" id="loginPassw" type="password" placeholder="Password" required />
+              </div>
+              <span id="loginPasswFuckup" class="uk-text-danger uk-text-light uk-text-small" hidden>8-25 characters, lowercase & uppercase, number, special character</span>
+            </div>
+            <div>
+              <button class="uk-button uk-button-default uk-width-1-1">Login</button>
+            </div>
+          </form>
+        </div>
+      </li>
+      <!-- SIGNUP -->
+      <li>
+        <div class="uk-modal-body">
+          <form id="signupForm" class="uk-child-width-1-1 uk-grid-small" uk-grid>
+            <div>
+              <div class="uk-inline">
+                <span class="uk-form-icon" uk-icon="icon: mail"></span>
+                <input class="uk-input uk-form-width-large uk-text-light" id="signupEmail" type="text" placeholder="Email" required />
+              </div>
+              <span id="signupEmailFuckup" class="uk-text-danger uk-text-light uk-text-small" hidden>This isn't a valid email address chief..</span>
+            </div>
+            <div>
+              <div class="uk-inline">
+                <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                <input class="uk-input uk-form-width-large uk-text-light" id="signupPassw" type="password" placeholder="Password" required />
+              </div>
+              <span id="signupPasswFuckup" class="uk-text-danger uk-text-light uk-text-small" hidden>8-25 characters, lowercase & uppercase, number, special character</span>
+            </div>
+            <div>
+              <button class="uk-button uk-button-default uk-width-1-1">Sign Up</button>
+            </div>
+          </form>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

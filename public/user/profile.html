@@ -10,8 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/js/uikit-icons.min.js"></script>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- jQuery plugins -->
-    <script src="https://unpkg.com/sticky-table-headers"></script>
 
     <!-- Firebase JS -->
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
@@ -23,11 +21,11 @@
     <link rel="stylesheet" href="/resources/css/main.css" />
     <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
 
-    <script src="/resources/js/siege.js" charset="utf-8"></script>
-    <script src="/resources/jss/sorttable.js" charset="utf-8"></script>
+    <script src="/resources/js/index.js" charset="utf-8"></script>
     <script defer src="/resources/jss/loginSignup.js" charset="utf-8"></script>
+    <script defer src="/user/profile.js" charset="utf-8"></script>
 
-    <title>Diskíto Siege Stats</title>
+    <title>Diskíto</title>
     <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
 
   </head>
@@ -37,7 +35,7 @@
       <div class="uk-navbar-left">
         <ul class="uk-navbar-nav uk-hidden@s">
           <li>
-            <a href="index.html" class="uk-navbar-item uk-logo uk-padding-remove-left">
+            <a href="/index.html" class="uk-navbar-item uk-logo uk-padding-remove-left">
               <img src="/resources/img/diskito_pfp.jpg" width="80" height="80" class="logo" alt="😀" />
               <span class="uk-text-large uk-text-primary uk-margin-small-left">Diskíto</span>
             </a>
@@ -94,48 +92,55 @@
       </div>
     </nav>
 
-    <div id="bnaom9s1BB"></div>
-
-    <div class="uk-section uk-padding-remove-bottom">
-      <div class="uk-container">
-
-        <div class="uk-overflow-auto">
-          <table class="uk-table uk-table-divider sortable">
-            <thead class="pls-no-click" style="background: rgb(34, 34, 34);">
-              <tr>
-                <th class="sorttable_numeric uk-flex uk-flex-center uk-visible@m"><span uk-icon="image"></span></th>
-                <th class="sorttable_alpha">Peep</th>
-                <th class="sorttable_numeric uk-text-center">Rank <span class="uk-text-muted uk-visible@m">(max)</span></th>
-                <th class="sorttable_numeric uk-text-center">MMR</th>
-                <th class="sorttable_numeric uk-text-center" uk-tooltip="Seasonal">K/D</th>
-                <th class="sorttable_numeric uk-text-center" uk-tooltip="Seasonal">W/L</th>
-                <th class="sorttable_numeric uk-text-center uk-visible@m">Alpha pack</th>
-                <th class="sorttable_nosort uk-text-center uk-visible@m">Top Operators</th>
-                <th class="sorttable_numeric uk-text-center uk-visible@m" uk-tooltip="Total"> Time Played</th>
-                <th class="sorttable_numeric uk-text-center uk-visible@m">HS %</th>
-              </tr>
-            </thead>
-            <tbody id="tableDataPlace"></tbody>
-          </table>
-        </div>
-
-      </div>
-    </div>
-
     <div class="uk-section">
       <div class="uk-container">
-        <div class="uk-flex uk-flex-around uk-flex-wrap">
+        <div class="uk-flex-center uk-grid-divider uk-grid-collapse pretty-scrollbar" uk-grid>
 
-          <div class="uk-text-center uk-text-middle uk-text-muted uk-margin-small-bottom">
-            Click on the profile picture to make it bigger.
-            <br />
-            Click on a users name to see a more detailed page!
+
+
+          <div class="uk-width-auto@m uk-first-column">
+            <article class="uk-article">
+
+              <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center">
+                <span class="uk-text-large uk-text-emphasis uk-margin-small-right">
+                  Welcome
+                </span>
+                <form id="usernameForm">
+                  <div class="uk-margin">
+                    <div class="uk-inline uk-width-medium">
+                      <button id="usernameButton" type="submit" class="uk-form-icon uk-form-icon-flip" name="button" uk-icon="icon: pencil" uk-tooltip="Save new username"></button>
+                      <input id="usernameInput" class="cndrd-username-input" value="User" type="text" />
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <hr class="uk-divider-icon" />
+
+              <div class="uk-flex uk-flex-column uk-flex-center">
+                <span id="discordConnected" class="uk-text-large uk-text-emphasis">Discord Connection</span>
+                <span id="discordConnectionLoader" uk-spinner></span>
+                <div id="discordConnectionSuccess" hidden>
+                  Succesfully connected to <span class="uk-text-emphasis" id="discordConnectedName"></span>
+                </div>
+                <div id="discordConnectionCode" class="uk-flex uk-flex-column uk-flex-center" hidden>
+                  <span>Go to Diskíto and send this 👇 command to <span class="badge badge-discord">#host-hq</span></span>
+                  <div class="uk-inline uk-margin-small-top">
+                    <button id="discordConnectionCodeButton" class="uk-form-icon uk-form-icon-flip" uk-icon="icon: copy; ratio: 1.3" uk-tooltip="Click to copy"></button>
+                    <input id="discordConnectionCodeInput" class="cndrd-username-input uk-text-center" type="text" />
+                  </div>
+                </div>
+              </div>
+
+            </article>
           </div>
-          <div class="uk-text-center uk-text-middle uk-text-muted">
-            <span>Last update: <div id="lastUpdated" uk-spinner="ratio: 0.5"></div> minutes ago</span>
-            <br/>
-            <span>These stats <i>should</i> be updated every 30 minutes</span>
+
+
+
+          <div class="uk-width-auto@m" hidden>
           </div>
+
+
 
         </div>
       </div>
