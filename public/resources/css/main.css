@@ -9,6 +9,8 @@
   --uk-success: #32d296;
   --uk-warning: #faa05a;
   --uk-danger: #f0506e;
+
+  --uk-success-light: #3de3a5;
 }
 
 /* Pretty Scrollbar */
@@ -176,4 +178,32 @@ that they lose color when you use `.uk-light`
 .cndrd-username-input:focus {
   border-color: transparent;
   border-style: dashed;
+}
+
+/* Button success */
+
+.cndrd-button-success {
+  background-color: var(--uk-success);
+  color: #fff;
+  border: 1px solid transparent;
+}
+.cndrd-button-success:hover,
+.cndrd-button-success:focus {
+  background-color: var(--uk-success-light);
+  color: #fff;
+}
+.cndrd-button-success:active,
+.cndrd-button-success.uk-active {
+  background-color: var(--uk-success-light);
+  color: #fff;
+}
+
+/* Input type="number" without arrows */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
 }
