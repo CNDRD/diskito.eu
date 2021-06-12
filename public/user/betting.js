@@ -5,7 +5,7 @@ var discordUID = false;
 firebase.auth().onAuthStateChanged(userAuth => {
   user = userAuth;
   firebase.database().ref(`websiteProfiles/${user.uid}/discordUID`).once("value").then(discordIDsnapshot => {
-    firebase.database().ref(`users/${discordIDsnapshot.val()}/money`).once("value").then(snapshot => {
+    firebase.database().ref(`users/${discordIDsnapshot.val()}/money`).on("value", snapshot => {
       monies = snapshot.val();
       discordUID = discordIDsnapshot.val();
       updateMoney(monies);
