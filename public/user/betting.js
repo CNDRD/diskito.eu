@@ -39,10 +39,13 @@ $("#coinflipEasyBet100").click(() => { coinflipInputValueChange(100000); });
 $("#coinflipEasyBetMax").click(() => { coinflipInputValueChange(monies); });
 
 function gameCoinflip() {
-  let gameTimeoutTime = 1500;
-  let backToNormalTime = 4000;
+  let gameTimeoutTime = 500;
+  let backToNormalTime = 1000;
   let betAmount = $("#coinflipMoneyAmount").val();
   let outcomeMoney;
+  let notificationMessage, notificationStatus;
+  let notificationTimeout = 1000;
+
 
   $("#coinflipButtonText").replaceWith(`<div id="coinflipButtonText" uk-spinner></div>`);
 
@@ -51,16 +54,14 @@ function gameCoinflip() {
       case 0:
         // Win
         outcomeMoney = monies + (betAmount * 2);
-        $("#coinflipButton").removeClass("uk-button-default");
-        $("#coinflipButton").addClass("cndrd-button-success");
-        $("#coinflipButtonText").text(`You won ${addCommas(betAmount * 2)} monies!`);
+        notificationMessage = `You won ${addCommas(betAmount * 2)} monies!`;
+        notificationStatus = "success";
         break;
       case 1:
         // Lose
         outcomeMoney = monies - betAmount;
-        $("#coinflipButton").removeClass("uk-button-default");
-        $("#coinflipButton").addClass("uk-button-danger");
-        $("#coinflipButtonText").text(`You lost ${addCommas(betAmount)} monies!`);
+        notificationMessage = `You lost ${addCommas(betAmount)} monies!`;
+        notificationStatus = "danger";
         break;
     }
 
@@ -71,9 +72,10 @@ function gameCoinflip() {
 
     setTimeout(() => {
       $("#coinflipButtonText").replaceWith(`<span id="coinflipButtonText">Place bet</span>`);
-      $("#coinflipButton").removeClass("uk-button-danger");
-      $("#coinflipButton").removeClass("cndrd-button-success");
-      $("#coinflipButton").addClass("uk-button-default");
+      UIkit.notification({
+        message: notificationMessage, status: notificationStatus,
+        timeout: notificationTimeout, pos: "bottom-center"
+      });
     }, backToNormalTime);
   }, gameTimeoutTime);
 };
