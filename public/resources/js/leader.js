@@ -31,6 +31,7 @@ userDataRef.once("value").then(function(snapshot){
       cicinaAverage:cD.cicina_avg ? cD.cicina_avg : 0,
       cicinaCount:cD.cicina_count ? cD.cicina_count: 0,
       discordID:uid,
+      money:cD.money,
     }); /* arr.push() */
   }); /* snapshot.forEach() */
 
@@ -75,7 +76,10 @@ function getStatsDataRow(i, u) {
       <td sorttable_customkey="${u.currentYearVoice}" class="uk-text-center uk-text-middle uk-text-light">
         ${getOneTime(u.currentYearVoice)}
       </td>
-      <td sorttable_customkey="${u.reacc_points}" class="uk-text-center uk-text-middle uk-text-light">
+      <td sorttable_customkey="${u.money}" class="uk-text-center uk-text-middle uk-text-light">
+        ${abbreviateNumber(u.money)}
+      </td>
+      <td sorttable_customkey="${u.reacc_points}" class="uk-text-center uk-text-middle uk-text-light uk-visible@m">
         ${addSpaces(u.reacc_points)}
       </td>
       <td class="uk-text-center uk-text-middle uk-text-light uk-visible@m">
@@ -167,3 +171,20 @@ function getDateAndTimeInTooltipFromTimestamp(UNIX_timestamp){
   let sec = a.getSeconds() < 10 ? "0" + a.getSeconds() : a.getSeconds();
   return `<span class="uk-text-default uk-text-muted" uk-tooltip="${hour}:${min}:${sec}">(${date}.${month}. ${year})</span>`;
 };
+function abbreviateNumber(value) {
+  // https://stackoverflow.com/a/10601315/13186339
+  var newValue = value;
+  if (value >= 1000) {
+    var suffixes = ["", "k", "mil", "bil","tril"];
+    var suffixNum = Math.floor( (""+value).length/3 );
+    var shortValue = '';
+    for (var precision = 2; precision >= 1; precision--) {
+      shortValue = parseFloat( (suffixNum != 0 ? (value / Math.pow(1000,suffixNum) ) : value).toPrecision(precision));
+      var dotLessShortValue = (shortValue + '').replace(/[^a-zA-Z 0-9]+/g,'');
+      if (dotLessShortValue.length <= 2) { break; }
+    }
+    if (shortValue % 1 != 0)  shortValue = shortValue.toFixed(1);
+    newValue = shortValue+suffixes[suffixNum];
+  }
+  return newValue;
+}
