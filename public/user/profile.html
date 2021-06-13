@@ -118,7 +118,14 @@
 
               <hr class="uk-divider-icon" />
 
-              <div class="uk-flex uk-flex-column uk-flex-center">
+              <div id="plsLoginMessage" class="uk-text-emphasis uk-text-large uk-text-center" style="display: none;">
+                It seems like you're not logged in sir.. <br>
+                <a class="uk-button uk-button-default uk-margin-small-top uk-text-emphasis" type="button" uk-toggle="target: #user-modal">
+                  You can login or sign up here
+                </a>
+              </div>
+
+              <div id="discordConnectionDiv" class="uk-flex uk-flex-column uk-flex-center">
                 <span id="discordConnected" class="uk-text-large uk-text-emphasis">Discord Connection</span>
                 <span id="discordConnectionLoader" uk-spinner></span>
                 <div id="discordConnectionSuccess" hidden>

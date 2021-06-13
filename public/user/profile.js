@@ -2,24 +2,40 @@ const discordConnectID = Math.random().toString(36).substr(2, 12);
 
 var user = false;
 firebase.auth().onAuthStateChanged(userAuth => {
-  user = userAuth;
+  if (!userAuth) { isUser(false); } else { isUser(true);
 
-  firebase.database().ref(`websiteProfiles/${user.uid}/discordUID`).once("value").then(snapshot => {
-    if (snapshot.val() != undefined) {
-      firebase.database().ref(`users/${snapshot.val()}/username`).once("value").then(nameSnapshot => {
+    user = userAuth;
+
+    firebase.database().ref(`websiteProfiles/${user.uid}/discordUID`).once("value").then(snapshot => {
+      if (snapshot.val() != undefined) {
+        firebase.database().ref(`users/${snapshot.val()}/username`).once("value").then(nameSnapshot => {
+          $("#discordConnectionLoader").attr("hidden", "hidden");
+          $("#discordConnectionSuccess").removeAttr("hidden");
+          $("#discordConnectedName").text(nameSnapshot.val());
+        });
+      } else {
         $("#discordConnectionLoader").attr("hidden", "hidden");
-        $("#discordConnectionSuccess").removeAttr("hidden");
-        $("#discordConnectedName").text(nameSnapshot.val());
-      });
-    } else {
-      $("#discordConnectionLoader").attr("hidden", "hidden");
-      $("#discordConnectionCode").removeAttr("hidden");
-      $("#discordConnectionCodeInput").attr("value", `,connect ${discordConnectID}`)
-      $("#discordConnectionCodeButton").attr("onclick", `copyThis(',connect ${discordConnectID}')`)
-    }
-  });
-  $("#usernameInput").attr("value", user.displayName);
+        $("#discordConnectionCode").removeAttr("hidden");
+        $("#discordConnectionCodeInput").attr("value", `,connect ${discordConnectID}`)
+        $("#discordConnectionCodeButton").attr("onclick", `copyThis(',connect ${discordConnectID}')`)
+      }
+    });
+    $("#usernameInput").attr("value", user.displayName);
+
+  }
 });
+
+function isUser(huh) {
+  if (huh) {
+    $("#plsLoginMessage").hide();
+    $("#usernameForm").show();
+    $("#discordConnectionDiv").show();
+  } else {
+    $("#plsLoginMessage").show();
+    $("#usernameForm").hide();
+    $("#discordConnectionDiv").hide();
+  }
+}
 
 /* Name changer */
 $("#usernameForm").submit(function(e) {
