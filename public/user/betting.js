@@ -49,35 +49,48 @@ function gameCoinflip() {
 
   $("#coinflipButtonText").replaceWith(`<div id="coinflipButtonText" uk-spinner></div>`);
 
-  setTimeout(() => {
-    switch (getRandomInt(2)) {
-      case 0:
-        // Win
-        outcomeMoney = monies + (betAmount * 2);
-        notificationMessage = `You won ${addCommas(betAmount * 2)} monies!`;
-        notificationStatus = "success";
-        break;
-      case 1:
-        // Lose
-        outcomeMoney = monies - betAmount;
-        notificationMessage = `You lost ${addCommas(betAmount)} monies!`;
-        notificationStatus = "danger";
-        break;
-    }
+  if (betAmount > monies) {
 
-    /* Set money in DB, update money, set money */
-    firebase.database().ref(`users/${discordUID}`).update({money: outcomeMoney});
-    updateMoney(outcomeMoney);
-    monies = outcomeMoney;
+    UIkit.notification({
+      message: "You aren't allowed to do that chump.. And don't fuck with the code, it bites", status: "danger",
+      timeout: 5000, pos: "bottom-center"
+    });
+    setTimeout(() => { location.reload() }, 6000);
+    firebase.database().ref(`users/${discordUID}`).update({fuckedWithWebsite: true});
+
+  } else {
 
     setTimeout(() => {
-      $("#coinflipButtonText").replaceWith(`<span id="coinflipButtonText">Place bet</span>`);
-      UIkit.notification({
-        message: notificationMessage, status: notificationStatus,
-        timeout: notificationTimeout, pos: "bottom-center"
-      });
-    }, backToNormalTime);
-  }, gameTimeoutTime);
+      switch (getRandomInt(2)) {
+        case 0:
+          // Win
+          outcomeMoney = monies + (betAmount * 2);
+          notificationMessage = `You won ${addCommas(betAmount * 2)} monies!`;
+          notificationStatus = "success";
+          break;
+        case 1:
+          // Lose
+          outcomeMoney = monies - betAmount;
+          notificationMessage = `You lost ${addCommas(betAmount)} monies!`;
+          notificationStatus = "danger";
+          break;
+      }
+
+      /* Set money in DB, update money, set money */
+      firebase.database().ref(`users/${discordUID}`).update({money: outcomeMoney});
+      updateMoney(outcomeMoney);
+      monies = outcomeMoney;
+
+      setTimeout(() => {
+        $("#coinflipButtonText").replaceWith(`<span id="coinflipButtonText">Place bet</span>`);
+        UIkit.notification({
+          message: notificationMessage, status: notificationStatus,
+          timeout: notificationTimeout, pos: "bottom-center"
+        });
+      }, backToNormalTime);
+    }, gameTimeoutTime);
+
+  }
 };
 
 /* Prevent submit */
