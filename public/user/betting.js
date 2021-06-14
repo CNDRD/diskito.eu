@@ -83,8 +83,8 @@ function gameOneToTen() {
     } else {
       setTimeout(() => {
         if (betOnNumber == randomNumberLmao) {
-          outcomeMoney = monies + (betAmount * 20);
-          notificationMessage = `You won ${addCommas(betAmount * 20)} monies!`;
+          outcomeMoney = monies + (betAmount * 10);
+          notificationMessage = `You won ${addCommas(betAmount * 10)} monies!`;
           notificationStatus = "success";
         } else {
           outcomeMoney = monies - betAmount;
