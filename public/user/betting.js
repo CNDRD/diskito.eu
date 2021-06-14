@@ -42,8 +42,6 @@ let setMaxMoneyInput = mony => {
   $(".moniesInput").attr("placeholder", `1 - ${addCommas(mony)}`);
 };
 
-
-
 function getCurrentMoney() {
   return firebase.database().ref(`websiteProfiles/${firebase.auth().currentUser.uid}/discordUID`)
   .once("value").then(discordIDsnapshot => {
@@ -51,6 +49,11 @@ function getCurrentMoney() {
     .once("value").then(snapshot => { return snapshot.val() });
   });
 };
+
+
+
+
+
 
 
 /*
@@ -124,6 +127,11 @@ $("#oneToTenEasyBetForm").submit(function(e) { e.preventDefault(); });
 /* Clear Inputs */
 $("#oneToTenMoneyAmountClear").click(() => { $("#oneToTenMoneyAmount").val("") });
 $("#oneToTenValueClear").click(() => { $("#oneToTenValueInput").val("") });
+
+
+
+
+
 
 
 /*
