@@ -9,13 +9,11 @@ firebase.auth().onAuthStateChanged(userAuth => {
     firebase.database().ref(`websiteProfiles/${user.uid}/discordUID`).once("value").then(snapshot => {
       if (snapshot.val() != undefined) {
         firebase.database().ref(`users/${snapshot.val()}/username`).once("value").then(nameSnapshot => {
-          $("#discordConnectionLoader").attr("hidden", "hidden");
-          $("#discordConnectionSuccess").removeAttr("hidden");
+          isDiscordConnected(true);
           $("#discordConnectedName").text(nameSnapshot.val());
         });
       } else {
-        $("#discordConnectionLoader").attr("hidden", "hidden");
-        $("#discordConnectionCode").removeAttr("hidden");
+        isDiscordConnected(false);
         $("#discordConnectionCodeInput").attr("value", `,connect ${discordConnectID}`)
         $("#discordConnectionCodeButton").attr("onclick", `copyThis(',connect ${discordConnectID}')`)
       }
@@ -25,15 +23,33 @@ firebase.auth().onAuthStateChanged(userAuth => {
   }
 });
 
+function isDiscordConnected(lolz) {
+  let icon = "#discordConnectionIcon";
+  let loader = "#discordConnectionLoader";
+  let success = "#discordSuccessfullyConnected";
+  let fucked = "#discordNotConnected";
+  if (lolz) {
+    $(loader).hide();
+    $(icon).show();
+    $(success).show();
+    $(fucked).hide();
+  } else {
+    $(loader).hide();
+    $(icon).show();
+    $(success).hide();
+    $(fucked).show();
+  }
+};
+
 function isUser(huh) {
   if (huh) {
     $("#plsLoginMessage").hide();
     $("#usernameForm").show();
-    $("#discordConnectionDiv").show();
+    $("#discordConnection").show();
   } else {
     $("#plsLoginMessage").show();
     $("#usernameForm").hide();
-    $("#discordConnectionDiv").hide();
+    $("#discordConnection").hide();
   }
 }
 
