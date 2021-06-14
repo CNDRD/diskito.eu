@@ -28,16 +28,19 @@ function isDiscordConnected(lolz) {
   let loader = "#discordConnectionLoader";
   let success = "#discordSuccessfullyConnected";
   let fucked = "#discordNotConnected";
+  let connectDiscord = "#discordConnectionCode";
   if (lolz) {
     $(loader).hide();
     $(icon).show();
     $(success).show();
     $(fucked).hide();
+    $(connectDiscord).hide();
   } else {
     $(loader).hide();
     $(icon).show();
     $(success).hide();
     $(fucked).show();
+    $(connectDiscord).show();
   }
 };
 
