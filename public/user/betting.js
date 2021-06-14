@@ -98,6 +98,7 @@ function gameOneToTen() {
         /* Set money in DB, update money, set money */
         firebase.database().ref(`users/${discordUID}`).update({money: outcomeMoney});
         updateMoney(outcomeMoney);
+        monies = outcomeMoney;
 
         $("#oneToTenButtonText").replaceWith(`<span id="oneToTenButtonText">Place bet</span>`);
         UIkit.notification({
