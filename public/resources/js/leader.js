@@ -76,10 +76,10 @@ function getStatsDataRow(i, u) {
       <td sorttable_customkey="${u.currentYearVoice}" class="uk-text-center uk-text-middle uk-text-light">
         ${getOneTime(u.currentYearVoice)}
       </td>
-      <td sorttable_customkey="${u.money}" class="uk-text-center uk-text-middle uk-text-light">
+      <td sorttable_customkey="${u.money}" class="uk-text-center uk-text-middle uk-text-light uk-visible@m">
         ${abbreviateNumber(u.money)}
       </td>
-      <td sorttable_customkey="${u.reacc_points}" class="uk-text-center uk-text-middle uk-text-light uk-visible@m">
+      <td sorttable_customkey="${u.reacc_points}" class="uk-text-center uk-text-middle uk-text-light">
         ${addSpaces(u.reacc_points)}
       </td>
       <td class="uk-text-center uk-text-middle uk-text-light uk-visible@m">
