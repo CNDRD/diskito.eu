@@ -45,8 +45,9 @@ function updateHeader(d) {
   $('#trn').attr('href',`https://r6.tracker.network/profile/id/${d.ubisoftID}`);
 };
 function updateSeasonalCard(d) {
-  $('#season').text(d.seasonName);
-  $('#season').css('color', getSeasonColorRGB(d.seasonName))
+  $('#season').text(getSeasonFromNumber(d.season));
+  $('#season').css('color', getSeasonColorRGB(d.season));
+  $('#season_code').text(getSeasonCodeFromNumber(d.season));
 
   $('#next_rank_mmr').text(addSpaces(parseInt(d.nextRankMMR)));
   $('#prev_rank_mmr').text(addSpaces(parseInt(d.prevRankMMR)));
@@ -58,9 +59,9 @@ function updateSeasonalCard(d) {
   $('#last_mmr_change').text(d.lastMMRchange);
   $('#last_mmr_change').addClass(d.lastMMRchange >= 0 ? ( d.lastMMRchange == 0 ? 'uk-text-muted' : 'uk-text-success' ) : 'uk-text-danger');
 
-  $('#seasonal_kd').text(roundTwo(d.sKills / d.sDeaths));
-  $('#seasonal_wl').text(`${roundTwo(d.sWins / (d.sWins + d.sLosses) * 100)}%`);
-  $('#seasonal_games').text(addSpaces(d.sWins + d.sLosses));
+  $('#seasonal_kd').text(d.sDeaths == 0 ? 0 : roundTwo(d.sKills / d.sDeaths));
+  $('#seasonal_wl').text((d.sWins + d.sLosses) == 0 ? 0 : `${roundTwo(d.sWins / (d.sWins + d.sLosses) * 100)}%`);
+  $('#seasonal_games').text((d.sWins + d.sLosses) == 0 ? 0 : addSpaces(d.sWins + d.sLosses));
 
   $('#max_mmr').text(`${addSpaces(parseInt(d.maxMMR))} MMR`);
   $('#max_mmr_name').text(d.maxRank);
@@ -142,10 +143,84 @@ function orderBySubKey(dict, key) {
 };
 function getSeasonColorRGB(s) {
   let x = {
-    "crimson heist": "#ac0000",
-    "north star": "#009cbe"
+    1: "#2e93b3",
+    2: "#d0a344",
+    3: "#47893b",
+    4: "#bd1E2c",
+    5: "#723093",
+    6: "#0050b3",
+    7: "#ca361c",
+    8: "#006543",
+    9: "#ffc113",
+    10: "#949f39",
+    11: "#81a0c1",
+    12: "#aa854f",
+    13: "#d2005a",
+    14: "#304395",
+    15: "#156309",
+    16: "#089eb3",
+    17: "#946a97",
+    18: "#2b7f9b",
+    19: "#6ca511",
+    20: "#d14007",
+    21: "#ac0000",
+    22: "#009cbe",
   };
-  return x[s.toLowerCase()]
+  return x[s]
+};
+function getSeasonFromNumber(s) {
+  let x = {
+    1: "Black Ice",
+    2: "Dust Line",
+    3: "Skull Rain",
+    4: "Red Crow",
+    5: "Velvet Shell",
+    6: "Operation Health",
+    7: "Blood Orchid",
+    8: "White Noise",
+    9: "Chimera",
+    10: "Para Bellum",
+    11: "Grim Sky",
+    12: "Wind Bastion",
+    13: "Burnt Horizon",
+    14: "Phantom Sight",
+    15: "Ember Rise",
+    16: "Shifting Tides",
+    17: "Void Edge",
+    18: "Steel Wave",
+    19: "Shadow Legacy",
+    20: "Neon Dawn",
+    21: "Crimson Heist",
+    22: "North Star",
+  };
+  return x[s]
+};
+function getSeasonCodeFromNumber(s) {
+  let x = {
+    1: "Y1S1",
+    2: "Y1S2",
+    3: "Y1S3",
+    4: "Y1S4",
+    5: "Y2S1",
+    6: "Y2S2",
+    7: "Y2S3",
+    8: "Y2S4",
+    9: "Y3S1",
+    10: "Y3S2",
+    11: "Y3S3",
+    12: "Y3S4",
+    13: "Y4S1",
+    14: "Y4S2",
+    15: "Y4S3",
+    16: "Y4S4",
+    17: "Y5S1",
+    18: "Y5S2",
+    19: "Y5S3",
+    20: "Y5S4",
+    21: "Y6S1",
+    22: "Y6S2",
+  };
+  return x[s]
 };
 function getPlaytime(s) {
   hours = Math.floor(s / 3600);
