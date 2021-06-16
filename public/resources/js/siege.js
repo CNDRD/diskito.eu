@@ -1,6 +1,31 @@
 $("table").stickyTableHeaders();
 
 let VERSION = 8;
+const rankMMR = [
+  {name: "Copper 5",    min_mmr: 1,     max_mmr: 1199, image: "https://i.imgur.com/SNSfudP.png"},
+  {name: "Copper 4",    min_mmr: 1200,  max_mmr: 1299, image: "https://i.imgur.com/7PiisA2.png"},
+  {name: "Copper 3",    min_mmr: 1300,  max_mmr: 1399, image: "https://i.imgur.com/aNCvwAI.png"},
+  {name: "Copper 2",    min_mmr: 1400,  max_mmr: 1499, image: "https://i.imgur.com/fUzUApd.png"},
+  {name: "Copper 1",    min_mmr: 1500,  max_mmr: 1599, image: "https://i.imgur.com/eGuxE0k.png"},
+  {name: "Bronze 5",    min_mmr: 1600,  max_mmr: 1699, image: "https://i.imgur.com/bbjMf4V.png"},
+  {name: "Bronze 4",    min_mmr: 1700,  max_mmr: 1799, image: "https://i.imgur.com/75IEQkD.png"},
+  {name: "Bronze 3",    min_mmr: 1800,  max_mmr: 1899, image: "https://i.imgur.com/GIt29R0.png"},
+  {name: "Bronze 2",    min_mmr: 1900,  max_mmr: 1999, image: "https://i.imgur.com/sTIXKlh.png"},
+  {name: "Bronze 1",    min_mmr: 2000,  max_mmr: 2099, image: "https://i.imgur.com/zKRDUdK.png"},
+  {name: "Silver 5",    min_mmr: 2100,  max_mmr: 2199, image: "https://i.imgur.com/CbAbvOa.png"},
+  {name: "Silver 4",    min_mmr: 2200,  max_mmr: 2299, image: "https://i.imgur.com/2Y8Yr11.png"},
+  {name: "Silver 3",    min_mmr: 2300,  max_mmr: 2399, image: "https://i.imgur.com/zNUuJSn.png"},
+  {name: "Silver 2",    min_mmr: 2400,  max_mmr: 2499, image: "https://i.imgur.com/utTa5mq.png"},
+  {name: "Silver 1",    min_mmr: 2500,  max_mmr: 2599, image: "https://i.imgur.com/27ISr4q.png"},
+  {name: "Gold 3",      min_mmr: 2600,  max_mmr: 2799, image: "https://i.imgur.com/JJvq35l.png"},
+  {name: "Gold 2",      min_mmr: 2800,  max_mmr: 2999, image: "https://i.imgur.com/Fco8pIl.png"},
+  {name: "Gold 1",      min_mmr: 3000,  max_mmr: 3199, image: "https://i.imgur.com/m8FFWGi.png"},
+  {name: "Platinum 3",  min_mmr: 3200,  max_mmr: 3599, image: "https://i.imgur.com/GpEpkDs.png"},
+  {name: "Platinum 2",  min_mmr: 3600,  max_mmr: 3999, image: "https://i.imgur.com/P8IO0Sn.png"},
+  {name: "Platinum 1",  min_mmr: 4000,  max_mmr: 4399, image: "https://i.imgur.com/52Y4EVg.png"},
+  {name: "Diamond",     min_mmr: 4400,  max_mmr: 4999, image: "https://i.imgur.com/HHPc5HQ.png"},
+  {name: "Champion",   min_mmr: 5000,  max_mmr: 15000, image: "https://i.imgur.com/QHZFdUj.png"}
+];
 
 let ranked = [];
 let unranked = [];
@@ -41,6 +66,7 @@ function getStatsRow(u, clown, unrank=false) {
   let mmrChangeColor = u.lastMMRchange >= 0 ? ( u.lastMMRchange == 0 ? 'uk-text-muted' : 'uk-text-success' ) : 'uk-text-danger';
   let mmrChange = u.lastMMRchange == undefined ? '0' : u.lastMMRchange;
   let topOps = getTopTwoOperators(u);
+  let rankCell = getRankCell(u, unrank);
 
   let a = `
     <tr>
@@ -57,8 +83,7 @@ function getStatsRow(u, clown, unrank=false) {
       </td>
 
       <td class="uk-text-middle uk-text-center uk-padding-remove-horizontal">
-        <img style="height: 4rem;" class="uk-preserve-width" src="${u.currentRankImage}" uk-tooltip="${u.currentRank}" />
-        <img style="height: 3.5rem;" class="uk-preserve-width uk-visible@m uk-margin-small-left ${unrank==true?'uk-hidden':''} " src="${u.maxRankImage}" uk-tooltip="${u.maxRank}" />
+        ${rankCell}
       </td>
 
       <td uk-tooltip="Max ${addSpaces(parseInt(u.maxMMR))}">
@@ -107,6 +132,24 @@ function getStatsRow(u, clown, unrank=false) {
 function createPfpModalRef(uID) {
   return `bnaom9s1BB_${uID}`.replaceAll("-","_");
 };
+function getRankCell(u, unrank=false) {
+  let rankedCell = `
+    <img style="height: 4rem;" class="uk-preserve-width" src="${u.currentRankImage}" uk-tooltip="${u.currentRank}" />
+    <img style="height: 3.5rem;" class="uk-preserve-width uk-visible@m uk-margin-small-left" src="${u.maxRankImage}" uk-tooltip="${u.maxRank}" />
+  `;
+  let unrankedCell = `
+    <div class="uk-inline">
+      <img style="height: 3.5rem;" class="uk-preserve-width uk-margin-small-left"
+      src="${getRankImageFromMMR(u.currentMMR)}" uk-tooltip="${getRankFromMMR(u.currentMMR)}" />
+      <div class="uk-overlay uk-position-right">
+        <span class="uk-badge">U</span>
+      </div>
+    </div>
+  `;
+  if (unrank) { return unrankedCell }
+  else { return rankedCell }
+};
+
 function diff_minutes(dt2, dt1) {
   // https://www.w3resource.com/javascript-exercises/javascript-date-exercise-44.php
   var diff =(dt2.getTime() - dt1.getTime()) / 1000;
@@ -129,8 +172,24 @@ function getPlaytime(s) {
   seconds = s % 60;
   return [hours, minutes, seconds]
 };
-
-
+function getRankFromMMR(mmr) {
+  let x = "Wrong MMR";
+  rankMMR.forEach(r => {
+    if (r.min_mmr <= mmr && mmr <= r.max_mmr) {
+      x = r.name;
+    }
+  });
+  return x
+};
+function getRankImageFromMMR(mmr) {
+  let x = "https://i.imgur.com/RpPdtbU.png";
+  rankMMR.forEach(r => {
+    if (r.min_mmr <= mmr && mmr <= r.max_mmr) {
+      x = r.image;
+    }
+  });
+  return x
+};
 
 const operatorsJson = {
   "recruitfbi": {
