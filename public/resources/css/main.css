@@ -13,6 +13,85 @@
   --uk-success-light: #3de3a5;
 }
 
+@font-face {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa"; /* Medium */
+  src: url("/resources/fonts/DM_U4OIZE8TpOW8Kw0k2MQa.otf");
+}
+@font-face {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE"; /* Normal */
+  src: url("/resources/fonts/DN_FTCAXQdEjKRXjGbCH0lE.otf");
+}
+
+.cndrd-font-medium {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+.cndrd-font-normal {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+
+h1.uk-article-title {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+h1.uk-heading-small {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+h3.uk-card-title {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+
+/* /leader */
+table.uk-table.uk-table-divider.sortable tbody tr td a.uk-text-warning {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+div.uk-flex-top.uk-modal.uk-flex.uk-open
+div.uk-modal-dialog.uk-modal-body.uk-margin-auto-vertical
+div.uk-modal-header
+h2.uk-modal-title
+span.uk-text-success {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+
+/* /siege */
+tbody#tableDataPlace tr td.uk-text-middle a {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+
+
+/* /profile */
+#usernameInput{
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE" !important;
+}
+#discordConnectedName {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+
+/* /betting */
+#mony {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+#monies-explainer-modal div div.uk-modal-body h2 {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+
+
+/* Navbar */
+nav div.uk-navbar-left ul li a span.uk-text-large.uk-text-primary.uk-margin-small-left {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+nav div.uk-navbar-left ul li a span.uk-button-text {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+a.loginButton {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+#userButtonNormal {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+#userButtonMobile {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+
+
 /* Pretty Scrollbar */
 .pretty-scrollbar *::-webkit-scrollbar {
   width: 1rem;
