@@ -60,7 +60,7 @@ function getPfpModal(u) {
 function getStatsRow(u, clown, unrank=false) {
   let pfpLink = `https://ubisoft-avatars.akamaized.net/${u.ubisoftID}/default_256_256.png`;
   let kd = u.sDeaths == 0 ? 0 : roundTwo(u.sKills / u.sDeaths);
-  let wl = u.sDeaths == 0 ? 0 : roundTwo(u.sWins / u.sDeaths * 100);
+  let wl = u.sDeaths == 0 ? 0 : roundTwo(u.sWins / (u.sWins + u.sLosses) * 100);
   let ptRAW = getPlaytime(u.totalPlaytime);
   let playtime = `${ptRAW[0]}h <span class="uk-visible@m">${ptRAW[1]}m <span class="uk-text-muted">${ptRAW[2]}s</span></span>`;
   let mmrChangeColor = u.lastMMRchange >= 0 ? ( u.lastMMRchange == 0 ? 'uk-text-muted' : 'uk-text-success' ) : 'uk-text-danger';
