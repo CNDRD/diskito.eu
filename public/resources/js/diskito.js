@@ -183,14 +183,14 @@ emojiRef.once('value').then(snapshot => {
 
 function getAllEmojiUses(arr) {
   let r = ''
-  arr.forEach(em => {
-    if (em.count > 0) { r += getEmojiUsage(em); }
+  arr.forEach((em, i) => {
+    if (em.count > 0) { r += getEmojiUsage(em, i); }
   });
   return r
 };
-function getEmojiUsage(e) {
+function getEmojiUsage(e, lol) {
   let a = `
-  <div class="uk-inline uk-dark uk-margin-small-right uk-margin-small-left uk-margin-large-top">
+  <div class="uk-inline uk-dark uk-margin-small-right uk-margin-small-left uk-margin-large-top ${lol > 8 ? 'uk-visible@s' : ''}">
     <img style="height: 4rem;" src="${e.url}" />
     <span class="uk-position-absolute uk-transform-center uk-badge" style="right: -40%; top: 0">×${e.count}</span>
   </div>
