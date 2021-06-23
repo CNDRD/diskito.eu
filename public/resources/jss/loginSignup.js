@@ -122,13 +122,37 @@ firebase.auth().onAuthStateChanged(user => {
   window.user = user;
 
   if (user != undefined) {
-    //console.log("Logged In!");
+    //Logged In
     $(loginButton).attr("hidden","hidden");
     $(userButton).removeAttr("hidden");
     UIkit.modal($("#user-modal")).hide();
+
+    firebase.database().ref(`websiteProfiles/${user.uid}/discordUID`).once("value").then(snapshot => {
+      if (snapshot.val() != undefined) {
+        firebase.database().ref(`users/${snapshot.val()}/username`).once("value").then(nameSnapshot => {
+          firebase.database().ref(`GameStats/IDs/${snapshot.val()}/ubiID`).once("value").then(gsSnapshot => {
+            if (gsSnapshot.val() != undefined) { doPersonalSiegeStats(gsSnapshot.val()); }
+          });
+        });
+      }
+    });
+
   } else {
-    //console.log("Logged Out!");
+    //Logged Out
     $(loginButton).removeAttr("hidden");
     $(userButton).attr("hidden","hidden");
   }
 });
+
+function doPersonalSiegeStats(ubiID) {
+  let normal = `
+    <a href="/r6?id=${ubiID}" class="uk-button uk-button-default uk-margin-small-top">
+      <span uk-icon="icon: play; ratio: 1.2"></span> Your R6 Stats
+    </a>`;
+  let mobile = `
+    <a href="/r6?id=${ubiID}" class="uk-button uk-button-default uk-text-emphasis uk-flex uk-flex-row uk-flex-middle uk-flex-center uk-margin-small-top" type="button">
+      Your R6 Stats <span uk-icon="icon: play; ratio: 1.2"></span>
+    </a>`;
+  $("#userButtonNormalButtons").append(normal);
+  $("#userButtonMobileButtons").append(mobile);
+};
