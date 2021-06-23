@@ -97,26 +97,8 @@
       <div class="uk-container">
         <div class="uk-flex-center uk-grid-divider uk-grid-collapse pretty-scrollbar" uk-grid>
 
-
-
           <div class="uk-width-auto@m uk-first-column">
             <article class="uk-article">
-
-              <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center">
-                <span class="uk-text-large uk-text-emphasis uk-margin-small-right">
-                  Welcome
-                </span>
-                <form id="usernameForm">
-                  <div class="uk-margin uk-margin-remove-bottom">
-                    <div class="uk-inline uk-width-medium">
-                      <button id="usernameButton" type="submit" class="uk-form-icon uk-form-icon-flip" name="button" uk-icon="icon: pencil" uk-tooltip="Save new username"></button>
-                      <input id="usernameInput" class="cndrd-username-input" value="User" type="text" />
-                    </div>
-                  </div>
-                </form>
-              </div>
-
-              <hr class="uk-divider-icon" />
 
               <div id="plsLoginMessage" class="uk-text-emphasis uk-text-large uk-text-center" style="display: none;">
                 It seems like you're not logged in sir.. <br>
@@ -126,9 +108,7 @@
               </div>
 
               <div id="discordConnectionDiv" class="uk-flex uk-flex-column uk-flex-center">
-
-
-                <div id="discordConnection">
+                <div id="discordConnection" class="uk-flex uk-flex-center">
                   <span id="discordConnectionIcon" uk-icon="icon: discord; ratio: 1.5" style="display: none"></span>
                   <span id="discordConnectionLoader" uk-spinner></span>
                   <span id="discordSuccessfullyConnected" style="display: none">
@@ -138,8 +118,6 @@
                     Please connect your Discord account
                   </span>
                 </div>
-
-
                 <div id="discordConnectionCode" class="uk-flex uk-flex-column uk-flex-center uk-margin-large-top" style="display: none">
                   <span>Go to Diskíto and send this 👇 command to <span class="badge badge-discord">#host-hq</span></span>
                   <div class="uk-inline uk-margin-small-top">
@@ -147,7 +125,13 @@
                     <input id="discordConnectionCodeInput" class="cndrd-username-input uk-text-center" type="text" />
                   </div>
                 </div>
+              </div>
 
+              <hr class="uk-divider-icon" />
+
+              <div id="personalDiscordStats" class="uk-flex uk-flex-column uk-flex-left uk-width-medium" style="display: none">
+                <h3>All Your Stats</h3>
+                <div id="personalDiscordStatsPlace"></div>
               </div>
 
             </article>

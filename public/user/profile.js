@@ -18,10 +18,78 @@ firebase.auth().onAuthStateChanged(userAuth => {
         $("#discordConnectionCodeButton").attr("onclick", `copyThis(',connect ${discordConnectID}')`)
       }
     });
-    $("#usernameInput").attr("value", user.displayName);
 
   }
 });
+
+
+function doDiscordStats() {
+  let discordStatsDiv = "#personalDiscordStatsPlace";
+  const goodStatKeys = ["all_time_total_voice", "voice_year_2020", "voice_year_2021", "voice_year_2022",
+                        "cicna_avg", "cicina_count", "cicina_last", "cicina_longest", "joined_discord", "joined_server",
+                        "last_xp_get", "level", "messages_count", "money", "reacc_points", "xp"];
+
+  $(discordStatsDiv).replaceWith('<div id="personalDiscordStatsPlace"></div>');
+
+  firebase.database().ref(`websiteProfiles/${user.uid}/discordUID`).once("value").then(snapshot => {
+    firebase.database().ref(`users/${snapshot.val()}`).once("value").then(ns => {
+      let zmrd = ns.val();
+
+      for (const key in zmrd) {
+        if (goodStatKeys.includes(key)) {
+          let fancyKey = getFancyKey(key);
+          let fancyValue = getFancyValue(key, zmrd[key])
+          let msgLmao = `
+            <div class="uk-flex uk-flex-between">
+              <span>${fancyKey}</span>
+              <span>${fancyValue}</span>
+            </div>`;
+          $(discordStatsDiv).append(msgLmao);
+        }
+      }
+
+    });
+  });
+};
+function getFancyKey(key) {
+  let xd = {
+    all_time_total_voice: "All Time Total Voice",
+    voice_year_2020: "2020 Total Voice",
+    voice_year_2021: "2021 Total Voice",
+    voice_year_2022: "2022 Total Voice",
+    cicna_avg: "Average Cicina",
+    cicina_count: "Total Cicina Tries",
+    cicina_last: "Last Cicina Try",
+    cicina_longest: "Longest Cicina",
+    joined_discord: "Joined Discord",
+    joined_server: "Joined Diskíto",
+    last_xp_get: "Last Time You Got XP",
+    level: "Level",
+    xp: "XP",
+    messages_count: "Number of Messages",
+    money: "Money",
+    reacc_points: "Reaction Points",
+  }
+  return xd[key]
+};
+function getFancyValue(key, value) {
+
+  let fuckWithDate = (date) => { return new Date(date).toLocaleString() }
+
+  switch (key) {
+    case "joined_discord": return fuckWithDate(value*1000);
+    case "joined_server": return fuckWithDate(value*1000);
+    case "last_xp_get": return fuckWithDate(value*1000);
+    case "cicina_last": return `${fuckWithDate(value).split(" ")[0]} ${fuckWithDate(value).split(" ")[1]} ${fuckWithDate(value).split(" ")[2]}`;
+    case "cicna_avg": return (Math.round((value + Number.EPSILON) * 100) / 100);
+    case "all_time_total_voice": return `${getOneTime(value)} hr`;
+    case "voice_year_2020": return `${getOneTime(value)} hr`;
+    case "voice_year_2021": return `${getOneTime(value)} hr`;
+    case "voice_year_2022": return `${getOneTime(value)} hr`;
+  }
+
+  return addSpaces(value)
+};
 
 function isDiscordConnected(lolz) {
   let icon = "#discordConnectionIcon";
@@ -29,42 +97,39 @@ function isDiscordConnected(lolz) {
   let success = "#discordSuccessfullyConnected";
   let fucked = "#discordNotConnected";
   let connectDiscord = "#discordConnectionCode";
+  let discordStats = "#personalDiscordStats";
+
   if (lolz) {
+    /* Yes */
     $(loader).hide();
     $(icon).show();
     $(success).show();
     $(fucked).hide();
     $(connectDiscord).hide();
+    doDiscordStats();
+    $(discordStats).show();
   } else {
+    /* No */
     $(loader).hide();
     $(icon).show();
     $(success).hide();
     $(fucked).show();
     $(connectDiscord).show();
+    $(discordStats).hide();
   }
 };
 
 function isUser(huh) {
   if (huh) {
     $("#plsLoginMessage").hide();
-    $("#usernameForm").show();
     $("#discordConnection").show();
+    $("#personalDiscordStats").show();
   } else {
     $("#plsLoginMessage").show();
-    $("#usernameForm").hide();
     $("#discordConnection").hide();
+    $("#personalDiscordStats").hide();
   }
 }
-
-/* Name changer */
-$("#usernameForm").submit(function(e) {
-  e.preventDefault();
-  let newName = $("#usernameInput").val();
-  user.updateProfile({displayName: newName});
-  $("#usernameButton").attr("uk-icon", "icon: check");
-  UIkit.notification({message: "<span uk-icon='icon: check'></span> Username changed!", status: "success"});
-  setTimeout(function(){ $("#usernameButton").attr("uk-icon", "icon: pencil"); }, 3000);
-});
 
 let discordConnectionRef = firebase.database().ref('discordConnection');
 discordConnectionRef.on('value', snapshot => {
