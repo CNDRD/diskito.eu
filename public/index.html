@@ -98,7 +98,6 @@
         <div class="uk-flex-center uk-grid-divider uk-grid-collapse pretty-scrollbar" uk-grid>
 
           <div class="uk-width-auto@m uk-first-column">
-
             <article class="uk-article">
               <h1 class="uk-article-title">Links</h1>
               <hr class="uk-divider-small" />
@@ -145,13 +144,29 @@
               </a>
 
             </article>
+
+            <hr class="uk-divider-icon" />
+
+            <article class="uk-article uk-margin-remove-vertical">
+              <div>
+                For all the personal stats
+                <span class="loginButton uk-text-warning uk-text-light" uk-toggle="target: #user-modal" style="cursor: pointer;">
+                  login here
+                </span>
+                <a href="/user/profile" class="userButton uk-text-warning uk-text-light">
+                  visit your profile page here
+                </a>
+              </div>
+
+            </article>
+
           </div>
 
           <div id="inVoice" hidden></div>
 
           <div style="min-width: 30%;" class="uk-width-auto@m">
             <article class="uk-article">
-              <h1 class="uk-article-title" id='nowOnline'>Now Online</h1>
+              <h1 class="uk-article-title" id="nowOnline">Now Online</h1>
               <hr class="uk-divider-small" />
               <div class="uk-height-large uk-overflow-auto" id="widget"></div>
             </article>
