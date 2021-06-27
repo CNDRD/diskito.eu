@@ -45,8 +45,19 @@ userDataRef.once("value").then(snapshot => {
   unranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, true)); $("#bnaom9s1BB").append(getPfpModal(u)); clown++; });
 });
 
+let last_update;
 let lastUpdateRef = firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`);
-lastUpdateRef.once('value').then(snapshot => { $("#lastUpdated").text( `~${diff_minutes(new Date(snapshot.val()*1000), new Date())}` ); });
+lastUpdateRef.once('value').then(snapshot => {
+  $("#lastUpdated").text( `~${diff_minutes(new Date(snapshot.val()*1000), new Date())}` );
+  last_update = snapshot.val();
+
+  firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).on('value', snapshot => {
+    if (snapshot.val() != last_update) { location.reload(); }
+  });
+
+});
+
+
 
 function getPfpModal(u) {
   return `
