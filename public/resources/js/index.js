@@ -102,10 +102,6 @@ firebase.database().ref("widget").on("value", snapshot => {
     let user = childSnapshot.val();
     if (user.status == "offline") { return }
 
-    if (user.usernam == "bitel") {
-      console.log(user);
-    }
-
     let a = `
       <!-- ${user.username} -->
       <div class="uk-flex uk-flex-between">
@@ -167,7 +163,7 @@ function widgetActivities(activities) {
   gaem = gaem.replace("Counter Strike: Global Offensive", "CS:GO");
   return reduceStringLength(gaem , 23);
 };
-function widgetVoiceIcons(user) {
+function widgetVoiceIcons(voice) {
   let width = 17;
   let height = 17;
 
@@ -202,19 +198,31 @@ function widgetVoiceIcons(user) {
   <path d="M19.725 9.91686C19.9043 10.5813 20 11.2796 20 12V15H18C16.896 15 16 15.896 16 17V20C16 21.104 16.896 22 18 22H20C21.105 22 22 21.104 22 20V12C22 10.7075 21.7536 9.47149 21.3053 8.33658L19.725 9.91686Z" class='uk-text-danger' fill="currentColor"></path>
   <path d="M3.20101 23.6243L1.7868 22.2101L21.5858 2.41113L23 3.82535L3.20101 23.6243Z" class='uk-text-danger' fill="currentColor"></path></svg>`
 
+  let screenshare = `<svg aria-hidden="false" width="${width}" height="${height}" viewBox="0 0 24 24">
+  <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M2 4.5C2 3.397 2.897 2.5 4 2.5H20C21.103 2.5 22 3.397 22 4.5V15.5C22 16.604 21.103 17.5 20
+  17.5H13V19.5H17V21.5H7V19.5H11V17.5H4C2.897 17.5 2 16.604 2 15.5V4.5ZM13.2 14.3375V11.6C9.864 11.6 7.668 12.6625 6 15C6.672 11.6625 8.532 8.3375 13.2 7.6625V5L18 9.6625L13.2 14.3375Z"></path></svg>`
+  let videoshare = `<svg aria-hidden="false" width="${width}" height="${height}" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M21.526 8.149C21.231 7.966 20.862 7.951 20.553 8.105L18 9.382V7C18 5.897 17.103 5 16 5H4C2.897 5 2 5.897 2 7V17C2 18.104 2.897 19 4 19H16C17.103 19
+     18 18.104 18 17V14.618L20.553 15.894C20.694 15.965 20.847 16 21 16C21.183 16 21.365 15.949 21.526 15.851C21.82 15.668 22 15.347 22 15V9C22 8.653 21.82 8.332 21.526 8.149Z"></path></svg>`
+
 
   let icons = ''
   // Not in voice
-  if (user.mute == undefined || user.deaf == undefined || user.self_mute == undefined || user.self_deaf == undefined) { return '' }
+  if (voice.mute == undefined || voice.deaf == undefined || voice.self_mute == undefined || voice.self_deaf == undefined) { return '' }
+
+  // Screen sharing
+  if (voice.self_stream != undefined && voice.self_stream) { icons += screenshare }
+  // Video
+  if (voice.self_video != undefined && voice.self_video) { icons += videoshare }
 
   // Speaking
-  if (user.mute != undefined && user.mute) { icons += serverMuted }
-  else if (user.self_mute != undefined && user.self_mute) { icons += selfMuted }
+  if (voice.mute != undefined && voice.mute) { icons += serverMuted }
+  else if (voice.self_mute != undefined && voice.self_mute) { icons += selfMuted }
   else { icons += mic }
 
   // Listening
-  if (user.deaf != undefined && user.deaf) { icons += serverDeafened }
-  else if (user.self_deaf != undefined && user.self_deaf) { icons += selfDeafened }
+  if (voice.deaf != undefined && voice.deaf) { icons += serverDeafened }
+  else if (voice.self_deaf != undefined && voice.self_deaf) { icons += selfDeafened }
   else { icons += earphones }
 
   return icons
