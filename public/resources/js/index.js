@@ -36,8 +36,9 @@ function widgetFlags(user) {
   if (user.house == "none" && user.premium_since == "none") { return "" }
 
   let house = house_name = "";
-  let nitro = nitro_since = "";
+  let booster = booster_since = "";
   let wh = 17;
+  let bwh = 10;
 
   switch (user.house) {
     case "brilliance":
@@ -55,10 +56,10 @@ function widgetFlags(user) {
   }
 
   if (user.premium_since != "none") {
-    nitro = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/386884eecd36164487505ddfbac35a9d.svg" width=${wh} height=${wh} uk-svg />`;
-    nitro_since = getNitroTime(user.premium_since);
+    booster = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/booster.svg" width=${bwh} height=${bwh} uk-svg />`;
+    booster_since = getNitroTime(user.premium_since);
   }
-  return `<div class="uk-flex uk-flex-row" uk-tooltip="${house_name}">${house}</div><div class="uk-flex uk-flex-row" uk-tooltip="since ${nitro_since}">${nitro}</div>`
+  return `<div class="uk-flex uk-flex-row" uk-tooltip="${house_name}">${house}</div><div class="uk-flex uk-flex-row" uk-tooltip="since ${booster_since}">${booster}</div>`
 };
 function widgetActivities(activities) {
   if (!activities || activities.other == undefined) { return ""; }
