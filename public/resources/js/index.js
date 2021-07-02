@@ -67,6 +67,7 @@ function widgetActivities(activities) {
   let gaem = activities.other[activities.other.length - 1];
   gaem = gaem.replace("PLAYERUNKNOWN'S BATTLEGROUNDS", "PUBG");
   gaem = gaem.replace("Counter Strike: Global Offensive", "CS:GO");
+  gaem = gaem.replace("Tom Clancy's Rainbow Six Siege", "Rainbow Six: Siege");
   return reduceStringLength(gaem , 23);
 };
 function widgetVoiceIcons(voice) {
