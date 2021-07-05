@@ -17,7 +17,7 @@ firebase.database().ref("widget").on("value", snapshot => {
         <div class="uk-flex uk-flex-row uk-flex-nowrap">
           ${widgetVoiceIcons(user.voice)}
           ${widgetSpotify(user.activities)}
-          <div class="uk-text-muted" style="margin-left: 5px">${widgetActivities(user.activities)}</div>
+          ${widgetActivities(user.activities)}
         </div>
       </div>`;
     $("#widget").append(a);
@@ -77,10 +77,19 @@ function widgetActivities(activities) {
   if (!activities || activities.other == undefined) { return ""; }
 
   let gaem = activities.other[activities.other.length - 1];
+  activities.other.pop();
+
   gaem = gaem.replace("PLAYERUNKNOWN'S BATTLEGROUNDS", "PUBG");
   gaem = gaem.replace("Counter-Strike: Global Offensive", "CS:GO");
   gaem = gaem.replace("Tom Clancy's Rainbow Six Siege", "Rainbow Six: Siege");
-  return reduceStringLength(gaem , 23);
+
+  let moreActivities = "";
+  if (activities.other.length > 0) {
+    activities.other.forEach(act => { moreActivities += `& ${act}`; });
+  }
+
+  gaem = `<div class="uk-text-muted" style="margin-left: 5px" uk-tooltip="title:${moreActivities};pos:right">${reduceStringLength(gaem , 23)}</div>`;
+  return gaem;
 };
 function widgetVoiceIcons(voice) {
   let width = 17;
