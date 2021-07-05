@@ -37,6 +37,7 @@ function widgetFlags(user) {
 
   let house = house_name = "";
   let booster = booster_since = "";
+  let on_mobile = "";
   let wh = 17;
   let bwh = 10;
 
@@ -56,10 +57,21 @@ function widgetFlags(user) {
   }
 
   if (user.premium_since != "none") {
-    booster = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/booster.svg" width=${bwh} height=${bwh} uk-svg />`;
-    booster_since = getNitroTime(user.premium_since);
+    booster = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/${getBoostingBadge(user.premium_since)}.svg" width=${wh} height=${wh} uk-svg />`;
+    booster_since = getReadableBoostingSinceTime(user.premium_since);
   }
-  return `<div class="uk-flex uk-flex-row" uk-tooltip="${house_name}">${house}</div><div class="uk-flex uk-flex-row" uk-tooltip="since ${booster_since}">${booster}</div>`
+
+  if (user.is_on_mobile) {
+    on_mobile = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/on_mobile.svg" width=${bwh} height=${bwh} uk-svg />`;
+  }
+
+  let flags = `
+    <div class="uk-flex uk-flex-row">${on_mobile}</div>
+    <div class="uk-flex uk-flex-row" uk-tooltip="${house_name}">${house}</div>
+    <div class="uk-flex uk-flex-row" uk-tooltip="since ${booster_since}">${booster}</div>
+  `;
+
+  return flags
 };
 function widgetActivities(activities) {
   if (!activities || activities.other == undefined) { return ""; }
@@ -144,7 +156,7 @@ function widgetSpotify(activities) {
     </div>`;
   return spotify
 };
-function getNitroTime(UNIX_timestamp){
+function getReadableBoostingSinceTime(UNIX_timestamp){
   // https://stackoverflow.com/a/6078873/13186339
   let a = new Date(UNIX_timestamp * 1000);
   let months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -152,6 +164,22 @@ function getNitroTime(UNIX_timestamp){
   let month = months[a.getMonth()];
   let date = a.getDate();
   return `${month} ${date}, ${year}`;
+};
+function getBoostingBadge(UNIX_timestamp) {
+  let now = Math.floor(Date.now() / 1000)
+  let diff = now - UNIX_timestamp;
+  let month = 2629743.83; // 2,629,743.83 seconds, according to Google
+
+  if (diff <= month) { return "booster_levels/booster_1" }
+  if (diff <= month * 2) { return "booster_levels/booster_2" }
+  if (diff <= month * 3) { return "booster_levels/booster_3" }
+  if (diff <= month * 6) { return "booster_levels/booster_6" }
+  if (diff <= month * 9) { return "booster_levels/booster_9" }
+  if (diff <= month * 12) { return "booster_levels/booster_12" }
+  if (diff <= month * 15) { return "booster_levels/booster_15" }
+  if (diff <= month * 18) { return "booster_levels/booster_18" }
+  if (diff <= month * 24) { return "booster_levels/booster_24" }
+  return "booster"
 };
 
 
