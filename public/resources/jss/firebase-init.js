@@ -4,3 +4,4 @@ var firebaseConfig = {
   storageBucket: "chuckwalla-69.appspot.com", messagingSenderId: "1089559873334",
   appId: "1:1089559873334:web:4399166af2301cd8631597", measurementId: "G-VSR8WK6BJT"};
 firebase.initializeApp(firebaseConfig);
+firebase.analytics();
