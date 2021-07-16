@@ -48,8 +48,16 @@ userDataRef.once("value").then(snapshot => {
 let last_update;
 let lastUpdateRef = firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`);
 lastUpdateRef.once('value').then(snapshot => {
-  $("#lastUpdated").text( `~${diff_minutes(new Date(snapshot.val()*1000), new Date())}` );
   last_update = snapshot.val();
+
+  let lastUpdateInterval = setInterval(function() {
+    let now = parseInt(Date.now()/1000);
+    let diff = now - last_update;
+
+    $("#lastUpdated").replaceWith(`<span id="lastUpdated">${getUpdateTimeString(diff)}</span>`);
+
+    if (diff >= 180) { $("#siegeManualUpdateButton").removeAttr("hidden"); }
+  }, 1000);
 
   firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).on('value', snapshot => {
     if (snapshot.val() != last_update) { location.reload(); }
@@ -57,6 +65,21 @@ lastUpdateRef.once('value').then(snapshot => {
 
 });
 
+function getUpdateTimeString(s) {
+  let hours = Math.floor(s / 3600);
+  s %= 3600;
+  let minutes = Math.floor(s / 60);
+  let seconds = s % 60;
+
+  if (parseInt(minutes) == 0) {
+    return `${seconds} second${seconds == 1 ? '' : 's'}`
+  }
+  if (parseInt(hours) == 0) {
+    return `${minutes} minute${minutes == 1 ? '' : 's'} ${seconds} second${seconds == 1 ? '' : 's'}`
+  }
+
+  return `${hours}:${minutes}:${seconds}`
+};
 
 
 function getPfpModal(u) {
@@ -163,12 +186,6 @@ function getRankCell(u, unrank=false) {
   else { return rankedCell }
 };
 
-function diff_minutes(dt2, dt1) {
-  // https://www.w3resource.com/javascript-exercises/javascript-date-exercise-44.php
-  var diff =(dt2.getTime() - dt1.getTime()) / 1000;
-  diff /= 60;
-  return Math.abs(Math.round(diff));
-};
 function orderBySubKey(dict, key) {
   return Object.values( dict ).map( value => value ).sort( (a,b) => b[key] - a[key] );
 };
@@ -217,3 +234,12 @@ function getNextRankMMR(mmr) {
   });
   return x
 };
+
+
+$('#siegeManualUpdateButton').click(function () {
+  firebase.database().ref("GameStats/updateRequests/R6S").set(parseInt(Date.now()/1000));
+  UIkit.notification({
+    message: `Request to update the stats has been sent! The page will reload once the stats are ready.`,
+    pos: 'top-right', timeout: 7500
+  });
+});

@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="/resources/css/main.css" />
     <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
 
-    <script src="/resources/js/siege.js" charset="utf-8"></script>
     <script src="/resources/jss/sorttable.js" charset="utf-8"></script>
     <script defer src="/resources/jss/loginSignup.js" charset="utf-8"></script>
 
@@ -100,6 +99,16 @@
     <div class="uk-section uk-padding-remove-bottom">
       <div class="uk-container">
 
+        <div class="uk-flex uk-flex-column uk-text-right">
+          <div>
+            Last update: <div id="lastUpdated" uk-spinner="ratio: 0.5"></div> ago
+          </div>
+          <a id="siegeManualUpdateButton" class="uk-flex uk-flex-middle uk-flex-right pls-no-click" hidden>
+            <span style="margin-right: 5px" uk-icon="icon:refresh"></span>
+            Request Update
+          </a>
+        </div>
+
         <div class="uk-overflow-auto">
           <table class="uk-table uk-table-divider sortable">
             <thead class="pls-no-click" style="background: rgb(34, 34, 34);">
@@ -128,15 +137,13 @@
         <div class="uk-flex uk-flex-around uk-flex-wrap">
 
           <div class="uk-text-center uk-text-middle uk-text-muted uk-margin-small-bottom">
-            <span class="uk-badge">U</span> means this user is <i>Unranked</i>
-            <br />
             Click on the profile picture to make it bigger.
             <br />
-            Click on a users name to see a more detailed page!
+            Click on a username to see a more detailed page!
           </div>
           <div class="uk-text-center uk-text-middle uk-text-muted">
-            <span>Last update: <div id="lastUpdated" uk-spinner="ratio: 0.5"></div> minutes ago</span>
-            <br/>
+            <span class="uk-badge">U</span> means this user is <i>Unranked</i>
+            <br />
             <span>These stats <i>should</i> be updated every 30 minutes</span>
           </div>
 
@@ -204,5 +211,6 @@
       </div>
     </div>
 
+    <script src="/resources/js/siege.js" charset="utf-8"></script>
   </body>
 </html>
