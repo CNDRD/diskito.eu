@@ -43,16 +43,16 @@ function widgetFlags(user) {
 
   switch (user.house) {
     case "brilliance":
-      house = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/48cf0556d93901c8cb16317be2436523.svg" width=${wh} height=${wh} uk-svg />`;
+      house = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/hs_brilliance.svg" width=${wh} height=${wh} uk-svg />`;
       house_name = "Brilliance";
       break;
     case "balance":
-      house = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/9fdc63ef8a3cc1617c7586286c34e4f1.svg" width=${wh} height=${wh} uk-svg />`;
+      house = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/hs_balance.svg" width=${wh} height=${wh} uk-svg />`;
       house_name = "Balance";
       break;
-    case "balance":
-      house = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/64ae1208b6aefc0a0c3681e6be36f0ff.svg" width=${wh} height=${wh} uk-svg />`;
-      house_name = "Balance";
+    case "bravery":
+      house = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/hs_bravery.svg" width=${wh} height=${wh} uk-svg />`;
+      house_name = "Bravery";
       break;
   }
 
@@ -66,8 +66,8 @@ function widgetFlags(user) {
   }
 
   let flags = `
-    <div class="uk-flex uk-flex-row">${on_mobile}</div>
     <div class="uk-flex uk-flex-row" uk-tooltip="${house_name}">${house}</div>
+    <div class="uk-flex uk-flex-row">${on_mobile}</div>
     <div class="uk-flex uk-flex-row" uk-tooltip="since ${booster_since}">${booster}</div>
   `;
 
@@ -82,6 +82,8 @@ function widgetActivities(activities) {
   gaem = gaem.replace("PLAYERUNKNOWN'S BATTLEGROUNDS", "PUBG");
   gaem = gaem.replace("Counter-Strike: Global Offensive", "CS:GO");
   gaem = gaem.replace("Tom Clancy's Rainbow Six Siege", "Rainbow Six: Siege");
+  gaem = gaem.replace("Rainbow Six Siege", "Rainbow Six: Siege");
+  gaem = gaem.replace("The Elder Scrolls", "TES");
 
   let moreActivities = "";
   if (activities.other.length > 0) {
