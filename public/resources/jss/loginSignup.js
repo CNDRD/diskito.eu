@@ -146,7 +146,7 @@ firebase.auth().onAuthStateChanged(user => {
 
 function doPersonalSiegeStats(ubiID) {
   let normal = `
-    <a href="/r6?id=${ubiID}" class="uk-button uk-button-default uk-margin-small-top">
+    <a href="/r6?id=${ubiID}" class="uk-button uk-button-default uk-margin-small-top uk-flex uk-flex-row uk-flex-middle uk-flex-center">
       <span uk-icon="icon: play; ratio: 1.2"></span> Your R6 Stats
     </a>`;
   let mobile = `
