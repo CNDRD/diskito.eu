@@ -42,6 +42,7 @@ userDataRef.once("value").then(function(snapshot){
     if (user.xp != 0 || user.lvl != 0) {
       $("#tableDataPlace").append(getStatsDataRow(i, user));
       $("#modalsColony").append(getModal(user));
+      $("#AnsW6MRxRo").append(getPfpModal(user));
       i++;
     };
   });
@@ -58,8 +59,10 @@ function getStatsDataRow(i, u) {
       <td class="uk-visible@m uk-text-middle">
         ${i}
       </td>
-      <td class="uk-visible@m">
-        <img class="uk-preserve-width uk-align-center" src="${u.avatarURL}" width="40" />
+      <td class="uk-visible@m uk-flex uk-flex-middle uk-flex-center">
+        <a href="#${createPfpModalRef(u.discordID)}" uk-toggle>
+          <img style="height: 3rem;" class="uk-preserve-width" src="${u.avatarURL}" />
+        </a>
       </td>
       <td class="uk-text-middle">
         <a href="#xd${u.discordID}" class="uk-text-warning" uk-toggle>
@@ -102,13 +105,13 @@ function getModal(u) {
     cicina = `
     <p class="uk-text-light">
       Tvoja najdlhšia cicina bola <span class="uk-text-success">${addSpaces(u.cicinaLongest)}</span> cm.<br>
-      Po <span class="uk-text-success">${u.cicinaCount}</span> ${u.cicinaCount == 1 ? "pokusu" : "pokusoch"}
+      Po <span class="uk-text-success">${addSpaces(u.cicinaCount)}</span> ${u.cicinaCount == 1 ? "pokusu" : "pokusoch"}
       je celkový priemer <span class="uk-text-success">${Math.round(u.cicinaAverage*10)/10}</span> cm.
     </p>`
   }
 
   let messagesText = u.mess_cnt > 0 ? `<br>sending a total of <span class="uk-text-success">${addSpaces(u.mess_cnt)}</span> ${u.mess_cnt == 1 ? "message" : "messages"}` : "";
-  let timeInVoiceText = u.allTimeVoice > 0 ? `${messagesText == "" ? "" : 'and '}<br> spending <span class='uk-text-success'>${Math.round((u.allTimeVoice/60/60)*1)/1}</span> total hours in voice` : "";
+  let timeInVoiceText = u.allTimeVoice > 0 ? `${messagesText == "" ? "" : 'and '}<br> spending <span class='uk-text-success'>${addSpaces(Math.round((u.allTimeVoice/60/60)*1)/1)}</span> total hours in voice` : "";
   let rpText = u.reacc_points != 0 ? `<p class="uk-text-light">For all of those messages other users have awarded <span class='uk-text-success'>${addSpaces(u.reacc_points)}</span> reaction point${u.reacc_points != 1 ? "s" : ""}.</p>` : "";
 
   if (messagesText == '' && timeInVoiceText == ''){
@@ -147,6 +150,18 @@ function getModal(u) {
   </div>
   `;
   return a;
+};
+function createPfpModalRef(id) {
+  return `AnsW6MRxRo_${id}`;
+};
+function getPfpModal(u) {
+  return `
+  <div id="${createPfpModalRef(u.discordID)}" class="uk-flex-top" uk-modal>
+    <div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical">
+      <button class="uk-modal-close-outside" type="button" uk-close></button>
+      <img src="${u.avatarURL}" />
+    </div>
+  </div>`;
 };
 
 function reduceNameLength(a){
