@@ -35,7 +35,10 @@ function updateHeader(d) {
   $('#profile_picture').attr('src', `https://ubisoft-avatars.akamaized.net/${d.ubisoftID}/default_256_256.png`);
   $('#TGVjGjztIQ').removeClass("uk-placeholder");
   $('#profile_picture').removeAttr("hidden");
-  $('#username').text(d.ubisoftUsername);
+
+  $('#username').text(reduceNameLength(d.ubisoftUsername, 13));
+  $('#username').attr("uk-tooltip",d.ubisoftUsername);
+
   document.title = `${d.ubisoftUsername}'s Rainbow Six: Siege Stats'`;
   $('#level').text(d.level);
   $('#alpha_pack').text(`${roundTwo(d.alphapackProbability/100)}%`);
@@ -137,7 +140,9 @@ function updateOperatorCard(d) {
   });
 };
 
-
+function reduceNameLength(a, len=14){
+  return a.length > (len) ? `${a.substr(0,len)}..` : a.substr(0,len)
+};
 function orderBySubKey(dict, key) {
   return Object.values( dict ).map( value => value ).sort( (a,b) => b[key] - a[key] );
 };
