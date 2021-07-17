@@ -71,14 +71,16 @@ function getUpdateTimeString(s) {
   let minutes = Math.floor(s / 60);
   let seconds = s % 60;
 
-  if (parseInt(minutes) == 0) {
-    return `${seconds} second${seconds == 1 ? '' : 's'}`
+  let msg = `${seconds} second${seconds == 1 ? '' : 's'}`;
+
+  if (parseInt(minutes) != 0) {
+    msg = `${minutes} minute${minutes == 1 ? '' : 's'} ${msg}`
   }
-  if (parseInt(hours) == 0) {
-    return `${minutes} minute${minutes == 1 ? '' : 's'} ${seconds} second${seconds == 1 ? '' : 's'}`
+  if (parseInt(hours) != 0) {
+    msg = `${hours} hour${hours == 1 ? '' : 's'} ${msg}`
   }
 
-  return `${hours}:${minutes}:${seconds}`
+  return msg
 };
 
 
