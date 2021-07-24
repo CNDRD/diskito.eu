@@ -1,5 +1,13 @@
 $("table").stickyTableHeaders();
 
+
+/*
+
+currentYearVoice:cD[`voice_year_${year}`] ? cD[`voice_year_${year}`] : 0,
+discordID:uid,
+
+*/
+
 const arr = []
 let userDataRef = firebase.database().ref("users").orderByKey();
 userDataRef.once("value").then(function(snapshot){
@@ -16,30 +24,19 @@ userDataRef.once("value").then(function(snapshot){
 
     if (cD.username === undefined || cD.in_server == false || cD.joined_server === undefined){return}
 
-    arr.push({
-      user_name:cD.username,
-      xp:cD.xp,
-      lvl:cD.level,
-      reacc_points:cD.reacc_points,
-      mess_cnt:cD.messages_count,
-      avatarURL:cD.avatar_url,
-      joinedDiscord:cD.joined_discord,
-      joinedServer:cD.joined_server,
-      allTimeVoice:cD.all_time_total_voice ? cD.all_time_total_voice : 0,
-      currentYearVoice:cD[`voice_year_${year}`] ? cD[`voice_year_${year}`] : 0,
-      cicinaLongest:cD.cicina_longest ? cD.cicina_longest : 0,
-      cicinaAverage:cD.cicina_avg ? cD.cicina_avg : 0,
-      cicinaCount:cD.cicina_count ? cD.cicina_count: 0,
-      discordID:uid,
-      money:cD.money,
-    }); /* arr.push() */
+    cD['currentYearVoice'] = cD[`voice_year_${year}`] ? cD[`voice_year_${year}`] : 0;
+    cD['discordID'] = uid;
+    cD.cicina_longest = cD.cicina_longest ? cD.cicina_longest : 0;
+    //console.table(cD);
+    arr.push(cD);
+
   }); /* snapshot.forEach() */
 
   arr.sort(function(a, b){return b.xp - a.xp})
 
   let i = 1;
   arr.forEach(user => {
-    if (user.xp != 0 || user.lvl != 0) {
+    if (user.xp != 0 || user.level != 0) {
       $("#tableDataPlace").append(getStatsDataRow(i, user));
       $("#modalsColony").append(getModal(user));
       $("#AnsW6MRxRo").append(getPfpModal(user));
@@ -50,18 +47,18 @@ userDataRef.once("value").then(function(snapshot){
 
 
 function getStatsDataRow(i, u) {
-  let splitname = (u.user_name).split("#");
-  let levelPercentage = getLevelBarPercentage(u.lvl, u.xp);
+  let splitname = (u.username).split("#");
+  let levelPercentage = getLevelBarPercentage(u.level, u.xp);
 
   let a = `
-    <!-- ${u.user_name} -->
+    <!-- ${u.username} -->
     <tr>
       <td class="uk-visible@m uk-text-middle">
         ${i}
       </td>
       <td class="uk-visible@m uk-flex uk-flex-middle uk-flex-center">
         <a href="#${createPfpModalRef(u.discordID)}" uk-toggle>
-          <img style="height: 3rem;" class="uk-preserve-width" src="${u.avatarURL}" />
+          <img style="height: 3rem;" class="uk-preserve-width" src="${u.avatar_url}" />
         </a>
       </td>
       <td class="uk-text-middle">
@@ -70,11 +67,11 @@ function getStatsDataRow(i, u) {
         </a>
       </td>
       <td sorttable_customkey="${u.xp}" class="uk-text-center uk-text-middle" uk-tooltip="${addSpaces(u.xp)} XP">
-        <span class="uk-text-primary">${u.lvl}</span>
+        <span class="uk-text-primary">${u.level}</span>
         <span class="uk-text-muted uk-visible@m"> ${levelPercentage}%</span>
       </td>
-      <td sorttable_customkey="${u.mess_cnt}" class="uk-text-center uk-text-middle uk-text-light">
-        ${addSpaces(u.mess_cnt)}
+      <td sorttable_customkey="${u.messages_count}" class="uk-text-center uk-text-middle uk-text-light">
+        ${addSpaces(u.messages_count)}
       </td>
       <td sorttable_customkey="${u.currentYearVoice}" class="uk-text-center uk-text-middle uk-text-light">
         ${getOneTime(u.currentYearVoice)}
@@ -86,32 +83,32 @@ function getStatsDataRow(i, u) {
         ${addSpaces(u.reacc_points)}
       </td>
       <td class="uk-text-center uk-text-middle uk-text-light uk-visible@m">
-        <span>${addSpaces(u.cicinaLongest)}</span>
+        <span>${addSpaces(u.cicina_longest)}</span>
         <span class="uk-text-muted"> cm</span>
       </td>
     </tr>`;
   return a
 };
 function getModal(u) {
-  let splitname = u.user_name.split("#");
+  let splitname = u.username.split("#");
   let unixTimestamp = Math.floor(Date.now() / 1000);
-  let daysInDiskito = Math.round(((unixTimestamp - u.joinedServer) / 60 / 60 / 24) * 100) / 100;
-  let joinedDiskitoDate = getDateAndTimeInTooltipFromTimestamp(u.joinedServer);
+  let daysInDiskito = Math.round(((unixTimestamp - u.joined_server) / 60 / 60 / 24) * 100) / 100;
+  let joinedDiskitoDate = getDateAndTimeInTooltipFromTimestamp(u.joined_server);
 
   let cicina = "";
   let magic = "";
 
-  if (u.cicinaCount > 0) {
+  if (u.cicina_count > 0) {
     cicina = `
     <p class="uk-text-light">
-      Tvoja najdlhšia cicina bola <span class="uk-text-success">${addSpaces(u.cicinaLongest)}</span> cm.<br>
-      Po <span class="uk-text-success">${addSpaces(u.cicinaCount)}</span> ${u.cicinaCount == 1 ? "pokusu" : "pokusoch"}
-      je celkový priemer <span class="uk-text-success">${Math.round(u.cicinaAverage*10)/10}</span> cm.
+      Tvoja najdlhšia cicina bola <span class="uk-text-success">${addSpaces(u.cicina_longest)}</span> cm.<br>
+      Po <span class="uk-text-success">${addSpaces(u.cicina_count)}</span> ${u.cicina_count == 1 ? "pokusu" : "pokusoch"}
+      je celkový priemer <span class="uk-text-success">${Math.round(u.cicina_avg*10)/10}</span> cm.
     </p>`
   }
 
-  let messagesText = u.mess_cnt > 0 ? `<br>sending a total of <span class="uk-text-success">${addSpaces(u.mess_cnt)}</span> ${u.mess_cnt == 1 ? "message" : "messages"}` : "";
-  let timeInVoiceText = u.allTimeVoice > 0 ? `${messagesText == "" ? "" : 'and '}<br> spending <span class='uk-text-success'>${addSpaces(Math.round((u.allTimeVoice/60/60)*1)/1)}</span> total hours in voice` : "";
+  let messagesText = u.messages_count > 0 ? `<br>sending a total of <span class="uk-text-success">${addSpaces(u.messages_count)}</span> ${u.messages_count == 1 ? "message" : "messages"}` : "";
+  let timeInVoiceText = u.all_time_total_voice > 0 ? `${messagesText == "" ? "" : 'and '}<br> spending <span class='uk-text-success'>${addSpaces(Math.round((u.all_time_total_voice/60/60)*1)/1)}</span> total hours in voice` : "";
   let rpText = u.reacc_points != 0 ? `<p class="uk-text-light">For all of those messages other users have awarded <span class='uk-text-success'>${addSpaces(u.reacc_points)}</span> reaction point${u.reacc_points != 1 ? "s" : ""}.</p>` : "";
 
   if (messagesText == '' && timeInVoiceText == ''){
@@ -120,7 +117,7 @@ function getModal(u) {
   };
 
   let a = `
-  <!-- ${u.user_name} -->
+  <!-- ${u.username} -->
   <div id="xd${u.discordID}" class="uk-flex-top" uk-modal>
     <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical" style="background: rgb(34, 34, 34);">
 
@@ -136,7 +133,7 @@ function getModal(u) {
 
       <div class="uk-modal-body uk-text-large">
         <p class="uk-text-light">
-          Level <span class="uk-text-success">${addSpaces(u.lvl)}</span> with <span class="uk-text-success">${addSpaces(u.xp)}</span> total XP.
+          Level <span class="uk-text-success">${addSpaces(u.level)}</span> with <span class="uk-text-success">${addSpaces(u.xp)}</span> total XP.
         </p>
         <p class="uk-text-light">
           That XP was gained through ${messagesText} ${timeInVoiceText} ${magic} since joining <b>Diskíto</b> about <span class="uk-text-success">${addSpaces(Math.round(daysInDiskito))}</span> days ago.
@@ -159,7 +156,7 @@ function getPfpModal(u) {
   <div id="${createPfpModalRef(u.discordID)}" class="uk-flex-top" uk-modal>
     <div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical">
       <button class="uk-modal-close-outside" type="button" uk-close></button>
-      <img src="${u.avatarURL}" />
+      <img src="${u.avatar_url}" />
     </div>
   </div>`;
 };
