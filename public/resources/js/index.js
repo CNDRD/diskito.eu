@@ -95,12 +95,12 @@ function widgetActivities(activities) {
   if (moreActivities != "") {
     let wh = 16;
     gaem += `
-    <div class="uk-text-muted" style="margin-left: 5px" uk-tooltip="title:${moreActivities};pos:right">
+    <div class="uk-text-muted" style="margin-left: 5px;" uk-tooltip="title:${moreActivities};pos:right">
       <img class="uk-preserve" src="/resources/svg/widget/rich_presence.svg" width=${wh} height=${wh} uk-svg />
     </div>`;
   }
 
-  return gaem;
+  return `<div style="margin-left: 5px;">${gaem}</div>`;
 };
 function widgetVoiceIcons(voice) {
   let width = 17;
@@ -171,7 +171,7 @@ function widgetSpotify(activities) {
 
   let wh = 17;
   let spotify = `
-    <div class="uk-flex uk-flex-row" style="margin-left: 7px; margin-right: 7px;" uk-tooltip="${activities.spotify.artist} - ${activities.spotify.title}">
+    <div class="uk-flex uk-flex-row" style="margin-left: 7px;" uk-tooltip="${activities.spotify.artist} - ${activities.spotify.title}">
       <img class="uk-preserve" src="/resources/svg/widget/spotify.svg" width=${wh} height=${wh} uk-svg />
     </div>`;
   return spotify
