@@ -90,7 +90,7 @@ function widgetActivities(activities) {
     activities.other.forEach(act => { moreActivities += `& ${act}`; });
   }
 
-  gaem = reduceStringLength(gaem , 23);
+  gaem = `<div>${reduceStringLength(gaem , 23)}</div>`;
 
   if (moreActivities != "") {
     let wh = 16;
@@ -100,7 +100,7 @@ function widgetActivities(activities) {
     </div>`;
   }
 
-  return `<div style="margin-left: 5px;">${gaem}</div>`;
+  return `<div class="uk-flex uk-flex-row" style="margin-left: 5px;">${gaem}</div>`;
 };
 function widgetVoiceIcons(voice) {
   let width = 17;
