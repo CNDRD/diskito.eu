@@ -16,10 +16,12 @@
 @font-face {
   font-family: "DM_U4OIZE8TpOW8Kw0k2MQa"; /* Medium */
   src: url("/resources/fonts/DM_U4OIZE8TpOW8Kw0k2MQa.otf");
+  font-display: swap;
 }
 @font-face {
   font-family: "DN_FTCAXQdEjKRXjGbCH0lE"; /* Normal */
   src: url("/resources/fonts/DN_FTCAXQdEjKRXjGbCH0lE.otf");
+  font-display: swap;
 }
 
 .cndrd-font-medium {
