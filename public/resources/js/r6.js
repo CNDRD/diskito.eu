@@ -42,6 +42,7 @@ function updateHeader(d) {
   document.title = `${d.ubisoftUsername}'s Rainbow Six: Siege Stats'`;
   $('#level').text(d.level);
   $('#alpha_pack').text(`${roundTwo(d.alphapackProbability/100)}%`);
+  $('#total_playtime').text(`${convertSecondsToHours(d.totalPlaytime)}h`)
 
   $('#r6stats').attr('href',`https://r6stats.com/stats/${d.ubisoftID}`);
   $('#tab').attr('href',`https://tabstats.com/siege/player/${d.ubisoftID}`);
@@ -240,6 +241,9 @@ function getOpPlaytime(s) {
   minutes = Math.floor(s / 60);
   return `${hours}h ${minutes}m`
 };
+function convertSecondsToHours(s) {
+  return Math.floor(s / 3600);
+};
 function getOperatorPlaytime(s) {
   hours = Math.floor(s / 3600);
   s %= 3600;
@@ -261,7 +265,7 @@ function getOperatorRow(op) {
 
   let kdtd = `
     <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-      <div class="uk-text-large uk-margin-small-right uk-text-emphasis">
+      <div class="uk-text-large uk-margin-small-right uk-text-emphasis cndrd-font-normal">
         ${kd}
       </div>
       <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-middle">
@@ -271,7 +275,7 @@ function getOperatorRow(op) {
     </div>`;
   let wltd = `
     <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-      <div class="uk-text-large uk-margin-small-right uk-text-emphasis">
+      <div class="uk-text-large uk-margin-small-right uk-text-emphasis cndrd-font-normal">
         ${wl}
       </div>
       <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-middle">
@@ -281,20 +285,20 @@ function getOperatorRow(op) {
     </div>`;
   let hstd = `
     <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-middle">
-      <div class="uk-text-large uk-text-emphasis">${hs}%</div>
+      <div class="uk-text-large uk-text-emphasis cndrd-font-normal">${hs}%</div>
       <div class="uk-text-muted uk-text-nowrap">${addSpaces(op.headshots)}</div>
     </div>`;
 
   return `
     <tr>
       <td class="uk-text-center"> <img class="uk-preserve-width" data-src="${op.icon}" style="height: 6rem" uk-img /> </td>
-      <td class="uk-text-middle uk-text-large uk-text-emphasis uk-visible@m">${op.readable}</td>
+      <td class="uk-text-middle uk-text-large uk-text-emphasis uk-visible@m cndrd-font-medium">${op.readable}</td>
       <td class="uk-text-center uk-text-middle" sorttable_customkey="${kd*100}">${kdtd}</td>
       <td class="uk-text-center uk-text-middle" sorttable_customkey="${wl*100}">${wltd}</td>
       <td class="uk-text-center uk-text-middle" sorttable_customkey="${hs*100}">${hstd}</td>
-      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@l">${addSpaces(op.dbnos)}</td>
-      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@l">${addSpaces(op.melees)}</td>
-      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@m" sorttable_customkey="op.time_played">${getOperatorPlaytime(op.time_played)}</td>
+      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@l cndrd-font-normal">${addSpaces(op.dbnos)}</td>
+      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@l cndrd-font-normal">${addSpaces(op.melees)}</td>
+      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@m cndrd-font-normal" sorttable_customkey="op.time_played">${getOperatorPlaytime(op.time_played)}</td>
     </tr>`
 };
 function diff_minutes(dt2, dt1) {

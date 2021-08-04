@@ -109,18 +109,22 @@
               <div class="uk-placeholder uk-margin-remove-bottom uk-padding-remove" style="height: 10rem; width: 10rem; display: block;" id="TGVjGjztIQ">
                 <img hidden style="height: 10rem; width: 10rem; display: block;" id="profile_picture" src="" />
               </div>
-              <div class="uk-heading-small uk-padding-remove-bottom uk-margin-remove-vertical uk-margin-small-left" id="username">
+              <i class="uk-heading-small uk-padding-remove-bottom uk-margin-remove-vertical uk-margin-small-left cndrd-font-medium" id="username" style="line-height:100%;">
                 Username
-              </div>
+              </i>
             </div>
             <div class="uk-flex uk-flex-row uk-flex-start uk-flex-bottom uk-margin-small-top">
               <div class="uk-flex uk-flex-row uk-flex-middle uk-margin-small-left" uk-tooltip="Level">
                 <span uk-icon="icon: bolt; ratio: 1.5"></span>
-                <h2 class="uk-margin-remove-vertical" id="level">0</h2>
+                <h2 class="uk-margin-remove-vertical cndrd-font-normal" id="level">0</h2>
               </div>
               <div class="uk-flex uk-flex-row uk-flex-middle uk-margin-small-left" uk-tooltip="Alpha Pack %">
                 <span uk-icon="icon: credit-card; ratio: 1.5"></span>
-                <h2 class="uk-margin-remove-vertical uk-margin-small-left" id="alpha_pack">0%</h2>
+                <h2 class="uk-margin-remove-vertical uk-margin-small-left cndrd-font-normal" id="alpha_pack">0%</h2>
+              </div>
+              <div class="uk-flex uk-flex-row uk-flex-middle uk-margin-small-left" uk-tooltip="Total Playtime">
+                <span uk-icon="icon: clock; ratio: 1.5"></span>
+                <h2 class="uk-margin-remove-vertical uk-margin-small-left cndrd-font-normal" id="total_playtime">0h</h2>
               </div>
             </div>
           </div>
@@ -133,9 +137,9 @@
             </div>
 
             <div class="uk-button-group uk-margin-small-top">
-              <a target="_blank" rel="noreferrer" class="uk-button uk-button-default" id="r6stats">r6stats</a>
-              <a target="_blank" rel="noreferrer" class="uk-button uk-button-default" id="tab">tabstats</a>
-              <a target="_blank" rel="noreferrer" class="uk-button uk-button-default" id="trn">trn</a>
+              <a target="_blank" rel="noreferrer" class="uk-button uk-button-default cndrd-font-normal" id="r6stats">r6stats</a>
+              <a target="_blank" rel="noreferrer" class="uk-button uk-button-default cndrd-font-normal" id="tab">tabstats</a>
+              <a target="_blank" rel="noreferrer" class="uk-button uk-button-default cndrd-font-normal" id="trn">trn</a>
             </div>
 
           </div>
@@ -144,8 +148,8 @@
 
         <!-- Tab -->
         <ul class="uk-flex-left" uk-tab>
-          <li><a href="#">Overall</a></li>
-          <li><a href="#">Operators</a></li>
+          <li><a href="#" class="cndrd-font-normal">Overall</a></li>
+          <li><a href="#" class="cndrd-font-normal">Operators</a></li>
         </ul><!-- Tab -->
 
         <ul class="uk-switcher">
@@ -158,11 +162,11 @@
               <!-- Seasonal Card -->
               <div class="uk-card uk-card-secondary uk-card-hover uk-light uk-width-1-3@m">
                 <div class="uk-card-body">
-                  <span id="season" class="uk-text-italic uk-text-large">Current Operation</span>
-                  <span id="season_code" class="uk-text-meta uk-margin-small-left">Y_S_</span>
+                  <span id="season" class="uk-text-italic uk-text-large cndrd-font-medium">Current Operation</span>
+                  <span id="season_code" class="uk-text-meta uk-margin-small-left cndrd-font-normal">Y_S_</span>
                   <ul class="uk-flex-center" uk-tab>
-                    <li><a href="#">Ranked</a></li>
-                    <li><a href="#">Casual</a></li>
+                    <li><a href="#" class="cndrd-font-normal">Ranked</a></li>
+                    <li><a href="#" class="cndrd-font-normal">Casual</a></li>
                   </ul>
 
                   <ul class="uk-switcher">
@@ -175,28 +179,28 @@
                             <img class="uk-preserve-width" style="height: 8rem" id="current_rank_img" data-src="https://firebasestorage.googleapis.com/v0/b/chuckwalla-69.appspot.com/o/R6%20Ranks%2FUnranked.png?alt=media&token=295b2528-9813-4add-a46f-9e5c7e2a13c8" uk-img />
                             <span class="uk-text-nowrap" id="prev_rank_mmr">0</span>
                           </div>
-                          <span class="uk-text-nowrap" id="current_rank_name">
+                          <span class="uk-text-nowrap cndrd-font-medium" id="current_rank_name">
                             Unranked
                           </span>
                           <span class="uk-text-muted uk-margin-small-top uk-text-nowrap">
                             Current MMR
                           </span>
                           <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-                            <span class="uk-text-nowrap uk-margin-small-right" id="last_mmr_change">±0</span>
-                            <span class="uk-text-nowrap" id="current_rank_mmr">0</span>
+                            <i class="uk-text-nowrap uk-margin-small-right cndrd-font-normal" id="last_mmr_change">±0</i>
+                            <span class="uk-text-nowrap cndrd-font-medium" id="current_rank_mmr">0</span>
                           </div>
                         </div>
                         <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
                           <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-                            <span class="uk-text-nowrap uk-text-large" id="seasonal_kd">0</span>
+                            <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="seasonal_kd">0</span>
                             <span class="uk-text-nowrap uk-margin-small-left">KD</span>
                           </div>
                           <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-                            <span class="uk-text-nowrap uk-text-large" id="seasonal_wl">0</span>
+                            <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="seasonal_wl">0</span>
                             <span class="uk-text-nowrap uk-margin-small-left">WL</span>
                           </div>
                           <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-                            <span class="uk-text-nowrap uk-text-large" id="seasonal_games">0</span>
+                            <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="seasonal_games">0</span>
                             <span class="uk-text-nowrap uk-margin-small-left">matches</span>
                           </div>
                           <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle uk-margin-small-top">
@@ -218,29 +222,29 @@
                             <img class="uk-preserve-width" style="height: 8rem" id="current_rank_img_casual" data-src="https://firebasestorage.googleapis.com/v0/b/chuckwalla-69.appspot.com/o/R6%20Ranks%2FUnranked.png?alt=media&token=295b2528-9813-4add-a46f-9e5c7e2a13c8" uk-img />
                             <span class="uk-text-nowrap" id="prev_rank_mmr_casual">0</span>
                           </div>
-                          <span class="uk-text-nowrap" id="current_rank_name_casual">
+                          <span class="uk-text-nowrap cndrd-font-normal" id="current_rank_name_casual">
                             Unranked
                           </span>
                           <span class="uk-text-muted uk-margin-small-top uk-text-nowrap">
                             Current MMR
                           </span>
                           <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-                            <span class="uk-text-nowrap uk-margin-small-right" id="last_mmr_change_casual">±0</span>
-                            <span class="uk-text-nowrap" id="current_rank_mmr_casual">0</span>
+                            <i class="uk-text-nowrap uk-margin-small-right cndrd-font-normal" id="last_mmr_change_casual">±0</i>
+                            <span class="uk-text-nowrap cndrd-font-medium" id="current_rank_mmr_casual">0</span>
                           </div>
                         </div>
 
                         <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
                           <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-                            <span class="uk-text-nowrap uk-text-large" id="seasonal_kd_casual">0</span>
+                            <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="seasonal_kd_casual">0</span>
                             <span class="uk-text-nowrap uk-margin-small-left">KD</span>
                           </div>
                           <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-                            <span class="uk-text-nowrap uk-text-large" id="seasonal_wl_casual">0</span>
+                            <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="seasonal_wl_casual">0</span>
                             <span class="uk-text-nowrap uk-margin-small-left">WL</span>
                           </div>
                           <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-                            <span class="uk-text-nowrap uk-text-large" id="seasonal_games_casual">0</span>
+                            <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="seasonal_games_casual">0</span>
                             <span class="uk-text-nowrap uk-margin-small-left">matches</span>
                           </div>
                         </div>
@@ -257,73 +261,73 @@
                 <div class="uk-card-body">
 
                   <div class="uk-flex uk-flex-between">
-                    <h4 class="uk-margin-remove-bottom">Ranked stats</h4>
+                    <h4 class="uk-margin-remove-bottom cndrd-font-medium">Ranked stats</h4>
                     <span class="uk-text-muted" id="ranked_playtime">0h 0m 0s</span>
                   </div>
                   <hr class="uk-margin-small" />
                   <div class="uk-child-width-1-4" uk-grid>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="ranked_kd">0.00</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="ranked_kd">0.00</span>
                       <span class="uk-text-muted">KD</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="ranked_kills">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="ranked_kills">0</span>
                       <span class="uk-text-muted">Kills</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="ranked_deaths">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="ranked_deaths">0</span>
                       <span class="uk-text-muted">Deaths</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="ranked_games">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="ranked_games">0</span>
                       <span class="uk-text-muted">Games</span>
                     </div>
                   </div>
 
                   <div class="uk-flex uk-flex-between uk-margin-medium-top">
-                    <h4 class="uk-margin-remove-bottom">Casual stats</h4>
+                    <h4 class="uk-margin-remove-bottom cndrd-font-medium">Casual stats</h4>
                     <span class="uk-text-muted" id="unranked_playtime">0h 0m 0s</span>
                   </div>
                   <hr class="uk-margin-small" />
                   <div class="uk-child-width-1-4" uk-grid>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="unranked_kd">0.00</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="unranked_kd">0.00</span>
                       <span class="uk-text-muted">KD</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="unranked_kills">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="unranked_kills">0</span>
                       <span class="uk-text-muted">Kills</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="unranked_deaths">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="unranked_deaths">0</span>
                       <span class="uk-text-muted">Deaths</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="unranked_games">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="unranked_games">0</span>
                       <span class="uk-text-muted">Games</span>
                     </div>
                   </div>
 
                   <div class="uk-flex uk-flex-between uk-margin-medium-top">
-                    <h4 class="uk-margin-remove-bottom">Discovery stats</h4>
+                    <h4 class="uk-margin-remove-bottom cndrd-font-medium">Discovery stats</h4>
                     <span class="uk-text-muted" id="discovery_playtime">0h 0m 0s</span>
                   </div>
                   <hr class="uk-margin-small" />
                   <div class="uk-child-width-1-4" uk-grid>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="discovery_kd">0.00</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="discovery_kd">0.00</span>
                       <span class="uk-text-muted">KD</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="discovery_kills">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="discovery_kills">0</span>
                       <span class="uk-text-muted">Kills</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="discovery_deaths">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="discovery_deaths">0</span>
                       <span class="uk-text-muted">Deaths</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="discovery_games">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="discovery_games">0</span>
                       <span class="uk-text-muted">Games</span>
                     </div>
                   </div>
@@ -340,31 +344,31 @@
               <div class="uk-card uk-card-secondary uk-card-hover uk-light uk-width-3-5@m">
                 <div class="uk-card-body">
 
-                  <h4 class="uk-card-title uk-margin-remove-bottom">General stats</h4>
+                  <h4 class="uk-card-title uk-margin-remove-bottom cndrd-font-medium">General stats</h4>
                   <hr class="uk-divider-small uk-margin-small" />
 
                   <div class="uk-child-width-1-4 uk-grid-divider" uk-grid>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_kd">0.00</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_kd">0.00</span>
                         <span class="uk-text-muted">KD</span>
                       </div>
                     </div>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_kills">0</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_kills">0</span>
                         <span class="uk-text-muted">Kills</span>
                       </div>
                     </div>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_deaths">0</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_deaths">0</span>
                         <span class="uk-text-muted">Deaths</span>
                       </div>
                     </div>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_assists">0</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_assists">0</span>
                         <span class="uk-text-muted">Assists</span>
                       </div>
                     </div>
@@ -373,25 +377,25 @@
                   <div class="uk-child-width-1-4 uk-grid-divider" uk-grid>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_wl">0.00%</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_wl">0.00%</span>
                         <span class="uk-text-muted">WL</span>
                       </div>
                     </div>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_wins">0</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_wins">0</span>
                         <span class="uk-text-muted">Wins</span>
                       </div>
                     </div>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_losses">0</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_losses">0</span>
                         <span class="uk-text-muted">Losses</span>
                       </div>
                     </div>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_matches">0</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_matches">0</span>
                         <span class="uk-text-muted">Matches</span>
                       </div>
                     </div>
@@ -400,25 +404,25 @@
                   <div class="uk-child-width-1-4 uk-grid-divider" uk-grid>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_headshots">0</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_headshots">0</span>
                         <span class="uk-text-muted">Headshots</span>
                       </div>
                     </div>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_hs">0.00%</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_hs">0.00%</span>
                         <span class="uk-text-muted">HS%</span>
                       </div>
                     </div>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_dbnos">0</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_dbnos">0</span>
                         <span class="uk-text-muted">DBNOs</span>
                       </div>
                     </div>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_suicides">0</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_suicides">0</span>
                         <span class="uk-text-muted">Suicides</span>
                       </div>
                     </div>
@@ -427,25 +431,25 @@
                   <div class="uk-child-width-1-4 uk-grid-divider" uk-grid>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_melees">0</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_melees">0</span>
                         <span class="uk-text-muted">Melees</span>
                       </div>
                     </div>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_penetrations">0</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_penetrations">0</span>
                         <span class="uk-text-muted">Penetrations</span>
                       </div>
                     </div>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_barricades">0</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_barricades">0</span>
                         <span class="uk-text-muted">Barricades</span>
                       </div>
                     </div>
                     <div>
                       <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                        <span class="uk-text-nowrap uk-text-large" id="general_reinforcements">0</span>
+                        <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="general_reinforcements">0</span>
                         <span class="uk-text-muted">Reinforcements</span>
                       </div>
                     </div>
@@ -458,7 +462,7 @@
               <div class="uk-card uk-card-secondary uk-card-hover uk-light uk-width-2-5@m">
                 <div class="uk-card-body">
 
-                  <h4 class="uk-card-title uk-margin-remove-bottom">Top Operator stats</h4>
+                  <h4 class="uk-card-title uk-margin-remove-bottom cndrd-font-medium">Top Operator stats</h4>
                   <hr class="uk-divider-small uk-margin-small" />
 
                   <div class="uk-child-width-1-4" uk-grid>
@@ -466,15 +470,15 @@
                       <img style="height: 6rem" class="uk-preserve-width" data-src="https://i.imgur.com/mF8eGXj.png"  id="operator_img_1" uk-tooltip='Recruit GSG 9' uk-img />
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="operator_kd_1">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="operator_kd_1">0</span>
                       <span class="uk-text-muted">KD</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="operator_wl_1">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="operator_wl_1">0</span>
                       <span class="uk-text-muted">WL</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="operator_playtime_1">0h 0m</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="operator_playtime_1">0h 0m</span>
                       <span class="uk-text-muted">Playtime</span>
                     </div>
                   </div>
@@ -484,15 +488,15 @@
                       <img style="height: 6rem" class="uk-preserve-width" data-src="https://i.imgur.com/MEvmmGf.png"  id="operator_img_2" uk-tooltip='Recruit Spetsnaz' uk-img />
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="operator_kd_2">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="operator_kd_2">0</span>
                       <span class="uk-text-muted">KD</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="operator_wl_2">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="operator_wl_2">0</span>
                       <span class="uk-text-muted">WL</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="operator_playtime_2">0h 0m</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="operator_playtime_2">0h 0m</span>
                       <span class="uk-text-muted">Playtime</span>
                     </div>
                   </div>
@@ -502,15 +506,15 @@
                       <img style="height: 6rem" class="uk-preserve-width" data-src="https://i.imgur.com/Pd7krMT.png"  id="operator_img_3" uk-tooltip='Recruit FBI SWAT' uk-img />
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="operator_kd_3">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="operator_kd_3">0</span>
                       <span class="uk-text-muted">KD</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="operator_wl_3">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="operator_wl_3">0</span>
                       <span class="uk-text-muted">WL</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="operator_playtime_3">0h 0m</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="operator_playtime_3">0h 0m</span>
                       <span class="uk-text-muted">Playtime</span>
                     </div>
                   </div>
@@ -520,15 +524,15 @@
                       <img style="height: 6rem" class="uk-preserve-width" data-src="https://i.imgur.com/D05DqQW.png"  id="operator_img_4" uk-tooltip='Recruit GIGN' uk-img />
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="operator_kd_4">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="operator_kd_4">0</span>
                       <span class="uk-text-muted">KD</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="operator_wl_4">0</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="operator_wl_4">0</span>
                       <span class="uk-text-muted">WL</span>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-                      <span class="uk-text-nowrap uk-text-large" id="operator_playtime_4">0h 0m</span>
+                      <span class="uk-text-nowrap uk-text-large cndrd-font-normal" id="operator_playtime_4">0h 0m</span>
                       <span class="uk-text-muted">Playtime</span>
                     </div>
                   </div>
