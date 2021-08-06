@@ -36,7 +36,7 @@ function updateHeader(d) {
   $('#TGVjGjztIQ').removeClass("uk-placeholder");
   $('#profile_picture').removeAttr("hidden");
 
-  $('#username').text(reduceNameLength(d.ubisoftUsername, 13));
+  $('#username').text(d.ubisoftUsername);
   $('#username').attr("uk-tooltip",d.ubisoftUsername);
 
   document.title = `${d.ubisoftUsername}'s Rainbow Six: Siege Stats'`;
@@ -172,7 +172,7 @@ function getSeasonColorRGB(s) {
     21: "#ac0000",
     22: "#009cbe",
   };
-  return x[s]
+  return x[s] || "Wrong Code";
 };
 function getSeasonFromNumber(s) {
   let x = {
@@ -199,7 +199,7 @@ function getSeasonFromNumber(s) {
     21: "Crimson Heist",
     22: "North Star",
   };
-  return x[s]
+  return x[s] || "Wrong Code";
 };
 function getSeasonCodeFromNumber(s) {
   let x = {
@@ -225,8 +225,14 @@ function getSeasonCodeFromNumber(s) {
     20: "Y5S4",
     21: "Y6S1",
     22: "Y6S2",
+    23: "Y6S3",
+    24: "Y6S4",
+    25: "Y7S1",
+    26: "Y7S2",
+    27: "Y7S3",
+    28: "Y7S4",
   };
-  return x[s]
+  return x[s] || "Wrong Code";
 };
 function getPlaytime(s) {
   hours = Math.floor(s / 3600);
@@ -318,4 +324,42 @@ function getTimeAndDateFromTimestamp(UNIX_timestamp){
   let min = a.getMinutes() < 10 ? "0" + a.getMinutes() : a.getMinutes();
   let sec = a.getSeconds() < 10 ? "0" + a.getSeconds() : a.getSeconds();
   return `${hour}:${min}:${sec} / ${date}.${month}. ${year}`;
+};
+
+
+// Update button
+let lastUpdateRef = firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`);
+lastUpdateRef.once('value').then(snapshot => {
+  let last_update = snapshot.val();
+
+  let lastUpdateInterval = setInterval(function() {
+    let now = parseInt(Date.now()/1000);
+    let diff = now - last_update;
+
+    $("#lastUpdated").replaceWith(`<span id="lastUpdated">${getUpdateTimeString(diff)}</span>`);
+
+    if (diff >= 180) { $("#siegeManualUpdateButton").removeAttr("hidden"); }
+  }, 1000);
+
+  firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).on('value', snapshot => {
+    if (snapshot.val() != last_update) { location.reload(); }
+  });
+
+});
+function getUpdateTimeString(s) {
+  let hours = Math.floor(s / 3600);
+  s %= 3600;
+  let minutes = Math.floor(s / 60);
+  let seconds = s % 60;
+
+  let msg = `${seconds} second${seconds == 1 ? '' : 's'}`;
+
+  if (parseInt(minutes) != 0) {
+    msg = `${minutes} minute${minutes == 1 ? '' : 's'} ${msg}`
+  }
+  if (parseInt(hours) != 0) {
+    msg = `${hours} hour${hours == 1 ? '' : 's'} ${msg}`
+  }
+
+  return msg
 };
