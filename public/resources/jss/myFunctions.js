@@ -19,3 +19,9 @@ function nextLevelXP(level) {
 function roundTwo(x) {
   return Math.round(x * 100) / 100;
 };
+
+// https://stackoverflow.com/a/44185289/13186339
+function get(object, key, default_value) {
+  var result = object[key];
+  return (typeof result !== "undefined") ? result : default_value;
+}
