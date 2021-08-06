@@ -1,6 +1,6 @@
 $("table").stickyTableHeaders();
 
-let VERSION = 8;
+let VERSION = 9;
 const rankMMR = [
   {name: "Copper 5",    min_mmr: 1,     max_mmr: 1199, image: "https://i.imgur.com/SNSfudP.png"},
   {name: "Copper 4",    min_mmr: 1200,  max_mmr: 1299, image: "https://i.imgur.com/7PiisA2.png"},
@@ -193,9 +193,9 @@ function orderBySubKey(dict, key) {
 };
 function getTopTwoOperators(d) {
   let o = d.operators;
-  let atk = orderBySubKey(o.atk, "time_played");
-  let def = orderBySubKey(o.def, "time_played");
-  return [atk[0], def[0]]
+  //let atk = orderBySubKey(o.atk, "time_played");
+  //let def = orderBySubKey(o.def, "time_played");
+  return [o.atk1, o.def1]
 };
 function getPlaytime(s) {
   hours = Math.floor(s / 3600);

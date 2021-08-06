@@ -1,6 +1,6 @@
 $("table").stickyTableHeaders();
 let id = new URLSearchParams(window.location.search).get('id');
-let VERSION = 8;
+let VERSION = 9;
 
 firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once('value').then(snapshot => {
   $("#lastUpdatedText").text( diff_minutes(new Date(snapshot.val()*1000), new Date()) );
@@ -28,7 +28,6 @@ function operatorsPage(d) {
   OPS.sort(function(a,b){return b.time_played-a.time_played});
   OPS.forEach(op => { $('#operator_table').append(getOperatorRow(op)); });
 };
-
 
 
 function updateHeader(d) {
@@ -139,6 +138,50 @@ function updateOperatorCard(d) {
     $(`#operator_wl_${i+1}`).text(`${roundTwo(op.wins / (op.wins + op.losses) * 100)}%`);
     $(`#operator_playtime_${i+1}`).text(getOpPlaytime(op.time_played))
   });
+};
+
+function getOperatorRow(op) {
+  let kd = op.deaths == 0 ? "0" : roundTwo(op.kills/op.deaths);
+  let wl = (op.wins+op.losses) == 0 ? "0" : roundTwo(op.wins / (op.wins+op.losses) * 100);
+  let hs = op.kills == 0 ? "0" : roundTwo((op.headshots / op.kills) * 100);
+
+  let kdtd = `
+    <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
+      <div class="uk-text-large uk-margin-small-right uk-text-emphasis cndrd-font-normal">
+        ${kd}
+      </div>
+      <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-middle">
+        <span class="uk-text-nowrap">${addSpaces(op.kills)} K</span>
+        <span class="uk-text-nowrap">${addSpaces(op.deaths)} D</span>
+      </div>
+    </div>`;
+  let wltd = `
+    <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
+      <div class="uk-text-large uk-margin-small-right uk-text-emphasis cndrd-font-normal">
+        ${wl}
+      </div>
+      <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-middle">
+        <span class="uk-text-nowrap">${addSpaces(op.wins)} W</span>
+        <span class="uk-text-nowrap">${addSpaces(op.losses)} L</span>
+      </div>
+    </div>`;
+  let hstd = `
+    <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-middle">
+      <div class="uk-text-large uk-text-emphasis cndrd-font-normal">${hs}%</div>
+      <div class="uk-text-muted uk-text-nowrap">${addSpaces(op.headshots)}</div>
+    </div>`;
+
+  return `
+    <tr>
+      <td class="uk-text-center"> <img class="uk-preserve-width" data-src="${op.icon}" style="height: 6rem" uk-img /> </td>
+      <td class="uk-text-middle uk-text-large uk-text-emphasis uk-visible@m cndrd-font-medium">${op.readable}</td>
+      <td class="uk-text-center uk-text-middle" sorttable_customkey="${kd*100}">${kdtd}</td>
+      <td class="uk-text-center uk-text-middle" sorttable_customkey="${wl*100}">${wltd}</td>
+      <td class="uk-text-center uk-text-middle" sorttable_customkey="${hs*100}">${hstd}</td>
+      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@l cndrd-font-normal">${addSpaces(op.dbnos)}</td>
+      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@l cndrd-font-normal">${addSpaces(op.melees)}</td>
+      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@m cndrd-font-normal" sorttable_customkey="op.time_played">${getOperatorPlaytime(op.time_played)}</td>
+    </tr>`
 };
 
 function reduceNameLength(a, len=14){
@@ -263,49 +306,6 @@ function getTopTwoOperatorsFromEach(d) {
   let def = orderBySubKey(o.def, 'time_played');
 
   return [atk[0], atk[1], def[0], def[1]]
-};
-function getOperatorRow(op) {
-  let kd = op.deaths == 0 ? "0" : roundTwo(op.kills/op.deaths);
-  let wl = (op.wins+op.losses) == 0 ? "0" : roundTwo(op.wins / (op.wins+op.losses) * 100);
-  let hs = op.kills == 0 ? "0" : roundTwo((op.headshots / op.kills) * 100);
-
-  let kdtd = `
-    <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-      <div class="uk-text-large uk-margin-small-right uk-text-emphasis cndrd-font-normal">
-        ${kd}
-      </div>
-      <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-middle">
-        <span class="uk-text-nowrap">${addSpaces(op.kills)} K</span>
-        <span class="uk-text-nowrap">${addSpaces(op.deaths)} D</span>
-      </div>
-    </div>`;
-  let wltd = `
-    <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-      <div class="uk-text-large uk-margin-small-right uk-text-emphasis cndrd-font-normal">
-        ${wl}
-      </div>
-      <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-middle">
-        <span class="uk-text-nowrap">${addSpaces(op.wins)} W</span>
-        <span class="uk-text-nowrap">${addSpaces(op.losses)} L</span>
-      </div>
-    </div>`;
-  let hstd = `
-    <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-middle">
-      <div class="uk-text-large uk-text-emphasis cndrd-font-normal">${hs}%</div>
-      <div class="uk-text-muted uk-text-nowrap">${addSpaces(op.headshots)}</div>
-    </div>`;
-
-  return `
-    <tr>
-      <td class="uk-text-center"> <img class="uk-preserve-width" data-src="${op.icon}" style="height: 6rem" uk-img /> </td>
-      <td class="uk-text-middle uk-text-large uk-text-emphasis uk-visible@m cndrd-font-medium">${op.readable}</td>
-      <td class="uk-text-center uk-text-middle" sorttable_customkey="${kd*100}">${kdtd}</td>
-      <td class="uk-text-center uk-text-middle" sorttable_customkey="${wl*100}">${wltd}</td>
-      <td class="uk-text-center uk-text-middle" sorttable_customkey="${hs*100}">${hstd}</td>
-      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@l cndrd-font-normal">${addSpaces(op.dbnos)}</td>
-      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@l cndrd-font-normal">${addSpaces(op.melees)}</td>
-      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@m cndrd-font-normal" sorttable_customkey="op.time_played">${getOperatorPlaytime(op.time_played)}</td>
-    </tr>`
 };
 function diff_minutes(dt2, dt1) {
   // https://www.w3resource.com/javascript-exercises/javascript-date-exercise-44.php
