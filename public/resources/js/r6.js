@@ -19,6 +19,7 @@ function overallPage(d) {
   updateQueueCard(d);
   updateGeneralCard(d);
   updateOperatorCard(d);
+  updateWeaponTypeCard(d);
 };
 function operatorsPage(d) {
   let atk = orderBySubKey(d.operators.atk, 'time_played');
@@ -137,6 +138,15 @@ function updateOperatorCard(d) {
     $(`#operator_kd_${i+1}`).text(roundTwo(op.kills / op.deaths));
     $(`#operator_wl_${i+1}`).text(`${roundTwo(op.wins / (op.wins + op.losses) * 100)}%`);
     $(`#operator_playtime_${i+1}`).text(getOpPlaytime(op.time_played))
+  });
+};
+function updateWeaponTypeCard(d) {
+  d.weapon_types.forEach((w, index) => {
+    $(`#wt_name_${index}`).text(`${addSpaces(w.name)}s`);
+    $(`#wt_kills_${index}`).text(addSpaces(w.kills));
+    $(`#wt_hits_${index}`).text(addSpaces(w.hits));
+    $(`#wt_hsp_${index}`).text(`${roundTwo((w.headshots/w.kills)*100)}%`);
+    $(`#wt_hs_${index}`).text(addSpaces(w.headshots));
   });
 };
 
