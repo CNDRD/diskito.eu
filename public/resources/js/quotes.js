@@ -2,12 +2,12 @@ const quotes = [];
 var quotesRef = firebase.database().ref('quotes');
 quotesRef.once('value').then(function(snapshot){
   snapshot.forEach(function(childSnapshot){
-    let cD = childSnapshot.val()
+    let cD = childSnapshot.val();
 
-    let id = childSnapshot.key
-    let quote = cD.quote
-    let by = cD.by == 'unknown' ? '' : `— ${cD.by}`
-    let when = cD.when == 'unknown' ? '' : `, ${cD.when}`
+    let id = childSnapshot.key;
+    let quote = cD.quote;
+    let by = cD.by == 'unknown' ? '' : cD.by;
+    let when = cD.when == 'unknown' ? '' : cD.when;
 
     quotes.push({
       id:id,
@@ -37,7 +37,7 @@ quotesRef.once('value').then(function(snapshot){
         </div>
 
         <span class="uk-position-absolute uk-position-bottom-right uk-position-medium">
-          <i>${q.by}</i>${q.when}
+          <i>— ${q.by}</i>, ${q.when}
         </span>
 
         <span class="uk-position-absolute uk-position-bottom-left uk-margin-remove uk-margin-small-left uk-margin-small-bottom quoteID uk-hidden"
