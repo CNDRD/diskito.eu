@@ -36,6 +36,8 @@ function getRandomMessage() {
               "I have maxed out the render distance, and I still can't see who asked",
               "I've searched far and wide but the only thing I found is noone.",
               "Yup. That's it. It's nobody a clock!",
-              "I did not, and you're adopted."]
+              "I did not, and you're adopted.",
+              "Maybe try again later, because I couldn't find anybody at this time",
+            ]
   return list[Math.floor(Math.random() * list.length)];
 };
