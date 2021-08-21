@@ -224,6 +224,7 @@ function getSeasonColorRGB(s) {
     20: "#d14007",
     21: "#ac0000",
     22: "#009cbe",
+    23: "#ffa200",
   };
   return x[s] || "Wrong Code";
 };
@@ -251,6 +252,7 @@ function getSeasonFromNumber(s) {
     20: "Neon Dawn",
     21: "Crimson Heist",
     22: "North Star",
+    23: "Crystal Guard",
   };
   return x[s] || "Wrong Code";
 };
