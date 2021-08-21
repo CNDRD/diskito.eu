@@ -33,16 +33,20 @@ let clown = 0;
 let userDataRef = firebase.database().ref(`GameStats/R6Sv${VERSION}/main_data`);
 userDataRef.once("value").then(snapshot => {
 
-  snapshot.forEach(childSnapshot => {
-    let cd = childSnapshot.val();
-    if (cd.currentRank != "Unranked"){ ranked.push(cd); } else { unranked.push(cd); }
+  firebase.database().ref(`GameStats/R6Sv${VERSION}/mmr_watch`).once('value').then(mmrSnapshot => {
+    let mmrWatch = mmrSnapshot.val();
+
+    snapshot.forEach(childSnapshot => {
+      let cd = childSnapshot.val();
+      if (cd.currentRank != "Unranked"){ ranked.push(cd); } else { unranked.push(cd); }
+    });
+
+    ranked.sort(function(a,b){return b.currentMMR - a.currentMMR})
+    unranked.sort(function(a,b){return b.currentMMR - a.currentMMR})
+
+    ranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, mmrWatch[u.ubisoftID])); $("#bnaom9s1BB").append(getPfpModal(u)); clown++; });
+    unranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, mmrWatch[u.ubisoftID], true)); $("#bnaom9s1BB").append(getPfpModal(u)); clown++; });
   });
-
-  ranked.sort(function(a,b){return b.currentMMR - a.currentMMR})
-  unranked.sort(function(a,b){return b.currentMMR - a.currentMMR})
-
-  ranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown)); $("#bnaom9s1BB").append(getPfpModal(u)); clown++; });
-  unranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, true)); $("#bnaom9s1BB").append(getPfpModal(u)); clown++; });
 });
 
 let last_update;
@@ -93,7 +97,7 @@ function getPfpModal(u) {
     </div>
   </div>`;
 };
-function getStatsRow(u, clown, unrank=false) {
+function getStatsRow(u, clown, mmrWatch, unrank=false) {
   let pfpLink = `https://ubisoft-avatars.akamaized.net/${u.ubisoftID}/default_256_256.png`;
   let kd = u.sDeaths == 0 ? 0 : roundTwo(u.sKills / u.sDeaths);
   let wl = u.sDeaths == 0 ? 0 : roundTwo(u.sWins / (u.sWins + u.sLosses) * 100);
@@ -105,6 +109,14 @@ function getStatsRow(u, clown, unrank=false) {
   let nextMMR = u.nextRankMMR == 0 ? getNextRankMMR(u.currentMMR) : u.nextRankMMR;
   let topOps = getTopTwoOperators(u);
   let rankCell = getRankCell(u, unrank);
+  let mmrWatchChangeColor = "";
+
+  if (mmrWatch.adjustment) {
+    mmrWatchChangeColor = `color: #faa05a !important`;
+    mmrChangeColor = mmrWatch.adjustment_value >= 0 ? ( mmrWatch.adjustment_value == 0 ? 'uk-text-muted' : 'uk-text-success' ) : 'uk-text-danger';
+    mmrChange = mmrWatch.adjustment_value == undefined ? '0' : mmrWatch.adjustment_value;
+  };
+
 
   let a = `
     <tr>
@@ -131,7 +143,7 @@ function getStatsRow(u, clown, unrank=false) {
           <span style="font-size: 0.8rem;" class='uk-text-muted'>${nextMMR}</span>
         </div>
         <div class="uk-flex uk-flex-row uk-flex-middle uk-flex-around">
-          <span style="font-size: 1.5rem;" class="uk-text-nowrap uk-text-emphasis">${addSpaces(parseInt(u.currentMMR))}</span>
+          <span class="uk-text-nowrap uk-text-emphasis" style="font-size: 1.5rem; ${mmrWatchChangeColor}">${addSpaces(parseInt(u.currentMMR))}</span>
           <span class="${mmrChangeColor} uk-text-small">${mmrChange}</span>
         </div>
       </td>
