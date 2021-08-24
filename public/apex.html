@@ -10,7 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit-icons.min.js"></script>
     <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- jQuery plugins -->
+    <script defer src="https://unpkg.com/sticky-table-headers"></script>
 
     <!-- Firebase JS -->
     <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
@@ -21,10 +23,13 @@
 
     <!-- Custom CSS & JS -->
     <link rel="stylesheet" href="/resources/css/main.css" />
+    <script defer src="/resources/jss/myFunctions.js" charset="utf-8"></script>
 
+    <script defer src="/resources/js/apex.js" charset="utf-8"></script>
+    <script defer src="/resources/jss/sorttable.js" charset="utf-8"></script>
     <script defer src="/resources/jss/loginSignup.js" charset="utf-8"></script>
 
-    <title>Diskíto</title>
+    <title>Diskíto Apex Stats</title>
     <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
 
   </head>
@@ -95,24 +100,51 @@
       </div>
     </nav>
 
+    <div class="uk-section uk-padding-remove-bottom">
+      <div class="uk-container">
+
+        <div class="uk-flex uk-flex-column uk-text-right">
+          <div>
+            Last update: <div id="lastUpdated" uk-spinner="ratio: 0.5"></div> ago
+          </div>
+        </div>
+
+        <div class="uk-overflow-auto">
+          <table class="uk-table uk-table-divider sortable">
+            <thead class="pls-no-click" style="background: rgb(34, 34, 34);">
+              <tr>
+                <th class="sorttable_alpha">Peep</th>
+                <th class="sorttable_numeric uk-text-center">Kills</th>
+                <th class="uk-text-center">Rank</th>
+                <th class="uk-text-center">Arena Rank</th>
+                <th class="sorttable_nosort uk-text-center uk-visible@m">Legends</th>
+              </tr>
+            </thead>
+            <tbody id="tableDataPlace"></tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
     <div class="uk-section">
       <div class="uk-container">
-        <div class="uk-flex-center">
-          <article class="uk-article">
-            <h1 class="uk-article-title">404</h1>
-            <hr class="uk-divider-small" />
-            <div class="uk-dropcap uk-width-1-2">
-              You fucked up the URI champ.
-              Or you tried to get somewhere you're not supposed to huh..
-              What's so interesting about <span id="stinky">this page</span> you just have to explore?
+        <div class="uk-flex uk-flex-middle uk-flex-around uk-flex-wrap">
 
-              <div class="uk-margin-medium-top" uk-grid>
-                <a href="/" class="uk-button uk-button-default uk-width-2-3 uk-margin-small-right">Home</a>
-                <button onclick="window.history.back();" class="uk-button uk-button-default uk-width-expand">Back</button>
-              </div>
+          <div class="uk-text-center uk-text-middle uk-text-muted uk-margin-small-bottom">
+            <span>Stats provided by <a href="https://tracker.gg/">TRN</a></span>
+            <br />
+            <span>And yes, that is all the stats there is...</span>
+          </div>
+          <div class="uk-text-center uk-text-middle uk-text-muted">
+            <span>These stats <i>should</i> be updated every 30 minutes</span>
+            <br />
+            <br />
+            <span>The <i>Legends</i> column is currently just a bunch of placeholder images</span>
+            <br />
+            <span>Some stats will come eventually</span>
+          </div>
 
-            </div>
-          </article>
         </div>
       </div>
     </div>
@@ -176,12 +208,5 @@
         </ul>
       </div>
     </div>
-
   </body>
-
-  <!-- I ain't puttin' this in a separate file doode -->
-  <script type="text/javascript">
-    $('#stinky').replaceWith(`<code class="uk-text-success">${window.location.pathname}</code>`);
-  </script>
-
 </html>
