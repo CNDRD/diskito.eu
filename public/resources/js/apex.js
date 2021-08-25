@@ -49,12 +49,43 @@ function getUpdateTimeString(s) {
 function orderBySubKey(dict, key) {
   return Object.values( dict ).map( value => value ).sort( (a,b) => b[key] - a[key] );
 };
+function getLegendStats(legend) {
+  let a = "";
+  const fuckTheseOnes = ["imageUrl", "tallImageUrl", "name"];
+
+  for(var key in legend) {
+    if (!fuckTheseOnes.includes(key)) { a += `<li>${key.replaceAll(':','')}: ${addSpaces(legend[key])}</li>`; };
+  };
+  if (a === "") { return "<li>There are no stats being tracked for this legend</li>" };
+  return a;
+};
 function getLegendIconsCell(legends) {
   let a = ``;
   let LEGENDS = orderBySubKey(legends, 'Kills');
 
   LEGENDS.forEach(l => {
-    a += `<img style="height: 4rem;" class="uk-preserve-width uk-animation-scale-up" src="${l.imageUrl}" uk-tooltip="${l.name}" />`;
+    console.log(l);
+    a += `
+      <div class="uk-inline">
+        <!--<button class="uk-button uk-button-default" type="button">Click</button>-->
+        <img style="height: 4rem;" class="uk-preserve-width uk-animation-scale-up" src="${l.imageUrl}" />
+        <div uk-drop="mode: click; pos:bottom-center">
+
+          <div style="padding: 5px" class="uk-card uk-card-secondary uk-child-width-1-2" uk-grid>
+            <div class="uk-card-media-left uk-cover-container">
+              <img src="${l.tallImageUrl}" alt="" />
+            </div>
+            <div class="uk-card-body">
+              <h3 class="uk-card-title">${l.name}</h3>
+              <ul class="uk-list uk-list-divider uk-list-collapse">
+                ${getLegendStats(l)}
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    `;
   });
   return a;
 };
