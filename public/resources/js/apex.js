@@ -98,6 +98,9 @@ function getStatsRow(user) {
         ${u.username}
       </td>
       <td class="uk-text-middle uk-text-center uk-text-nowrap">
+        ${addSpaces(u.level)}
+      </td>
+      <td class="uk-text-middle uk-text-center uk-text-nowrap">
         ${addSpaces(u.kills)}
       </td>
       <td class="uk-text-middle uk-text-center uk-padding-remove-horizontal">
