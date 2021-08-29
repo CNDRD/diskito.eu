@@ -27,7 +27,11 @@ function operatorsPage(d) {
   let OPS = atk.concat(def);
 
   OPS.sort(function(a,b){return b.time_played-a.time_played});
-  OPS.forEach(op => { $('#operator_table').append(getOperatorRow(op)); });
+  OPS.forEach(op => {
+    console.log(op);
+    if (op.name == "osa") { return };
+    $('#operator_table').append(getOperatorRow(op));
+  });
 };
 
 
@@ -49,7 +53,7 @@ function updateHeader(d) {
   $('#trn').attr('href',`https://r6.tracker.network/profile/id/${d.ubisoftID}`);
 };
 function updateSeasonalCard(d) {
-  $('#season').text(getSeasonFromNumber(d.season));
+  $('#season').text(getSeasonNameFromNumber(d.season));
   $('#season').css('color', getSeasonColorRGB(d.season));
   $('#season_code').text(getSeasonCodeFromNumber(d.season));
 
@@ -181,19 +185,80 @@ function getOperatorRow(op) {
       <div class="uk-text-muted uk-text-nowrap">${addSpaces(op.headshots)}</div>
     </div>`;
 
+  let name = `
+    <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-left">
+      <div class="uk-text-emphasis cndrd-font-medium">${op.readable}</div>
+      <div class="uk-text-muted uk-text-small">${getSeasonNameFromCode(getOpYearCode(op.name))}</div>
+    </div>
+  `;
+
   return `
-    <tr>
+    <tr ${getDATA(op)}>
       <td class="uk-text-center"> <img class="uk-preserve-width" data-src="${op.icon}" style="height: 6rem" uk-img /> </td>
-      <td class="uk-text-middle uk-text-large uk-text-emphasis uk-visible@m cndrd-font-medium">${op.readable}</td>
+      <td class="uk-text-middle uk-text-large uk-visible@m">${name}</td>
       <td class="uk-text-center uk-text-middle" sorttable_customkey="${kd*100}">${kdtd}</td>
       <td class="uk-text-center uk-text-middle" sorttable_customkey="${wl*100}">${wltd}</td>
       <td class="uk-text-center uk-text-middle" sorttable_customkey="${hs*100}">${hstd}</td>
       <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@l cndrd-font-normal">${addSpaces(op.dbnos)}</td>
       <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@l cndrd-font-normal">${addSpaces(op.melees)}</td>
-      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@m cndrd-font-normal" sorttable_customkey="op.time_played">${getOperatorPlaytime(op.time_played)}</td>
+      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@m cndrd-font-normal" sorttable_customkey="${op.time_played}">${getOperatorPlaytime(op.time_played)}</td>
     </tr>`
 };
 
+function getDATA(op) {
+  let kd = (op.deaths == 0 ? 0 : roundTwo(op.kills/op.deaths)) >= 1 ? "more" : "less";
+  let wl = ((op.wins+op.losses) == 0 ? 0 : roundTwo(op.wins / (op.wins+op.losses) * 100)) >= 50 ? "more" : "less";
+  let hs = (op.kills == 0 ? 0 : roundTwo((op.headshots / op.kills) * 100)) >= 50 ? "more" : "less";
+  return `
+    data-atkdef="${op.atkdef}"
+    data-kd="${kd}"
+    data-wl="${wl}"
+    data-hs="${hs}"
+    data-year="${getOpYearCode(op.name).charAt(1)}"
+  `;
+};
+function getOpYearCode(op) {
+  let x = {
+    kapkan:"Y0S0", tachanka:"Y0S0", glaz:"Y0S0", fuze:"Y0S0",
+    iq:"Y0S0", blitz:"Y0S0", bandit:"Y0S0", jager:"Y0S0",
+    rook:"Y0S0", doc:"Y0S0", twitch:"Y0S0", montagne:"Y0S0",
+    thermite:"Y0S0", pulse:"Y0S0", castle:"Y0S0", ash:"Y0S0",
+    thatcher:"Y0S0", smoke:"Y0S0", sledge:"Y0S0", mute:"Y0S0",
+
+    frost:"Y1S1", buck:"Y1S1",
+    valkyrie:"Y1S2", blackbeard:"Y1S2",
+    caveira:"Y1S3", capitao:"Y1S3",
+    echo:"Y1S4", hibana:"Y1S4",
+
+    mira:"Y2S1", jackal:"Y2S1",
+    // operation health
+    lesion:"Y2S3", ying:"Y2S3",
+    dokkaebi:"Y2S4", vigil:"Y2S4", zofia:"Y2S4", ela:"Y2S4",
+
+    lion:"Y3S1", finka:"Y3S1",
+    alibi:"Y3S2", maestro:"Y3S2",
+    clash:"Y3S3", maverick:"Y3S3",
+    kaid:"Y3S4", nomad:"Y3S4",
+
+    gridlock:"Y4S1", mozzie:"Y4S1",
+    nokk:"Y4S2", warden:"Y4S2",
+    amaru:"Y4S3", goyo:"Y4S3",
+    kali:"Y4S4", wamai:"Y4S4",
+
+    iana:"Y5S1", oryx:"Y5S1",
+    ace:"Y5S2", melusi:"Y5S2",
+    zero:"Y5S3",
+    aruni:"Y5S4",
+
+    flores:"Y6S1",
+    thunderbird:"Y6S2",
+    osa:"Y6S3",
+    thorn:"Y6S4",
+
+    recruit:"Y7S1",
+  }
+  return x[op] || "Y S ";
+};
 function reduceNameLength(a, len=14){
   return a.length > (len) ? `${a.substr(0,len)}..` : a.substr(0,len)
 };
@@ -228,8 +293,39 @@ function getSeasonColorRGB(s) {
   };
   return x[s] || "Wrong Code";
 };
-function getSeasonFromNumber(s) {
+function getSeasonNameFromCode(s) {
   let x = {
+    "Y0S0": "Default",
+    "Y1S1": "Black Ice",
+    "Y1S2": "Dust Line",
+    "Y1S3": "Skull Rain",
+    "Y1S4": "Red Crow",
+    "Y2S1": "Velvet Shell",
+    "Y2S2": "Operation Health",
+    "Y2S3": "Blood Orchid",
+    "Y2S4": "White Noise",
+    "Y3S1": "Chimera",
+    "Y3S2": "Para Bellum",
+    "Y3S3": "Grim Sky",
+    "Y3S4": "Wind Bastion",
+    "Y4S1": "Burnt Horizon",
+    "Y4S2": "Phantom Sight",
+    "Y4S3": "Ember Rise",
+    "Y4S4": "Shifting Tides",
+    "Y5S1": "Void Edge",
+    "Y5S2": "Steel Wave",
+    "Y5S3": "Shadow Legacy",
+    "Y5S4": "Neon Dawn",
+    "Y6S1": "Crimson Heist",
+    "Y6S2": "North Star",
+    "Y6S3": "Crystal Guard",
+    "Y6S4": "High Calibre",
+  };
+  return x[s] || "Wrong Code";
+};
+function getSeasonNameFromNumber(s) {
+  let x = {
+    0: "Default",
     1: "Black Ice",
     2: "Dust Line",
     3: "Skull Rain",
@@ -253,11 +349,13 @@ function getSeasonFromNumber(s) {
     21: "Crimson Heist",
     22: "North Star",
     23: "Crystal Guard",
+    24: "High Calibre"
   };
   return x[s] || "Wrong Code";
 };
 function getSeasonCodeFromNumber(s) {
   let x = {
+    0: "Y0S0",
     1: "Y1S1",
     2: "Y1S2",
     3: "Y1S3",

@@ -153,7 +153,7 @@
         </div><!-- User Header -->
 
         <!-- Tab -->
-        <ul class="uk-flex-left" uk-tab>
+        <ul class="uk-flex-left" uk-tab="active:0">
           <li><a href="#" class="cndrd-font-normal">Overall</a></li>
           <li><a href="#" class="cndrd-font-normal">Operators</a></li>
         </ul><!-- Tab -->
@@ -699,21 +699,68 @@
           <!-- Operators -->
           <li>
             <div class="uk-overflow-auto">
-              <table class="uk-table uk-table-divider sortable">
-                <thead class="pls-no-click" style="background: rgb(34, 34, 34);">
-                  <tr>
-                    <th class="sorttable_nosort uk-flex uk-flex-center uk-visible@m"><span uk-icon="image"></span></th>
-                    <th class="sorttable_nosort uk-visible@m">Operator</th>
-                    <th class="uk-text-center sorttable_numeric">KD</th>
-                    <th class="uk-text-center sorttable_numeric">WL</th>
-                    <th class="uk-text-center sorttable_numeric">HS%</th>
-                    <th class="uk-text-center sorttable_numeric uk-visible@l">DBNOs</th>
-                    <th class="uk-text-center sorttable_numeric uk-visible@l">Melees</th>
-                    <th class="uk-text-center sorttable_numeric uk-visible@m">Playtime</th>
-                  </tr>
-                </thead>
-                <tbody id="operator_table"></tbody>
-              </table>
+              <div uk-filter="target: .js-filter">
+
+                <div class="uk-grid-small uk-grid-divider uk-child-width-auto uk-flex-center" uk-grid>
+                  <div>
+                    <ul class="uk-subnav uk-subnav-pill" uk-margin>
+                      <li class="uk-active" uk-filter-control><a href="#">All</a></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <ul class="uk-subnav uk-subnav-pill" uk-margin>
+                      <li uk-filter-control="filter: [data-atkdef='attacker']; group: side"><a href="#">Attacker</a></li>
+                      <li uk-filter-control="filter: [data-atkdef='defender']; group: side"><a href="#">Defender</a></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <ul class="uk-subnav uk-subnav-pill" uk-margin>
+                      <li uk-filter-control="filter: [data-kd='more']; group: kd"><a href="#">KD > 1</a></li>
+                      <li uk-filter-control="filter: [data-kd='less']; group: kd"><a href="#">KD < 1</a></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <ul class="uk-subnav uk-subnav-pill" uk-margin>
+                      <li uk-filter-control="filter: [data-wl='more']; group: wl"><a href="#">WL > 50%</a></li>
+                      <li uk-filter-control="filter: [data-wl='less']; group: wl"><a href="#">WL < 50%</a></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <ul class="uk-subnav uk-subnav-pill" uk-margin>
+                      <li uk-filter-control="filter: [data-hs='more']; group: hs"><a href="#">HS > 50%</a></li>
+                      <li uk-filter-control="filter: [data-hs='less']; group: hs"><a href="#">HS < 50%</a></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <ul class="uk-subnav uk-subnav-pill" uk-margin>
+                      <li uk-filter-control="filter: [data-year='0']; group: hs"><a href="#">Default</a></li>
+                      <li uk-filter-control="filter: [data-year='1']; group: hs"><a href="#">Year 1</a></li>
+                      <li uk-filter-control="filter: [data-year='2']; group: hs"><a href="#">Year 2</a></li>
+                      <li uk-filter-control="filter: [data-year='3']; group: hs"><a href="#">Year 3</a></li>
+                      <li uk-filter-control="filter: [data-year='4']; group: hs"><a href="#">Year 4</a></li>
+                      <li uk-filter-control="filter: [data-year='5']; group: hs"><a href="#">Year 5</a></li>
+                      <li uk-filter-control="filter: [data-year='6']; group: hs"><a href="#">Year 6</a></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <table class="uk-table uk-table-divider sortable">
+                  <thead class="pls-no-click" style="background: rgb(34, 34, 34);">
+                    <tr>
+                      <th class="sorttable_nosort uk-flex uk-flex-center uk-visible@m"><span uk-icon="image"></span></th>
+                      <th class="sorttable_nosort uk-visible@m">Operator</th>
+                      <th class="uk-text-center sorttable_numeric">KD</th>
+                      <th class="uk-text-center sorttable_numeric">WL</th>
+                      <th class="uk-text-center sorttable_numeric">HS%</th>
+                      <th class="uk-text-center sorttable_numeric uk-visible@l">DBNOs</th>
+                      <th class="uk-text-center sorttable_numeric uk-visible@l">Melees</th>
+                      <th class="uk-text-center sorttable_numeric uk-visible@m">Playtime</th>
+                      <th class="uk-text-center sorttable_nosort uk-visible@m" hidden>Unique Ability</th>
+                    </tr>
+                  </thead>
+                  <tbody class="js-filter" id="operator_table"></tbody>
+                </table>
+              </div>
             </div>
           </li>
         </ul>
