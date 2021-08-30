@@ -64,7 +64,6 @@ function getLegendIconsCell(legends) {
   let LEGENDS = orderBySubKey(legends, 'Kills');
 
   LEGENDS.forEach(l => {
-    console.log(l);
     a += `
       <div class="uk-inline">
         <!--<button class="uk-button uk-button-default" type="button">Click</button>-->
