@@ -372,6 +372,10 @@ window.onload = function (){
   });
 };
 
+let cookieInviteLink = 'cookieInviteLink_AXu69hAfSh';
+if (!localStorage.getItem(cookieInviteLink)) { $('#inviteLink-button').removeAttr('hidden'); localStorage.setItem(cookieInviteLink, 'true'); }
+else { $('#inviteLink-link').removeAttr('hidden'); }
+
 function abbreviateNumber(value) {
   let newValue = value;
   if (value >= 1000) {
