@@ -26,6 +26,7 @@
     <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
 
     <script defer src="/resources/js/r6.js" charset="utf-8"></script>
+    <script defer src="/resources/jss/siege-operators.js" charset="utf-8"></script>
     <script defer src="/resources/jss/sorttable.js" charset="utf-8"></script>
     <script defer src="/resources/jss/loginSignup.js" charset="utf-8"></script>
 
@@ -153,7 +154,7 @@
         </div><!-- User Header -->
 
         <!-- Tab -->
-        <ul class="uk-flex-left" uk-tab="active:0">
+        <ul class="uk-flex-left" uk-tab="active:1">
           <li><a href="#" class="cndrd-font-normal">Overall</a></li>
           <li><a href="#" class="cndrd-font-normal">Operators</a></li>
         </ul><!-- Tab -->
@@ -699,7 +700,7 @@
           <!-- Operators -->
           <li>
             <div class="uk-overflow-auto">
-              <div uk-filter="target: .js-filter">
+              <div uk-filter="target: .js-filter; animation: false">
 
                 <div class="uk-grid-small uk-grid-divider uk-child-width-auto uk-flex-center" uk-grid>
                   <div>
@@ -740,6 +741,29 @@
                       <li uk-filter-control="filter: [data-year='4']; group: hs"><a href="#">Year 4</a></li>
                       <li uk-filter-control="filter: [data-year='5']; group: hs"><a href="#">Year 5</a></li>
                       <li uk-filter-control="filter: [data-year='6']; group: hs"><a href="#">Year 6</a></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <ul class="uk-subnav uk-subnav-pill uk-flex-center" uk-margin>
+                      <li uk-filter-control="filter: [data-role-anchor='true']; group: roles"><a href="#">Anchor</a></li>
+                      <li uk-filter-control="filter: [data-role-anti-roam='true']; group: roles"><a href="#">Anti Roam</a></li>
+                      <li uk-filter-control="filter: [data-role-roam='true']; group: roles"><a href="#">Roam</a></li>
+                      <li uk-filter-control="filter: [data-role-anti-hard-breach='true']; group: roles"><a href="#">Anti Hard Breach</a></li>
+                      <li uk-filter-control="filter: [data-role-hard-breach='true']; group: roles"><a href="#">Hard Breach</a></li>
+                      <li uk-filter-control="filter: [data-role-soft-breach='true']; group: roles"><a href="#">Soft Breach</a></li>
+                      <li uk-filter-control="filter: [data-role-back-line='true']; group: roles"><a href="#">Back Line</a></li>
+                      <li uk-filter-control="filter: [data-role-front-line='true']; group: roles"><a href="#">Front Line</a></li>
+                      <li uk-filter-control="filter: [data-role-intel-gatherer='true']; group: roles"><a href="#">Intel Gatherer</a></li>
+                      <li uk-filter-control="filter: [data-role-intel-denier='true']; group: roles"><a href="#">Intel Denier</a></li>
+                      <li uk-filter-control="filter: [data-role-disable='true']; group: roles"><a href="#">Disable</a></li>
+                      <li uk-filter-control="filter: [data-role-covering-fire='true']; group: roles"><a href="#">Covering Fire</a></li>
+                      <li uk-filter-control="filter: [data-role-area-denial='true']; group: roles"><a href="#">Area Denial</a></li>
+                      <li uk-filter-control="filter: [data-role-crowd-control='true']; group: roles"><a href="#">Crowd Control</a></li>
+                      <li uk-filter-control="filter: [data-role-flank='true']; group: roles"><a href="#">Flank</a></li>
+                      <li uk-filter-control="filter: [data-role-buff='true']; group: roles"><a href="#">Buff</a></li>
+                      <li uk-filter-control="filter: [data-role-secure='true']; group: roles"><a href="#">Secure</a></li>
+                      <li uk-filter-control="filter: [data-role-shield='true']; group: roles"><a href="#">Shield</a></li>
+                      <li uk-filter-control="filter: [data-role-trap='true']; group: roles"><a href="#">Trap</a></li>
                     </ul>
                   </div>
                 </div>
