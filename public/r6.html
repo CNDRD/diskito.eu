@@ -154,7 +154,7 @@
         </div><!-- User Header -->
 
         <!-- Tab -->
-        <ul class="uk-flex-left" uk-tab="active:1">
+        <ul class="uk-flex-left" uk-tab="active:0">
           <li><a href="#" class="cndrd-font-normal">Overall</a></li>
           <li><a href="#" class="cndrd-font-normal">Operators</a></li>
         </ul><!-- Tab -->
@@ -702,7 +702,13 @@
             <div class="uk-overflow-auto">
               <div uk-filter="target: .js-filter; animation: false">
 
-                <div class="uk-grid-small uk-grid-divider uk-child-width-auto uk-flex-center" uk-grid>
+                <div class="uk-flex uk-flex-center">
+                  <button type="button" class="uk-button uk-button-default" uk-toggle="target: #r6-filters; animation: uk-animation-slide-top-medium; queued: true">
+                    Show Filters
+                  </button>
+                </div>
+
+                <div id="r6-filters" class="uk-grid-small uk-grid-divider uk-child-width-auto uk-flex-center uk-margin-medium-top uk-margin-medium-bottom" uk-grid hidden>
                   <div>
                     <ul class="uk-subnav uk-subnav-pill" uk-margin>
                       <li class="uk-active" uk-filter-control><a href="#">All</a></li>

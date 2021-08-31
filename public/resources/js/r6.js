@@ -261,7 +261,6 @@ function getDATA(op) {
     data-role-trap=${r.includes('Trap')}
   `;
 };
-
 function reduceNameLength(a, len=14){
   return a.length > (len) ? `${a.substr(0,len)}..` : a.substr(0,len)
 };
@@ -476,3 +475,10 @@ function getUpdateTimeString(s) {
 
   return msg
 };
+$('#siegeManualUpdateButton').click(function () {
+  firebase.database().ref("GameStats/updateRequests/R6S").set(parseInt(Date.now()/1000));
+  UIkit.notification({
+    message: `Request to update the stats has been sent! The page will reload once the stats are ready.`,
+    pos: 'top-right', timeout: 7500
+  });
+});
