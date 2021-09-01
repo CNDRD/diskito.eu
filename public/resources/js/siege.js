@@ -84,6 +84,8 @@ const rankMMRv3 = [
   {name: "Champion",    min_mmr: 5000,  max_mmr: 15000, image: "https://i.imgur.com/QHZFdUj.png"}
 ];
 
+const currentRankMMRs = rankMMRv2;
+
 let ranked = [];
 let unranked = [];
 let clown = 0;
@@ -275,7 +277,7 @@ function getPlaytime(s) {
 };
 function getRankFromMMR(mmr) {
   let x = "Wrong MMR";
-  rankMMRv2.forEach(r => {
+  currentRankMMRs.forEach(r => {
     if (r.min_mmr <= mmr && mmr <= r.max_mmr) {
       x = r.name;
     }
@@ -284,7 +286,7 @@ function getRankFromMMR(mmr) {
 };
 function getRankImageFromMMR(mmr) {
   let x = "https://i.imgur.com/RpPdtbU.png";
-  rankMMRv2.forEach(r => {
+  currentRankMMRs.forEach(r => {
     if (r.min_mmr <= mmr && mmr <= r.max_mmr) {
       x = r.image;
     }
@@ -293,14 +295,14 @@ function getRankImageFromMMR(mmr) {
 };
 function getPrevRankMMR(mmr) {
   let x = 0;
-  rankMMRv2.forEach(r => {
+  currentRankMMRs.forEach(r => {
     if (r.min_mmr <= mmr && mmr <= r.max_mmr) { x = r.min_mmr; }
   });
   return x
 };
 function getNextRankMMR(mmr) {
   let x = 0;
-  rankMMRv2.forEach(r => {
+  currentRankMMRs.forEach(r => {
     if (r.min_mmr <= mmr && mmr <= r.max_mmr) { x = r.max_mmr+1; }
   });
   return x
