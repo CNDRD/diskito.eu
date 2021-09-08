@@ -84,7 +84,7 @@ const rankMMRv3 = [
   {name: "Champion",    min_mmr: 5000,  max_mmr: 15000, image: "https://i.imgur.com/QHZFdUj.png"}
 ];
 
-const currentRankMMRs = rankMMRv2;
+const currentRankMMRs = rankMMRv3;
 
 let ranked = [];
 let unranked = [];
