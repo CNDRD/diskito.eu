@@ -22,6 +22,8 @@
     <!-- Custom CSS & JS -->
     <link rel="stylesheet" href="/resources/css/main.css" />
     <script defer src="/resources/jss/myFunctions.js" charset="utf-8"></script>
+    <script defer src="/resources/jss/siege-stuff.js" charset="utf-8"></script>
+    <script defer src="/resources/js/siege_ops.js" charset="utf-8"></script>
 
     <script defer src="/resources/jss/loginSignup.js" charset="utf-8"></script>
 
@@ -101,633 +103,631 @@
       </div>
     </nav>
 
-    <div class="uk-section">
+    <div class="uk-section uk-padding-large">
+      <div class="uk-container uk-container-xlarge">
+        <div id="op-div" class="uk-flex-center uk-child-width-1-4@m" uk-grid="masonry: true"></div>
+      </div>
+    </div>
+
+    <div class="uk-section" hidden>
       <div class="uk-container">
-        <ul class="uk-flex-center" uk-tab>
-          <li><a href="#">Defenders</a></li>
-          <li><a href="#">Attackers</a></li>
-        </ul>
 
-        <ul class="uk-switcher">
-          <li>
-            <!-- Defenders -->
-            <div class="uk-flex-center uk-child-width-1-6@m" uk-grid="masonry: true">
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/VNv1Ch4.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Smonk</h3>
-                  </div>
-                </div>
+        <!-- Defenders -->
+        <div class="uk-flex-center uk-child-width-1-6@m" uk-grid="masonry: true">
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/VNv1Ch4.png" />
               </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/0XHJJ2S.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Mute</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/TfYOlcV.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Castle</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/4OgdB2r.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Pulse</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/z4W4lrj.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Doc</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/BwUgdrg.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Rook</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/xkQhMT9.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Kapkan</h3>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/A7x1F6R.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Chanka</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/p7PDuJQ.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Jäger</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/GA9yOiS.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Bandit</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/iyFrBwp.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Fwost</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/nAKak6j.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Vaklýra</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/y503xhj.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Coomveira</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/futxIJJ.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Echo</h3>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/Z14E0dN.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Mira</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/hIZRivL.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Leštión</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/7tMbx0y.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Ela</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/JgOBzmd.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Virgin</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/DyxP5r1.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Maestro</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/Cip7n3X.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Alibabi</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/rtEq34X.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Trash</h3>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/rVRfHgZ.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Kaid</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/46RGx1h.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Buzzie</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/GlCmw3s.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Warden</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/vxCENPj.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Geyo</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/IWo0kTU.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Wahmai</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/nJfg54G.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Chačův Tata</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/KdSrt8P.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Mewusi</h3>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/CezJ32Q.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Awuni</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/OLJqTD7.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Thunderfuck</h3>
-                  </div>
-                </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Smonk</h3>
               </div>
             </div>
-          </li>
-          <li>
-            <!-- Attackers -->
-            <div class="uk-flex-center uk-child-width-1-6@m" uk-grid="masonry: true">
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/kIfQQsp.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Sledge</h3>
-                  </div>
-                </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/0XHJJ2S.png" />
               </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/mm628SW.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Thatcher</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/BA77gOJ.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Trash</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/CkA1pbL.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Thermite</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/Cq6S7AY.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Twitch</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/EnyFu8I.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Montagne</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/e19H9q4.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Glacek</h3>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/enocFwm.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Fuze</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/Y0THdeG.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Blitz</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/2BS6AeU.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">IQ</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/wRAsFea.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Buwuck</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/PrGdJH5.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Snackbeard</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/Ysd6vwn.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Capitão</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/ZEJkcmA.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Hibibana</h3>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/Wcvv4vM.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Jackal</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/uvXMqbE.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Čingiling</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/5BEPwG3.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Zofia</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/oBcZzHG.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Dokkebabi</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/d0MjY3v.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Lion</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/UH8qFsb.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Fifinka</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/1B1yWqw.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Maverick</h3>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/hcuExRf.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Twomad</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/duqFglN.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Thicclock</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/FFMpPnm.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Nøkk</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/3jVa2JG.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Amaru</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/A1Reqyh.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Kali</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/AMPURYJ.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Iana</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/mp50t7y.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Ace</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/g0n8Gcn.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Zero</h3>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-secondary uk-card-hover uk-light">
-                  <div class="uk-card-media-top uk-margin-remove">
-                    <img class="op-img" src="https://i.imgur.com/hTptR7w.png" />
-                  </div>
-                  <div class="uk-card-body uk-padding-remove-top">
-                    <h3 class="uk-card-title">Bouchal</h3>
-                  </div>
-                </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Mute</h3>
               </div>
             </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/TfYOlcV.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Castle</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/4OgdB2r.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Pulse</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/z4W4lrj.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Doc</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/BwUgdrg.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Rook</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/xkQhMT9.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Kapkan</h3>
+              </div>
+            </div>
+          </div>
 
-          </li>
-        </ul>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/A7x1F6R.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Chanka</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/p7PDuJQ.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Jäger</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/GA9yOiS.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Bandit</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/iyFrBwp.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Fwost</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/nAKak6j.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Vaklýra</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/y503xhj.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Coomveira</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/futxIJJ.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Echo</h3>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/Z14E0dN.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Mira</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/hIZRivL.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Leštión</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/7tMbx0y.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Ela</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/JgOBzmd.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Virgin</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/DyxP5r1.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Maestro</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/Cip7n3X.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Alibabi</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/rtEq34X.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Trash</h3>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/rVRfHgZ.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Kaid</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/46RGx1h.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Buzzie</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/GlCmw3s.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Warden</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/vxCENPj.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Geyo</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/IWo0kTU.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Wahmai</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/nJfg54G.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Chačův Tata</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/KdSrt8P.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Mewusi</h3>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/CezJ32Q.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Awuni</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/OLJqTD7.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Thunderfuck</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- Attackers -->
+        <div class="uk-flex-center uk-child-width-1-6@m" uk-grid="masonry: true">
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/kIfQQsp.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Sledge</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/mm628SW.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Thatcher</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/BA77gOJ.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Trash</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/CkA1pbL.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Thermite</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/Cq6S7AY.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Twitch</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/EnyFu8I.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Montagne</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/e19H9q4.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Glacek</h3>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/enocFwm.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Fuze</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/Y0THdeG.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Blitz</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/2BS6AeU.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">IQ</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/wRAsFea.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Buwuck</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/PrGdJH5.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Snackbeard</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/Ysd6vwn.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Capitão</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/ZEJkcmA.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Hibibana</h3>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/Wcvv4vM.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Jackal</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/uvXMqbE.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Čingiling</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/5BEPwG3.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Zofia</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/oBcZzHG.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Dokkebabi</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/d0MjY3v.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Lion</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/UH8qFsb.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Fifinka</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/1B1yWqw.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Maverick</h3>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/hcuExRf.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Twomad</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/duqFglN.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Thicclock</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/FFMpPnm.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Nøkk</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/3jVa2JG.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Amaru</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/A1Reqyh.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Kali</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/AMPURYJ.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Iana</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/mp50t7y.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Ace</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/g0n8Gcn.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Zero</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-secondary uk-card-hover uk-light">
+              <div class="uk-card-media-top uk-margin-remove">
+                <img class="op-img" src="https://i.imgur.com/hTptR7w.png" />
+              </div>
+              <div class="uk-card-body uk-padding-remove-top">
+                <h3 class="uk-card-title">Bouchal</h3>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
