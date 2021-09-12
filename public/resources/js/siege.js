@@ -247,11 +247,17 @@ function getRankCell(u, unrank=false) {
     <img style="height: 3.5rem;" class="uk-preserve-width uk-visible@m uk-margin-small-left" src="${u.maxRankImage}" uk-tooltip="${u.maxRank}" />
   `;
   let unrankedCell = `
-    <div class="uk-inline">
-      <img style="height: 3.5rem;" class="uk-preserve-width uk-margin-small-left"
-      src="${getRankImageFromMMR(u.currentMMR)}" uk-tooltip="${getRankFromMMR(u.currentMMR)}" />
-      <div class="uk-overlay uk-position-right">
-        <span class="uk-badge">U</span>
+    <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-around uk-flex-middle">
+      <div class="uk-inline">
+        <img style="height: 3.5rem;" class="uk-preserve-width uk-margin-small-left" src="${getRankImageFromMMR(u.currentMMR)}" uk-tooltip="${getRankFromMMR(u.currentMMR)}" />
+        <div class="uk-overlay uk-position-right">
+          <span class="uk-badge">U</span>
+        </div>
+      </div>
+      <div>
+        <span>${u.sWins+u.sLosses}</span>
+        <hr class="uk-margin-small" />
+        <span>10</span>
       </div>
     </div>
   `;
