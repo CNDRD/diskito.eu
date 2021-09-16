@@ -28,7 +28,6 @@ function operatorsPage(d) {
 
   OPS.sort(function(a,b){return b.time_played-a.time_played});
   OPS.forEach(op => {
-    if (op.name == "osa") { return };
     $('#operator_table').append(getOperatorRow(op));
   });
 };
