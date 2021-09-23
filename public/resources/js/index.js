@@ -38,6 +38,7 @@ function widgetFlags(user) {
   let house = house_name = "";
   let booster = booster_since = "";
   let on_mobile = "";
+  let early_supporter = "";
   let wh = 17;
   let bwh = 10;
 
@@ -65,9 +66,14 @@ function widgetFlags(user) {
     on_mobile = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/on_mobile.svg" width=${bwh} height=${bwh} uk-svg />`;
   }
 
+  if (user.early_supporter) {
+    early_supporter = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/early_supporter.svg" width=22 height=22 uk-svg />`;
+  }
+
   let flags = `
     <div class="uk-flex uk-flex-row" uk-tooltip="${house_name}">${house}</div>
     <div class="uk-flex uk-flex-row">${on_mobile}</div>
+    <div class="uk-flex uk-flex-row" uk-tooltip="Early Supporter">${early_supporter}</div>
     <div class="uk-flex uk-flex-row" uk-tooltip="since ${booster_since}">${booster}</div>
   `;
 
