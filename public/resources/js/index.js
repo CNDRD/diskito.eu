@@ -355,7 +355,7 @@ function getTodayFirebaseString() {
 
 firebase.database().ref('serverTotals').on('value', snapshot => {
   $("#userCount").text(snapshot.val().users);
-  //$("#rpDownloads").text(snapshot.val().rpDownloads);
+  $("#rpDownloads").text(snapshot.val().rpDownloads);
 });
 
 
@@ -372,10 +372,6 @@ window.onload = function (){
     });
     localStorage.setItem(cookieAlert, 'true');
   };
-
-  $.getJSON("https://api.cfwidget.com/381945", function(data) {
-    $("#rpDownloads").text(abbreviateNumber(data.downloads.total + 1000) + '+');
-  });
 };
 
 let cookieInviteLink = 'cookieInviteLink_AXu69hAfSh';
