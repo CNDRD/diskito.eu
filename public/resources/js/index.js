@@ -33,28 +33,30 @@ function widgetStatus(status) {
   return "uk-text-primary"
 };
 function widgetFlags(user) {
-  if (user.house == "none" && user.premium_since == "none") { return "" }
+  if (user.house == "none" && user.premium_since == "none" && !user.early_supporter || user.activities == "none") { return "" }
 
-  let house = house_name = "";
+  let custom_status = "";
   let booster = booster_since = "";
   let on_mobile = "";
   let early_supporter = "";
   let wh = 17;
   let bwh = 10;
 
-  switch (user.house) {
-    case "brilliance":
-      house = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/hs_brilliance.svg" width=${wh} height=${wh} uk-svg />`;
-      house_name = "Brilliance";
-      break;
-    case "balance":
-      house = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/hs_balance.svg" width=${wh} height=${wh} uk-svg />`;
-      house_name = "Balance";
-      break;
-    case "bravery":
-      house = `<img class="uk-preserve" style="margin-left: 5px;" src="/resources/svg/widget/hs_bravery.svg" width=${wh} height=${wh} uk-svg />`;
-      house_name = "Bravery";
-      break;
+  if (user.activities.custom != "none") {
+    let cus = user.activities.custom;
+
+    console.log(user.username);
+
+    if (cus.emoji_name != "none" && cus.emoji_url == "none") { // Default unicode emoji
+      custom_status = cus.emoji_name;
+    }
+    else if (cus.emoji_name != "none") { // Custom emoji
+      custom_status = `<img class="uk-preserve" style="margin-right:3px; width:auto; height:20px" src="${cus.emoji_url}" uk-tooltip="${cus.emoji_name}" />`;
+    }
+    if (cus.name != "none") {
+      custom_status += `<span uk-tooltip="${cus.name}">${reduceStringLength(cus.name,15)}</span>`
+    }
+
   }
 
   if (user.premium_since != "none") {
@@ -71,7 +73,7 @@ function widgetFlags(user) {
   }
 
   let flags = `
-    <div class="uk-flex uk-flex-row" uk-tooltip="${house_name}">${house}</div>
+    <div class="uk-flex uk-flex-row" style="margin-left:5px;">${custom_status}</div>
     <div class="uk-flex uk-flex-row">${on_mobile}</div>
     <div class="uk-flex uk-flex-row" uk-tooltip="Early Supporter">${early_supporter}</div>
     <div class="uk-flex uk-flex-row" uk-tooltip="since ${booster_since}">${booster}</div>
