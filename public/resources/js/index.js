@@ -75,7 +75,7 @@ function widgetFlags(user) {
   let flags = `
     <div class="uk-flex uk-flex-row" style="margin-left:5px;">${custom_status}</div>
     <div class="uk-flex uk-flex-row">${on_mobile}</div>
-    <div class="uk-flex uk-flex-row" uk-tooltip="Early Supporter">${early_supporter}</div>
+    <div class="uk-flex uk-flex-row" uk-tooltip="Early Supporter" hidden>${early_supporter}</div>
     <div class="uk-flex uk-flex-row" uk-tooltip="since ${booster_since}">${booster}</div>
   `;
 
