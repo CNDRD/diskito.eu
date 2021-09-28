@@ -135,20 +135,47 @@ function updateGeneralCard(d) {
 function updateOperatorCard(d) {
   let ops = getTopTwoOperatorsFromEach(d);
   ops.forEach((op, i) => {
+    let operator_wl = `
+      <div class="uk-visible@s">${roundTwo(op.wins/(op.wins+op.losses)*100)}%</div>
+      <div class="uk-hidden@s">${Math.round(op.wins/(op.wins+op.losses)*100)}%</div>`;
+
+    let op_playtime_rawxd = getOpPlaytime(op.time_played);
+    let op_playtime = `
+      <div class="uk-visible@s">${op_playtime_rawxd}</div>
+      <div class="uk-hidden@s">${op_playtime_rawxd.split(" ")[0]}</div>`;
+
     $(`#operator_img_${i+1}`).attr('uk-tooltip', op.readable);
     $(`#operator_img_${i+1}`).attr('data-src', op.icon);
     $(`#operator_kd_${i+1}`).text(roundTwo(op.kills / op.deaths));
-    $(`#operator_wl_${i+1}`).text(`${roundTwo(op.wins / (op.wins + op.losses) * 100)}%`);
-    $(`#operator_playtime_${i+1}`).text(getOpPlaytime(op.time_played))
+    $(`#operator_wl_${i+1}`).replaceWith(operator_wl);
+    $(`#operator_playtime_${i+1}`).replaceWith(op_playtime);
   });
 };
 function updateWeaponTypeCard(d) {
-  d.weapon_types.forEach((w, index) => {
-    $(`#wt_name_${index}`).text(`${addSpaces(w.name)}s`);
-    $(`#wt_kills_${index}`).text(addSpaces(w.kills));
-    $(`#wt_hits_${index}`).text(addSpaces(w.hits));
-    $(`#wt_hsp_${index}`).text(`${roundTwo((w.headshots/w.kills)*100)}%`);
-    $(`#wt_hs_${index}`).text(addSpaces(w.headshots));
+  let wt_name_dict = {"Assault Rifle":"ARs","Submachine Gun":"SMGs","Light Machine Gun":"LMGs","Marksman Rifle":"DMRs","Handgun":"Handg..","Shotgun":"Shotg.."};
+
+  d.weapon_types.forEach((w, i) => {
+    let wt_name = `
+      <div class="uk-visible@s">${addSpaces(w.name)}s</div>
+      <div class="uk-hidden@s">${wt_name_dict[addSpaces(w.name)] || w.name}</div>`;
+    let wt_kills = `
+      <div class="uk-visible@s">${addSpaces(w.kills)}</div>
+      <div class="uk-hidden@s">${abbreviateNumber(w.kills)}</div>`;
+    let wt_hits = `
+      <div class="uk-visible@s">${addSpaces(w.hits)}</div>
+      <div class="uk-hidden@s">${abbreviateNumber(w.hits)}</div>`;
+    let wt_hsp = `
+      <div class="uk-visible@s">${roundTwo((w.headshots/w.kills)*100)}%</div>
+      <div class="uk-hidden@s">${Math.round((w.headshots/w.kills)*100)}%</div>`;
+    let wt_hs = `
+      <div class="uk-visible@s">${addSpaces(w.headshots)}</div>
+      <div class="uk-hidden@s">${abbreviateNumber(w.headshots)}</div>`;
+
+    $(`#wt_name_${i+1}`).replaceWith(wt_name);
+    $(`#wt_kills_${i+1}`).replaceWith(wt_kills);
+    $(`#wt_hits_${i+1}`).replaceWith(wt_hits);
+    $(`#wt_hsp_${i+1}`).replaceWith(wt_hsp);
+    $(`#wt_hs_${i+1}`).replaceWith(wt_hs);
   });
 };
 
@@ -314,7 +341,23 @@ function getTimeAndDateFromTimestamp(UNIX_timestamp){
   let sec = a.getSeconds() < 10 ? "0" + a.getSeconds() : a.getSeconds();
   return `${hour}:${min}:${sec} / ${date}.${month}. ${year}`;
 };
-
+function abbreviateNumber(value) {
+  // https://stackoverflow.com/a/10601315/13186339
+  var newValue = value;
+  if (value >= 1000) {
+    var suffixes = ["", "k", "m", "b","t"];
+    var suffixNum = Math.floor( (""+value).length/3 );
+    var shortValue = '';
+    for (var precision = 2; precision >= 1; precision--) {
+      shortValue = parseFloat( (suffixNum != 0 ? (value / Math.pow(1000,suffixNum) ) : value).toPrecision(precision));
+      var dotLessShortValue = (shortValue + '').replace(/[^a-zA-Z 0-9]+/g,'');
+      if (dotLessShortValue.length <= 2) { break; }
+    }
+    if (shortValue % 1 != 0)  shortValue = shortValue.toFixed(1);
+    newValue = shortValue+suffixes[suffixNum];
+  }
+  return newValue;
+}
 
 // Update button
 let lastUpdateRef = firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`);
