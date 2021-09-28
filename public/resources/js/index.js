@@ -36,6 +36,7 @@ function widgetFlags(user) {
   if (user.house == "none" && user.premium_since == "none" && !user.early_supporter || user.activities == "none") { return "" }
 
   let custom_status = "";
+  let custom_name = "";
   let booster = booster_since = "";
   let on_mobile = "";
   let early_supporter = "";
@@ -45,16 +46,18 @@ function widgetFlags(user) {
   if (user.activities.custom != "none") {
     let cus = user.activities.custom;
 
-    console.log(user.username);
+    if (cus.name != "none") {
+      custom_name = cus.name;
+    }
 
     if (cus.emoji_name != "none" && cus.emoji_url == "none") { // Default unicode emoji
       custom_status = cus.emoji_name;
     }
     else if (cus.emoji_name != "none") { // Custom emoji
-      custom_status = `<img class="uk-preserve" style="margin-right:3px; width:auto; height:20px" src="${cus.emoji_url}" uk-tooltip="${cus.emoji_name}" />`;
+      custom_status = `<img class="uk-preserve" style="margin-right:3px; width:auto; height:20px" src="${cus.emoji_url}" uk-tooltip=${custom_name} />`;
     }
-    if (cus.name != "none") {
-      custom_status += `<span uk-tooltip="${cus.name}">${reduceStringLength(cus.name,15)}</span>`
+    else {
+      custom_status = `<span uk-tooltip="${custom_name}"><span uk-icon="icon:commenting;ratio:0.8"></span>`;
     }
 
   }
@@ -73,8 +76,8 @@ function widgetFlags(user) {
   }
 
   let flags = `
-    <div class="uk-flex uk-flex-row" style="margin-left:5px;">${custom_status}</div>
     <div class="uk-flex uk-flex-row">${on_mobile}</div>
+    <div class="uk-flex uk-flex-row" style="margin-left:5px;">${custom_status}</div>
     <div class="uk-flex uk-flex-row" uk-tooltip="Early Supporter" hidden>${early_supporter}</div>
     <div class="uk-flex uk-flex-row" uk-tooltip="since ${booster_since}">${booster}</div>
   `;
