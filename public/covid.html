@@ -24,9 +24,9 @@
     <script defer src="/resources/jss/myFunctions.js" charset="utf-8"></script>
 
     <!-- Placeholder loading -->
-    <link rel="stylesheet" href="/resources/css/placeholder-loading.css" />
+    <!-- <link rel="stylesheet" href="/resources/css/placeholder-loading.css" /> -->
 
-    <script defer src="/resources/js/index.js" charset="utf-8"></script>
+    <script defer src="/resources/js/covid.js" charset="utf-8"></script>
     <script defer src="/resources/jss/loginSignup.js" charset="utf-8"></script>
 
     <title>Diskíto</title>
@@ -100,119 +100,78 @@
       </div>
     </nav>
 
-    <div id="inviteLink-button" class="uk-section uk-padding-remove-bottom" hidden>
-      <div class="uk-container">
+    <div class="uk-section uk-padding-remove-bottom">
+      <div class="uk-container uk-container-large uk-text-center">
 
-        <div class="uk-flex uk-flex-center">
-          <a target="_blank" rel="noreferrer" href="https://discord.gg/sXDbtp4" class="uk-button uk-button-default uk-button-large uk-padding-small uk-margin-small-top">
-            <div class="uk-flex uk-flex-middle uk-flex-center">
-            <span uk-icon="icon: discord; ratio:1.5" class="uk-margin-small-right"></span>
-              <span class="cndrd-font-medium uk-text-large">Join Now!</span>
-              <span class="uk-margin-small-left uk-badge"><span id="userCount">60+</span><span uk-icon="users"></span></span>
-            </div>
-          </a>
-        </div>
+        <h1 class="uk-heading-medium cndrd-font-medium">COVID-19</h1>
+        <span>
+          Data od
+          <a target="_blank" rel="noreferrer" href="https://onemocneni-aktualne.mzcr.cz/covid-19">mzcr.cz</a>
+        </span>
+
+        <hr class="uk-divider-icon">
 
       </div>
     </div>
 
-    <div class="uk-section">
-      <div class="uk-container">
+    <div class="uk-section uk-padding-small uk-padding-remove-horizontal">
+      <div class="uk-container uk-container-large uk-text-center">
 
-        <div class="uk-flex-center uk-grid-divider uk-grid-collapse pretty-scrollbar" uk-grid>
+        <div class="uk-grid-divider uk-grid-match uk-flex-center uk-text-large uk-child-width-1-3@m" uk-grid>
 
-          <div class="uk-width-auto@m uk-first-column">
-            <article class="uk-article">
-
-              <h1 class="uk-article-title uk-margin-small-top">Links</h1>
-              <hr class="uk-divider-small" />
-
-              <a href="/covid" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">COVID-19 stats</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: lifesaver; ratio: 1.5"></span>
-              </a>
-              <a href="/tools" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Tools</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: cog; ratio: 1.5"></span>
-              </a>
-              <a href="/who_asked" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Who Asked</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: question; ratio: 1.5"></span>
-              </a>
-              <a href="/siege_ops" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Siege Operators</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: tag; ratio: 1.5"></span>
-              </a>
-
-              <hr class="uk-divider-small" />
-
-              <a target="_blank" rel="noreferrer" href="https://github.com/CNDRD/Bruce" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Bruce</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: github; ratio: 1.5"></span>
-              </a>
-              <a target="_blank" rel="noreferrer" href="https://github.com/CNDRD/Diskito-Website" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Website</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: github; ratio: 1.5"></span>
-              </a>
-
-              <hr class="uk-divider-small" />
-
-              <a target="_blank" rel="noreferrer" href="https://www.reddit.com/r/diskito/" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">r/Diskito</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: reddit; ratio: 1.5"></span>
-              </a>
-              <a target="_blank" rel="noreferrer" href="https://www.curseforge.com/minecraft/texture-packs/diskito" class="uk-flex uk-flex-row uk-flex-middle">
-                <span class="uk-text-warning uk-text-lead">Resource Pack</span>
-                <span class="uk-margin-small-left uk-badge"><span id="rpDownloads">18K+</span><span uk-icon="download"></span></span>
-                <span class="uk-icon" uk-icon="icon: link; ratio: 1.5"></span>
-              </a>
-              <a id="inviteLink-link" target="_blank" rel="noreferrer" href="https://discord.gg/sXDbtp4" class="uk-flex uk-flex-row uk-flex-middle" hidden>
-                <span class="uk-text-warning uk-text-lead">discord.gg/sXDbtp4</span>
-                <span class="uk-margin-small-left uk-icon" uk-icon="icon: discord; ratio: 1.5"></span>
-              </a>
-
-            </article>
-
+          <div>
+            <div class="uk-flex uk-flex-column uk-flex-middle uk-text-center">
+              <span class="cndrd-font-normal text-white">Nově nakažení</span>
+              <div id="prirustkovy_pocet_nakazenych" class="cndrd-font-normal">××</div>
+              <span class="cndrd-font-normal text-white">Celkem nakažení</span>
+              <div id="kumulativni_pocet_nakazenych" class="cndrd-font-normal">××</div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-flex uk-flex-column uk-flex-middle uk-text-center">
+              <span class="cndrd-font-normal text-white">Nově vyléčení</span>
+              <div id="prirustkovy_pocet_vylecenych" class="cndrd-font-normal">××</div>
+              <span class="cndrd-font-normal text-white">Celkem vyléčení</span>
+              <div id="kumulativni_pocet_vylecenych" class="cndrd-font-normal">××</div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-flex uk-flex-column uk-flex-middle uk-text-center">
+              <span class="cndrd-font-normal text-white">Nová úmrtí</span>
+              <div id="prirustkovy_pocet_umrti" class="cndrd-font-normal">××</div>
+              <span class="cndrd-font-normal text-white">Celkem úmrtí</span>
+              <div id="kumulativni_pocet_umrti" class="cndrd-font-normal">××</div>
+            </div>
           </div>
 
-          <div id="inVoice" hidden></div>
+        </div>
 
-          <div style="min-width: 30%;" class="uk-width-auto@m">
-            <article class="uk-article">
-              <h1 class="uk-article-title" id="nowOnline">Now Online</h1>
-              <hr class="uk-divider-small" />
-              <div class="uk-height-large uk-overflow-auto" id="widget">
 
-                <div class="ph-item">
-                  <div class="ph-col">
-                    <div class="ph-row">
-                      <div class="ph-col-4"></div>
-                      <div class="ph-col-6 empty"></div>
-                      <div class="ph-col-2"></div>
-                      <div class="ph-col-2"></div>
-                      <div class="ph-col-10 empty"></div>
-                      <div class="ph-col-6"></div>
-                      <div class="ph-col-6 empty"></div>
-                      <div class="ph-col-4"></div>
-                      <div class="ph-col-4 empty"></div>
-                      <div class="ph-col-4"></div>
-                      <div class="ph-col-2"></div>
-                      <div class="ph-col-7 empty"></div>
-                      <div class="ph-col-3"></div>
-                      <div class="ph-col-4"></div>
-                      <div class="ph-col-8 empty"></div>
-                      <div class="ph-col-5"></div>
-                      <div class="ph-col-6 empty"></div>
-                      <div class="ph-col-1"></div>
-                      <div class="ph-col-3"></div>
-                      <div class="ph-col-6 empty"></div>
-                      <div class="ph-col-3"></div>
-                    </div>
-                  </div>
-                </div>
+      </div>
+    </div>
 
-              </div>
-            </article>
+    <div class="uk-section uk-padding-small uk-padding-remove-horizontal">
+      <div class="uk-container uk-container-large uk-text-center">
+
+        <div class="uk-grid-divider uk-grid-match uk-flex-center uk-text-large uk-child-width-1-3@m" uk-grid>
+
+          <div>
+            <div class="uk-flex uk-flex-column uk-flex-middle uk-text-center">
+              <span class="cndrd-font-normal text-white">Aktivní případy</span>
+              <div id="aktivni_pripady" class="cndrd-font-normal">××</div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-flex uk-flex-column uk-flex-middle uk-text-center">
+              <span class="cndrd-font-normal text-white">Aktuálně hospitalizovaní</span>
+              <div id="aktualne_hospitalizovani" class="cndrd-font-normal">××</div>
+            </div>
+          </div>
+          <div>
+            <div class="uk-flex uk-flex-column uk-flex-middle uk-text-center">
+              <span class="cndrd-font-normal text-white">Včerejší testy</span>
+              <div id="provedene_testy_vcerejsi_den" class="cndrd-font-normal">××</div>
+            </div>
           </div>
 
         </div>
