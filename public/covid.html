@@ -19,6 +19,13 @@
     <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-analytics.js"></script>
     <script src="/resources/jss/firebase-init.js"></script>
 
+    <!-- amCharts 4 -->
+    <script defer src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script defer src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script defer src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
+    <script defer src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <style> .amChartDiv{ width:100%; height:30em; } </style>
+
     <!-- Custom CSS & JS -->
     <link rel="stylesheet" href="/resources/css/main.css" />
     <script defer src="/resources/jss/myFunctions.js" charset="utf-8"></script>
@@ -109,7 +116,7 @@
           <a target="_blank" rel="noreferrer" href="https://onemocneni-aktualne.mzcr.cz/covid-19">mzcr.cz</a>
         </span>
 
-        <hr class="uk-divider-icon">
+        <hr class="uk-divider-icon" />
 
       </div>
     </div>
@@ -146,6 +153,7 @@
 
         </div>
 
+        <hr class="uk-divider-small" />
 
       </div>
     </div>
@@ -174,6 +182,24 @@
             </div>
           </div>
 
+        </div>
+
+        <hr class="uk-divider-small" />
+
+      </div>
+    </div>
+
+    <div class="uk-section uk-padding-small uk-padding-remove-horizontal">
+      <div class="uk-container uk-container-large uk-text-center">
+
+        <div class="uk-card uk-card-body">
+          <h3 class="uk-text-center uk-card-title cndrd-font-medium">Přírůstkový počet nakažených za poslední měsíc</h3>
+          <div class="amChartDiv" id="nakazeni31ChartDiv"></div>
+        </div>
+
+        <div class="uk-card uk-card-body">
+          <h3 class="uk-text-center uk-card-title cndrd-font-medium">Přírůstkový počet nakažených od začátku pandemie</h3>
+          <div class="amChartDiv" id="nakazeniChartDiv"></div>
         </div>
 
       </div>
