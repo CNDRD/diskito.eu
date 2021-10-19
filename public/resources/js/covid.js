@@ -1,5 +1,5 @@
 const ZAKLADNI_PREHLED = "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/zakladni-prehled.min.json";
-const NAKAZENI_VALECENI_UMRTI_TESTY = "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/nakazeni-vyleceni-umrti-testy.min.json";
+const NAKAZENI_VYLECENI_UMRTI_TESTY = "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/nakazeni-vyleceni-umrti-testy.min.json";
 
 $.getJSON(ZAKLADNI_PREHLED, data => {
   let modified = data.modified;
@@ -19,7 +19,7 @@ am4core.useTheme(am4themes_animated);
 let nakazeni31Chart = am4core.create("nakazeni31ChartDiv", am4charts.XYChart);
 let nakazeniChart = am4core.create("nakazeniChartDiv", am4charts.XYChart);
 
-$.getJSON(NAKAZENI_VALECENI_UMRTI_TESTY, data => {
+$.getJSON(NAKAZENI_VYLECENI_UMRTI_TESTY, data => {
   let modified = data.modified;
   let d = data.data;
   let ld = d.at(-1);  // last day
@@ -32,7 +32,6 @@ $.getJSON(NAKAZENI_VALECENI_UMRTI_TESTY, data => {
   $(`#kumulativni_pocet_umrti`).replaceWith(`<div class="cndrd-font-normal">${addSpaces(ld.kumulativni_pocet_umrti)} ${getYAS(ya.kumulativni_pocet_umrti)}</div>`);
   $(`#prirustkovy_pocet_vylecenych`).replaceWith(`<div class="cndrd-font-normal">${addSpaces(ld.prirustkovy_pocet_vylecenych)} ${getYAS(ya.prirustkovy_pocet_vylecenych)}</div>`);
   $(`#kumulativni_pocet_vylecenych`).replaceWith(`<div class="cndrd-font-normal">${addSpaces(ld.kumulativni_pocet_vylecenych)} ${getYAS(ya.kumulativni_pocet_vylecenych)}</div>`);
-
 
   let nakazeniData = [];
   data.data.forEach(day => {
