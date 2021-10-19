@@ -47,19 +47,18 @@ function widgetFlags(user) {
     let cus = user.activities.custom;
 
     if (cus.name != "none") {
-      custom_name = cus.name;
+      custom_name = `uk-tooltip="${cus.name}"`;
     }
 
     if (cus.emoji_name != "none" && cus.emoji_url == "none") { // Default unicode emoji
       custom_status = cus.emoji_name;
     }
     else if (cus.emoji_name != "none") { // Custom emoji
-      custom_status = `<img class="uk-preserve" style="margin-right:3px; width:auto; height:20px" src="${cus.emoji_url}" uk-tooltip=${custom_name} />`;
+      custom_status = `<img class="uk-preserve" style="margin-right:3px; width:auto; height:20px" src="${cus.emoji_url}" ${custom_name} />`;
     }
     else {
-      custom_status = `<span uk-tooltip="${custom_name}"><span uk-icon="icon:commenting;ratio:0.8"></span>`;
+      custom_status = `<span ${custom_name}><span uk-icon="icon:commenting;ratio:0.8"></span></span>`;
     }
-
   }
 
   if (user.premium_since != "none") {
@@ -357,14 +356,10 @@ function getTodayFirebaseString() {
 };
 
 
-
 firebase.database().ref('serverTotals').on('value', snapshot => {
   $("#userCount").text(snapshot.val().users);
   $("#rpDownloads").text(snapshot.val().rpDownloads);
 });
-
-
-
 
 
 window.onload = function (){
