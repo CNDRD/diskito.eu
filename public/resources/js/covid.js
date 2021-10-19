@@ -41,6 +41,44 @@ $.getJSON(NAKAZENI_VYLECENI_UMRTI_TESTY, data => {
   nakazeni31Chart.data = nakazeniData.slice(Math.max(nakazeniData.length - 31, 0));
   nakazeniChart.data = nakazeniData;
 
+
+  let last_6_weeks = d.slice(-42);
+  let last_6_todays = [];
+
+  last_6_weeks.reverse();
+
+  for (i=0; i<last_6_weeks.length; i+=7) {
+    last_6_todays.push(last_6_weeks[i]);
+  }
+
+  last_6_todays.reverse();
+
+  last_6_todays.forEach(t => {
+    let nakazeni = t.prirustkovy_pocet_nakazenych;
+    let testy = t.prirustkovy_pocet_provedenych_testu;
+    let datum = t.datum.split("-");
+    let proc = Math.round((nakazeni/testy)*10000)/100;
+
+    $('.nakazeni_testovani_spinner').attr('hidden','hidden');
+
+    $('#nakazeni_testovani').append(`
+      <div>
+        <div class="uk-flex uk-flex-column uk-flex-middle uk-text-center">
+          <span class="cndrd-font-normal text-white">
+            ${datum[2]}.${datum[1]}.
+          </span>
+          <div class="cndrd-font-normal">
+            ${proc}%
+          </div>
+          <div class="cndrd-font-normal uk-text-small">
+            ${addSpaces(nakazeni)} / ${addSpaces(testy)}
+          </div>
+        </div>
+      </div>
+    `);
+
+  });
+
 });
 
 createBarChart(nakazeni31Chart, 'new_cases', 'date', 'Monke');
