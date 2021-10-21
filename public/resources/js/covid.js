@@ -88,6 +88,8 @@ createBarChart(nakazeniChart, 'new_cases', 'date', 'Monke');
 
 function createBarChart(chart, vY, cX, seriesName) {
 
+  chart.colors.list = [ am4core.color("#f0506e") ];
+
   // Create axes
   let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
   categoryAxis.dataFields.category = cX;
