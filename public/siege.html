@@ -105,14 +105,21 @@
     <div class="uk-section uk-padding-remove-bottom">
       <div class="uk-container">
 
-        <div class="uk-flex uk-flex-column uk-text-right">
-          <div>
-            Last update: <div id="lastUpdated" uk-spinner="ratio: 0.5"></div> ago
+        <div class="uk-flex uk-flex-between uk-flex-row uk-flex-wrap">
+          <div class="uk-flex uk-flex-column uk-text-left">
+            <div>
+              PC Server Status: <div id="siegePcStatus" uk-spinner="ratio: 0.5"></div>
+            </div>
           </div>
-          <a id="siegeManualUpdateButton" class="uk-flex uk-flex-middle uk-flex-right pls-no-click" hidden>
-            <span style="margin-right: 6px" uk-icon="icon:refresh"></span>
-            Request Update
-          </a>
+          <div class="uk-flex uk-flex-column uk-text-right">
+            <div>
+              Last update: <div id="lastUpdated" uk-spinner="ratio: 0.5"></div> ago
+            </div>
+            <a id="siegeManualUpdateButton" class="uk-flex uk-flex-middle uk-flex-right pls-no-click" hidden>
+              <span style="margin-right: 6px" uk-icon="icon:refresh"></span>
+              Request Update
+            </a>
+          </div>
         </div>
 
         <div class="uk-overflow-auto">

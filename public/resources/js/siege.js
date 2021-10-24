@@ -322,3 +322,14 @@ $('#siegeManualUpdateButton').click(function () {
     pos: 'top-right', timeout: 7500
   });
 });
+
+
+$.getJSON("https://game-status-api.ubisoft.com/v1/instances", data => {
+  $.each(data, (key, val) => {
+    if (val['AppID '] === "e3d5ea9e-50bd-43b7-88bf-39794f4e3d40") {
+      if (val.Maintenance != null) { return $('#siegePcStatus').replaceWith(`<span class="uk-text-warning">Maintenance</span>`); }
+      let color = val.Status == "Online" ? "uk-text-success" : "uk-text-danger";
+      return $('#siegePcStatus').replaceWith(`<span class="${color}">${val.Status}</span>`);
+    }
+  });
+});
