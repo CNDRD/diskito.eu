@@ -78,9 +78,9 @@ const rankMMRv3 = [
   {name: "Platinum 3",  min_mmr: 3200,  max_mmr: 3499, image: "https://i.imgur.com/GpEpkDs.png"},
   {name: "Platinum 2",  min_mmr: 3500,  max_mmr: 3799, image: "https://i.imgur.com/P8IO0Sn.png"},
   {name: "Platinum 1",  min_mmr: 3800,  max_mmr: 4099, image: "https://i.imgur.com/52Y4EVg.png"},
-  {name: "Diamond 3",   min_mmr: 4100,  max_mmr: 4399, image: "https://i.imgur.com/HHPc5HQ.png"},
-  {name: "Diamond 2",   min_mmr: 4400,  max_mmr: 4699, image: "https://i.imgur.com/HHPc5HQ.png"},
-  {name: "Diamond 1",   min_mmr: 4700,  max_mmr: 4999, image: "https://i.imgur.com/HHPc5HQ.png"},
+  {name: "Diamond 3",   min_mmr: 4100,  max_mmr: 4399, image: "https://i.imgur.com/XEqbdS5.png"},
+  {name: "Diamond 2",   min_mmr: 4400,  max_mmr: 4699, image: "https://i.imgur.com/A9hsLtc.png"},
+  {name: "Diamond 1",   min_mmr: 4700,  max_mmr: 4999, image: "https://i.imgur.com/n0izxYa.png"},
   {name: "Champion",    min_mmr: 5000,  max_mmr: 15000, image: "https://i.imgur.com/QHZFdUj.png"}
 ];
 
