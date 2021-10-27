@@ -1,18 +1,9 @@
 
-<a href="/user/profile" class="uk-button uk-button-default uk-text-emphasis uk-flex uk-flex-row uk-flex-middle">
-  Profile <span class="uk-margin-small-left uk-icon" uk-icon="icon: user; ratio: 1.2"></span>
-</a>
-<div class="uk-inline">
-  <button class="uk-button uk-button-default" type="button"><span uk-icon="icon: triangle-down"></span></button>
-  <div uk-dropdown="mode: click; boundary: ! .uk-button-group; boundary-align: true;" style="background-color: rgb(34, 34, 34);">
-    <ul class="uk-nav uk-dropdown-nav">
-
-      <li class="uk-margin-top">
-        <button onclick="firebase.auth().signOut();" class="uk-button uk-button-danger uk-text-emphasis uk-flex uk-flex-row uk-flex-middle" type="button">
-          Logout <span class="uk-margin-small-left uk-icon" uk-icon="icon: sign-out; ratio: 1.2"></span>
-        </button>
-      </li>
-
-    </ul>
-  </div>
+<div class="uk-button-group">
+  <a href="/user/profile" class="uk-button uk-button-default uk-text-emphasis uk-flex uk-flex-row uk-flex-middle uk-margin-small-right">
+    Profile <span class="uk-margin-small-left uk-icon" uk-icon="icon: user; ratio: 1.2"></span>
+  </a>
+  <button onclick="firebase.auth().signOut();" class="uk-button uk-button-danger uk-text-emphasis uk-flex uk-flex-row uk-flex-middle" type="button">
+    Logout <span class="uk-margin-small-left uk-icon" uk-icon="icon: sign-out; ratio: 1.2"></span>
+  </button>
 </div>
