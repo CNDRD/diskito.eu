@@ -14,14 +14,63 @@ firebase.auth().onAuthStateChanged(userAuth => {
         });
       } else {
         isDiscordConnected(false);
-        $("#discordConnectionCodeInput").attr("value", `,connect ${discordConnectID}`)
-        $("#discordConnectionCodeButton").attr("onclick", `copyThis(',connect ${discordConnectID}')`)
+        $("#discordConnectionCodeInput").attr("value", `/connect ${discordConnectID}`)
+        $("#discordConnectionCodeButton").attr("onclick", `copyThis('/connect ${discordConnectID}')`)
       }
     });
 
   }
 });
 
+function doTradingData() {
+  let redstoneApi = "https://api.redstone.finance/prices?provider=redstone&symbols=";
+
+  firebase.database().ref(`websiteProfiles/${user.uid}/discordUID`).once("value").then(snapshot => {
+    firebase.database().ref(`trading/${snapshot.val()}`).once("value").then(kokot => {
+      let trading = kokot.val();
+
+      for (let key in trading) { redstoneApi += `${key.replace('-USD','')},` };
+
+      $.getJSON(redstoneApi, data => {
+        for (const key in data) {
+
+          let symbol = key;
+          let boughtAtValue = trading[key]['boughtAt'];
+          let amountBought = trading[key]['amount'];
+          let currentPrice = data[key]['value'];
+          let profit = (currentPrice*amountBought) - (boughtAtValue*amountBought);
+
+          let profitColor = profit > 0 ? "uk-text-success" : profit != 0 ? "uk-text-danger" : "";
+
+          boughtAtValue = floatWithSpaces(parseFloat(boughtAtValue.toFixed(5)));
+          amountBought = floatWithSpaces(parseFloat(amountBought.toFixed(5)));
+          currentPrice = floatWithSpaces(parseFloat(currentPrice.toFixed(5)));
+          profit = floatWithSpaces(parseFloat(profit.toFixed(2)));
+
+          $('#tradingTable').append(`
+            <tr>
+              <td class="uk-text-center cndrd-font-normal">${symbol}</td>
+              <td class="uk-text-center">${currentPrice}</td>
+              <td class="uk-text-center">${boughtAtValue}</td>
+              <td class="uk-text-center">${amountBought}</td>
+              <td class="uk-text-center ${profitColor}">${profit}</td>
+            </tr>
+          `);
+
+        };
+      });
+
+
+
+    });
+  });
+};
+
+function floatWithSpaces(x) {
+  let parts = x.toString().split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  return parts.join(".");
+};
 
 function doDiscordStats() {
   let discordStatsDiv = "#personalDiscordStatsPlace";
@@ -41,7 +90,7 @@ function doDiscordStats() {
           let fancyValue = getFancyValue(key, zmrd[key])
           let msgLmao = `
             <div class="uk-flex uk-flex-between">
-              <span>${fancyKey}</span>
+              <span style="margin-right:25px;">${fancyKey}</span>
               <span>${fancyValue}</span>
             </div>`;
           $(discordStatsDiv).append(msgLmao);
@@ -107,6 +156,7 @@ function isDiscordConnected(lolz) {
     $(fucked).hide();
     $(connectDiscord).hide();
     doDiscordStats();
+    doTradingData();
     $(discordStats).show();
   } else {
     /* No */

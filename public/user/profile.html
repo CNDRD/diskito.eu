@@ -25,6 +25,7 @@
 
     <script defer src="/resources/jss/loginSignup.js" charset="utf-8"></script>
     <script defer src="/user/profile.js" charset="utf-8"></script>
+    <script defer src="/user/trading.js" charset="utf-8"></script>
 
     <title>Diskíto</title>
     <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
@@ -133,9 +134,36 @@
 
               <hr class="uk-divider-icon" />
 
-              <div id="personalDiscordStats" class="uk-flex uk-flex-column uk-flex-left uk-width-medium" style="display: none">
-                <h3>All Your Stats</h3>
-                <div id="personalDiscordStatsPlace"></div>
+              <div id="personalDiscordStats" class="uk-flex uk-flex-column uk-flex-left uk-width-auto" style="display: none">
+
+                <!-- Tab -->
+                <ul class="uk-flex-center" uk-tab="active:1">
+                  <li><a href="#" class="cndrd-font-normal">All Your Stats</a></li>
+                  <li><a href="#" class="cndrd-font-normal">Trading</a></li>
+                </ul><!-- Tab -->
+
+                <ul class="uk-switcher">
+                  <!-- Stats -->
+                  <li>
+                    <div id="personalDiscordStatsPlace"></div>
+                  </li>
+                  <!-- Trading -->
+                  <li>
+                    <div id="tradingData">
+                      <table class="uk-table uk-table-divider sortable">
+                        <thead class="pls-no-click" style="background: rgb(34, 34, 34);">
+                          <tr>
+                            <th class="uk-text-center sorttable_alpha">Stock</th>
+                            <th class="uk-text-center sorttable_numeric">Current price</th>
+                            <th class="uk-text-center sorttable_numeric">Bought at</th>
+                            <th class="uk-text-center sorttable_numeric">No. stocks</th>
+                            <th class="uk-text-center sorttable_numeric">Profit</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tradingTable"></tbody>
+                      </table>
+                    </div>
+                  </li>
               </div>
 
             </article>
