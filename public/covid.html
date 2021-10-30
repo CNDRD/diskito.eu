@@ -161,15 +161,18 @@
     <div class="uk-section uk-padding-small uk-padding-remove-horizontal">
       <div class="uk-container uk-container-large uk-text-center">
 
-        <h2 class="cndrd-font-normal text-white">Nově nakažení / počet testovaných</h2>
+        <div class="uk-card uk-card-body">
+          <h3 class="uk-text-center uk-card-title cndrd-font-medium">
+            Procento pozitivních testů za poslední měsíc
+          </h3>
+          <div class="amChartDiv" id="pozitivni31ChartDiv"></div>
+        </div>
 
-        <div id="nakazeni_testovani" class="uk-grid-divider uk-grid-match uk-flex-center uk-text-large uk-child-width-1-6@m" uk-grid>
-          <div><div class="nakazeni_testovani_spinner" uk-spinner="ratio: 3"></div></div>
-          <div><div class="nakazeni_testovani_spinner" uk-spinner="ratio: 3"></div></div>
-          <div><div class="nakazeni_testovani_spinner" uk-spinner="ratio: 3"></div></div>
-          <div><div class="nakazeni_testovani_spinner" uk-spinner="ratio: 3"></div></div>
-          <div><div class="nakazeni_testovani_spinner" uk-spinner="ratio: 3"></div></div>
-          <div><div class="nakazeni_testovani_spinner" uk-spinner="ratio: 3"></div></div>
+        <div class="uk-card uk-card-body">
+          <h3 class="uk-text-center uk-card-title cndrd-font-medium">
+            Přírůstkový počet nakažených za poslední měsíc
+          </h3>
+          <div class="amChartDiv" id="nakazeni31ChartDiv"></div>
         </div>
 
         <hr />
@@ -203,7 +206,7 @@
 
         </div>
 
-        <hr class="uk-divider-small" />
+        <hr />
 
       </div>
     </div>
@@ -212,12 +215,16 @@
       <div class="uk-container uk-container-large uk-text-center">
 
         <div class="uk-card uk-card-body">
-          <h3 class="uk-text-center uk-card-title cndrd-font-medium">Přírůstkový počet nakažených za poslední měsíc</h3>
-          <div class="amChartDiv" id="nakazeni31ChartDiv"></div>
+          <h3 class="uk-text-center uk-card-title cndrd-font-medium">
+            Procento pozitivních testů od začátku pandemie
+          </h3>
+          <div class="amChartDiv" id="pozitivniChartDiv"></div>
         </div>
 
         <div class="uk-card uk-card-body">
-          <h3 class="uk-text-center uk-card-title cndrd-font-medium">Přírůstkový počet nakažených od začátku pandemie</h3>
+          <h3 class="uk-text-center uk-card-title cndrd-font-medium">
+            Přírůstkový počet nakažených od začátku pandemie
+          </h3>
           <div class="amChartDiv" id="nakazeniChartDiv"></div>
         </div>
 
