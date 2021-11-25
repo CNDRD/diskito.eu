@@ -432,6 +432,13 @@ operatorDict = {
     countryCode:"HR",
     roles:["Intel Gatherer","Area Denial","Anti Roam"],
   },
+  thorn:{
+    year:"Y6S4",
+    health:2,
+    unit:"GARDA SÍOCHÁNA",
+    countryCode:"IE",
+    roles:["Anchor","Secure"],
+  }
 };
 
 function countryCodeToFlag(cc) {
@@ -463,6 +470,7 @@ function countryCodeToFlag(cc) {
     TH: "4JOrWXjjryauDVMa4JBcQq/9c7e2999def5e579d969607553395f86/flag-thailand.png",
     AR: "7q1b76Cha9Gp62F506Gi0C/82abe986bbc6b2768f693c08f9ce1a17/flag-argentina.png",
     HR: "5rYMZfhKKItdtUVRBLxZqm/79d895f738c7db6b742afcf041ddd612/flag-croatia.png",
+    IE: "4ZTCTE7yj5Yp1NEaLL40f1/5f61da3cf0eff0666b769585ec2a9df4/flag-ireland.png"
   };
   return `https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/${x[cc]}` || "Wrong code";
 };
@@ -529,6 +537,7 @@ function getUniqueAbilityImage(op) {
     flores: "1z7eSI5D8IRIOHi0PJu4yq/3c4a273098a840957a248583f73fa8ff/r6s-operator-ability-flores.png",
     thunderbird: "67J9QnmuA4TMI3rBxoA3Jz/4ec42d8c1bb61dadc5f36893f93142e8/r6s-operator-ability-thunderbird.png",
     osa: "71VBmyDtBAx788WnNJfEgo/1e6d78a81f8dc381bf4244b87970038f/r6s-operator-ability-osa.png",
+    thorn: "38hUQdWTb1vgs0Yg8eQHFC/0d7f05420068a41392342a1b38c57c2e/r6s-operator-ability-thorn.png",
   };
   return `https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/${x[op]}` || "Wrong operator";
 };
@@ -595,8 +604,9 @@ function getOperatorPoseUrl(op) {
     flores: "3hXRjYHsrlFOocJjyxyYZY/29eb8f1ad9eab150518a053b775c336f/r6s-operators-list-flores.png",
     thunderbird: "3gadEIZqtSfsHstfPMe3bz/424c7e4c21276e99f41a8c75478aa5e5/r6s-operators-list-thunderbird.png",
     osa: "3Dg95rvyhPtw588r60vIPM/75e609068a0b205cc4dbc7bf3e517f51/r6s-operators-list-osa.png",
+    thorn: "3erk7Ub0asfBDZEKsdL8j9/5019698958b0834e806d01cd7bf36286/r6s-operator-thorn.png",
   };
-  return `https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/${x[op]}` || "Wrong operator";
+  return `https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/${x[op]}` || "Missing asset";
 };
 function getOperatorIconUrl(op) {
   let x = {
@@ -662,7 +672,7 @@ function getOperatorIconUrl(op) {
     thunderbird: "21vn9y7",
     osa: "WjvbwYD",
   };
-  return `https://i.imgur.com/${x[op]}.png` || "Wrong operator";
+  return `https://i.imgur.com/${x[op]}.png` || "Missing asset";
 };
 function getOperatorData(op, what=undefined) {
   let x = operatorDict;
@@ -708,6 +718,7 @@ function getSeasonColorRGB(s) {
     21: "#ac0000",
     22: "#009cbe",
     23: "#ffa200",
+    24: "#587624",
   };
   return x[s] || "Wrong Code";
 };
