@@ -294,3 +294,13 @@ input[type=number] {
 .text-white {
   color: var(--white);
 }
+
+
+/* NFTs */
+#nft {
+  will-change: transform;
+  transition: transform 250ms ease;
+}
+#nft:hover{
+  transform: scale(1.05);
+}
