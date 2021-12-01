@@ -129,6 +129,7 @@ function getFunnyNames(op) {
     flores: "Bouchal",
     thunderbird: "Thunderfuck",
     osa: "Osa",
+    thorn: "Thorn"
   };
   return x[op] || "Wrong operator!";
 };
