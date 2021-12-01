@@ -671,6 +671,7 @@ function getOperatorIconUrl(op) {
     flores: "1wBdB2q",
     thunderbird: "21vn9y7",
     osa: "WjvbwYD",
+    thorn: "w5DB6xs",
   };
   return `https://i.imgur.com/${x[op]}.png` || "Missing asset";
 };
