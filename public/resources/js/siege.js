@@ -1,6 +1,6 @@
 $("table").stickyTableHeaders();
 
-let VERSION = 9;
+let VERSION = 10;
 
 /*
 v1 - idk

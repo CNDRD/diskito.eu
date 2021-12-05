@@ -1,6 +1,6 @@
 $("table").stickyTableHeaders();
 let id = new URLSearchParams(window.location.search).get('id');
-let VERSION = 9;
+let VERSION = 10;
 
 firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once('value').then(snapshot => {
   $("#lastUpdatedText").text( diff_minutes(new Date(snapshot.val()*1000), new Date()) );
