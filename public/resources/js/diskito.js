@@ -59,14 +59,24 @@ let yr = new Date().getFullYear();
 
 let allYearsData = {
   2020: {
-    totalHours: 2432,
     averageHours: 94,
-    mostHoursInVoice: 697.37,
-    mostHoursInVoiceName: 'CNDRD',
     longestSingleSession: 16.12,
-    longestSingleSessionName: 'CNDRD',
+    longestSingleSessionName: "CNDRD",
     mostHoursInOneDay: 74,
-    mostHoursInOneDayDate: '9.11. 2020'
+    mostHoursInOneDayDate: "9.11. 2020",
+    mostHoursInVoice: 697.37,
+    mostHoursInVoiceName: "CNDRD",
+    totalHours: 2432
+  },
+  2021: {
+    averageHours: 110,
+    longestSingleSession: 14.73,
+    longestSingleSessionName: "Brebik",
+    mostHoursInOneDay: 95,
+    mostHoursInOneDayDate: "6.4. 2021",
+    mostHoursInVoice: 1246.88,
+    mostHoursInVoiceName: "CNDRD",
+    totalHours: 6356
   }
 };
 
