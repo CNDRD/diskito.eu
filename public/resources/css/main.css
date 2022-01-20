@@ -9,8 +9,20 @@
   --uk-success: #32d296;
   --uk-warning: #faa05a;
   --uk-danger: #f0506e;
-
   --uk-success-light: #3de3a5;
+
+  --cndrd-dark-bg: #272727;
+  --cndrd-dark-navbar-bg: #1b1b1e;
+}
+
+html {
+  background-color: var(--cndrd-dark-bg) !important;
+}
+div#user-modal[uk-modal] div.uk-modal-dialog.uk-modal-body.uk-margin-auto-vertical {
+  background-color: var(--cndrd-dark-bg) !important;
+}
+[uk-navbar] {
+  background-color: var(--cndrd-dark-navbar-bg) !important;
 }
 
 @font-face {
