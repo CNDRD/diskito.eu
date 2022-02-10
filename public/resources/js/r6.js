@@ -13,6 +13,11 @@ firebase.database().ref(`GameStats/R6Sv${VERSION}/all_data/${id}`).once('value')
   operatorsPage(d);
 });
 
+firebase.database().ref(`GameStats/R6Sv${VERSION}/seasonal_data/${id}`).once('value').then(snapshot => {
+  let d = snapshot.val();
+  seasonsPage(d);
+});
+
 function overallPage(d) {
   updateHeader(d);
   updateSeasonalCard(d);
@@ -31,6 +36,92 @@ function operatorsPage(d) {
     $('#operator_table').append(getOperatorRow(op));
   });
 };
+function seasonsPage(d) {
+  let seasonsHTML = "";
+
+  d.forEach(s => {
+
+    let rank = s.rank;
+    let mmr = s.mmr;
+    let maxRank = s.max_rank;
+    let maxMmr = s.max_mmr;
+
+    if (maxMmr === -1) {
+      rank = maxRank = "undefined";
+      mmr = maxMmr = 0;
+    }
+
+    seasonsHTML += `
+    <div class="uk-card uk-card-secondary uk-card-hover uk-light uk-width-1-1 uk-margin-small-bottom">
+      <div class="uk-card-body" style="border-right: 1.7rem; border-style: none solid none none; border-color: ${getSeasonColorRGB(s.season)};">
+
+        <div class="uk-flex uk-flex-middle" uk-grid>
+          <div class="uk-text-left cndrd-font-normal uk-width-1-4@m">
+            <div style="color:${getSeasonColorRGB(s.season)}; font-size: 2rem; line-height: 1.5;">${s.season_name}</div>
+            <div class="uk-text-meta uk-text-italic">${getSeasonStartDate(s.season).toString()}</div>
+            <div class="uk-text-meta uk-text-italic">${s.season_code}</div>
+          </div>
+
+          <div class="uk-width-3-4@m uk-child-width-1-5@m uk-width-1-1 uk-child-width-1-2" uk-grid>
+
+            <div>
+              <div class="uk-flex uk-flex-column uk-flex-middle cndrd-font-normal">
+                <div>Rank</div>
+                <img class="uk-preserve-width uk-margin-small-bottom uk-margin-small-top"
+                    style="height: 4rem" uk-hover="${rank}" data-src="${getRankImageFromRankName(rank)}" uk-img />
+                <div>${mmr} MMR</div>
+              </div>
+            </div>
+
+            <div>
+              <div class="uk-flex uk-flex-column uk-flex-middle cndrd-font-normal">
+                <div>Max Rank</div>
+                <img class="uk-preserve-width uk-margin-small-bottom uk-margin-small-top"
+                    style="height: 4rem" uk-hover="${maxRank}" data-src="${getRankImageFromRankName(maxRank)}" uk-img />
+                <div>${maxMmr} MMR</div>
+              </div>
+            </div>
+
+            <div>
+              <div style="height: 100%" class="uk-flex uk-flex-column uk-flex-middle uk-flex-center">
+                <div><span class="cndrd-font-normal">${s.deaths != 0 ? roundTwo(s.kills/s.deaths) : 0}</span> K/D</div>
+                <div><span class="cndrd-font-normal">${s.kills}</span> Kills</div>
+                <div><span class="cndrd-font-normal">${s.deaths}</span> Deaths</div>
+              </div>
+            </div>
+
+            <div>
+              <div style="height: 100%" class="uk-flex uk-flex-column uk-flex-middle uk-flex-center">
+                <div><span class="cndrd-font-normal">${s.losses != 0 ? roundTwo(s.wins/s.losses) : 0}</span> WL</div>
+                <div><span class="cndrd-font-normal">${s.wins}</span> Wins</div>
+                <div><span class="cndrd-font-normal">${s.losses}</span> Losses</div>
+              </div>
+            </div>
+
+            <div>
+              <div style="height: 100%" class="uk-flex uk-flex-column uk-flex-middle uk-flex-center">
+                <div><span class="cndrd-font-normal">${s.abandons}</span> Abandon${s.abandons == 1 ? "" : "s"}</div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>`;
+  });
+
+  seasonsHTML = `
+  <li>
+    <div class="uk-flex uk-flex-column-reverse">
+      ${seasonsHTML}
+    </div>
+  </li>`;
+
+  $("#seasons").replaceWith(seasonsHTML);
+};
+
 
 
 function updateHeader(d) {
@@ -49,6 +140,8 @@ function updateHeader(d) {
   $('#r6stats').attr('href',`https://r6stats.com/stats/${d.ubisoftID}`);
   $('#tab').attr('href',`https://tabstats.com/siege/player/${d.ubisoftID}`);
   $('#trn').attr('href',`https://r6.tracker.network/profile/id/${d.ubisoftID}`);
+  $('#r6db').attr('href', `https://r6db.net/player/${d.ubisoftUsername}/${d.ubisoftID}`);
+  $('#dragon6').attr('href', `https://dragon6.dragonfruit.network/stats/PC/${d.ubisoftID}`);
 };
 function updateSeasonalCard(d) {
   $('#season').text(getSeasonNameFromNumber(d.season));

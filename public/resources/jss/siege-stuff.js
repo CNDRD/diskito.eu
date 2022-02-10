@@ -847,3 +847,78 @@ function getSeasonCodeFromNumber(s) {
   };
   return x[s] || "Wrong Code";
 };
+
+function getRankImageFromRankName(name) {
+  rank_dict = {
+    "unranked": "RpPdtbU",
+    "undefined": "RpPdtbU",
+    "copper 5": "SNSfudP",
+    "copper 4": "7PiisA2",
+    "copper 3": "aNCvwAI",
+    "copper 2": "fUzUApd",
+    "copper 1": "eGuxE0k",
+    "bronze 5": "bbjMf4V",
+    "bronze 4": "75IEQkD",
+    "bronze 3": "GIt29R0",
+    "bronze 2": "sTIXKlh",
+    "bronze 1": "zKRDUdK",
+    "silver 5": "CbAbvOa",
+    "silver 4": "2Y8Yr11",
+    "silver 3": "zNUuJSn",
+    "silver 2": "utTa5mq",
+    "silver 1": "27ISr4q",
+    "gold 4": "YIWWNzf",
+    "gold 3": "JJvq35l",
+    "gold 2": "Fco8pIl",
+    "gold 1": "m8FFWGi",
+    "platinum 3": "GpEpkDs",
+    "platinum 2": "P8IO0Sn",
+    "platinum 1": "52Y4EVg",
+    "diamond 3": "HHPc5HQ",
+    "diamond 2": "HHPc5HQ",
+    "diamond 1": "HHPc5HQ",
+    "champion": "QHZFdUj"
+  }
+  return `https://i.imgur.com/${rank_dict[name.toLowerCase()]}.png`
+};
+function getSeasonStartDate(season_id) {
+  seasons = {
+    0: "2015-12-01",
+    1: "2016-02-02",
+    2: "2016-05-10",
+    3: "2016-08-02",
+    4: "2016-11-17",
+
+    5: "2017-02-07",
+    6: "2017-06-07",
+    7: "2017-09-05",
+    8: "2017-12-05",
+
+    9: "2018-03-06",
+    10: "2018-06-07",
+    11: "2018-09-04",
+    12: "2018-12-04",
+
+    13: "2019-03-06",
+    14: "2019-06-11",
+    15: "2019-09-11",
+    16: "2019-12-03",
+
+    17: "2020-03-10",
+    18: "2020-06-16",
+    19: "2020-09-10",
+    20: "2020-12-01",
+
+    21: "2021-03-16",
+    22: "2021-06-14",
+    23: "2021-09-07",
+    24: "2021-11-30",
+  }
+  let d = new Date(seasons[season_id]);
+  let months = ["January","February","March",
+                "April","May","June",
+                "July","August","September",
+                "October","November","December"];
+
+  return `${months[d.getMonth()]} ${d.getFullYear()}`;
+};
