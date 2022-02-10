@@ -58,7 +58,7 @@ function seasonsPage(d) {
         <div class="uk-flex uk-flex-middle" uk-grid>
           <div class="uk-text-left cndrd-font-normal uk-width-1-4@m">
             <div style="color:${getSeasonColorRGB(s.season)}; font-size: 2rem; line-height: 1.5;">${s.season_name}</div>
-            <div class="uk-text-meta uk-text-italic">${getSeasonStartDate(s.season).toString()}</div>
+            <div class="uk-text-meta uk-text-italic">${getSeasonStartDate(s.season)}</div>
             <div class="uk-text-meta uk-text-italic">${s.season_code}</div>
           </div>
 
