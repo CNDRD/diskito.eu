@@ -21,6 +21,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-analytics.js"></script>
     <script src="/resources/jss/firebase-init.js"></script>
 
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- Custom CSS & JS -->
     <link rel="stylesheet" href="/resources/css/main.css" />
     <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
@@ -148,10 +151,12 @@
         </div><!-- User Header -->
 
         <!-- Tab -->
-        <ul class="uk-flex-left" uk-tab="active:0">
+        <ul class="uk-flex-left" uk-tab="active:3">
+          <!-- TODO: When on mobile dont display the whole trend category -->
           <li><a href="#" class="cndrd-font-normal">Overall</a></li>
           <li><a href="#" class="cndrd-font-normal">Operators</a></li>
           <li><a href="#" class="cndrd-font-normal">Seasons</a></li>
+          <li><a href="#" class="cndrd-font-normal">Trends</a></li>
         </ul><!-- Tab -->
 
         <ul class="uk-switcher">
@@ -794,16 +799,43 @@
           <li>
             <div id="seasons" style="display: flex; justify-content: center;" uk-spinner="ratio: 4"></div>
           </li>
+          <!-- Trends -->
+          <li>
+            
+            <div>
+
+              <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
+
+                <div class="uk-flex uk-flex-row cndrd-font-normal uk-margin-medium-bottom">
+                  <div>
+                    <label for="chartSelector">Select Data</label>
+                    <select id="chartSelector" class="uk-select"></select>
+                  </div>
+                  <div class="uk-margin-medium-left">
+                    <label id="chartBezierRangeLabel" for="chartBezierRange">Curve Tension (0.6)</label>
+                    <input id="chartBezierRange" class="uk-range" style="padding-top: 10px;" type="range" min="0" max="20" value="0.6" step="0.1" />
+                  </div>
+                </div>
+
+                <div class="uk-width-full">
+                  <canvas id="chartCanvas"></canvas>
+                </div>
+                
+              </div>
+
+            </div>
+
+          </li>
         </ul>
 
-        <div class="uk-button-group uk-margin-medium-top uk-flex uk-flex-center">
+        <div class="uk-button-group uk-margin-medium-top uk-flex uk-flex-center uk-flex-wrap">
           <a target="_blank" rel="noreferrer" class="uk-button uk-button-default cndrd-font-normal" id="r6stats">r6stats</a>
           <a target="_blank" rel="noreferrer" class="uk-button uk-button-default cndrd-font-normal" id="tab">tabstats</a>
           <a target="_blank" rel="noreferrer" class="uk-button uk-button-default cndrd-font-normal" id="trn">trn</a>
           <a target="_blank" rel="noreferrer" class="uk-button uk-button-default cndrd-font-normal" id="r6db">r6db</a>
           <a target="_blank" rel="noreferrer" class="uk-button uk-button-default cndrd-font-normal" id="dragon6">dragon6</a>
         </div>
-  
+
       </div>
       
     </div>
