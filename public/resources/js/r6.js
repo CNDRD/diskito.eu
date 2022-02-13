@@ -11,6 +11,7 @@ firebase.database().ref(`GameStats/R6Sv${VERSION}/all_data/${id}`).once('value')
   let d = snapshot.val();
   overallPage(d);
   operatorsPage(d);
+  trendsPage(d);
 });
 
 firebase.database().ref(`GameStats/R6Sv${VERSION}/seasonal_data/${id}`).once('value').then(snapshot => {
@@ -122,6 +123,130 @@ function seasonsPage(d) {
   $("#seasons").replaceWith(seasonsHTML);
 };
 
+
+let trendsDatasets = {};
+let theChart;
+let chartConfig;
+function trendsPage(d) {
+  let allTrends = d.trends;
+  let labels = [];
+
+  function getDefaultDataset(_label) {
+    const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
+    return {
+      label: _label,
+      backgroundColor: "rgba(0, 255, 229, 0.9)",
+      borderColor: "rgba(0, 255, 229, 0.4)",
+
+      pointStyle: 'circle',
+      pointRadius: 7,
+      pointHoverRadius: 14,
+
+      tension: 0.6,
+
+      spanGaps: true,
+      segment: {
+        borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)'),
+        borderDash: ctx => skipped(ctx, [6, 6]),
+      },
+
+      data: [],
+    };
+  };
+
+  trendsDatasets["KD"] = getDefaultDataset("K / D");
+  trendsDatasets["WL"] = getDefaultDataset("W / L");
+  trendsDatasets["HS"] = getDefaultDataset("HS%");
+  trendsDatasets["MinutesPlayed"] = getDefaultDataset("Minutes Played");
+  trendsDatasets["MatchesPlayed"] = getDefaultDataset("Matches Played");
+  trendsDatasets["Aces"] = getDefaultDataset("Aces");
+  trendsDatasets["Revives"] = getDefaultDataset("Revives");
+  trendsDatasets["Assists"] = getDefaultDataset("Assists");
+  trendsDatasets["TeamKills"] = getDefaultDataset("Team Kills");
+  trendsDatasets["Trades"] = getDefaultDataset("Trades");
+  trendsDatasets["RoundsWithKOST"] = getDefaultDataset("Rounds With KOST");
+
+  for (trend in allTrends) {
+    let trendData = allTrends[trend];
+    labels.push(trend.replace(":", " 👉 "));
+
+    // When the value is null Chart.js can then show dashed lines in the graph
+    trendsDatasets["KD"]["data"].push(
+      trendData["kill_death_ratio"] != 0 ? trendData["kill_death_ratio"] : null
+    );
+    trendsDatasets["WL"]["data"].push(
+      trendData["win_loss_ratio"] != 0 ? trendData["win_loss_ratio"] : null
+    );
+    trendsDatasets["HS"]["data"].push(
+      trendData["headshot_accuracy"] != 0 ? roundTwo(trendData["headshot_accuracy"]*100) : null
+    );
+    trendsDatasets["MinutesPlayed"]["data"].push(
+      trendData["minutes_played"] != 0 ? addSpaces(trendData["minutes_played"]) : null
+    );
+    trendsDatasets["MatchesPlayed"]["data"].push(
+      trendData["matches_played"] != 0 ? addSpaces(trendData["matches_played"]) : null
+    );
+    trendsDatasets["Aces"]["data"].push(
+      trendData["rounds_with_ace"] != 0 ? Math.ceil(trendData["rounds_with_ace"] * trendData["rounds_played"]) : null
+    );
+    trendsDatasets["Revives"]["data"].push(
+      trendData["revives"] != 0 ? addSpaces(trendData["revives"]) : null
+    );
+    trendsDatasets["Assists"]["data"].push(
+      trendData["assists"] != 0 ? addSpaces(trendData["assists"]) : null
+    );
+    trendsDatasets["TeamKills"]["data"].push(
+      trendData["team_kills"] != 0 ? addSpaces(trendData["team_kills"]) : null
+    );
+    trendsDatasets["Trades"]["data"].push(
+      trendData["trades"] != 0 ? addSpaces(trendData["trades"]) : null
+    );
+    trendsDatasets["RoundsWithKOST"]["data"].push(
+      trendData["rounds_with_kost"] != 0 ? Math.ceil(trendData["rounds_with_kost"] * trendData["rounds_played"]) : null
+    );
+  };
+
+  for (dataset in trendsDatasets) {
+    $("#chartSelector").append(
+      $('<option>', { 
+        value: dataset,
+        text : trendsDatasets[dataset].label,
+      })
+    );
+  }
+
+  chartConfig = {
+    type: "line",
+    data: {labels: labels, datasets: [trendsDatasets["KD"]]},
+    options: {
+      plugins: {
+        legend: {
+          display: false,
+        },
+        labels: {
+          display: false,
+        }
+      }
+    }
+  };
+  theChart = new Chart(document.getElementById("chartCanvas"), chartConfig);
+};
+
+document.getElementById("chartSelector").onchange = function(){
+  // Replace the dataset
+  chartConfig.data.datasets = [trendsDatasets[document.getElementById("chartSelector").value]];
+  // Update the chart
+  theChart.update();
+};
+document.getElementById("chartBezierRange").onchange = function(){
+  let val = document.getElementById("chartBezierRange").value;
+  // Update the shown value
+  $("#chartBezierRangeLabel").text(`Curve Tension (${val})`);
+  // Update the tension in config
+  chartConfig.data.datasets[0].tension = val;
+  // Update the chart
+  theChart.update();
+};
 
 
 function updateHeader(d) {

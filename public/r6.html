@@ -21,6 +21,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-analytics.js"></script>
     <script src="/resources/jss/firebase-init.js"></script>
 
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- Custom CSS & JS -->
     <link rel="stylesheet" href="/resources/css/main.css" />
     <script src="/resources/jss/myFunctions.js" charset="utf-8"></script>
@@ -55,7 +58,6 @@
           <li><a href="/diskito.html"><span class="uk-button-text">Server Stats</span></a></li>
           <li><a href="/leader.html"><span class="uk-button-text">Leaderboards</span></a></li>
           <li><a href="/siege.html"><span class="uk-button-text">Siege Stats</span></a></li>
-          <li><a href="/apex.html"><span class="uk-button-text">Apex Stats</span></a></li>
           <li><a href="/voice.html"><span class="uk-button-text">Voice Stats</span></a></li>
           <li><a href="/quotes.html"><span class="uk-button-text">Quotes</span></a></li>
         </ul>
@@ -82,9 +84,8 @@
                   <li><a href="/diskito.html">Server Stats</a></li>
                   <li><a href="/leader.html">Leaderboards</a></li>
                   <li><a href="/siege.html">Siege Stats</a></li>
-                  <li><a href="/apex.html">Apex Stats</a></li>
-                  <li><a href="/voice.html">Voice Stats‏‏‎</a></li>
-                  <li><a href="/quotes.html">Quotes‏‏‎</a></li>
+                  <li><a href="/voice.html">Voice Stats</a></li>
+                  <li><a href="/quotes.html">Quotes</a></li>
                   <li class="uk-divider-icon"></li>
                   <li>
                     <a class="loginButton uk-button uk-button-default uk-text-emphasis uk-flex uk-flex-row uk-flex-middle" type="button" uk-toggle="target: #user-modal">
@@ -152,6 +153,7 @@
           <li><a href="#" class="cndrd-font-normal">Overall</a></li>
           <li><a href="#" class="cndrd-font-normal">Operators</a></li>
           <li><a href="#" class="cndrd-font-normal">Seasons</a></li>
+          <li><a href="#" class="cndrd-font-normal">Trends</a></li>
         </ul><!-- Tab -->
 
         <ul class="uk-switcher">
@@ -794,16 +796,43 @@
           <li>
             <div id="seasons" style="display: flex; justify-content: center;" uk-spinner="ratio: 4"></div>
           </li>
+          <!-- Trends -->
+          <li>
+            
+            <div>
+
+              <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
+
+                <div class="uk-flex uk-flex-row cndrd-font-normal uk-margin-medium-bottom">
+                  <div>
+                    <label for="chartSelector">Select Data</label>
+                    <select id="chartSelector" class="uk-select"></select>
+                  </div>
+                  <div class="uk-margin-medium-left">
+                    <label id="chartBezierRangeLabel" for="chartBezierRange">Curve Tension (0.6)</label>
+                    <input id="chartBezierRange" class="uk-range" style="padding-top: 10px;" type="range" min="0" max="20" value="0.6" step="0.1" />
+                  </div>
+                </div>
+
+                <div class="uk-width-full">
+                  <canvas id="chartCanvas"></canvas>
+                </div>
+                
+              </div>
+
+            </div>
+
+          </li>
         </ul>
 
-        <div class="uk-button-group uk-margin-medium-top uk-flex uk-flex-center">
+        <div class="uk-button-group uk-margin-medium-top uk-flex uk-flex-center uk-flex-wrap">
           <a target="_blank" rel="noreferrer" class="uk-button uk-button-default cndrd-font-normal" id="r6stats">r6stats</a>
           <a target="_blank" rel="noreferrer" class="uk-button uk-button-default cndrd-font-normal" id="tab">tabstats</a>
           <a target="_blank" rel="noreferrer" class="uk-button uk-button-default cndrd-font-normal" id="trn">trn</a>
           <a target="_blank" rel="noreferrer" class="uk-button uk-button-default cndrd-font-normal" id="r6db">r6db</a>
           <a target="_blank" rel="noreferrer" class="uk-button uk-button-default cndrd-font-normal" id="dragon6">dragon6</a>
         </div>
-  
+
       </div>
       
     </div>
