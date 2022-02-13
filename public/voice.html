@@ -19,12 +19,10 @@
     <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-analytics.js"></script>
     <script src="/resources/jss/firebase-init.js"></script>
 
-    <!-- amCharts 4 -->
-    <script defer src="https://cdn.amcharts.com/lib/4/core.js"></script>
-    <script defer src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-    <script defer src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
-    <script defer src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-    <style> .amChartDiv{ width:100%; height:25em; } </style>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.0/dist/chartjs-plugin-zoom.js"></script>
 
     <!-- Custom CSS & JS -->
     <link rel="stylesheet" href="/resources/css/main.css" />
@@ -105,27 +103,57 @@
     </nav>
 
     <div class="uk-section">
-      <div class="uk-container">
+      <div class="uk-container uk-container-xlarge">
 
-        <div class="uk-card uk-card-body">
-          <h3 class="uk-text-center uk-card-title" id="dailyChartH3">Daily Voice this year</h3>
-          <div class="amChartDiv" id="dailyChartdiv"></div>
-        </div>
+        <!-- Tab -->
+        <ul class="uk-flex-left uk-flex-center" uk-tab="active:0">
+          <li><a id="dailyChartTab" href="#" class="cndrd-font-normal">Daily Voice this year</a></li>
+          <li><a id="totalChartTab" href="#" class="cndrd-font-normal">Total Time Spent per User</a></li>
+          <li><a id="lvsChartTab" href="#" class="cndrd-font-normal">Longest Voice Sessions</a></li>
+          <li><a href="#" class="cndrd-font-normal">Total Time per User</a></li>
+          <li><a href="#" class="cndrd-font-normal">Yearly User Time</a></li>
+        </ul><!-- Tab -->
 
-        <div class="uk-card uk-card-body">
-          <h3 class="uk-text-center uk-card-title" id="totalChartH3">Total Time Spent per User</h3>
-          <div class="amChartDiv" id="totalChartdiv"></div>
-        </div>
+        <ul class="uk-switcher">
+          <!-- Daily Voice this year -->
+          <li>
+            <div class="uk-card uk-card-body">
+              <h3 class="uk-text-center uk-card-title" id="dailyChartH3">Daily Voice this year</h3>
+              <canvas id="dailyChartCanvas"></canvas>
+            </div>
+          </li>
+          <!-- Total Time Spent per User -->
+          <li>
+            <div class="uk-card uk-card-body">
+              <h3 class="uk-text-center uk-card-title" id="totalChartH3">Time Spent per User this Year</h3>
+              <canvas id="totalChartCanvas"></canvas>
+            </div>
+          </li>
+          <!-- Longest Voice Sessions -->
+          <li>
+            <div class="uk-card uk-card-body">
+              <h3 class="uk-text-center uk-card-title" id="lvsChartH3">Longest Voice Sessions</h3>
+              <canvas id="lvsChartCanvas"></canvas>
+            </div>
+          </li>
+          <!-- Total Time Spent per User since ever -->
+          <li>
+            <div class="uk-card uk-card-body">
+              <h3 class="uk-text-center uk-card-title" id="totalTotalChartH3">Total Time Spent per User since ever</h3>
+              <canvas id="totalTotalChartCanvas"></canvas>
+            </div>
+          </li>
+          <!-- Yearly User Time -->
+          <li>
+            <div class="uk-card uk-card-body">
+              <h3 class="uk-text-center uk-card-title" id="yearlyUserTimeChartH3">Yearly User Time</h3>
+              <canvas id="yearlyUserTimeChartCanvas"></canvas>
+            </div>
+          </li>
+        </ul>
 
-        <div class="uk-card uk-card-body">
-          <h3 class="uk-text-center uk-card-title" id="lvsChartH3">Longest Voice Sessions</h3>
-          <div class="amChartDiv" id="lvsChartdiv"></div>
-        </div>
-
-        <div class="uk-card uk-card-body">
-          <h3 class="uk-text-center uk-card-title" id="totalTotalChartH3">Total Time Spent per User since ever</h3>
-          <div class="amChartDiv" id="totalTotalChartdiv"></div>
-        </div>
+        <div class="uk-text-center uk-margin-small-bottom">Check data from other years</div>
+        <div id="yearsGrid" class="uk-flex uk-flex-center uk-grid-divider" uk-grid></div>
 
       </div>
     </div>
