@@ -13,29 +13,6 @@ for (let yr = 2020; yr <= actuallyCurrentYear; yr++) {
   );
 }
 
-const chartZoomSettings = {
-  limits: {
-    x: {
-      max: "original",
-    },
-    y: {
-      max: "original",
-    },
-  },
-  zoom: {
-    wheel: {
-      enabled: true,
-    },
-    drag: {
-      enabled: true,
-    },
-    pinch: {
-      enabled: true
-    },
-    mode: 'xy',
-  }
-};
-
 firebase.database().ref(`voice/${currentYear}/total`).once('value').then(users => {
   let lvsData = [];
   let totalData = [];
@@ -64,7 +41,7 @@ firebase.database().ref(`voice/${currentYear}/total`).once('value').then(users =
         backgroundColor: "rgba(250, 240, 202, 0.75)",
       }]
     },
-    options: { plugins: { zoom: chartZoomSettings, legend: { display: false } } }
+    options: { plugins: { legend: { display: false } } }
   });
 
   let lvsVoiceChart = new Chart(document.getElementById("lvsChartCanvas"), {
@@ -77,7 +54,7 @@ firebase.database().ref(`voice/${currentYear}/total`).once('value').then(users =
         backgroundColor: "rgba(249, 87, 56, 0.8)",
       }]
     },
-    options: { plugins: { zoom: chartZoomSettings, legend: { display: false } } }
+    options: { plugins: { legend: { display: false } } }
   });
 
 });
@@ -128,7 +105,6 @@ firebase.database().ref(`voice/${currentYear}/day`).once('value').then(days => {
         legend: {
           display: false,
         },
-        zoom: chartZoomSettings,
       }
     }
   });
@@ -194,7 +170,6 @@ firebase.database().ref(`users`).once('value').then(users => {
     options: {
       responsive: true,
       plugins: {
-        zoom: chartZoomSettings,
         title: {
           display: true,
           text: "If the colors are too similar, refresh the page"
@@ -219,7 +194,7 @@ firebase.database().ref(`users`).once('value').then(users => {
         backgroundColor: "rgba(244, 211, 94, 0.8)",
       }]
     },
-    options: { plugins: { zoom: chartZoomSettings, legend: { display: false } } }
+    options: { plugins: { legend: { display: false } } }
   });
 
 });
