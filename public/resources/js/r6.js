@@ -102,6 +102,7 @@ function seasonsPage(d) {
             <div>
               <div style="height: 100%" class="uk-flex uk-flex-column uk-flex-middle uk-flex-center">
                 <div><span class="cndrd-font-normal">${s.abandons}</span> Abandon${s.abandons == 1 ? "" : "s"}</div>
+                <div><span class="cndrd-font-normal">${s.wins+s.losses}</span> Match${s.wins+s.losses == 1 ? "" : "es"}</div>
               </div>
             </div>
 
