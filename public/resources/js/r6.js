@@ -12,6 +12,7 @@ firebase.database().ref(`GameStats/R6Sv${VERSION}/all_data/${id}`).once('value')
   overallPage(d);
   operatorsPage(d);
   trendsPage(d);
+  weaponsPage(d);
 });
 
 firebase.database().ref(`GameStats/R6Sv${VERSION}/seasonal_data/${id}`).once('value').then(snapshot => {
@@ -129,6 +130,77 @@ function seasonsPage(d) {
 };
 
 
+function weaponsPage(d) {
+  let weapons = d.weapons;
+
+  let mostKills = getBestWeaponInStat(weapons, "kills");
+  let bestHsRatio = getBestWeaponInStat(weapons, "hs_accuracy");
+  let mostPlayed = getBestWeaponInStat(weapons, "rounds_played");
+  updateBestWeaponInStat(mostKills, "mostKills");
+  updateBestWeaponInStat(bestHsRatio, "bestHsRatio");
+  updateBestWeaponInStat(mostPlayed, "mostPlayed");
+
+  weapons.sort(function(a, b){ return b.kills - a.kills }).forEach(w => {
+    let wl = (w.rounds_played) != 0 ? roundTwo((w.rounds_won / (w.rounds_won+w.rounds_lost))*100) : 0;
+    let hs = (w.hs_accuracy) != 0 ? roundTwo(w.hs_accuracy*100) : 0;
+
+    $("#weaponsGrid").append(`
+    
+      <div>
+        <div class="uk-card uk-card-secondary uk-card-body uk-grid-collapse uk-light">
+
+          <h3 class="cndrd-font-normal uk-text-emphasis">
+            ${w.name}
+          </h3>
+          
+          <div class="uk-flex uk-flex-column uk-text-center uk-text-large">
+
+            <div>
+              <span class="uk-text-emphasis cndrd-font-normal">${addSpaces(w.kills)}</span> Kills
+            </div>
+            
+            <div>
+              <span class="uk-text-emphasis cndrd-font-normal">${addSpaces(w.rounds_played)}</span> Rounds Played
+            </div>
+
+            <div>
+              <span class="uk-text-emphasis cndrd-font-normal">${hs}%</span> HS Acc
+            </div>
+
+            <div>
+              <span class="uk-text-emphasis cndrd-font-normal">${wl}%</span> W/L
+            </div>
+              
+          </div>
+
+        </div>
+      </div>
+    
+    `);
+  });
+
+};
+
+function updateBestWeaponInStat(w, stat) {
+  console.log(w);
+  $(`#BWIS_${stat}_name`).text(w.name);
+  $(`#BWIS_${stat}_kills`).text(`${w.kills} Kills`);
+  $(`#BWIS_${stat}_roundsPlayed`).text(`${w.rounds_played} Rounds Played`);
+  $(`#BWIS_${stat}_hsAcc`).text(`${roundTwo(w.hs_accuracy*100)}% HS Acc`);
+  $(`#BWIS_${stat}_image`).attr("data-src", w.image_url);
+};
+function getBestWeaponInStat(weapons, stat) {
+  let i = 0;
+  weapons = weapons.sort(function(a, b){ return b[stat] - a[stat] });
+  
+  while (weapons[i].headshots < 5 && weapons[i].kills < 5) {
+    i++;
+  }
+
+  return weapons[i];
+};
+
+
 let trendsDatasets = {};
 let theChart;
 let chartConfig;
@@ -236,7 +308,6 @@ function trendsPage(d) {
   };
   theChart = new Chart(document.getElementById("chartCanvas"), chartConfig);
 };
-
 document.getElementById("chartSelector").onchange = function(){
   // Replace the dataset
   chartConfig.data.datasets = [trendsDatasets[document.getElementById("chartSelector").value]];

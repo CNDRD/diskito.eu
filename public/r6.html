@@ -153,6 +153,7 @@
           <li><a href="#" class="cndrd-font-normal">Overall</a></li>
           <li><a href="#" class="cndrd-font-normal">Operators</a></li>
           <li><a href="#" class="cndrd-font-normal">Seasons</a></li>
+          <li><a href="#" class="cndrd-font-normal">Weapons</a></li>
           <li><a href="#" class="cndrd-font-normal">Trends</a></li>
         </ul><!-- Tab -->
 
@@ -795,6 +796,56 @@
           <!-- Seasons -->
           <li>
             <div id="seasons" style="display: flex; justify-content: center;" uk-spinner="ratio: 4"></div>
+          </li>
+          <!-- Weapons -->
+          <li>
+
+            <div class="uk-child-width-expand">
+
+              <div>
+                <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light uk-margin-medium-bottom">
+                  <div class="uk-flex uk-flex-wrap uk-flex-around">
+                    <!-- Most Kills -->
+                    <div>
+                      <div class="uk-flex uk-flex-column uk-flex-middle cndrd-font-normal">
+                        <h3 class="cndrd-font-medium">Most Kills</h3>
+                        <div id="BWIS_mostKills_name" class="uk-text-large uk-text-italic uk-text-emphasis">Name</div>
+                        <div id="BWIS_mostKills_kills">0 Kills</div>
+                        <div id="BWIS_mostKills_roundsPlayed">0 Rounds Played</div>
+                        <div id="BWIS_mostKills_hsAcc">0.00% HS Acc</div>
+                        <img id="BWIS_mostKills_image" class="uk-preserve-width" data-src="" style="height: 8rem; filter: invert(100%)" uk-img />
+                      </div>
+                    </div>
+                    <!-- Best HS Ratio -->
+                    <div>
+                      <div class="uk-flex uk-flex-column uk-flex-middle cndrd-font-normal">
+                        <h3 class="cndrd-font-medium">Best Headshot Ratio</h3>
+                        <div id="BWIS_bestHsRatio_name" class="uk-text-large uk-text-italic uk-text-emphasis">Name</div>
+                        <div id="BWIS_bestHsRatio_kills">0 Kills</div>
+                        <div id="BWIS_bestHsRatio_roundsPlayed">0 Rounds Played</div>
+                        <div id="BWIS_bestHsRatio_hsAcc">0.00% HS Acc</div>
+                        <img id="BWIS_bestHsRatio_image" class="uk-preserve-widt" data-src="" style="height: 8rem; filter: invert(100%)" uk-img />
+                      </div>
+                    </div>
+                    <!-- Most Played -->
+                    <div>
+                      <div class="uk-flex uk-flex-column uk-flex-middle cndrd-font-normal">
+                        <h3 class="cndrd-font-medium">Most Played</h3>
+                        <div id="BWIS_mostPlayed_name" class="uk-text-large uk-text-italic uk-text-emphasis">Name</div>
+                        <div id="BWIS_mostPlayed_kills">0 Kills</div>
+                        <div id="BWIS_mostPlayed_roundsPlayed">0 Rounds Played</div>
+                        <div id="BWIS_mostPlayed_hsAcc">0.00% HS Acc</div>
+                        <img id="BWIS_mostPlayed_image" class="uk-preserve-widt" data-src="" style="height: 7rem; filter: invert(100%)" uk-img />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="weaponsGrid" class="uk-grid-small uk-child-width-1-3@m uk-child-width-1-1 uk-flex-center" uk-grid></div>
+
+            </div>
+
           </li>
           <!-- Trends -->
           <li>
