@@ -34,6 +34,10 @@ function operatorsPage(d) {
 
   OPS.sort(function(a,b){return b.time_played-a.time_played});
   OPS.forEach(op => {
+
+    // Temporary, until she is released :D
+    if (op.readable === "Azami") {return};
+
     $('#operator_table').append(getOperatorRow(op));
   });
 };

@@ -618,7 +618,17 @@ let operatorDict = {
     uniqueAbilityImageURL: "https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/38hUQdWTb1vgs0Yg8eQHFC/0d7f05420068a41392342a1b38c57c2e/r6s-operator-ability-thorn.png",
     poseImageURL: "https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/3erk7Ub0asfBDZEKsdL8j9/5019698958b0834e806d01cd7bf36286/r6s-operator-thorn.png",
     iconImageURL: "https://i.imgur.com/w5DB6xs.png"
-  }
+  },
+  azami: {
+    year: "Y7S1",
+    health: 2,
+    unit: "UNAFFILIATED",
+    countryCode: "JP",
+    roles: [],
+    uniqueAbilityImageURL: "",
+    poseImageURL: "",
+    iconImageURL: ""
+  },
 };
 
 function countryCodeToFlag(cc) {
