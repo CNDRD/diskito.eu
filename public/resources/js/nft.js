@@ -1,4 +1,4 @@
-let id = new URLSearchParams(window.location.search).get('id');
+let userid = new URLSearchParams(window.location.search).get('id');
 
 function wrongOrMissingIdPage() {
 
@@ -7,15 +7,14 @@ function wrongOrMissingIdPage() {
 
 };
 
-if (id === null) {
+if (userid === null) {
 
   wrongOrMissingIdPage();
 
 } else {
 
-  firebase.database().ref(`NFT/owned/${id}`).once("value").then(snapshot => {
+  firebase.database().ref(`NFT/owned/${userid}`).once("value").then(snapshot => {
     let ids = snapshot.val();
-    console.log(ids.length);
 
     if (ids === null) {
 
@@ -45,7 +44,13 @@ if (id === null) {
         );
       };
 
-      $("#page_header").append(" collection");
+      
+      firebase.database().ref(`users/${userid}/username`).once("value").then(snpsht => {
+
+        $("#page_header").text(`${snpsht.val().split("#")[0]}'s NFT Collection`);
+        
+      });
+
       $("#cost").text(`This collection is worth ${count*10}K shekels`);
 
     }
