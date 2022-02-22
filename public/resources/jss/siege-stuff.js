@@ -624,9 +624,9 @@ let operatorDict = {
     health: 2,
     unit: "UNAFFILIATED",
     countryCode: "JP",
-    roles: [],
-    uniqueAbilityImageURL: "",
-    poseImageURL: "",
+    roles: ["Area Denial"],
+    uniqueAbilityImageURL: "https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/1UDhKrAXnm0thdHhsTTAyo/03f6b0b4879208d963e6d551b86ad3a6/r6s-operator-ability-azami.png",
+    poseImageURL: "https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/6vzacvORn7fh5sWFqy4glF/daadcbb2e0515129bf0cb610eccb3393/r6s-operator-azami.png",
     iconImageURL: ""
   },
 };
@@ -850,7 +850,7 @@ let seasonsDict = {
 
   25: {
     name: "Demon Veil",
-    hex: "#010101",
+    hex: "#ffb52c",
     code: "Y7S1",
     startDate: "2022-03-08"
   }
