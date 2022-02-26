@@ -182,7 +182,9 @@ function widgetSpotify(activities) {
   let wh = 17;
   let spotify = `
     <div class="uk-flex uk-flex-row" style="margin-left: 7px;" uk-tooltip="${activities.spotify.artist} - ${activities.spotify.title}">
-      <img class="uk-preserve" src="/resources/svg/widget/spotify.svg" width=${wh} height=${wh} uk-svg />
+      <a class="uk-flex uk-flex-row" target="_blank" rel="noreferrer" href="${activities.spotify.url}">
+        <img class="uk-preserve" src="/resources/svg/widget/spotify.svg" width=${wh} height=${wh} uk-svg />
+      </a>
     </div>`;
   return spotify
 };
