@@ -25,7 +25,6 @@
 
     <script defer src="/resources/jss/loginSignup.js" charset="utf-8"></script>
     <script defer src="/user/profile.js" charset="utf-8"></script>
-    <script defer src="/user/trading.js" charset="utf-8"></script>
 
     <title>Diskíto</title>
     <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
@@ -135,9 +134,10 @@
               <div id="personalDiscordStats" class="uk-flex uk-flex-column uk-flex-left uk-width-auto" style="display: none">
 
                 <!-- Tab -->
-                <ul class="uk-flex-center" uk-tab="active:0">
+                <ul class="uk-flex-center" uk-tab="active:2">
                   <li><a href="#" class="cndrd-font-normal">All Your Stats</a></li>
-                  <li><a href="#" class="cndrd-font-normal">Trading</a></li>
+                  <li id="trading-tab"><a href="#" class="cndrd-font-normal">Trading</a></li>
+                  <li id="nfts-tab"><a href="#" class="cndrd-font-normal">Your NFTs</a></li>
                 </ul><!-- Tab -->
 
                 <ul class="uk-switcher">
@@ -146,7 +146,7 @@
                     <div id="personalDiscordStatsPlace"></div>
                   </li>
                   <!-- Trading -->
-                  <li>
+                  <li id="trading-parent">
                     <div id="tradingData">
                       <table class="uk-table uk-table-divider sortable">
                         <thead class="pls-no-click">
@@ -161,6 +161,10 @@
                         <tbody id="tradingTable"></tbody>
                       </table>
                     </div>
+                  </li>
+                  <!-- NFTs -->
+                  <li id="nfts-parent">
+                    <div id="nfts" class="uk-child-width-1-4 uk-grid-small uk-flex-center" uk-grid></div>
                   </li>
               </div>
 

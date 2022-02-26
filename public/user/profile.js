@@ -29,41 +29,78 @@ function doTradingData() {
     firebase.database().ref(`trading/${snapshot.val()}`).once("value").then(kokot => {
       let trading = kokot.val();
 
-      for (let key in trading) { redstoneApi += `${key.replace('-USD','')},` };
+      if (trading === null) {
 
-      $.getJSON(redstoneApi, data => {
-        for (const key in data) {
+        $("#trading-tab").remove();
+        $("#trading-parent").remove();
 
-          let symbol = key;
-          let boughtAtValue = trading[key]['boughtAt'];
-          let amountBought = trading[key]['amount'];
-          let currentPrice = data[key]['value'];
-          let profit = (currentPrice*amountBought) - (boughtAtValue*amountBought);
+      } else {
 
-          let profitColor = profit > 0 ? "uk-text-success" : profit != 0 ? "uk-text-danger" : "";
+        for (let key in trading) { redstoneApi += `${key.replace('-USD','')},` };
 
-          boughtAtValue = floatWithSpaces(parseFloat(boughtAtValue.toFixed(5)));
-          amountBought = floatWithSpaces(parseFloat(amountBought.toFixed(5)));
-          currentPrice = floatWithSpaces(parseFloat(currentPrice.toFixed(5)));
-          profit = floatWithSpaces(parseFloat(profit.toFixed(2)));
+        $.getJSON(redstoneApi, data => {
+          for (const key in data) {
+  
+            let symbol = key;
+            let boughtAtValue = trading[key]['boughtAt'];
+            let amountBought = trading[key]['amount'];
+            let currentPrice = data[key]['value'];
+            let profit = (currentPrice*amountBought) - (boughtAtValue*amountBought);
+  
+            let profitColor = profit > 0 ? "uk-text-success" : profit != 0 ? "uk-text-danger" : "";
+  
+            boughtAtValue = floatWithSpaces(parseFloat(boughtAtValue.toFixed(5)));
+            amountBought = floatWithSpaces(parseFloat(amountBought.toFixed(5)));
+            currentPrice = floatWithSpaces(parseFloat(currentPrice.toFixed(5)));
+            profit = floatWithSpaces(parseFloat(profit.toFixed(2)));
+  
+            $('#tradingTable').append(`
+              <tr>
+                <td class="uk-text-center cndrd-font-normal">${symbol}</td>
+                <td class="uk-text-center">${currentPrice}</td>
+                <td class="uk-text-center">${boughtAtValue}</td>
+                <td class="uk-text-center">${amountBought}</td>
+                <td class="uk-text-center ${profitColor}">${profit}</td>
+              </tr>
+            `);
+  
+          };
+        });
 
-          $('#tradingTable').append(`
-            <tr>
-              <td class="uk-text-center cndrd-font-normal">${symbol}</td>
-              <td class="uk-text-center">${currentPrice}</td>
-              <td class="uk-text-center">${boughtAtValue}</td>
-              <td class="uk-text-center">${amountBought}</td>
-              <td class="uk-text-center ${profitColor}">${profit}</td>
-            </tr>
-          `);
-
-        };
-      });
-
-
+      }
 
     });
   });
+};
+
+function doNFTs() {
+
+  firebase.database().ref(`websiteProfiles/${user.uid}/discordUID`).once("value").then(snapshot => {
+    firebase.database().ref(`NFT/owned/${snapshot.val()}`).once("value").then(nftSnapshot => {
+      let ids = nftSnapshot.val();
+
+      if (ids === null) {
+
+        $("#nfts-tab").remove();
+        $("#nfts-parent").remove();
+
+      } else {
+
+        for (id in ids) {
+          $("#nfts").append(`
+            <div id="nft">
+              <a href="#nft${id}" uk-toggle>
+                <img src="https://i.imgur.com/${id}.png" uk-img />
+              </a>
+            </div>`
+          );
+        };
+
+      }
+
+    });
+  });
+
 };
 
 function floatWithSpaces(x) {
@@ -157,6 +194,7 @@ function isDiscordConnected(lolz) {
     $(connectDiscord).hide();
     doDiscordStats();
     doTradingData();
+    doNFTs();
     $(discordStats).show();
   } else {
     /* No */
