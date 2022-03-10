@@ -97,7 +97,7 @@ userDataRef.once("value").then(snapshot => {
 
     snapshot.forEach(childSnapshot => {
       let cd = childSnapshot.val();
-      if (cd.currentRank != "Unranked"){ ranked.push(cd); } else { unranked.push(cd); }
+      if (cd.maxMMR !== -1){ ranked.push(cd); } else { unranked.push(cd); }
     });
 
     ranked.sort(function(a,b){return b.currentMMR - a.currentMMR})
