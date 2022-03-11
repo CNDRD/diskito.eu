@@ -1,0 +1,312 @@
+:root {
+  --blurple: hsl(227, 58%, 65%);
+  --blurple-l: hsl(227, 47%, 66%);
+  --white: hsl(0, 0%, 100%);
+  --gray: rgba(255, 255, 255, 0.6);
+  --bj-gold: hsl(48, 37%, 62%);
+
+  --uk-primary: #1e87f0;
+  --uk-success: #32d296;
+  --uk-warning: #faa05a;
+  --uk-danger: #f0506e;
+  --uk-success-light: #3de3a5;
+
+  --cndrd-dark-bg: #272727;
+  --cndrd-dark-navbar-bg: #1b1b1e;
+}
+
+/*
+html {
+  background-color: var(--cndrd-dark-bg) !important;
+}
+div#user-modal[uk-modal] div.uk-modal-dialog.uk-modal-body.uk-margin-auto-vertical {
+  background-color: var(--cndrd-dark-bg) !important;
+}
+[uk-navbar] {
+  background-color: var(--cndrd-dark-navbar-bg) !important;
+}
+
+@font-face {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+  src: url("/resources/fonts/DM_U4OIZE8TpOW8Kw0k2MQa.otf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+  src: url("/resources/fonts/DN_FTCAXQdEjKRXjGbCH0lE.otf");
+  font-display: swap;
+}
+
+.cndrd-font-medium {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+.cndrd-font-normal {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+
+h1.uk-article-title {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+h1.uk-heading-small {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+h3.uk-card-title {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+
+
+table.uk-table.uk-table-divider.sortable tbody tr td a.uk-text-warning {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+div.uk-flex-top.uk-modal.uk-flex.uk-open
+div.uk-modal-dialog.uk-modal-body.uk-margin-auto-vertical
+div.uk-modal-header
+h2.uk-modal-title
+span.uk-text-success {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+
+
+tbody#tableDataPlace tr td.uk-text-middle a {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+
+
+
+#usernameInput{
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE" !important;
+}
+#discordConnectedName {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+
+
+#mony {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+#monies-explainer-modal div div.uk-modal-body h2 {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+
+
+
+nav div.uk-navbar-left ul li a span.uk-text-large.uk-text-primary.uk-margin-small-left {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+  font-size: 2.5rem;
+}
+nav div.uk-navbar-left ul li a span.uk-button-text {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+a.loginButton {
+  font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+#userButtonNormal {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+#userButtonMobile {
+  font-family: "DN_FTCAXQdEjKRXjGbCH0lE";
+}
+
+
+
+.pretty-scrollbar *::-webkit-scrollbar {
+  width: 1rem;
+  height: 1rem;
+  background-color: transparent;
+}
+.pretty-scrollbar *::-webkit-scrollbar-track:horizontal {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.pretty-scrollbar *::-webkit-scrollbar-thumb {
+  min-width: 3rem;
+  min-height: 3rem;
+  background-color: rgba(0, 0, 0, 0.25);
+  border: 0.4rem solid transparent;
+  -moz-background-clip: content;
+  -webkit-background-clip: content;
+  background-clip: content-box;
+  border-radius: 1rem;
+}
+.pretty-scrollbar *::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-color: transparent;
+}
+.pretty-scrollbar *::-webkit-scrollbar-corner {
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.05);
+}
+.pretty-scrollbar * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) #25282c;
+}
+
+
+.middel{
+  display:grid;
+  place-items:center;
+  height:90vh;
+}
+
+
+.pls-no-click {
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+.uk-navbar {
+  background-color: rgb(25, 25, 25);
+}
+
+
+.uk-background-danger {
+  background-color: var(--uk-danger);
+}
+
+
+
+.label {
+  display: inline-block;
+  padding: 0 10px;
+  background: var(--uk-primary);
+  line-height: 1.5;
+  font-size: 0.875rem;
+  color: var(--white);
+  vertical-align: middle;
+  white-space: nowrap;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+.label-success {
+  background-color: var(--uk-success);
+  color: var(--white);
+}
+.label-warning {
+  background-color: var(--uk-warning);
+  color: var(--white);
+}
+.label-danger {
+  background-color: var(--uk-danger);
+  color: var(--white);
+}
+
+
+.badge {
+  box-sizing: border-box;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 500px;
+  vertical-align: middle;
+  background: var(--uk-primary);
+  color: var(--white);
+  font-size: 0.875rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+.badge:hover,
+.badge:focus {
+  color: var(--white);
+  text-decoration: none;
+  outline: none;
+}
+
+.badge-discord {
+  background: var(--blurple);
+  color: var(--white);
+}
+.badge-discord:hover,
+.badge-discord:focus {
+  color: var(--white);
+}
+
+
+.uk-light .uk-input:focus,
+.uk-light .uk-select:focus,
+.uk-light .uk-textarea:focus{
+    background-color: inherit !important;
+    color: inherit !important;
+    border-color: inherit !important;
+}
+
+.cndrd-form-danger,
+.cndrd-form-danger:focus {
+  color: var(--uk-danger) !important;
+  border-color: var(--uk-danger) !important;
+}
+.cndrd-form-success,
+.cndrd-form-success:focus {
+  color: var(--uk-success) !important;
+  border-color: var(--uk-success) !important;
+}
+
+.cndrd-username-input {
+  background-color: rgba(255,255,255,.1);
+  color: #fff !important;
+  background-clip: padding-box;
+  border-color: transparent;
+  height: 40px;
+  vertical-align: middle;
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+  padding: 0 10px;
+  background: none;
+  transition: .2s ease-in-out;
+  transition-property: color,background-color,border;
+  -webkit-appearance: none;
+  overflow: visible;
+  box-sizing: border-box;
+  margin: 0;
+  border-radius: 0;
+  font: inherit;
+  font-size: 1.5rem;
+}
+.cndrd-username-input:focus {
+  border-color: transparent;
+  border-style: dashed;
+}
+
+.cndrd-button-success {
+  background-color: var(--uk-success);
+  color: #fff;
+  border: 1px solid transparent;
+}
+.cndrd-button-success:hover,
+.cndrd-button-success:focus {
+  background-color: var(--uk-success-light);
+  color: #fff;
+}
+.cndrd-button-success:active,
+.cndrd-button-success.uk-active {
+  background-color: var(--uk-success-light);
+  color: #fff;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+.text-white {
+  color: var(--white);
+}
+
+
+#nft {
+  will-change: transform;
+  transition: transform 250ms ease;
+}
+#nft:hover{
+  transform: scale(1.05);
+}
+*/

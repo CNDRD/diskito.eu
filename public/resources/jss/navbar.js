@@ -1,3 +1,7 @@
-$(function(){
-  $("#navbar").load("/resources/html/navbar.html")
+$(document).ready(function(){
+
+  $("#menu").click(function(){
+    $("#hidden").slideToggle(400);
+  });
+
 });

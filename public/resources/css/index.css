@@ -1,0 +1,91 @@
+:root {
+    --bj-gold: hsl(48, 37%, 62%);
+    --chaun-blue: hsl(212, 33%, 23%);
+    --chaun-blue-l: hsl(212, 37%, 33%);
+    --chaun-red: hsl(359, 83%, 63%);
+
+    --background-color: hsl(46, 100%, 97%);
+
+    --w-online: #32d296;
+    --w-idle: #faa05a;
+    --w-dnd: #f0506e;
+}
+
+body .main {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+@media screen and (max-width: 1000px) {
+    body .main {
+        justify-content: flex-start;
+    }
+}
+
+body .main .section {
+    height: 20rem;
+    margin-top: 5rem;
+    padding-left: 1rem;
+    border-left: 5px solid var(--chaun-red);
+}
+
+body .main .section.links {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: baseline;
+    justify-content: flex-start;
+}
+body .main .section.links a {
+    padding: 0.2rem;
+    text-decoration: none;
+    color: var(--chaun-blue);
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+body .main .section.links a:hover {
+    text-decoration: underline var(--chaun-red);
+}
+body .main .section.links .header {
+    font-weight: 700;
+    font-size: 3rem;
+    color: var(--chaun-blue);
+}
+
+body .main .section.widget {
+    overflow: auto;
+    min-width: 18rem;
+}
+body .main .section.widget .online {
+    font-weight: 700;
+    font-size: 3rem;
+    color: var(--chaun-blue);
+}
+body .main .section.widget .users {
+    display: flex;
+    flex-flow: column nowrap;
+}
+body .main .section.widget .users .user {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+body .main .section.widget .users .user .username {
+    padding-left: 5px;
+    margin-right: 1rem;
+    font-weight: 500;
+    font-size: 1rem;
+}
+body .main .section.widget .users .user .username.online {
+    text-decoration: underline var(--w-online);
+}
+body .main .section.widget .users .user .username.idle {
+    text-decoration: underline var(--w-idle);
+}
+body .main .section.widget .users .user .username.dnd {
+    text-decoration: underline var(--w-dnd);
+}
