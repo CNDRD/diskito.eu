@@ -57,7 +57,6 @@ firebase.database().ref(`voice/${currentYear}/in`).on('value', (snapshot) => {
     $("#voice").show();
     
     let inVoice = [];
-    console.log(snapshot.val());
 
     /* Connect usernames with timestamps */
     snapshot.forEach(childSnapshot => {

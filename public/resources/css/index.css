@@ -12,6 +12,10 @@
     --w-dnd: #f0506e;
 }
 
+* {
+    color: var(--chaun-blue);
+}
+
 body .main {
     width: 100%;
     display: flex;
@@ -115,7 +119,6 @@ body .main .section.voice .header {
     flex-grow: 100%;
     font-weight: 700;
     font-size: 3rem;
-    color: var(--chaun-blue);
     margin-bottom: 1rem;
 }
 body .main .section.voice #voice-stats .user {
