@@ -105,3 +105,32 @@ body .main .section.widget .users .user .us .status.status-idle {
 body .main .section.widget .users .user .us .status.status-dnd {
     background-color: var(--w-dnd);
 }
+body .main .section.voice #voice-stats .voice-lines {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+body .main .section.voice .header {
+    flex-grow: 100%;
+    font-weight: 700;
+    font-size: 3rem;
+    color: var(--chaun-blue);
+    margin-bottom: 1rem;
+}
+body .main .section.voice #voice-stats .user {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+    font-size: 2rem;
+}
+body .main .section.voice #voice-stats .username {
+    font-weight: 500;
+    font-size: 2rem;
+}
+body .main .section.voice #voice-stats .time {
+    font-weight: 400;
+    font-size: 2rem;
+}
