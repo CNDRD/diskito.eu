@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
   $("#menu").click(function(){
-    $("#hidden").slideToggle(400);
+    $("#hidden").slideToggle(150);
   });
 
 });

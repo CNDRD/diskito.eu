@@ -10,8 +10,11 @@ firebase.database().ref("widget").on("value", snapshot => {
     let a = `
       <!-- ${user.username} -->
       <div class="user">
-        <div class="username ${user.status}">
-          ${user.username}
+        <div class="us">
+          <div class="status status-${user.status}"></div>
+          <div class="username">
+            ${user.username}
+          </div>
         </div>
         <div class="activity">
           ${getWidgetActivity(user.activities)}

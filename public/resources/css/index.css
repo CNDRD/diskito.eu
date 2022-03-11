@@ -6,6 +6,7 @@
 
     --background-color: hsl(46, 100%, 97%);
 
+    --w-char: "×";
     --w-online: #32d296;
     --w-idle: #faa05a;
     --w-dnd: #f0506e;
@@ -74,18 +75,33 @@ body .main .section.widget .users .user {
     justify-content: space-between;
     align-items: center;
 }
-body .main .section.widget .users .user .username {
+body .main .section.widget .users .user .us {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+}
+body .main .section.widget .users .user .us .username {
     padding-left: 5px;
     margin-right: 1rem;
     font-weight: 500;
     font-size: 1rem;
 }
-body .main .section.widget .users .user .username.online {
-    text-decoration: underline var(--w-online);
+body .main .section.widget .users .user .us .status {
+    position: relative;
+    top: 0;
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 1px solid var(--background-color);
+    border-radius: 50%;
 }
-body .main .section.widget .users .user .username.idle {
-    text-decoration: underline var(--w-idle);
+body .main .section.widget .users .user .us .status.status-online {
+    background-color: var(--w-online);
 }
-body .main .section.widget .users .user .username.dnd {
-    text-decoration: underline var(--w-dnd);
+body .main .section.widget .users .user .us .status.status-idle {
+    background-color: var(--w-idle);
+}
+body .main .section.widget .users .user .us .status.status-dnd {
+    background-color: var(--w-dnd);
 }
