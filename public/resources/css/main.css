@@ -6,6 +6,9 @@
 
     --background-color: hsl(46, 100%, 97%);
 
+    --w-online: #32d296;
+    --w-idle: #faa05a;
+    --w-dnd: #f0506e;
 
     --navbar-height: 5rem;
 }
