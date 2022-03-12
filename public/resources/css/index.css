@@ -111,6 +111,7 @@ body .main .section.voice #voice-stats {
     justify-content: space-between;
 }
 body .main .section.voice #voice-stats .voice-lines {
+    width: 100%;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
