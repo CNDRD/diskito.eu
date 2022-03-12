@@ -57,16 +57,24 @@ firebase.database().ref(`voice/${currentYear}/in`).on('value', (snapshot) => {
     $("#voice").show();
     
     let inVoice = [];
+    let todayFromDB = 0;
+
+    firebase.database().ref(`voice/${currentYear}/day/${getTodayFirebaseString()}`).once("value").then(daySnapshot => {
+      todayFromDB = daySnapshot.val() || 0;
+    });
 
     /* Connect usernames with timestamps */
     snapshot.forEach(childSnapshot => {
       firebase.database().ref(`users/${childSnapshot.key}/username`).once("value").then(usernameSnapshot => {
+        firebase.database().ref(`widget/${childSnapshot.key}/voice`).once("value").then(widgetSnapshot => {
 
-        inVoice.push({
-          username: usernameSnapshot.val(),
-          userTimestamp: childSnapshot.val()
+          inVoice.push({
+            username: usernameSnapshot.val(),
+            userTimestamp: childSnapshot.val(),
+            voice: widgetSnapshot.val(),
+          });
+
         });
-
       });
     });
 
@@ -76,8 +84,17 @@ firebase.database().ref(`voice/${currentYear}/in`).on('value', (snapshot) => {
     /* Create an update function */
     let iterations = 1;
     function update() {
-      let unixTS = Math.floor(Date.now() / 1000);
-      replaceTimes(inVoice, unixTS);
+      let totalSessionSeconds = todayFromDB + (inVoice.length * iterations);
+      let rtData = {
+        currentlyInVoice: inVoice,
+        currentUnixTS: Math.floor(Date.now() / 1000),
+        totalSessionSeconds: totalSessionSeconds,
+        totalVoiceSecondsToday: totalSessionSeconds + todayFromDB,
+      };
+
+      console.log(rtData);
+
+      replaceTimes(rtData);
       iterations++;
     };
 
@@ -88,34 +105,52 @@ firebase.database().ref(`voice/${currentYear}/in`).on('value', (snapshot) => {
   
 });
 
-function replaceTimes(inVoice, unixTS) {
+function replaceTimes(rtData) {
+  let ppl = rtData.currentlyInVoice.length == 1 ? "User" : "Users";
   let xd = `
   <div id="voice-stats">
     <div class="header">
-      ${inVoice.length} People in Voice
+      ${rtData.currentlyInVoice.length} ${ppl} in Voice
     </div>
     <div class="voice-lines">
-      ${getVoiceUserLines(inVoice, unixTS)}
+      ${getVoiceUserLines(rtData)}
+    </div>
+    <div class="voice-total">
+      ${getVoiceTotals(rtData)}
     </div>
   </div>
   `;
   $("#voice-stats").replaceWith(xd);
 };
-function getVoiceUserLines(inVoice, unixTS) {
+function getVoiceUserLines(rtData) {
   let xd = "";
-  inVoice.forEach(u => {
+  rtData.currentlyInVoice.forEach(u => {
 
     xd += `
     <div class="user">
       <div class="username">${u.username.split("#")[0]}</div>
-      <div class="time">${addSpaces(getVoiceTime(unixTS - u.userTimestamp))}</div>
+      <div class="time">${getVoiceTime(rtData.currentUnixTS - u.userTimestamp)}</div>
     </div>
     `;
 
   });
   return xd;
 };
+function getVoiceTotals(rtData) {
+  return `
+  <div class="user">
+    <div class="username">Session</div>
+    <div class="time">${getVoiceTime(rtData.totalSessionSeconds)}</div>
+  </div>
+  <div class="user">
+    <div class="username">Today</div>
+    <div class="time">${getVoiceTime(rtData.totalVoiceSecondsToday)}</div>
+  </div>
+  `
+};
+
 function getVoiceTime(s) {
+  if (s < 0) { s = 0 }
   let hours = Math.floor(s / 3600);
   s %= 3600;
   let minutes = Math.floor(s / 60);
@@ -124,8 +159,6 @@ function getVoiceTime(s) {
   seconds = seconds < 10 ? '0' + seconds : seconds;
   return `${hours}:${minutes}:${seconds}`;
 };
-
-/*
 function getTodayFirebaseString() {
   let dateObj = (new Date()).toLocaleString('cs-CZ', { year:'numeric',month:'numeric',day:'numeric' }).split('.');
   let year = dateObj[2];
@@ -133,4 +166,3 @@ function getTodayFirebaseString() {
   let day = dateObj[0];
   return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`.replaceAll(' ','')
 };
-*/
