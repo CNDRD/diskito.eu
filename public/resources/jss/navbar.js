@@ -1,7 +1,5 @@
 let theme = localStorage.getItem('theme');
-if (theme) {
-  changeTheme(theme);
-}
+if (theme) { changeTheme(theme); }
 
 
 $(document).ready(function(){
