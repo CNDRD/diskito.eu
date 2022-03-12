@@ -1,0 +1,44 @@
+html, body {
+    height: 97%;
+}
+
+.center-container {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    width: 100%;
+    font-size: 2rem;
+    color: var(--chaun-blue);
+}
+.stats-container {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+.stats-container .header {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--chaun-blue);
+    font-weight: 700;
+    font-size: 3rem;
+}
+.stats {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+.stats .stat span {
+    font-weight: 500;
+}
+.stats .or {
+    font-size: 1rem;
+}
+.chat-totals .stats .stat:not(:last-of-type) {
+    margin-bottom: 1rem;
+}

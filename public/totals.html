@@ -21,40 +21,16 @@
     <!-- Custom CSS & JS -->
     <link rel="stylesheet" href="/resources/css/normalize.css" />
     <link rel="stylesheet" href="/resources/css/main.css" />
+    <link rel="stylesheet" href="/resources/css/totals.css" />
     <script defer src="/resources/jss/myFunctions.js" charset="utf-8"></script>
 
     <script defer src="/resources/jss/navbar.js" charset="utf-8"></script>
+    <script src="/resources/js/totals.js" charset="utf-8"></script>
 
     <title>Diskíto</title>
     <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
 
-    <style>
-      html, body {
-        height: 97%;
-      }
-      #bruh {
-        display: grid;
-        place-items: center;
-        height: 100%;
-        font-size: 2rem;
-        color: var(--chaun-blue);
-      }
-      #bruh div {
-        display: flex;
-        flex-flow: column nowrap;
-        align-items: flex-start;
-        justify-content: center;
-      }
-      #bruh div span:not(:last-of-type) {
-        margin-bottom: 0.5rem;
-      }
-      #stinky {
-        color: var(--chaun-red);
-      }
-    </style>
-
   </head>
-  
   <body>
 
     <nav class="navbar">
@@ -88,18 +64,51 @@
       </div>
     </nav>
 
-    <div id="bruh">
-      <div>
-        <span>What are you even doing here</span>
-        <span>Did you expect to find a pot of gold at <code id="stinky">/</code>?</span>
+    <div class="center-container">
+      <div class="stats-container">
+
+        <div class="chat-totals">
+          <span class="header">Chat Totals</span>
+          <div class="stats">
+            <div class="stat">
+              <span id="messages">???</span> Messages
+            </div>
+            <div class="stat">
+              <span id="rps">???</span> Reaction Points
+            </div>
+            <div class="stat">
+              <span id="xp">???</span> XP
+            </div>
+            <div class="stat">
+              <span id="levels">???</span> Levels
+            </div>
+          </div>
+        </div>
+            
+        <div class="voice-totals">
+          <span class="header">Voice Totals</span>
+          <div class="stats">
+            <div class="stat">
+              <span id="seconds">???</span> seconds
+            </div>
+            <div class="or">or</div>
+            <div class="stat">
+              <span id="minutes">???</span> minutes
+            </div>
+            <div class="or">or</div>
+            <div class="stat">
+              <span id="hours">???</span> hours
+            </div>
+            <div class="or">or</div>
+            <div class="stat">
+              <span id="days">???</span> days
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
   </body>
-
-  <!-- I ain't puttin' this in a separate file doode -->
-  <script type="text/javascript">
-    $('#stinky').text(window.location.pathname);
-  </script>
-
+  
 </html>
