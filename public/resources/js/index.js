@@ -92,8 +92,6 @@ firebase.database().ref(`voice/${currentYear}/in`).on('value', (snapshot) => {
         totalVoiceSecondsToday: totalSessionSeconds + todayFromDB,
       };
 
-      console.log(rtData);
-
       replaceTimes(rtData);
       iterations++;
     };
