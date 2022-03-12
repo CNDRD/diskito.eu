@@ -161,8 +161,7 @@ body {
         border-top: 3px solid var(--chaun-red);
     }
     #hidden a:last-child {
-        text-decoration: underline var(--chaun-red);
-        color: var(--chaun-blue);
+        color: var(--chaun-red);
         font-weight: 700;
     }
 }
