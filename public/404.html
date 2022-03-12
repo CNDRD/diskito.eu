@@ -1,177 +1,93 @@
 <!DOCTYPE html>
-<html class="pretty-scrollbar" lang="en" dir="ltr" style="background: rgb(34, 34, 34);">
+<html class="pretty-scrollbar" lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Loads of stats and other things about the Diskíto Discord server.">
 
-    <!-- UIkit CSS & JS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/css/uikit.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit-icons.min.js"></script>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <!-- Firebase JS -->
-    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-analytics.js"></script>
-    <script src="/resources/jss/firebase-init.js"></script>
+    <script src="/__/firebase/8.7.1/firebase-app.js"></script>
+    <script src="/__/firebase/8.7.1/firebase-database.js"></script>
+    <script src="/__/firebase/init.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Custom CSS & JS -->
+    <link rel="stylesheet" href="/resources/css/normalize.css" />
     <link rel="stylesheet" href="/resources/css/main.css" />
+    <script defer src="/resources/jss/myFunctions.js" charset="utf-8"></script>
 
-    <script defer src="/resources/jss/loginSignup.js" charset="utf-8"></script>
+    <script defer src="/resources/jss/navbar.js" charset="utf-8"></script>
 
     <title>Diskíto</title>
     <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
 
-  </head>
-  <body class="uk-light">
+    <style>
+      #bruh {margin-top: 15rem;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+      }
+      #bruh div {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        justify-content: center;
+      }
+      #bruh div span:not(:last-of-type) {
+        margin-bottom: 0.5rem;
+      }
+      #stinky {
+        color: hsl(359, 83%, 63%);
+      }
+    </style>
 
-    <nav uk-navbar>
-      <div class="uk-navbar-left">
-        <ul class="uk-navbar-nav uk-hidden@s">
-          <li>
-            <a href="index.html" class="uk-navbar-item uk-logo uk-padding-remove-left">
-              <img src="/resources/img/diskito_pfp.jpg" width="80" height="80" class="logo" alt="😀" />
-              <span class="uk-text-large uk-text-primary uk-margin-small-left">Diskíto</span>
-            </a>
-          </li>
-        </ul>
-        <ul class="uk-navbar-nav uk-visible@s pls-no-click">
-          <li>
-            <a href="index.html" class="uk-navbar-item uk-logo uk-padding-remove-left">
-              <img src="/resources/img/diskito_pfp.jpg" width="80" height="80" class="logo" alt="😀" />
-            </a>
-          </li>
-          <li><a href="/diskito.html"><span class="uk-button-text">Server Stats</span></a></li>
-          <li><a href="/leader.html"><span class="uk-button-text">Leaderboards</span></a></li>
-          <li><a href="/siege.html"><span class="uk-button-text">Siege Stats</span></a></li>
-          <li><a href="/voice.html"><span class="uk-button-text">Voice Stats</span></a></li>
-          <li><a href="/quotes.html"><span class="uk-button-text">Quotes</span></a></li>
-        </ul>
+  </head>
+  
+  <body>
+
+    <nav class="navbar">
+      <div class="branding">
+        <a href="/"><span id="dvojbodka">:</span>Diskíto</a>
       </div>
-      <div class="uk-navbar-right">
-        <ul class="uk-navbar-nav uk-visible@s">
-          <li>
-            <div class="uk-navbar-item">
-              <div id="userButtonNormal" class="userButton uk-button-group uk-margin-small-right" hidden>
-              </div>
-              <a class="loginButton uk-button uk-button-default uk-text-emphasis uk-flex uk-flex-row uk-flex-middle" type="button" uk-toggle="target: #user-modal">
-                Login <span class="uk-margin-small-left uk-icon" uk-icon="icon: user; ratio: 1.2"></span>
-              </a>
-            </div>
-          </li>
-        </ul>
-        <ul class="uk-navbar-nav uk-hidden@s">
-          <li>
-            <a class="uk-navbar-toggle uk-icon uk-navbar-toggle-icon" href="#offcanvas-primary-nav-flip" uk-navbar-toggle-icon="" uk-toggle="" aria-expanded="false"></a>
-            <div id="offcanvas-primary-nav-flip" uk-offcanvas="flip: true; overlay: true">
-              <button class="uk-offcanvas-close" type="button" uk-close></button>
-              <div class="uk-offcanvas-bar uk-flex uk-flex-column">
-                <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
-                  <li><a href="/diskito.html">Server Stats</a></li>
-                  <li><a href="/leader.html">Leaderboards</a></li>
-                  <li><a href="/siege.html">Siege Stats</a></li>
-                  <li><a href="/voice.html">Voice Stats</a></li>
-                  <li><a href="/quotes.html">Quotes</a></li>
-                  <li class="uk-divider-icon"></li>
-                  <li>
-                    <a class="loginButton uk-button uk-button-default uk-text-emphasis uk-flex uk-flex-row uk-flex-middle" type="button" uk-toggle="target: #user-modal">
-                      Login <span class="uk-margin-small-left uk-icon" uk-icon="icon: user; ratio: 1.2"></span>
-                    </a>
-                    <div id="userButtonMobile" class="userButton" hidden>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </li>
-        </ul>
+      <div class="navigation">
+        <a href="#">Stats</a>
+        <a href="#">Leaderboards</a>
+        <a href="#">Siege</a>
+        <a href="#">Voice</a>
+        <a href="#">Quotes</a>
+      </div>
+      <div class="at-right">
+        <div class="join-button">
+          <a href="#">Join</a>
+        </div>
+        <div id="theme-switch">🌑</div>
+      </div>
+    </nav>
+    <nav class="navbar-mobile">
+      <div id="menu">MENU</div>
+      <div id="hidden">
+        <a href="/">Home</a>
+        <a href="#">Server Stats</a>
+        <a href="#">Leaderboards</a>
+        <a href="#">Siege</a>
+        <a href="#">Voice Stats</a>
+        <a href="#">Quotes</a>
+        <a href="#">Join!</a>
       </div>
     </nav>
 
-    <div class="uk-section">
-      <div class="uk-container">
-        <div class="uk-flex-center">
-          <article class="uk-article">
-            <h1 class="uk-article-title">404</h1>
-            <hr class="uk-divider-small" />
-            <div class="uk-dropcap uk-width-1-2">
-              You fucked up the URI champ.
-              Or you tried to get somewhere you're not supposed to huh..
-              What's so interesting about <span id="stinky">this page</span> you just have to explore?
-
-              <div class="uk-margin-medium-top" uk-grid>
-                <a href="/" class="uk-button uk-button-default uk-width-2-3 uk-margin-small-right">Home</a>
-                <button onclick="window.history.back();" class="uk-button uk-button-default uk-width-expand">Back</button>
-              </div>
-
-            </div>
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div id="user-modal" uk-modal>
-      <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-        <button class="uk-modal-close-default" type="button" uk-close></button>
-        <ul uk-tab>
-          <li><a href="#">Login</a></li>
-          <li><a href="#">Sign Up</a></li>
-        </ul>
-        <ul class="uk-switcher uk-margin">
-          <!-- LOGIN -->
-          <li>
-            <div class="uk-modal-body">
-              <form id="loginForm" class="uk-child-width-1-1 uk-grid-small" uk-grid>
-                <div>
-                  <div class="uk-inline">
-                    <span class="uk-form-icon" uk-icon="icon: mail"></span>
-                    <input class="uk-input uk-form-width-large uk-text-light" id="loginEmail" type="email" placeholder="Email" required />
-                  </div>
-                  <span id="loginEmailFuckup" class="uk-text-danger uk-text-light uk-text-small" hidden>This isn't a valid email address chief..</span>
-                </div>
-                <div>
-                  <div class="uk-inline">
-                    <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                    <input class="uk-input uk-form-width-large uk-text-light" id="loginPassw" type="password" placeholder="Password" required />
-                  </div>
-                  <span id="loginPasswFuckup" class="uk-text-danger uk-text-light uk-text-small" hidden>8-25 characters, lowercase & uppercase, number, special character</span>
-                </div>
-                <div>
-                  <button class="uk-button uk-button-default uk-width-1-1">Login</button>
-                </div>
-              </form>
-            </div>
-          </li>
-          <!-- SIGNUP -->
-          <li>
-            <div class="uk-modal-body">
-              <form id="signupForm" class="uk-child-width-1-1 uk-grid-small" uk-grid>
-                <div>
-                  <div class="uk-inline">
-                    <span class="uk-form-icon" uk-icon="icon: mail"></span>
-                    <input class="uk-input uk-form-width-large uk-text-light" id="signupEmail" type="email" placeholder="Email" required />
-                  </div>
-                  <span id="signupEmailFuckup" class="uk-text-danger uk-text-light uk-text-small" hidden>This isn't a valid email address chief..</span>
-                </div>
-                <div>
-                  <div class="uk-inline">
-                    <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                    <input class="uk-input uk-form-width-large uk-text-light" id="signupPassw" type="password" placeholder="Password" required />
-                  </div>
-                  <span id="signupPasswFuckup" class="uk-text-danger uk-text-light uk-text-small" hidden>8-25 characters, lowercase & uppercase, number, special character</span>
-                </div>
-                <div>
-                  <button class="uk-button uk-button-default uk-width-1-1">Sign Up</button>
-                </div>
-              </form>
-            </div>
-          </li>
-        </ul>
+    <div id="bruh">
+      <div>
+        <span>Tf you even doin' here</span>
+        <span>What did you expect to find at <code id="stinky">/</code> anyways?</span>
       </div>
     </div>
 
@@ -179,7 +95,7 @@
 
   <!-- I ain't puttin' this in a separate file doode -->
   <script type="text/javascript">
-    $('#stinky').replaceWith(`<code class="uk-text-success">${window.location.pathname}</code>`);
+    $('#stinky').text(window.location.pathname);
   </script>
 
 </html>
