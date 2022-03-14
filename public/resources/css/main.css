@@ -94,6 +94,10 @@ body {
     flex-flow: row nowrap;
     align-items: center;
     justify-content: center;
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .navbar .at-right #theme-switch {
     margin-left: 2rem;
@@ -212,4 +216,12 @@ body {
 .pretty-scrollbar * {
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.25) #25282c;
+}
+
+/* No clickity click */
+.pls-no-click {
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
 }
