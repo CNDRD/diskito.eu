@@ -15,8 +15,7 @@ $(document).ready(function(){
 });
 
 function changeTheme(toWhat) {
-  console.log(toWhat);
-
+  
   switch ( toWhat ) {
     case "☀️":
     case "Light Mode":
