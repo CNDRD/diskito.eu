@@ -1,8 +1,4 @@
 
-* {
-    color: var(--chaun-blue);
-}
-
 body .main {
     width: 100%;
     display: flex;
