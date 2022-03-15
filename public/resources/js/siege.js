@@ -89,8 +89,8 @@ function getUpdateTimeString(s) {
 
 function getStatsRow(u, clown, mmrWatch, unrank=false) {
   let pfpLink = `https://ubisoft-avatars.akamaized.net/${u.ubisoftID}/default_256_256.png`;
-  let kd = u.sDeaths == 0 ? 0 : roundTwo(u.sKills / u.sDeaths);
-  let wl = u.sDeaths == 0 ? 0 : roundTwo(u.sWins / (u.sWins + u.sLosses) * 100);
+  let kd = u.sDeaths == 0 ? u.sKills : roundTwo(u.sKills / u.sDeaths);
+  let wl = u.sLosses == 0 ? 0 : roundTwo(u.sWins / (u.sWins + u.sLosses) * 100);
   let ptRAW = getPlaytime(u.totalPlaytime);
   let playtime = `${ptRAW[0]}h <span class="hidden-mobile">${ptRAW[1]}m ${ptRAW[2]}s</span>`;
   let mmrChangeColor = u.lastMMRchange >= 0 ? ( u.lastMMRchange == 0 ? "" : "color: var(--w-online)" ) : "color: var(--w-dnd)";
