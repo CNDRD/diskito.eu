@@ -114,6 +114,7 @@
 @media screen and (max-width: 1000px) {
     .main > #switcher {
         justify-content: center;
+        -webkit-tap-highlight-color: transparent;
     }
     .main > #switcher > * {
         margin-top: .5rem;
