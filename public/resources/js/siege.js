@@ -271,13 +271,13 @@ $(document).ready(function(){
 
 
   $.getJSON("https://game-status-api.ubisoft.com/v1/instances", data => {
-      $.each(data, (key, val) => {
+    $.each(data, (key, val) => {
       if (val["AppID "] === "e3d5ea9e-50bd-43b7-88bf-39794f4e3d40") {
-          if (val.Maintenance != null) { return $("#siegePcStatus").replaceWith(`<span style="color: var(--w-away);">Maintenance</span>`); }
-          let color = val.Status == "Online" ? "--w-online" : "--w-dnd";
-          return $("#siegePcStatus").replaceWith(`<span style="color: var(${color})">${val.Status}</span>`);
+        if (val.Maintenance != null) { return $("#siegePcStatus").replaceWith(`<span style="color: var(--w-away);">Maintenance</span>`); }
+        let color = val.Status == "Online" ? "--w-online" : "--w-dnd";
+        return $("#siegePcStatus").replaceWith(`<span style="color: var(${color})">${val.Status}</span>`);
       }
-      });
+    });
   });
 
 });
