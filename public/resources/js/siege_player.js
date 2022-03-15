@@ -724,14 +724,24 @@ $(document).ready(function(){
       });
   });
 
+  /* Page switcher */
   $(".switcher-button").click(function() {
-    let showThis = `#${this.id}-page`;
 
     $(".switcher-page").each((i, obj) => { 
       $(`#${obj.id}`).hide();
     });
 
-    $(showThis).show();
+    $(`#${this.id}-page`).show();
+  });
+
+  /* Seasonal ranked / casual switcher */
+  $(".sqs-button").click(function() {
+
+    $(".sqs-page").each((i, obj) => { 
+      $(`#${obj.id}`).hide();
+    });
+
+    $(`#${this.id}-page`).show();
   });
 
 });

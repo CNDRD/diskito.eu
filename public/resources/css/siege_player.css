@@ -88,24 +88,10 @@
 }
 
 .main > #switcher {
-    border: 3px solid var(--chaun-blue);
     display: flex;
     flex-flow: row wrap;
     justify-content: start;
     align-items: baseline;
-    border: 10px;
-    cursor: pointer;
-}
-.main > #switcher > * {
-    text-transform: uppercase;
-    padding: .3rem .5rem .3rem .5rem;
-    color: var(--background-color);
-    background-color: var(--chaun-blue);
-    will-change: transform;
-    transition: transform 0.1s ease-out;
-}
-.main > #switcher > *:hover {
-    transform: scale(0.95);
 }
 .main > #switcher > *:not(:first-of-type) {
     margin-left: 1rem;
@@ -119,4 +105,85 @@
     .main > #switcher > * {
         margin-top: .5rem;
     }
+}
+
+
+/* OVERALL PAGE */
+#overall-page > #first-row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+#overall-page > #first-row > #seasonal-card {
+    width: calc(100% * 1 / 3.001);
+}
+#overall-page > #first-row > #seasonal-card > #season {
+    font-size: 2rem;
+    margin-right: .3rem;
+}
+#overall-page > #first-row > #seasonal-card > #sqs {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#overall-page > #first-row > #queue-card {
+    width: calc(100% * 2 / 3.001);
+}
+
+
+
+/* Random Utils */
+.text-nowrap {
+    white-space: nowrap;
+}
+.text-large {
+    font-size: 1.5rem;
+    line-height: 1.5;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+.flex-col-cen-mid {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+.flex-row-nowrap-cent-mid {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.child-width-half > * {
+    width: 50%;
+}
+
+.margin-1rem-top {
+    margin-top: 1rem;
+}
+.margin-1rem-left {
+    margin-left: 1rem;
+}
+.margin-1rem-right {
+    margin-right: 1rem;
+}
+
+.switch-button {
+    text-transform: uppercase;
+    padding: .3rem .5rem .3rem .5rem;
+    color: var(--background-color);
+    background-color: var(--chaun-blue);
+    will-change: transform;
+    transition: transform 0.1s ease-out;
+    cursor: pointer;
+}
+.switch-button:hover {
+    transform: scale(0.95);
 }
