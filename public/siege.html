@@ -68,27 +68,46 @@
     </nav>
 
     <div class="main">
-        <div class="overflow">
-            
-          <table class="sortable">
-            <thead class="pls-no-click">
-              <tr>
-                <th class="sorttable_numeric hidden-mobile"><span uk-icon="image"></span></th>
-                <th class="sorttable_alpha name">Peep</th>
-                <th class="sorttable_numeric">Rank <span class="hidden-mobile">(max)</span></th>
-                <th class="sorttable_numeric hidden-mobile">MMR</th>
-                <th class="sorttable_numeric" uk-tooltip="Seasonal">K/D</th>
-                <th class="sorttable_numeric" uk-tooltip="Seasonal">W/L</th>
-                <th class="sorttable_numeric hidden-mobile">HS %</th>
-                <th class="sorttable_nosort hidden-mobile">Top Operators</th>
-                <th class="sorttable_numeric hidden-mobile" uk-tooltip="Total"> Time Played</th>
-                <th class="sorttable_numeric hidden-mobile">Alpha pack</th>
-              </tr>
-            </thead>
-            <tbody id="tableDataPlace"></tbody>
-          </table>
 
+      <div class="above-table">
+
+        <div class="left">
+          <span>PC Server Status:</span>
+          <span id="siegePcStatus">???</span>
         </div>
+
+        <div class="right">
+          <div>
+            Last update: <span id="lastUpdated">???</span> ago
+          </div>
+          <div id="siegeManualUpdateButton" class="pls-no-click" hidden>
+            🔁Request Update
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="overflow">
+          
+        <table class="sortable">
+          <thead class="pls-no-click">
+            <tr>
+              <th class="sorttable_numeric hidden-mobile"><span uk-icon="image"></span></th>
+              <th class="sorttable_alpha name">Peep</th>
+              <th class="sorttable_numeric">Rank <span class="hidden-mobile">(max)</span></th>
+              <th class="sorttable_numeric hidden-mobile">MMR</th>
+              <th class="sorttable_numeric" uk-tooltip="Seasonal">K/D</th>
+              <th class="sorttable_numeric" uk-tooltip="Seasonal">W/L</th>
+              <th class="sorttable_numeric hidden-mobile">HS %</th>
+              <th class="sorttable_nosort hidden-mobile">Top Operators</th>
+              <th class="sorttable_numeric hidden-mobile" uk-tooltip="Total"> Time Played</th>
+              <th class="sorttable_numeric hidden-mobile">Alpha pack</th>
+            </tr>
+          </thead>
+          <tbody id="tableDataPlace"></tbody>
+        </table>
+
+      </div>
     </div>
     
   </body>

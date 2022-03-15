@@ -52,6 +52,26 @@ table tbody#tableDataPlace tr td {
     justify-content: space-evenly;
 }
 
+.main .above-table {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.main .above-table .right {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+#siegeManualUpdateButton {
+    cursor: pointer;
+}
+#siegeManualUpdateButton.requested {
+    cursor: wait;
+}
+
 @media screen and (max-width: 1000px) {
     .hidden-mobile {
         display: none;

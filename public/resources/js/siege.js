@@ -32,10 +32,9 @@ const currentRankMMRs = [
 let ranked = [];
 let unranked = [];
 let clown = 0;
-let userDataRef = firebase.database().ref(`GameStats/R6Sv${VERSION}/main_data`);
-userDataRef.once("value").then(snapshot => {
+firebase.database().ref(`GameStats/R6Sv${VERSION}/main_data`).once("value").then(snapshot => {
 
-  firebase.database().ref(`GameStats/R6Sv${VERSION}/mmr_watch`).once('value').then(mmrSnapshot => {
+  firebase.database().ref(`GameStats/R6Sv${VERSION}/mmr_watch`).once("value").then(mmrSnapshot => {
     let mmrWatch = mmrSnapshot.val();
 
     snapshot.forEach(childSnapshot => {
@@ -52,8 +51,7 @@ userDataRef.once("value").then(snapshot => {
 });
 
 let last_update;
-let lastUpdateRef = firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`);
-lastUpdateRef.once('value').then(snapshot => {
+firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").then(snapshot => {
   last_update = snapshot.val();
 
   let lastUpdateInterval = setInterval(function() {
@@ -65,7 +63,7 @@ lastUpdateRef.once('value').then(snapshot => {
     if (diff >= 180) { $("#siegeManualUpdateButton").removeAttr("hidden"); }
   }, 1000);
 
-  firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).on('value', snapshot => {
+  firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).on("value", snapshot => {
     if (snapshot.val() != last_update) { location.reload(); }
   });
 
@@ -113,49 +111,49 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
 
   let a = `
     <tr>
-        <td class="hidden-mobile" sorttable_customkey="${clown}">
-            <img style="height: 4rem;" src="${pfpLink}" />
-        </td>
-        <td class="name" style="min-width: 5rem;" sorttable_customkey="${u.currentMMR}">
-            <a href="/r6?id=${u.ubisoftID}">
-                ${u.ubisoftUsername}
-            </a>
-        </td>
-        <td>
-                ${rankCell}
-        </td>
-        <td class="hidden-mobile">
-                <div>
-                    <span style="font-size: 0.8rem;">${prevMMR}</span>
-                    <span>👉</span>
-                    <span style="font-size: 0.8rem;">${nextMMR}</span>
-                </div>
-                <div>
-                    <span style="font-size: 1.5rem; ${mmrWatchChangeColor}">${addSpaces(parseInt(u.currentMMR))}</span>
-                    <span style="${mmrChangeColor}">${mmrChange}</span>
-                </div>
-        </td>
-        <td>
-            ${kd}
-        </td>
-        <td>
-            ${wl}%
-        </td>
-        <td class="hidden-mobile">
-            ${roundTwo(u.hs)}%
-        </td>
-        <td class="hidden-mobile">
-            <div class="uk-flex uk-flex-row uk-flex-middle">
-                <img style="height: 4rem;" src="${topOps[0].icon}" />
-                <img style="height: 4rem;" src="${topOps[1].icon}" />
-            </div>
-        </td>
-        <td class="hidden-mobile" sorttable_customkey="${u.totalPlaytime}">
-            ${playtime}
-        </td>
-        <td class="hidden-mobile">
-            ${u.alphapackProbability == undefined ? "0" : u.alphapackProbability/100}%
-        </td>
+      <td class="hidden-mobile" sorttable_customkey="${clown}">
+        <img style="height: 4rem;" src="${pfpLink}" />
+      </td>
+      <td class="name" style="min-width: 5rem;" sorttable_customkey="${u.currentMMR}">
+        <a href="/r6?id=${u.ubisoftID}">
+          ${u.ubisoftUsername}
+        </a>
+      </td>
+      <td>
+        ${rankCell}
+      </td>
+      <td class="hidden-mobile">
+        <div>
+          <span style="font-size: 0.8rem;">${prevMMR}</span>
+          <span>👉</span>
+          <span style="font-size: 0.8rem;">${nextMMR}</span>
+        </div>
+        <div>
+          <span style="font-size: 1.5rem; ${mmrWatchChangeColor}">${addSpaces(parseInt(u.currentMMR))}</span>
+          <span style="${mmrChangeColor}">${mmrChange}</span>
+        </div>
+      </td>
+      <td>
+        ${kd}
+      </td>
+      <td>
+        ${wl}%
+      </td>
+      <td class="hidden-mobile">
+        ${roundTwo(u.hs)}%
+      </td>
+      <td class="hidden-mobile">
+        <div class="uk-flex uk-flex-row uk-flex-middle">
+          <img style="height: 4rem;" src="${topOps[0].icon}" />
+          <img style="height: 4rem;" src="${topOps[1].icon}" />
+        </div>
+      </td>
+      <td class="hidden-mobile" sorttable_customkey="${u.totalPlaytime}">
+        ${playtime}
+      </td>
+      <td class="hidden-mobile">
+        ${u.alphapackProbability == undefined ? "0" : u.alphapackProbability/100}%
+      </td>
     </tr>`;
   return a
 };
@@ -163,14 +161,14 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
 function getRankCell(u, unrank=false) {
   let rankedCell = `
     <div class="rank-img-cell">
-        <img style="height: 4rem;" src="${u.currentRankImage}" />
-        <img style="height: 3.5rem;" class="hidden-mobile" src="${u.maxRankImage}" />
+      <img style="height: 4rem;" src="${u.currentRankImage}" />
+      <img style="height: 3.5rem;" class="hidden-mobile" src="${u.maxRankImage}" />
     </div>
   `;
   let unrankedCell = `
     <div class="rank-img-cell">
-        <img style="height: 3.5rem;" src="${getRankImageFromMMR(u.currentMMR)}" />
-        <span>${u.sWins+u.sLosses} / 10</span>
+      <img class="hidden-mobile" style="height: 3.5rem;" src="${getRankImageFromMMR(u.currentMMR)}" />
+      <span>${u.sWins+u.sLosses} / 10</span>
     </div>
   `;
   if (unrank) { return unrankedCell }
@@ -226,22 +224,60 @@ function getNextRankMMR(mmr) {
   return x
 };
 
+$(document).ready(function(){
+  let requested = 0;
+  let updateText = "⏰ Please wait, updating..";
 
-$('#siegeManualUpdateButton').click(function () {
-  firebase.database().ref("GameStats/updateRequests/R6S").set(parseInt(Date.now()/1000));
-  UIkit.notification({
-    message: `Request to update the stats has been sent! The page will reload once the stats are ready.`,
-    pos: 'top-right', timeout: 7500
-  });
-});
+  $("#siegeManualUpdateButton").click(() => {
 
+    $.each( $("#siegeManualUpdateButton").attr("class").split(/\s+/) , (index, item) => {
+      if (item === "requested") { requested += 1; }
+    });
 
-$.getJSON("https://game-status-api.ubisoft.com/v1/instances", data => {
-  $.each(data, (key, val) => {
-    if (val['AppID '] === "e3d5ea9e-50bd-43b7-88bf-39794f4e3d40") {
-      if (val.Maintenance != null) { return $('#siegePcStatus').replaceWith(`<span class="uk-text-warning">Maintenance</span>`); }
-      let color = val.Status == "Online" ? "uk-text-success" : "uk-text-danger";
-      return $('#siegePcStatus').replaceWith(`<span class="${color}">${val.Status}</span>`);
+    switch (requested) {
+      case 0:
+        $("#siegeManualUpdateButton").addClass("requested");
+        firebase.database().ref("GameStats/updateRequests/R6S").set(parseInt(Date.now()/1000));
+        break;
+      case 1:
+        updateText = "What are you doing?";
+        break;
+      case 2:
+        updateText = "More clicks != faster load times";
+        break;
+      case 10:
+        updateText = "This ain't GTA 5";
+        break;
+      case 50:
+        updateText = "🎵 Woah, we're half way there 🎵";
+        break;
+      case 100:
+        updateText = "Are you done?";
+        break;
+      case 1000:
+        updateText = "Seems not..";
+        break;
+      case 10000:
+        updateText = "I'm calling the cops on you";
+        break;
+      case 10000:
+        updateText = "Serisously, stop";
+        break;
+      case 100000:
+        updateText = "Aight, whatever dude, I give up";
+        break;
     }
+    $("#siegeManualUpdateButton").text(updateText)
   });
+
+  $.getJSON("https://game-status-api.ubisoft.com/v1/instances", data => {
+    $.each(data, (key, val) => {
+      if (val["AppID "] === "e3d5ea9e-50bd-43b7-88bf-39794f4e3d40") {
+        if (val.Maintenance != null) { return $("#siegePcStatus").replaceWith(`<span style="color: var(--w-away);">Maintenance</span>`); }
+        let color = val.Status == "Online" ? "--w-online" : "--w-dnd";
+        return $("#siegePcStatus").replaceWith(`<span style="color: var(${color})">${val.Status}</span>`);
+      }
+    });
+  });
+
 });
