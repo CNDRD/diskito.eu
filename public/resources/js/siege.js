@@ -50,7 +50,6 @@ firebase.database().ref(`GameStats/R6Sv${VERSION}/main_data`).once("value").then
   });
 });
 
-let last_update;
 firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").then(snapshot => {
   last_update = snapshot.val();
 
@@ -115,7 +114,7 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
         <img style="height: 4rem;" src="${pfpLink}" />
       </td>
       <td class="name" style="min-width: 5rem;" sorttable_customkey="${u.currentMMR}">
-        <a href="/r6?id=${u.ubisoftID}">
+        <a href="/siege_player?id=${u.ubisoftID}">
           ${u.ubisoftUsername}
         </a>
       </td>
@@ -268,16 +267,6 @@ $(document).ready(function(){
         break;
     }
     $("#siegeManualUpdateButton").text(updateText)
-  });
-
-  $.getJSON("https://game-status-api.ubisoft.com/v1/instances", data => {
-    $.each(data, (key, val) => {
-      if (val["AppID "] === "e3d5ea9e-50bd-43b7-88bf-39794f4e3d40") {
-        if (val.Maintenance != null) { return $("#siegePcStatus").replaceWith(`<span style="color: var(--w-away);">Maintenance</span>`); }
-        let color = val.Status == "Online" ? "--w-online" : "--w-dnd";
-        return $("#siegePcStatus").replaceWith(`<span style="color: var(${color})">${val.Status}</span>`);
-      }
-    });
   });
 
 });

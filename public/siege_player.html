@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html class="pretty-scrollbar" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Loads of stats and other things about the Diskíto Discord server.">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Firebase JS -->
+    <script src="/__/firebase/8.7.1/firebase-app.js"></script>
+    <script src="/__/firebase/8.7.1/firebase-database.js"></script>
+    <script src="/__/firebase/init.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom CSS & JS -->
+    <link rel="stylesheet" href="/resources/css/normalize.css" />
+    <link rel="stylesheet" href="/resources/css/main.css" />
+    <link rel="stylesheet" href="/resources/css/siege_player.css" />
+    <script defer src="/resources/jss/myFunctions.js" charset="utf-8"></script>
+
+    <script defer src="/resources/jss/main.js" charset="utf-8"></script>
+    <script src="/resources/jss/siege_stuff.js" charset="utf-8"></script>
+    <script src="/resources/js/siege_player.js" charset="utf-8"></script>
+
+    <title>Diskíto</title>
+    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
+
+  </head>
+  <body>
+
+    <nav class="navbar">
+        <div class="branding">
+          <a href="/"><span id="dvojbodka">:</span>Diskíto</a>
+        </div>
+        <div class="navigation">
+          <a href="/totals">Totals</a>
+          <a href="/leaderboards">Leaderboards</a>
+          <a href="/siege">Siege</a>
+          <a href="/voice">Voice</a>
+          <a href="/quotes">Quotes</a>
+        </div>
+        <div class="at-right">
+          <div class="join-button">
+            <a target="_blank" rel="noreferrer" href="https://discord.com/invite/sXDbtp4">Join</a>
+          </div>
+          <div id="theme-switch" class="theme-switch">🌑</div>
+        </div>
+    </nav>
+    <nav class="navbar-mobile">
+    <div id="menu">MENU</div>
+    <div id="hidden">
+        <div id="first">
+        <div id="mobile-theme-switch" class="theme-switch">Dark Mode</div>
+        <a href="/">Home</a>
+        </div>
+        <a href="/totals">Server Totals</a>
+        <a href="/leaderboards">Leaderboards</a>
+        <a href="/siege">Siege</a>
+        <a href="/voice">Voice Stats</a>
+        <a href="/quotes">Quotes</a>
+        <a target="_blank" rel="noreferrer" href="https://discord.com/invite/sXDbtp4">Discord Invite Link</a>
+    </div>
+    </nav>
+
+    <div class="main">
+      
+      <div class="user-header">
+        <div class="left">
+          <img id="profile_picture" src="https://i.imgur.com/lw9KwKH.jpg" />
+          <i id="username" class="siege-font-medium">
+            Username
+          </i>
+          <div class="header-stats">
+            <div id="level" class="siege-font-normal">0</div>
+            <div id="total_playtime" class="siege-font-normal">0h</div>
+          </div>
+        </div>
+        <div class="right">
+          <div>
+            Last update: <span id="lastUpdated">???</span> ago
+          </div>
+          <div id="siegeManualUpdateButton" class="pls-no-click" hidden>
+            🔁Request Update
+          </div>
+        </div>
+      </div>
+
+      <div id="switcher" class="pls-no-click">
+        <div id="overall" class="switcher-button">Overall</div>
+        <div id="operators" class="switcher-button">Operators</div>
+        <div id="seasons" class="switcher-button">Seasons</div>
+        <div id="weapons" class="switcher-button">Weapons</div>
+        <div id="trends" class="switcher-button">Trends</div>
+      </div>
+
+      <div id="pages">
+        <div id="overall-page" class="switcher-page">Overall Page</div>
+        <div id="operators-page" class="switcher-page" hidden>Operators Page</div>
+        <div id="seasons-page" class="switcher-page" hidden>Seasons Page</div>
+        <div id="weapons-page" class="switcher-page" hidden>Weapons Page</div>
+        <div id="trends-page" class="switcher-page" hidden>Trends Page</div>
+      </div>
+
+    </div>
+
+  </body>
+</html>
