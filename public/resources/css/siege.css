@@ -82,4 +82,11 @@ table tbody#tableDataPlace tr td {
     table td {
         padding: 0.5rem 0 0.5rem 0;
     }
+
+    .main .above-table {
+        justify-content: flex-end;
+    }
+    .main .above-table .right {
+        margin-top: 0.3rem;
+    }
 }
