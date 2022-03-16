@@ -852,7 +852,7 @@ let seasonsDict = {
     name: "Demon Veil",
     hex: "#ffb52c",
     code: "Y7S1",
-    startDate: "2022-03-08"
+    startDate: "2022-03-15"
   }
 };
 
