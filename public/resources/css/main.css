@@ -13,6 +13,7 @@
     --w-dnd: #f0506e;
 
     --navbar-height: 5rem;
+    --mobile-treshold: 1000px;
 }
 
 @font-face {
@@ -30,6 +31,20 @@
 }
 .siege-font-medium {
     font-family: "DM_U4OIZE8TpOW8Kw0k2MQa";
+}
+
+
+.text-online,
+.text-success {
+    color: var(--w-online);
+}
+.text-idle,
+.text-warning {
+    color: var(--w-idle);
+}
+.text-dnd,
+.text-danger {
+    color: var(--w-dnd);
 }
 
 

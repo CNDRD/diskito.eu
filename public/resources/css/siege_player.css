@@ -34,17 +34,28 @@
     margin-left: 0.6rem;
     font-size: 2rem;
 }
+.user-header > .left > .header-stats > #total_playtime {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: baseline;
+    justify-content: baseline;
+}
+.user-header > .left > .header-stats > #level {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: baseline;
+    justify-content: baseline;
+}
 .user-header > .left > #profile_picture {
     width: 10rem;
     height: 10rem;
     display: block;
 }
 .user-header > .left > #username {
-    line-height:100%;
-    font-size:3rem;
+    line-height: 100%;
+    font-size: 3rem;
     padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0 0 0 .75rem;
 }
 .user-header > .right {
     display: flex;
@@ -90,18 +101,16 @@
 .main > #switcher {
     display: flex;
     flex-flow: row wrap;
-    justify-content: start;
+    justify-content: center;
     align-items: baseline;
+    font-weight: 500;
+    -webkit-tap-highlight-color: transparent;
 }
 .main > #switcher > *:not(:first-of-type) {
-    margin-left: 1rem;
+    margin-left: 1.2rem;
 }
 
 @media screen and (max-width: 1000px) {
-    .main > #switcher {
-        justify-content: center;
-        -webkit-tap-highlight-color: transparent;
-    }
     .main > #switcher > * {
         margin-top: .5rem;
     }
@@ -111,8 +120,13 @@
 /* OVERALL PAGE */
 #overall-page > #first-row {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     justify-content: space-evenly;
+}
+@media screen and (max-width: 1000px) {
+    #overall-page > #first-row {
+        flex-wrap: wrap;
+    }
 }
 #overall-page > #first-row > #seasonal-card {
     width: calc(100% * 1 / 3.001);
@@ -127,6 +141,14 @@
     align-items: center;
     justify-content: center;
 }
+#overall-page > #first-row > #seasonal-card > #sqs > .sqs-button {
+    will-change: transform;
+    transition: transform 0.2s ease-out;
+    cursor: pointer;
+}
+#overall-page > #first-row > #seasonal-card > #sqs > .sqs-button:hover {
+    transform: scale(1.09);
+}
 
 
 #overall-page > #first-row > #queue-card {
@@ -137,16 +159,25 @@
 
 /* Random Utils */
 .text-nowrap {
-    white-space: nowrap;
+    white-space: nowrap !important;
 }
 .text-large {
-    font-size: 1.5rem;
-    line-height: 1.5;
+    font-size: 1.5rem !important;
+    line-height: 1.5 !important;
 }
+.text-small {
+    font-size: 1rem !important;
+    line-height: 1 !important;
+}
+
 
 .flex-wrap {
     display: flex;
     flex-wrap: wrap;
+}
+.flex-nowrap {
+    display: flex;
+    flex-wrap: nowrap;
 }
 .flex-col-cen-mid {
     display: flex;
@@ -160,30 +191,79 @@
     align-items: center;
     justify-content: center;
 }
+.flex-row-base-between {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+}
 
 .child-width-half > * {
     width: 50%;
 }
+.child-width-quarter > * {
+    width: 25%;
+}
+@media screen and (max-width: 1000px) {
+    .width-full-mobile {
+        width: 100% !important;
+    }
+}
 
+.margin-1rem-top {
+    margin-top: 1rem;
+}
 .margin-1rem-top {
     margin-top: 1rem;
 }
 .margin-1rem-left {
     margin-left: 1rem;
 }
+.margin-0-left {
+    margin-left: 0;
+}
 .margin-1rem-right {
     margin-right: 1rem;
+}
+.margin-0-bottom {
+    margin-bottom: 0;
+}
+
+.margin-0-y {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.margin-0-x {
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .switch-button {
     text-transform: uppercase;
-    padding: .3rem .5rem .3rem .5rem;
-    color: var(--background-color);
-    background-color: var(--chaun-blue);
     will-change: transform;
     transition: transform 0.1s ease-out;
     cursor: pointer;
 }
 .switch-button:hover {
-    transform: scale(0.95);
+    transform: scale(1.09);
+}
+
+.card {
+    padding: 2rem;
+}
+.card-shadow-below {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+.card-shadow-around {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+@media screen and (max-width: 1000px) {
+    .card {
+        padding: 2rem 0 2rem 0;
+    }
+    .card-shadow-below,
+    .card-shadow-around {
+        box-shadow: none;
+    }
 }
