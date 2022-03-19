@@ -1,6 +1,6 @@
 // https://stackoverflow.com/a/16637170
-function addSpaces(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+function addSpaces(x, char=" ") {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, char);
 };
 
 function reduceStringLength(str, len) {

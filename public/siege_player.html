@@ -75,7 +75,7 @@
       
       <div class="user-header">
         <div class="left">
-          <img id="profile_picture" src="https://i.imgur.com/lw9KwKH.jpg" />
+          <img id="profile_picture" class="card-shadow-around" src="https://i.imgur.com/lw9KwKH.jpg" />
           <i id="username" class="siege-font-medium">
             Username
           </i>
@@ -117,15 +117,16 @@
 
               <i id="season" class="text-large siege-font-medium">Operation</i>
               <span id="season_code" class="siege-font-normal">Y S </span>
-              <div id="sqs" class="pls-no-click margin-1rem-top">
+              <div id="sqs" class="pls-no-click margin-1-top">
                 <div id="sqs-ranked" class="sqs-button siege-font-normal">Ranked</div>
-                <div id="sqs-casual" class="sqs-button siege-font-normal margin-1rem-left">Casual</div>
+                <div id="sqs-casual" class="sqs-button siege-font-normal margin-1-left">Casual</div>
+                <div id="sqs-events" class="sqs-button siege-font-normal margin-1-left">Event</div>
               </div>
 
-              <div class="margin-1rem-top">
+              <div class="margin-1-top">
                 <!-- Ranked -->
                 <div id="sqs-ranked-page" class="sqs-page">
-                  <div class="child-width-half flex-wrap">
+                  <div class="child-width-1-2 flex-wrap">
 
                     <div class="flex-col-cen-mid">
                       <div class="flex-col-cen-mid">
@@ -136,29 +137,17 @@
                       <span id="current_rank_name" class="text-nowrap siege-font-medium">
                         Unranked
                       </span>
-                      <span class="margin-1rem-top text-nowrap">
+                      <span class="margin-1-top text-nowrap">
                         Current MMR
                       </span>
                       <div class="flex-row-nowrap-cent-mid">
-                        <i id="last_mmr_change" class="text-nowrap margin-1rem-right siege-font-normal">±0</i>
+                        <i id="last_mmr_change" class="text-nowrap margin-1-right siege-font-normal">±0</i>
                         <span id="current_rank_mmr" class="text-nowrap siege-font-medium">0</span>
                       </div>
                     </div>
 
                     <div class="flex-col-cen-mid">
-                      <div class="flex-row-nowrap-cent-mid">
-                        <span id="seasonal_kd" class="text-nowrap text-large siege-font-normal">0</span>
-                        <span class="text-nowrap margin-1rem-left">KD</span>
-                      </div>
-                      <div class="flex-row-nowrap-cent-mid">
-                        <span id="seasonal_wl" class="text-nowrap text-large siege-font-normal">0</span>
-                        <span class="text-nowrap margin-1rem-left">WL</span>
-                      </div>
-                      <div class="flex-row-nowrap-cent-mid">
-                        <span id="seasonal_games" class="text-nowrap text-large siege-font-normal">0</span>
-                        <span class="text-nowrap margin-1rem-left">matches</span>
-                      </div>
-                      <div class="flex-col-cen-mid margin-1rem-top">
+                      <div class="flex-col-cen-mid margin-1-top">
                         <span class="text-nowrap">Top MMR</span>
                         <img id="max_rank_img" style="height: 6rem" src="https://i.imgur.com/RpPdtbU.png" />
                         <span id="max_mmr_name" class="text-nowrap">Unranked</span>
@@ -170,7 +159,7 @@
                 </div>
                 <!-- Casual -->
                 <div id="sqs-casual-page" class="sqs-page" hidden>
-                  <div class="child-width-half flex-wrap">
+                  <div class="child-width-1-1 flex-wrap">
 
                     <div class="flex-col-cen-mid">
                       <div class="flex-col-cen-mid">
@@ -181,27 +170,36 @@
                       <span class="text-nowrap siege-font-normal" id="current_rank_name_casual">
                         Unranked
                       </span>
-                      <span class="margin-1rem-top text-nowrap">
+                      <span class="margin-1-top text-nowrap">
                         Current MMR
                       </span>
                       <div class="flex-row-nowrap-cent-mid">
-                        <i class="text-nowrap margin-1rem-right siege-font-normal" id="last_mmr_change_casual">±0</i>
+                        <i class="text-nowrap margin-1-right siege-font-normal" id="last_mmr_change_casual">±0</i>
                         <span class="text-nowrap siege-font-medium" id="current_rank_mmr_casual">0</span>
                       </div>
                     </div>
 
+                  </div>
+                </div>
+                <!-- Events -->
+                <div id="sqs-events-page" class="sqs-page" hidden>
+                  <div class="child-width-1-1 flex-wrap">
+
                     <div class="flex-col-cen-mid">
-                      <div class="flex-row-nowrap-cent-mid">
-                        <span class="text-nowrap text-large siege-font-normal" id="seasonal_kd_casual">0</span>
-                        <span class="text-nowrap margin-1rem-left">KD</span>
+                      <div class="flex-col-cen-mid">
+                        <span class="text-nowrap" id="next_rank_mmr_event">0</span>
+                        <img style="height: 8rem" id="current_rank_img_event" src="https://i.imgur.com/RpPdtbU.png" uk-img />
+                        <span class="text-nowrap" id="prev_rank_mmr_event">0</span>
                       </div>
+                      <span class="text-nowrap siege-font-normal" id="current_rank_name_event">
+                        Unranked
+                      </span>
+                      <span class="margin-1-top text-nowrap">
+                        Current MMR
+                      </span>
                       <div class="flex-row-nowrap-cent-mid">
-                        <span class="text-nowrap text-large siege-font-normal" id="seasonal_wl_casual">0</span>
-                        <span class="text-nowrap margin-1rem-left">WL</span>
-                      </div>
-                      <div class="flex-row-nowrap-cent-mid">
-                        <span class="text-nowrap text-large siege-font-normal" id="seasonal_games_casual">0</span>
-                        <span class="text-nowrap margin-1rem-left">matches</span>
+                        <i class="text-nowrap margin-1-right siege-font-normal" id="last_mmr_change_event">±0</i>
+                        <span class="text-nowrap siege-font-medium" id="current_rank_mmr_event">0</span>
                       </div>
                     </div>
 
@@ -216,73 +214,70 @@
 
               <div class="flex-row-base-between">
                 <h4 class="text-large margin-0-y siege-font-medium">Ranked stats</h4>
-                <span id="ranked_playtime">0h 0m 0s</span>
               </div>
               <hr />
-              <div class="child-width-quarter flex-nowrap">
+              <div class="child-width-1-4 flex-nowrap">
                 <div class="flex-col-cen-mid">
                   <span class="text-nowrap text-large siege-font-normal" id="ranked_kd">0.00</span>
                   <span>KD</span>
                 </div>
                 <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="ranked_kills">0</span>
-                  <span>Kills</span>
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_kills_deaths">0</span>
+                  <span>K / D</span>
                 </div>
                 <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="ranked_deaths">0</span>
-                  <span>Deaths</span>
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_wl">0</span>
+                  <span>WL</span>
                 </div>
                 <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="ranked_games">0</span>
-                  <span>Games</span>
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_win_lose">0</span>
+                  <span>W / L</span>
                 </div>
               </div>
 
               <div class="flex-row-base-between">
                 <h4 class="text-large margin-0-bottom siege-font-medium">Casual stats</h4>
-                <span id="unranked_playtime">0h 0m 0s</span>
               </div>
               <hr />
-              <div class="child-width-quarter flex-nowrap">
+              <div class="child-width-1-4 flex-nowrap">
                 <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="unranked_kd">0.00</span>
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_kd">0.00</span>
                   <span>KD</span>
                 </div>
                 <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="unranked_kills">0</span>
-                  <span>Kills</span>
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_kills_deaths">0</span>
+                  <span>K / D</span>
                 </div>
                 <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="unranked_deaths">0</span>
-                  <span>Deaths</span>
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_wl">0</span>
+                  <span>WL</span>
                 </div>
                 <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="unranked_games">0</span>
-                  <span>Games</span>
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_win_lose">0</span>
+                  <span>W / L</span>
                 </div>
               </div>
 
               <div class="flex-row-base-between">
-                <h4 class="text-large margin-0-bottom siege-font-medium">Discovery stats</h4>
-                <span id="discovery_playtime">0h 0m 0s</span>
+                <h4 class="text-large margin-0-bottom siege-font-medium">Event stats</h4>
               </div>
               <hr />
-              <div class="child-width-quarter flex-nowrap">
+              <div class="child-width-1-4 flex-nowrap">
                 <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="discovery_kd">0.00</span>
+                  <span class="text-nowrap text-large siege-font-normal" id="events_kd">0.00</span>
                   <span>KD</span>
                 </div>
                 <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="discovery_kills">0</span>
-                  <span>Kills</span>
+                  <span class="text-nowrap text-large siege-font-normal" id="events_kills_deaths">0</span>
+                  <span>K / D</span>
                 </div>
                 <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="discovery_deaths">0</span>
-                  <span>Deaths</span>
+                  <span class="text-nowrap text-large siege-font-normal" id="events_wl">0</span>
+                  <span>WL</span>
                 </div>
                 <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="discovery_games">0</span>
-                  <span>Games</span>
+                  <span class="text-nowrap text-large siege-font-normal" id="events_win_lose">0</span>
+                  <span>W / L</span>
                 </div>
               </div>
 
@@ -291,134 +286,321 @@
           </div>
 
           <!-- 2nd Row -->
-          <div class="uk-flex uk-flex-row uk-flex-wrap uk-flex-left margin-1rem-top">
+          <div id="second-row" class="card-shadow-around">
 
-            <!-- General Card -->
-            <div class="uk-card uk-card-secondary uk-card-hover uk-light uk-width-3-5@m">
-              <div class="uk-card-body">
+            <!-- Gamemodes Card -->
+            <div id="gamemodes-card" class="card width-full-mobile">
 
-                <h4 class="uk-card-title margin-0-bottom siege-font-medium">General stats</h4>
-                <hr class="uk-divider-small uk-margin-small" />
-
-                <div class="child-width-quarter uk-grid-divider" uk-grid>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_kd">0.00</span>
-                      <span>KD</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_kills">0</span>
-                      <span>Kills</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_deaths">0</span>
-                      <span>Deaths</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_assists">0</span>
-                      <span>Assists</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="child-width-quarter uk-grid-divider" uk-grid>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_wl">0.00%</span>
-                      <span>WL</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_wins">0</span>
-                      <span>Wins</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_losses">0</span>
-                      <span>Losses</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_matches">0</span>
-                      <span>Matches</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="child-width-quarter uk-grid-divider" uk-grid>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_headshots">0</span>
-                      <span>Headshots</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_hs">0.00%</span>
-                      <span>HS%</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_dbnos">0</span>
-                      <span>DBNOs</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_suicides">0</span>
-                      <span>Suicides</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="child-width-quarter uk-grid-divider" uk-grid>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_melees">0</span>
-                      <span>Melees</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_penetrations">0</span>
-                      <span>Penetrations</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_barricades">0</span>
-                      <span>Barricades</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="flex-col-cen-mid">
-                      <span class="text-nowrap text-large siege-font-normal" id="general_reinforcements">0</span>
-                      <span>Reinforcements</span>
-                    </div>
-                  </div>
-                </div>
-
+              <!-- ALL -->
+              <div id="all_g_header" class="flex-row-base-between gamemode-header">
+                <h4 class="text-large margin-0-y siege-font-medium">All Gamemodes</h4>
+                <span id="all_g_playtime">0h 0m</span>
               </div>
+              <hr id="all_g_hr" />
+              <div id="all_g_body" class="child-width-1-4 child-margin-1-top flex-wrap">
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="all_g_kd">0.00</span>
+                  <span>KD</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="all_g_kills_deaths">0/0</span>
+                  <span>K / D</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="all_g_wl">0%</span>
+                  <span>WL</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="all_g_win_lose">0/0</span>
+                  <span>W / L</span>
+                </div>
+                
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="all_g_hs">0%</span>
+                  <span>HS%</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="all_g_melee">0</span>
+                  <span>Melee</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="all_g_teamkills">0</span>
+                  <span>TKs</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="all_g_trades">0</span>
+                  <span>Trades</span>
+                </div>
+
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="all_g_rounds">0</span>
+                  <span>Rounds</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="all_g_kill_percentage">0%</span>
+                  <span>Kill %</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="all_g_kost_percentage">0%</span>
+                  <span>KOST %</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="all_g_ace_percentage">0%</span>
+                  <span>Ace %</span>
+                </div>
+              </div>
+              <!-- ALL -->
+
+              <!-- CASUAL -->
+              <div id="casual_g_header" class="flex-row-base-between gamemode-header">
+                <h4 class="text-large margin-0-y siege-font-medium">Casual</h4>
+                <span id="casual_g_playtime">0h 0m</span>
+              </div>
+              <hr id="casual_g_hr" />
+              <div id="casual_g_body" class="child-width-1-4 child-margin-1-top flex-wrap">
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_g_kd">0.00</span>
+                  <span>KD</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_g_kills_deaths">0/0</span>
+                  <span>K / D</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_g_wl">0%</span>
+                  <span>WL</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_g_win_lose">0/0</span>
+                  <span>W / L</span>
+                </div>
+                
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_g_hs">0%</span>
+                  <span>HS%</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_g_melee">0</span>
+                  <span>Melee</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_g_teamkills">0</span>
+                  <span>TKs</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_g_trades">0</span>
+                  <span>Trades</span>
+                </div>
+
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_g_rounds">0</span>
+                  <span>Rounds</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_g_kill_percentage">0%</span>
+                  <span>Kill %</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_g_kost_percentage">0%</span>
+                  <span>KOST %</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="casual_g_ace_percentage">0%</span>
+                  <span>Ace %</span>
+                </div>
+              </div>
+              <!-- CASUAL -->
+
+              <!-- NEWCOMER -->
+              <div id="newcomer_g_header" class="flex-row-base-between gamemode-header">
+                <h4 class="text-large margin-0-y siege-font-medium">Newcomer</h4>
+                <span id="newcomer_g_playtime">0h 0m</span>
+              </div>
+              <hr id="newcomer_g_hr" />
+              <div id="newcomer_g_body" class="child-width-1-4 child-margin-1-top flex-wrap">
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="newcomer_g_kd">0.00</span>
+                  <span>KD</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="newcomer_g_kills_deaths">0/0</span>
+                  <span>K / D</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="newcomer_g_wl">0%</span>
+                  <span>WL</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="newcomer_g_win_lose">0/0</span>
+                  <span>W / L</span>
+                </div>
+                
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="newcomer_g_hs">0%</span>
+                  <span>HS%</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="newcomer_g_melee">0</span>
+                  <span>Melee</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="newcomer_g_teamkills">0</span>
+                  <span>TKs</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="newcomer_g_trades">0</span>
+                  <span>Trades</span>
+                </div>
+
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="newcomer_g_rounds">0</span>
+                  <span>Rounds</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="newcomer_g_kill_percentage">0%</span>
+                  <span>Kill %</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="newcomer_g_kost_percentage">0%</span>
+                  <span>KOST %</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="newcomer_g_ace_percentage">0%</span>
+                  <span>Ace %</span>
+                </div>
+              </div>
+              <!-- NEWCOMER -->
+
+              <!-- RANKED -->
+              <div id="ranked_g_header" class="flex-row-base-between gamemode-header">
+                <h4 class="text-large margin-0-y siege-font-medium">Ranked</h4>
+                <span id="ranked_g_playtime">0h 0m</span>
+              </div>
+              <hr id="ranked_g_hr" />
+              <div id="ranked_g_body" class="child-width-1-4 child-margin-1-top flex-wrap">
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_g_kd">0.00</span>
+                  <span>KD</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_g_kills_deaths">0/0</span>
+                  <span>K / D</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_g_wl">0%</span>
+                  <span>WL</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_g_win_lose">0/0</span>
+                  <span>W / L</span>
+                </div>
+                
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_g_hs">0%</span>
+                  <span>HS%</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_g_melee">0</span>
+                  <span>Melee</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_g_teamkills">0</span>
+                  <span>TKs</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_g_trades">0</span>
+                  <span>Trades</span>
+                </div>
+
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_g_rounds">0</span>
+                  <span>Rounds</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_g_kill_percentage">0%</span>
+                  <span>Kill %</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_g_kost_percentage">0%</span>
+                  <span>KOST %</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="ranked_g_ace_percentage">0%</span>
+                  <span>Ace %</span>
+                </div>
+              </div>
+              <!-- RANKED -->
+              
+              <!-- UNRANKED -->
+              <div id="unranked_g_header" class="flex-row-base-between gamemode-header">
+                <h4 class="text-large margin-0-y siege-font-medium">Unranked</h4>
+                <span id="unranked_g_playtime">0h 0m</span>
+              </div>
+              <hr id="unranked_g_hr" />
+              <div id="unranked_g_body" class="child-width-1-4 child-margin-1-top flex-wrap">
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="unranked_g_kd">0.00</span>
+                  <span>KD</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="unranked_g_kills_deaths">0/0</span>
+                  <span>K / D</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="unranked_g_wl">0%</span>
+                  <span>WL</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="unranked_g_win_lose">0/0</span>
+                  <span>W / L</span>
+                </div>
+                
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="unranked_g_hs">0%</span>
+                  <span>HS%</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="unranked_g_melee">0</span>
+                  <span>Melee</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="unranked_g_teamkills">0</span>
+                  <span>TKs</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="unranked_g_trades">0</span>
+                  <span>Trades</span>
+                </div>
+
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="unranked_g_rounds">0</span>
+                  <span>Rounds</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="unranked_g_kill_percentage">0%</span>
+                  <span>Kill %</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="unranked_g_kost_percentage">0%</span>
+                  <span>KOST %</span>
+                </div>
+                <div class="flex-col-cen-mid">
+                  <span class="text-nowrap text-large siege-font-normal" id="unranked_g_ace_percentage">0%</span>
+                  <span>Ace %</span>
+                </div>
+              </div>
+              <!-- UNRANKED -->
+
             </div>
 
-            <!-- Top Operator Card -->
+            <!-- Top Operator Card 
             <div class="uk-card uk-card-secondary uk-card-hover uk-light uk-width-2-5@m">
               <div class="uk-card-body">
 
                 <h4 class="uk-card-title margin-0-bottom siege-font-medium">Top Operator stats</h4>
                 <hr class="uk-divider-small uk-margin-small" />
 
-                <div class="child-width-quarter" uk-grid>
+                <div class="child-width-1-4" uk-grid>
                   <div>
                     <img style="height: 6rem" data-src="https://i.imgur.com/mF8eGXj.png"  id="operator_img_1" uk-tooltip='Recruit GSG 9' uk-img />
                   </div>
@@ -436,7 +618,7 @@
                   </div>
                 </div>
 
-                <div class="child-width-quarter uk-margin-remove-top" uk-grid>
+                <div class="child-width-1-4 uk-margin-remove-top" uk-grid>
                   <div>
                     <img style="height: 6rem" data-src="https://i.imgur.com/MEvmmGf.png"  id="operator_img_2" uk-tooltip='Recruit Spetsnaz' uk-img />
                   </div>
@@ -456,7 +638,7 @@
 
                 <hr class="uk-margin-remove" />
 
-                <div class="child-width-quarter uk-margin-remove-top" uk-grid>
+                <div class="child-width-1-4 uk-margin-remove-top" uk-grid>
                   <div>
                     <img style="height: 6rem" data-src="https://i.imgur.com/Pd7krMT.png"  id="operator_img_3" uk-tooltip='Recruit FBI SWAT' uk-img />
                   </div>
@@ -474,7 +656,7 @@
                   </div>
                 </div>
 
-                <div class="child-width-quarter uk-margin-remove-top" uk-grid>
+                <div class="child-width-1-4 uk-margin-remove-top" uk-grid>
                   <div>
                     <img style="height: 6rem" data-src="https://i.imgur.com/D05DqQW.png"  id="operator_img_4" uk-tooltip='Recruit GIGN' uk-img />
                   </div>
@@ -494,153 +676,7 @@
 
               </div>
             </div>
-
-          </div>
-
-          <!-- 3rd Row -->
-          <div class="uk-flex uk-flex-row uk-flex-wrap uk-flex-left margin-1rem-top">
-
-            <!-- Weapon Type Card -->
-            <div class="uk-card uk-card-secondary uk-card-hover uk-light uk-width-1-1">
-              <div class="uk-card-body">
-
-                <h4 class="uk-card-title margin-0-bottom siege-font-medium">Weapon Type stats</h4>
-                <hr class="uk-divider-small uk-margin-small" />
-
-                <div class="uk-child-width-1-5" uk-grid>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_name_1">Weapon Type 1</div></span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_kills_1">0</div></span>
-                    <span>Kills</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hits_1">0</div></span>
-                    <span>Hits</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hsp_1">0%</div></span>
-                    <span>HS%</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hs_1">0</div></span>
-                    <span>Headshots</span>
-                  </div>
-                </div>
-
-                <div class="uk-child-width-1-5 margin-1rem-top" uk-grid>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_name_2">Weapon Type 2</div></span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_kills_2">0</div></span>
-                    <span>Kills</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hits_2">0</div></span>
-                    <span>Hits</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hsp_2">0%</div></span>
-                    <span>HS%</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hs_2">0</div></span>
-                    <span>Headshots</span>
-                  </div>
-                </div>
-
-                <div class="uk-child-width-1-5 margin-1rem-top" uk-grid>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_name_3">Weapon Type 3</div></span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_kills_3">0</div></span>
-                    <span>Kills</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hits_3">0</div></span>
-                    <span>Hits</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hsp_3">0%</div></span>
-                    <span>HS%</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hs_3">0</div></span>
-                    <span>Headshots</span>
-                  </div>
-                </div>
-
-                <div class="uk-child-width-1-5 margin-1rem-top" uk-grid>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_name_4">Weapon Type 4</div></span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_kills_4">0</div></span>
-                    <span>Kills</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hits_4">0</div></span>
-                    <span>Hits</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hsp_4">0%</div></span>
-                    <span>HS%</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hs_4">0</div></span>
-                    <span>Headshots</span>
-                  </div>
-                </div>
-
-                <div class="uk-child-width-1-5 margin-1rem-top" uk-grid>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_name_5">Weapon Type 5</div></span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_kills_5">0</div></span>
-                    <span>Kills</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hits_5">0</div></span>
-                    <span>Hits</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hsp_5">0%</div></span>
-                    <span>HS%</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hs_5">0</div></span>
-                    <span>Headshots</span>
-                  </div>
-                </div>
-
-                <div class="uk-child-width-1-5 margin-1rem-top" uk-grid>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_name_6">Weapon Type 6</div></span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_kills_6">0</div></span>
-                    <span>Kills</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hits_6">0</div></span>
-                    <span>Hits</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hsp_6">0%</div></span>
-                    <span>HS%</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="wt_hs_6">0</div></span>
-                    <span>Headshots</span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
+            -->
 
           </div>
 

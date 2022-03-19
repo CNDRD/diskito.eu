@@ -1,5 +1,5 @@
 let id = new URLSearchParams(window.location.search).get("id");
-let VERSION = 10;
+let VERSION = 11;
 
 firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").then(snapshot => {
   $("#lastUpdatedText").text(diff_minutes(new Date(snapshot.val() * 1000), new Date()));
@@ -8,23 +8,24 @@ firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").the
 firebase.database().ref(`GameStats/R6Sv${VERSION}/all_data/${id}`).once("value").then(snapshot => {
   let d = snapshot.val();
   overallPage(d);
-  operatorsPage(d);
-  trendsPage(d);
-  weaponsPage(d);
+  //operatorsPage(d);
+  //trendsPage(d);
+  //weaponsPage(d);
 });
 
+/*
 firebase.database().ref(`GameStats/R6Sv${VERSION}/seasonal_data/${id}`).once("value").then(snapshot => {
   let d = snapshot.val();
   seasonsPage(d);
 });
+*/
 
 function overallPage(d) {
-  updateHeader(d);
-  updateSeasonalCard(d);
-  updateQueueCard(d);
-  updateGeneralCard(d);
-  updateOperatorCard(d);
-  updateWeaponTypeCard(d);
+  updateHeader(d); // Done
+  updateSeasonalCard(d); // Done
+  updateSeasonalQueueCard(d);
+  updateGamemodesCard(d);
+  //updateOperatorCard(d);
 };
 function operatorsPage(d) {
   let atk = orderBySubKey(d.operators.atk, "time_played");
@@ -315,9 +316,9 @@ function updateHeader(d) {
 
   $("#username").text(d.ubisoftUsername);
 
-  document.title = `${d.ubisoftUsername}"s Siege Stats`;
-  $("#level").replaceWith(`<div id="level" class="siege-font-normal">${d.level} <div class="text-small">level</div></div>`);
-  $("#total_playtime").replaceWith(`<div id="total_playtime" class="siege-font-normal">${convertSecondsToHours(d.totalPlaytime)} <div class="text-small">h</div></div>`)
+  document.title = `${d.ubisoftUsername}'s Siege Stats`;
+  $("#level").replaceWith(`<div id="level" class="siege-font-normal">${d.progress.level} <div class="text-small">level</div></div>`);
+  $("#total_playtime").replaceWith(`<div id="total_playtime" class="siege-font-normal">${convertSecondsToHours(d.playtimes.total)} <div class="text-small">h</div></div>`)
 
   $("#r6stats").attr("href", `https://r6stats.com/stats/${d.ubisoftID}`);
   $("#tab").attr("href", `https://tabstats.com/siege/player/${d.ubisoftID}`);
@@ -326,87 +327,111 @@ function updateHeader(d) {
   $("#dragon6").attr("href", `https://dragon6.dragonfruit.network/stats/PC/${d.ubisoftID}`);
 };
 function updateSeasonalCard(d) {
-  $("#season").text(getSeasonNameFromNumber(d.season));
-  $("#season").css("color", getSeasonColorRGB(d.season));
-  $("#season_code").text(getSeasonCodeFromNumber(d.season));
+  let r = d.seasonal.ranked;
+  let c = d.seasonal.casual;
+  let e = d.seasonal.events;
 
-  $("#next_rank_mmr").text(addSpaces(parseInt(d.nextRankMMR)));
-  $("#prev_rank_mmr").text(addSpaces(parseInt(d.prevRankMMR)));
+  $("#season").text(getSeasonNameFromNumber(r.season));
+  $("#season").css("color", getSeasonColorRGB(r.season));
+  $("#season_code").text(getSeasonCodeFromNumber(r.season));
 
-  $("#current_rank_mmr").text(addSpaces(parseInt(d.currentMMR)));
-  $("#current_rank_name").text(d.currentRank);
-  $("#current_rank_img").attr("src", d.currentRankImage);
+  $("#next_rank_mmr").text(addSpaces(getNextRankMMR(r.mmr)));
+  $("#prev_rank_mmr").text(addSpaces(getPrevRankMMR(r.mmr)));
 
-  $("#last_mmr_change").text(d.lastMMRchange);
-  $("#last_mmr_change").addClass(d.lastMMRchange >= 0 ? (d.lastMMRchange == 0 ? "" : "text-success") : "text-danger");
+  $("#current_rank_mmr").text(addSpaces(r.mmr));
+  $("#current_rank_name").text(r.rank);
+  $("#current_rank_img").attr("src", getRankImageFromMMR(r.mmr));
 
-  $("#seasonal_kd").text(d.sDeaths == 0 ? 0 : roundTwo(d.sKills / d.sDeaths));
-  $("#seasonal_wl").text((d.sWins + d.sLosses) == 0 ? 0 : `${roundTwo(d.sWins / (d.sWins + d.sLosses) * 100)}%`);
-  $("#seasonal_games").text((d.sWins + d.sLosses) == 0 ? 0 : addSpaces(d.sWins + d.sLosses));
+  $("#last_mmr_change").text(r.last_mmr_change);
+  $("#last_mmr_change").addClass(r.last_mmr_change >= 0 ? (r.last_mmr_change == 0 ? "" : "text-success") : "text-danger");
 
-  $("#max_mmr").text(`${addSpaces(parseInt(d.maxMMR))} MMR`);
-  $("#max_mmr_name").text(d.maxRank);
-  $("#max_rank_img").attr("src", d.maxRankImage);
+  $("#seasonal_kd").text(r.deaths == 0 ? 0 : roundTwo(r.kills / r.deaths));
+  $("#seasonal_wl").text((r.wins + r.losses) == 0 ? 0 : `${roundTwo(r.wins / (r.wins + r.losses) * 100)}%`);
+  $("#seasonal_games").text((r.wins + r.losses) == 0 ? 0 : addSpaces(r.wins + r.losses));
 
+  $("#max_mmr").text(`${addSpaces(parseInt(r.max_mmr))} MMR`);
+  $("#max_mmr_name").text(r.max_rank);
+  $("#max_rank_img").attr("src", getRankImageFromMMR(r.max_mmr));
 
   // _casual
-  $("#next_rank_mmr_casual").text(addSpaces(parseInt(d.nextRankMMRcasual + 1)));
-  $("#prev_rank_mmr_casual").text(addSpaces(parseInt(d.prevRankMMRcasual)));
+  $("#next_rank_mmr_casual").text(addSpaces(getNextRankMMR(c.mmr)));
+  $("#prev_rank_mmr_casual").text(addSpaces(getPrevRankMMR(c.mmr)));
+  $("#current_rank_mmr_casual").text(addSpaces(c.mmr));
+  $("#current_rank_name_casual").text(c.rank);
+  $("#current_rank_img_casual").attr("src", getRankImageFromMMR(c.mmr));
+  $("#last_mmr_change_casual").text(c.last_mmr_change);
+  $("#last_mmr_change_casual").addClass(c.last_mmr_change >= 0 ? (c.last_mmr_change == 0 ? "" : "text-success") : "text-danger");
+  $("#seasonal_kd_casual").text(c.deaths == 0 ? 0 : roundTwo(c.kills / c.deaths));
+  $("#seasonal_wl_casual").text((c.wins + c.losses) == 0 ? 0 : `${roundTwo(c.wins / (c.wins + c.losses) * 100)}%`);
+  $("#seasonal_games_casual").text((c.wins + c.losses) == 0 ? 0 : addSpaces(c.wins + c.losses));
 
-  $("#current_rank_mmr_casual").text(addSpaces(parseInt(d.currentMMRcasual)));
-  $("#current_rank_name_casual").text(d.currentRankCasual);
-  $("#current_rank_img_casual").attr("src", d.currentRankImageCasual);
-
-  $("#last_mmr_change_casual").text(d.lastMMRchangeCasual);
-  $("#last_mmr_change_casual").addClass(d.lastMMRchangeCasual >= 0 ? (d.lastMMRchangeCasual == 0 ? "uk-text-muted" : "uk-text-success") : "uk-text-danger");
-
-  $("#seasonal_kd_casual").text(roundTwo(d.sKillsCasual / d.sDeathsCasual));
-  $("#seasonal_wl_casual").text(`${roundTwo(d.sWinsCasual / (d.sWinsCasual + d.sLossesCasual) * 100)}%`);
-  $("#seasonal_games_casual").text(addSpaces(d.sWinsCasual + d.sLossesCasual));
+  // _event
+  $("#next_rank_mmr_event").text(addSpaces(getNextRankMMR(e.mmr)));
+  $("#prev_rank_mmr_event").text(addSpaces(getPrevRankMMR(e.mmr)));
+  $("#current_rank_mmr_event").text(addSpaces(e.mmr));
+  $("#current_rank_name_event").text(e.rank);
+  $("#current_rank_img_event").attr("src", getRankImageFromMMR(e.mmr));
+  $("#last_mmr_change_event").text(e.last_mmr_change);
+  $("#last_mmr_change_event").addClass(e.last_mmr_change >= 0 ? (e.last_mmr_change == 0 ? "" : "text-success") : "text-danger");
+  $("#seasonal_kd_event").text(e.deaths == 0 ? 0 : roundTwo(e.kills / e.deaths));
+  $("#seasonal_wl_event").text((e.wins + e.losses) == 0 ? 0 : `${roundTwo(e.wins / (e.wins + e.losses) * 100)}%`);
+  $("#seasonal_games_event").text((e.wins + e.losses) == 0 ? 0 : addSpaces(e.wins + e.losses));
 };
-function updateQueueCard(d) {
-  /* Ranked */
-  $("#ranked_playtime").text(getPlaytime(d.rankedPlaytime));
-  $("#ranked_kd").text(roundTwo(d.rankedKills / d.rankedDeaths));
-  $("#ranked_kills").text(addSpaces(d.rankedKills));
-  $("#ranked_deaths").text(addSpaces(d.rankedDeaths));
-  $("#ranked_games").text(addSpaces(d.rankedGames));
+function updateSeasonalQueueCard(d) {
 
-  /* Unranked */
-  $("#unranked_playtime").text(getPlaytime(d.casualPlaytime));
-  $("#unranked_kd").text(roundTwo(d.casualKills / d.casualDeaths));
-  $("#unranked_kills").text(addSpaces(d.casualKills));
-  $("#unranked_deaths").text(addSpaces(d.casualDeaths));
-  $("#unranked_games").text(addSpaces(d.casualGames));
+  for (let name in d.seasonal) {
+    let data = d.seasonal[name];
 
-  /* Discovery */
-  $("#discovery_playtime").text(getPlaytime(d.totalPlaytime - (d.rankedPlaytime + d.casualPlaytime)));
-  $("#discovery_kd").text(roundTwo((d.totalKills - (d.rankedKills + d.casualKills)) / (d.totalDeaths - (d.rankedDeaths + d.casualDeaths))));
-  $("#discovery_kills").text(addSpaces(d.totalKills - (d.rankedKills + d.casualKills)));
-  $("#discovery_deaths").text(addSpaces(d.totalDeaths - (d.rankedDeaths + d.casualDeaths)));
-  $("#discovery_games").text(addSpaces(d.totalMatches - (d.rankedGames + d.casualGames)));
+    let kd = data.deaths == 0 ? 0 : roundTwo(data.kills / data.deaths);
+    let wl = (data.wins + data.losses) == 0 ? 0 : roundTwo(data.wins / (data.wins + data.losses) * 100)
+
+    $(`#${name}_kd`).text(kd);
+    $(`#${name}_kills_deaths`).text(`${data.kills}/${data.deaths}`);
+    $(`#${name}_wl`).text(`${wl}%`);
+    $(`#${name}_win_lose`).text(`${data.wins}/${data.losses}`);
+  };
+
 };
-function updateGeneralCard(d) {
-  $("#general_kd").text(roundTwo(d.totalKills / d.totalDeaths));
-  $("#general_kills").text(addSpaces(d.totalKills));
-  $("#general_deaths").text(addSpaces(d.totalDeaths));
-  $("#general_assists").text(addSpaces(d.totalAssists));
 
-  $("#general_wl").text(`${roundTwo(d.totalWins / (d.totalWins + d.totalLosses) * 100)}%`);
-  $("#general_wins").text(addSpaces(d.totalWins));
-  $("#general_losses").text(addSpaces(d.totalLosses));
-  $("#general_matches").text(addSpaces(d.totalMatches));
 
-  $("#general_headshots").text(addSpaces(d.totalHeadshots));
-  $("#general_hs").text(`${roundTwo(d.hs)}%`);
-  $("#general_dbnos").text(addSpaces(d.totalDBNOs));
-  $("#general_suicides").text(addSpaces(d.totalSuicides));
+function updateGamemodesCard(d) {
+  console.log(d);
 
-  $("#general_melees").text(addSpaces(d.totalMeleeKills));
-  $("#general_penetrations").text(addSpaces(d.totalPenetrationKills));
-  $("#general_barricades").text(addSpaces(d.totalBarricades));
-  $("#general_reinforcements").text(addSpaces(d.totalReinforcements));
+  for (let gamemode in d.gamemodes) {
+    let data = d.gamemodes[gamemode];
+
+    if (data.matches_played <= 0) {
+
+      $(`#${gamemode}_g_header`).hide();
+      $(`#${gamemode}_g_hr`).hide();
+      $(`#${gamemode}_g_body`).hide();
+
+    } else {
+      let win_loss_ratio = (data.rounds_won + data.rounds_lost) == 0 ? 0 : roundTwo(data.rounds_won / (data.rounds_won + data.rounds_lost) * 100);
+
+      $(`#${gamemode}_g_playtime`).text(getPlaytime(data.minutes_played))
+
+      $(`#${gamemode}_g_kd`).text(roundTwo(data.kill_death_ratio / 100));
+      $(`#${gamemode}_g_kills_deaths`).text(`${addSpaces(data.kills, ",")}/${addSpaces(data.death, ",")}`);
+      $(`#${gamemode}_g_wl`).text(`${roundTwo(win_loss_ratio)}%`);
+      $(`#${gamemode}_g_win_lose`).text(`${addSpaces(data.matches_won, ",")}/${addSpaces(data.matches_lost, ",")}`);
+
+      $(`#${gamemode}_g_hs`).text(`${data.headshot_accuracy}%`);
+      $(`#${gamemode}_g_melee`).text(addSpaces(data.melee_kills, ","));
+      $(`#${gamemode}_g_teamkills`).text(data.team_kills);
+      $(`#${gamemode}_g_trades`).text(addSpaces(data.trades));
+
+      $(`#${gamemode}_g_rounds`).text(addSpaces(data.rounds_played));
+      $(`#${gamemode}_g_kill_percentage`).text(`${data.rounds_with_a_kill}%`);
+      $(`#${gamemode}_g_kost_percentage`).text(`${data.rounds_with_kost}%`);
+      $(`#${gamemode}_g_ace_percentage`).text(`${data.rounds_with_an_ace}%`);
+
+    }
+
+  };
 };
+
+
 function updateOperatorCard(d) {
   let ops = getTopTwoOperatorsFromEach(d);
   ops.forEach((op, i) => {
@@ -424,33 +449,6 @@ function updateOperatorCard(d) {
     $(`#operator_kd_${i + 1}`).text(roundTwo(op.kills / op.deaths));
     $(`#operator_wl_${i + 1}`).replaceWith(operator_wl);
     $(`#operator_playtime_${i + 1}`).replaceWith(op_playtime);
-  });
-};
-function updateWeaponTypeCard(d) {
-  let wt_name_dict = { "Assault Rifle": "ARs", "Submachine Gun": "SMGs", "Light Machine Gun": "LMGs", "Marksman Rifle": "DMRs", "Handgun": "Handg..", "Shotgun": "Shotg.." };
-
-  d.weapon_types.forEach((w, i) => {
-    let wt_name = `
-      <div class="uk-visible@s">${addSpaces(w.name)}s</div>
-      <div class="uk-hidden@s">${wt_name_dict[addSpaces(w.name)] || w.name}</div>`;
-    let wt_kills = `
-      <div class="uk-visible@s">${addSpaces(w.kills)}</div>
-      <div class="uk-hidden@s">${abbreviateNumber(w.kills)}</div>`;
-    let wt_hits = `
-      <div class="uk-visible@s">${addSpaces(w.hits)}</div>
-      <div class="uk-hidden@s">${abbreviateNumber(w.hits)}</div>`;
-    let wt_hsp = `
-      <div class="uk-visible@s">${roundTwo((w.headshots / w.kills) * 100)}%</div>
-      <div class="uk-hidden@s">${Math.round((w.headshots / w.kills) * 100)}%</div>`;
-    let wt_hs = `
-      <div class="uk-visible@s">${addSpaces(w.headshots)}</div>
-      <div class="uk-hidden@s">${abbreviateNumber(w.headshots)}</div>`;
-
-    $(`#wt_name_${i + 1}`).replaceWith(wt_name);
-    $(`#wt_kills_${i + 1}`).replaceWith(wt_kills);
-    $(`#wt_hits_${i + 1}`).replaceWith(wt_hits);
-    $(`#wt_hsp_${i + 1}`).replaceWith(wt_hsp);
-    $(`#wt_hs_${i + 1}`).replaceWith(wt_hs);
   });
 };
 
@@ -567,12 +565,10 @@ function reduceNameLength(a, len = 14) {
 function orderBySubKey(dict, key) {
   return Object.values(dict).map(value => value).sort((a, b) => b[key] - a[key]);
 };
-function getPlaytime(s) {
-  hours = Math.floor(s / 3600);
-  s %= 3600;
-  minutes = Math.floor(s / 60);
-  seconds = s % 60;
-  return `${hours}h ${minutes}m ${seconds}s`
+function getPlaytime(m) {
+  let hours = Math.floor(m / 60);
+  let minutes = m % 60;
+  return `${hours}h ${minutes}m`;
 };
 function getOpPlaytime(s) {
   hours = Math.floor(s / 3600);

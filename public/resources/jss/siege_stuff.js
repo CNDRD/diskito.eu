@@ -691,6 +691,7 @@ function getOperatorData(op, what = undefined) {
   return x[op][what] || `Something went wrong [op:'${op}'|what:'${what}']`;
 };
 
+
 let seasonsDict = {
   0:{ 
     name: "Default",
@@ -924,4 +925,66 @@ function getSeasonStartDate(seasonId) {
     "October", "November", "December"
   ];
   return `${months[d.getMonth()]} ${d.getFullYear()}`;
+};
+
+
+const currentRankMMRs = [
+  {name: "Copper 5",    min_mmr: 1,     max_mmr: 1199, image: "https://i.imgur.com/SNSfudP.png"},
+  {name: "Copper 4",    min_mmr: 1200,  max_mmr: 1299, image: "https://i.imgur.com/7PiisA2.png"},
+  {name: "Copper 3",    min_mmr: 1300,  max_mmr: 1399, image: "https://i.imgur.com/aNCvwAI.png"},
+  {name: "Copper 2",    min_mmr: 1400,  max_mmr: 1499, image: "https://i.imgur.com/fUzUApd.png"},
+  {name: "Copper 1",    min_mmr: 1500,  max_mmr: 1599, image: "https://i.imgur.com/eGuxE0k.png"},
+  {name: "Bronze 5",    min_mmr: 1600,  max_mmr: 1699, image: "https://i.imgur.com/bbjMf4V.png"},
+  {name: "Bronze 4",    min_mmr: 1700,  max_mmr: 1799, image: "https://i.imgur.com/75IEQkD.png"},
+  {name: "Bronze 3",    min_mmr: 1800,  max_mmr: 1899, image: "https://i.imgur.com/GIt29R0.png"},
+  {name: "Bronze 2",    min_mmr: 1900,  max_mmr: 1999, image: "https://i.imgur.com/sTIXKlh.png"},
+  {name: "Bronze 1",    min_mmr: 2000,  max_mmr: 2099, image: "https://i.imgur.com/zKRDUdK.png"},
+  {name: "Silver 5",    min_mmr: 2100,  max_mmr: 2199, image: "https://i.imgur.com/CbAbvOa.png"},
+  {name: "Silver 4",    min_mmr: 2200,  max_mmr: 2299, image: "https://i.imgur.com/2Y8Yr11.png"},
+  {name: "Silver 3",    min_mmr: 2300,  max_mmr: 2399, image: "https://i.imgur.com/zNUuJSn.png"},
+  {name: "Silver 2",    min_mmr: 2400,  max_mmr: 2499, image: "https://i.imgur.com/utTa5mq.png"},
+  {name: "Silver 1",    min_mmr: 2500,  max_mmr: 2599, image: "https://i.imgur.com/27ISr4q.png"},
+  {name: "Gold 3",      min_mmr: 2600,  max_mmr: 2799, image: "https://i.imgur.com/JJvq35l.png"},
+  {name: "Gold 2",      min_mmr: 2800,  max_mmr: 2999, image: "https://i.imgur.com/Fco8pIl.png"},
+  {name: "Gold 1",      min_mmr: 3000,  max_mmr: 3199, image: "https://i.imgur.com/m8FFWGi.png"},
+  {name: "Platinum 3",  min_mmr: 3200,  max_mmr: 3499, image: "https://i.imgur.com/GpEpkDs.png"},
+  {name: "Platinum 2",  min_mmr: 3500,  max_mmr: 3799, image: "https://i.imgur.com/P8IO0Sn.png"},
+  {name: "Platinum 1",  min_mmr: 3800,  max_mmr: 4099, image: "https://i.imgur.com/52Y4EVg.png"},
+  {name: "Diamond 3",   min_mmr: 4100,  max_mmr: 4399, image: "https://i.imgur.com/XEqbdS5.png"},
+  {name: "Diamond 2",   min_mmr: 4400,  max_mmr: 4699, image: "https://i.imgur.com/A9hsLtc.png"},
+  {name: "Diamond 1",   min_mmr: 4700,  max_mmr: 4999, image: "https://i.imgur.com/n0izxYa.png"},
+  {name: "Champion",    min_mmr: 5000,  max_mmr: 15000, image: "https://i.imgur.com/QHZFdUj.png"}
+];
+
+function getRankFromMMR(mmr) {
+  let x = "Wrong MMR";
+  currentRankMMRs.forEach(r => {
+    if (r.min_mmr <= mmr && mmr <= r.max_mmr) {
+      x = r.name;
+    }
+  });
+  return x
+};
+function getRankImageFromMMR(mmr) {
+  let x = "https://i.imgur.com/RpPdtbU.png";
+  currentRankMMRs.forEach(r => {
+    if (r.min_mmr <= mmr && mmr <= r.max_mmr) {
+      x = r.image;
+    }
+  });
+  return x
+};
+function getPrevRankMMR(mmr) {
+  let x = 0;
+  currentRankMMRs.forEach(r => {
+    if (r.min_mmr <= mmr && mmr <= r.max_mmr) { x = r.min_mmr; }
+  });
+  return x
+};
+function getNextRankMMR(mmr) {
+  let x = 0;
+  currentRankMMRs.forEach(r => {
+    if (r.min_mmr <= mmr && mmr <= r.max_mmr) { x = r.max_mmr+1; }
+  });
+  return x
 };
