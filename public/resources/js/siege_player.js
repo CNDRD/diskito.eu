@@ -8,44 +8,20 @@ firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").the
 firebase.database().ref(`GameStats/R6Sv${VERSION}/all_data/${id}`).once("value").then(snapshot => {
   let d = snapshot.val();
   overallPage(d);
-  //operatorsPage(d);
+  operatorsPage(d);
   //trendsPage(d);
   //weaponsPage(d);
 });
 
-/*
 firebase.database().ref(`GameStats/R6Sv${VERSION}/seasonal_data/${id}`).once("value").then(snapshot => {
   let d = snapshot.val();
   seasonsPage(d);
 });
-*/
-
-function overallPage(d) {
-  updateHeader(d); // Done
-  updateSeasonalCard(d); // Done
-  updateSeasonalQueueCard(d);
-  updateGamemodesCard(d);
-  //updateOperatorCard(d);
-};
-function operatorsPage(d) {
-  let atk = orderBySubKey(d.operators.atk, "time_played");
-  let def = orderBySubKey(d.operators.def, "time_played");
-  let OPS = atk.concat(def);
-
-  OPS.sort(function (a, b) { return b.time_played - a.time_played });
-  OPS.forEach(op => {
-
-    // Temporary, until she is released :D
-    // AAHAHAHAHAHAHAHHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAAAA
-    if (op.readable === "Azami") { return };
-
-    $("#operator_table").append(getOperatorRow(op));
-  });
-};
 function seasonsPage(d) {
   let seasonsHTML = "";
 
-  d.forEach(s => {
+  for (let what in d) {
+    let s = d[what];
 
     let rank = s.rank;
     let mmr = s.mmr;
@@ -58,65 +34,85 @@ function seasonsPage(d) {
     }
 
     seasonsHTML += `
-    <div class="uk-card uk-card-secondary uk-card-hover uk-light uk-width-1-1 uk-margin-small-bottom">
-      <div class="uk-card-body" style="border-right: 1.7rem; border-style: none solid none none; border-color: ${getSeasonColorRGB(s.season)};">
-        <div class="uk-flex uk-flex-middle" uk-grid>
-          <div class="uk-text-left cndrd-font-normal uk-width-1-4@m">
-            <div style="color:${getSeasonColorRGB(s.season)}; font-size: 2rem; line-height: 1.5;">${s.season_name}</div>
-            <div class="uk-text-meta uk-text-italic">${getSeasonStartDate(s.season)}</div>
-            <div class="uk-text-meta uk-text-italic">${s.season_code}</div>
-          </div>
-          <div class="uk-width-3-4@m uk-child-width-1-5@m uk-width-1-1 uk-child-width-1-2" uk-grid>
-            <div>
-              <div class="uk-flex uk-flex-column uk-flex-middle cndrd-font-normal">
-                <div>Rank</div>
-                <img class="uk-preserve-width uk-margin-small-bottom uk-margin-small-top"
-                    style="height: 4rem" uk-hover="${rank}" data-src="${getRankImageFromRankName(rank)}" uk-img />
-                <div>${mmr} MMR</div>
-              </div>
-            </div>
-            <div>
-              <div class="uk-flex uk-flex-column uk-flex-middle cndrd-font-normal">
-                <div>Max Rank</div>
-                <img class="uk-preserve-width uk-margin-small-bottom uk-margin-small-top"
-                    style="height: 4rem" uk-hover="${maxRank}" data-src="${getRankImageFromRankName(maxRank)}" uk-img />
-                <div>${maxMmr} MMR</div>
-              </div>
-            </div>
-            <div>
-              <div style="height: 100%" class="uk-flex uk-flex-column uk-flex-middle uk-flex-center">
-                <div><span class="cndrd-font-normal">${s.deaths != 0 ? roundTwo(s.kills / s.deaths) : 0}</span> K/D</div>
-                <div><span class="cndrd-font-normal">${s.kills}</span> Kills</div>
-                <div><span class="cndrd-font-normal">${s.deaths}</span> Deaths</div>
-              </div>
-            </div>
-            <div>
-              <div style="height: 100%" class="uk-flex uk-flex-column uk-flex-middle uk-flex-center">
-                <div><span class="cndrd-font-normal">${s.losses != 0 ? roundTwo(s.wins / s.losses) : 0}</span> WL</div>
-                <div><span class="cndrd-font-normal">${s.wins}</span> Wins</div>
-                <div><span class="cndrd-font-normal">${s.losses}</span> Losses</div>
-              </div>
-            </div>
-            <div>
-              <div style="height: 100%" class="uk-flex uk-flex-column uk-flex-middle uk-flex-center">
-                <div><span class="cndrd-font-normal">${s.abandons}</span> Abandon${s.abandons == 1 ? "" : "s"}</div>
-                <div><span class="cndrd-font-normal">${s.wins + s.losses}</span> Match${s.wins + s.losses == 1 ? "" : "es"}</div>
-              </div>
-            </div>
+    <div class="card card-shadow-around width-1-1 margin-1-bottom"
+         style="border-right: 1.7rem; border-style: none solid none none; border-color: ${getSeasonColorRGB(s.season)};">
+
+      <div class="flex-row-nowrap-cent-evenly">
+        <div class="uk-text-left width-1-4-mobile">
+          <div class="text-large-2 siege-font-medium" style="color:${getSeasonColorRGB(s.season)}; font-style: italic;">${s.season_name}</div>
+          <i>${getSeasonStartDate(s.season)}</i>
+          <i>${s.season_code}</i>
+        </div>
+
+        <div>
+          <div class="flex-col-cen-mid siege-font-normal">
+            <div>Rank</div>
+            <img class="padding-05-y" style="height: 4rem" src="${getRankImageFromRankName(rank)}"/>
+            <div>${mmr} MMR</div>
           </div>
         </div>
+
+        <div>
+          <div class="flex-col-cen-mid siege-font-normal">
+            <div>Max Rank</div>
+            <img class="padding-05-y" style="height: 4rem" src="${getRankImageFromRankName(maxRank)}" />
+            <div>${maxMmr} MMR</div>
+          </div>
+        </div>
+
+        <div>
+          <div style="height: 100%" class="flex-col-cen-mid">
+            <div><span class="siege-font-normal">${s.deaths != 0 ? roundTwo(s.kills / s.deaths) : 0}</span> K/D</div>
+            <div><span class="siege-font-normal">${s.kills}</span> Kills</div>
+            <div><span class="siege-font-normal">${s.deaths}</span> Deaths</div>
+          </div>
+        </div>
+
+        <div>
+          <div style="height: 100%" class="flex-col-cen-mid">
+            <div><span class="siege-font-normal">${s.losses != 0 ? roundTwo(s.wins / s.losses) : 0}</span> WL</div>
+            <div><span class="siege-font-normal">${s.wins}</span> Wins</div>
+            <div><span class="siege-font-normal">${s.losses}</span> Losses</div>
+          </div>
+        </div>
+
+        <div>
+          <div style="height: 100%" class="flex-col-cen-mid">
+            <div><span class="siege-font-normal">${s.abandons}</span> Abandon${s.abandons == 1 ? "" : "s"}</div>
+            <div><span class="siege-font-normal">${s.wins + s.losses}</span> Match${s.wins + s.losses == 1 ? "" : "es"}</div>
+          </div>
+        </div>
+        
       </div>
     </div>`;
-  });
+  };
 
   seasonsHTML = `
-  <li>
-    <div class="uk-flex uk-flex-column-reverse">
+  <div id="seasons-page">
+    <div class="flex-col-reverse">
       ${seasonsHTML}
     </div>
-  </li>`;
+  </div>`;
 
-  //$("#seasons-page").replaceWith(seasonsHTML);
+  $("#seasons-page").replaceWith(seasonsHTML);
+};
+
+function overallPage(d) {
+  updateHeader(d);
+  updateSeasonalCard(d);
+  updateSeasonalQueueCard(d);
+  updateGamemodesCard(d);
+};
+function operatorsPage(d) {
+  let atk = d.operators.atk;
+  let def = d.operators.def;
+  let OPS = atk.concat(def);
+
+  OPS.sort(function (a, b) { return b.minutes_played - a.minutes_played });
+
+  OPS.forEach(op => {
+    $("#operator_table_body").append(getOperatorRow(op));
+  });
 };
 
 
@@ -392,10 +388,7 @@ function updateSeasonalQueueCard(d) {
   };
 
 };
-
-
 function updateGamemodesCard(d) {
-  console.log(d);
 
   for (let gamemode in d.gamemodes) {
     let data = d.gamemodes[gamemode];
@@ -431,134 +424,33 @@ function updateGamemodesCard(d) {
   };
 };
 
-
-function updateOperatorCard(d) {
-  let ops = getTopTwoOperatorsFromEach(d);
-  ops.forEach((op, i) => {
-    let operator_wl = `
-      <div class="uk-visible@s">${roundTwo(op.wins / (op.wins + op.losses) * 100)}%</div>
-      <div class="uk-hidden@s">${Math.round(op.wins / (op.wins + op.losses) * 100)}%</div>`;
-
-    let op_playtime_rawxd = getOpPlaytime(op.time_played);
-    let op_playtime = `
-      <div class="uk-visible@s">${op_playtime_rawxd}</div>
-      <div class="uk-hidden@s">${op_playtime_rawxd.split(" ")[0]}</div>`;
-
-    $(`#operator_img_${i + 1}`).attr("uk-tooltip", op.readable);
-    $(`#operator_img_${i + 1}`).attr("data-src", op.icon);
-    $(`#operator_kd_${i + 1}`).text(roundTwo(op.kills / op.deaths));
-    $(`#operator_wl_${i + 1}`).replaceWith(operator_wl);
-    $(`#operator_playtime_${i + 1}`).replaceWith(op_playtime);
-  });
-};
-
 function getOperatorRow(op) {
-  let kd = op.deaths == 0 ? "0" : roundTwo(op.kills / op.deaths);
-  let wl = (op.wins + op.losses) == 0 ? "0" : roundTwo(op.wins / (op.wins + op.losses) * 100);
+  let kd = op.death == 0 ? "0" : roundTwo(op.kills / op.death);
+  let wl = (op.matches_won + op.matches_lost) == 0 ? "0" : roundTwo(op.matches_won / (op.matches_won + op.matches_lost) * 100);
   let hs = op.kills == 0 ? "0" : roundTwo((op.headshots / op.kills) * 100);
-
-  let kdtd = `
-    <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-      <div class="uk-text-large uk-margin-small-right uk-text-emphasis cndrd-font-normal">
-        ${kd}
-      </div>
-      <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-middle">
-        <span class="uk-text-nowrap">${addSpaces(op.kills)} K</span>
-        <span class="uk-text-nowrap">${addSpaces(op.deaths)} D</span>
-      </div>
-    </div>`;
-  let wltd = `
-    <div class="uk-flex uk-flex-row uk-flex-nowrap uk-flex-center uk-flex-middle">
-      <div class="uk-text-large uk-margin-small-right uk-text-emphasis cndrd-font-normal">
-        ${wl}
-      </div>
-      <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-middle">
-        <span class="uk-text-nowrap">${addSpaces(op.wins)} W</span>
-        <span class="uk-text-nowrap">${addSpaces(op.losses)} L</span>
-      </div>
-    </div>`;
-  let hstd = `
-    <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-middle">
-      <div class="uk-text-large uk-text-emphasis cndrd-font-normal">${hs}%</div>
-      <div class="uk-text-muted uk-text-nowrap">${addSpaces(op.headshots)}</div>
-    </div>`;
+  let ace_count = Math.round((op.rounds_with_an_ace/100)*op.rounds_played);
 
   let name = `
-    <div class="uk-flex uk-flex-column uk-flex-nowrap uk-flex-center uk-flex-left">
-      <div class="uk-flex uk-flex-row uk-flex-middle">
-        <div class="uk-text-emphasis cndrd-font-medium">${op.readable}</div>
-        <img class="uk-preserve-width uk-margin-small-left" src="${countryCodeToFlag(getOperatorData(op.name, "countryCode"))}" />
-      </div>
-      <div class="uk-text-muted uk-text-small">${getSeasonNameFromCode(getOperatorData(op.name, "year"))} | ${getOperatorData(op.name, "unit")}</div>
+    <div class="flex-row-nowrap-cent-mid">
+      <div class="text-large siege-font-medium">${op.name}</div>
+      <img class="margin-1-left" src="${countryCodeToFlag(op.country_code)}" onerror="this.style.display='none'" />
     </div>
-  `;
-
-  let abilities = "";
-  orderBySubKey(op.unique_stats, "value").forEach(ua => {
-    abilities += `<li>${ua.name} - ${addSpaces(ua.value)}</li>`;
-  });
-
-  let ability = `
-    <div class="uk-inline">
-      <img class="uk-preserve-width" data-src="${getUniqueAbilityImage(op.name)}" style="height: 4rem" uk-img />
-      <div uk-drop="mode: click; pos:left-center">
-        <div class="uk-card uk-card-body uk-card-secondary">
-          <ul class="uk-list uk-list-divider">
-            ${abilities}
-          </ul>
-        </div>
-      </div>
-    </div>
+    <div class="text-small">${getSeasonNameFromCode(op.year_introduced)} | ${op.unit}</div>
   `;
 
   return `
-    <tr ${getDATA(op)}>
-      <td class="uk-text-center"> <img class="uk-preserve-width" data-src="${op.icon}" style="height: 6rem" uk-img /> </td>
-      <td class="uk-text-middle uk-text-large uk-visible@m">${name}</td>
-      <td class="uk-text-center uk-text-middle" sorttable_customkey="${kd * 100}">${kdtd}</td>
-      <td class="uk-text-center uk-text-middle" sorttable_customkey="${wl * 100}">${wltd}</td>
-      <td class="uk-text-center uk-text-middle" sorttable_customkey="${hs * 100}">${hstd}</td>
-      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@l cndrd-font-normal">${addSpaces(op.dbnos)}</td>
-      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@l cndrd-font-normal">${addSpaces(op.melees)}</td>
-      <td class="uk-text-center uk-text-middle uk-text-large uk-text-emphasis uk-visible@m cndrd-font-normal uk-text-nowrap" sorttable_customkey="${op.time_played}">${getOperatorPlaytime(op.time_played)}</td>
-      <td class="uk-text-center uk-text-middle uk-visible@l"> ${ability} </td>
+    <tr>
+      <td> <img src="${op.name === "Azami" ? "https://i.imgur.com/QnqklyT.png" : op.icon_url}" style="height: 4rem" /> </td>
+      <td class="operator_name_cell">${name}</td>
+      <td sorttable_customkey="${kd * 100}">${kd}</td>
+      <td sorttable_customkey="${wl * 100}">${wl}%</td>
+      <td sorttable_customkey="${hs * 100}">${hs}%</td>
+      <td sorttable_customkey="${op.melee_kills}">${addSpaces(op.melee_kills)}</td>
+      <td sorttable_customkey="${ace_count}">${ace_count}</td>
+      <td sorttable_customkey="${op.time_played}">${getPlaytime(op.minutes_played)}</td>
     </tr>`
 };
 
-function getDATA(op) {
-  let kd = (op.deaths == 0 ? 0 : roundTwo(op.kills / op.deaths)) >= 1 ? "more" : "less";
-  let wl = ((op.wins + op.losses) == 0 ? 0 : roundTwo(op.wins / (op.wins + op.losses) * 100)) >= 50 ? "more" : "less";
-  let hs = (op.kills == 0 ? 0 : roundTwo((op.headshots / op.kills) * 100)) >= 50 ? "more" : "less";
-  let opData = getOperatorData(op.name);
-  let r = opData.roles;
-
-  return `
-    data-atkdef="${op.atkdef}"
-    data-kd="${kd}"
-    data-wl="${wl}"
-    data-hs="${hs}"
-    data-year="${opData.year.charAt(1)}"
-    data-role-anchor=${r.includes("Anchor")}
-    data-role-anti-roam=${r.includes("Anti Roam")}
-    data-role-roam=${r.includes("Roam")}
-    data-role-anti-hard-breach=${r.includes("Anti Hard Breach")}
-    data-role-hard-breach=${r.includes("Hard Breach")}
-    data-role-soft-breach=${r.includes("Soft Breach")}
-    data-role-back-line=${r.includes("Back Line")}
-    data-role-front-line=${r.includes("Front Line")}
-    data-role-intel-gatherer=${r.includes("Intel Gatherer")}
-    data-role-intel-denier=${r.includes("Intel Denier")}
-    data-role-disable=${r.includes("Disable")}
-    data-role-covering-fire=${r.includes("Covering Fire")}
-    data-role-area-denial=${r.includes("Area Denial")}
-    data-role-crowd-control=${r.includes("Crowd Control")}
-    data-role-flank=${r.includes("Flank")}
-    data-role-buff=${r.includes("Buff")}
-    data-role-secure=${r.includes("Secure")}
-    data-role-shield=${r.includes("Shield")}
-    data-role-trap=${r.includes("Trap")}
-  `;
-};
 function reduceNameLength(a, len = 14) {
   return a.length > (len) ? `${a.substr(0, len)}..` : a.substr(0, len)
 };
@@ -569,12 +461,6 @@ function getPlaytime(m) {
   let hours = Math.floor(m / 60);
   let minutes = m % 60;
   return `${hours}h ${minutes}m`;
-};
-function getOpPlaytime(s) {
-  hours = Math.floor(s / 3600);
-  s %= 3600;
-  minutes = Math.floor(s / 60);
-  return `${hours}h ${minutes}m`
 };
 function convertSecondsToHours(s) {
   return Math.floor(s / 3600);

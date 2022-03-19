@@ -123,7 +123,10 @@
 }
 
 
-/* OVERALL PAGE */
+/* 
+    OVERALL PAGE 
+*/
+
 #overall-page > #first-row {
     display: flex;
     flex-flow: row nowrap;
@@ -136,6 +139,12 @@
 }
 #overall-page > #first-row > #seasonal-card {
     width: calc(100% * 1 / 3.001);
+}
+#overall-page > #first-row > #seasonal-card > #seasonal-header {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: baseline;
+    justify-content: space-evenly;
 }
 #overall-page > #first-row > #seasonal-card > #season {
     font-size: 2rem;
@@ -164,11 +173,61 @@
     margin-top: 2rem;
 }
 
+/* 
+    OVERALL PAGE END 
+*/
 
 
-/* Random Utils */
+
+/*
+    OPERATORS PAGE
+*/
+
+#operators-page > table {
+    margin-top: 3rem;
+    border-collapse: collapse;
+    border-spacing: 0;
+    -webkit-border-horizontal-spacing: 0px;
+    -webkit-border-vertical-spacing: 0px;
+    width: 100%;
+    color: var(--chaun-blue);
+}
+#operators-page > table > thead > tr > th {
+    font-size: 1.4rem;
+    line-height: 1.4;
+}
+#operators-page > table > tbody > tr > td {
+    text-align: center;
+    vertical-align: middle;
+}
+#operators-page > table > tbody > tr > td.operator_name_cell {
+    height: 4rem;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: baseline;
+    justify-content: center;
+}
+
+#operators-page > table > tbody > tr:hover {
+    box-shadow: inset 0 0 100px 100px rgba(0, 0, 0, 0.1);
+}
+
+/*
+    OPERATORS PAGE END
+*/
+
+
+
+/* 
+    Random Utils 
+*/
+
 .text-nowrap {
     white-space: nowrap !important;
+}
+.text-large-2 {
+    font-size: 2rem !important;
+    line-height: 2 !important;
 }
 .text-large {
     font-size: 1.5rem !important;
@@ -177,6 +236,12 @@
 .text-small {
     font-size: 1rem !important;
     line-height: 1 !important;
+}
+.text-center {
+    text-align: center !important;
+}
+.text-middle {
+    vertical-align: middle !important;
 }
 
 
@@ -194,11 +259,21 @@
     align-items: center;
     justify-content: center;
 }
+.flex-col-reverse {
+    display: flex;
+    flex-flow: column-reverse;
+}
 .flex-row-nowrap-cent-mid {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: center;
+}
+.flex-row-nowrap-cent-evenly {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-evenly;
 }
 .flex-row-base-between {
     display: flex;
@@ -253,6 +328,10 @@
 .margin-0-y {
     margin-top: 0;
     margin-bottom: 0;
+}
+.padding-05-y {
+    padding-top: .5;
+    padding-bottom: .5;
 }
 .margin-0-x {
     margin-left: 0;

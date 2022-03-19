@@ -100,14 +100,15 @@
         <div id="overall" class="switcher-button switch-button">Overall</div>
         <div id="operators" class="switcher-button switch-button">Operators</div>
         <div id="seasons" class="switcher-button switch-button">Seasons</div>
-        <div id="weapons" class="switcher-button switch-button">Weapons</div>
-        <div id="trends" class="switcher-button switch-button">Trends</div>
+        <div hidden id="weapons" class="switcher-button switch-button">Weapons</div>
+        <div hidden id="trends" class="switcher-button switch-button">Trends</div>
       </div>
 
       <div class="divider blank visible-mobile"></div>
 
       <div id="pages">
-        <div id="overall-page" class="switcher-page">
+
+        <div id="overall-page" class="switcher-page" hidden>
 
           <!-- 1st Row -->
           <div id="first-row" class="card-shadow-around">
@@ -115,8 +116,10 @@
             <!-- Seasonal Card -->
             <div id="seasonal-card" class="card width-full-mobile">
 
-              <i id="season" class="text-large siege-font-medium">Operation</i>
-              <span id="season_code" class="siege-font-normal">Y S </span>
+              <div id="seasonal-header">
+                <i id="season" class="text-large-2 siege-font-medium">Operation</i>
+                <span id="season_code" class="text-large siege-font-normal">Y S </span>
+              </div>
               <div id="sqs" class="pls-no-click margin-1-top">
                 <div id="sqs-ranked" class="sqs-button siege-font-normal">Ranked</div>
                 <div id="sqs-casual" class="sqs-button siege-font-normal margin-1-left">Casual</div>
@@ -593,96 +596,35 @@
 
             </div>
 
-            <!-- Top Operator Card 
-            <div class="uk-card uk-card-secondary uk-card-hover uk-light uk-width-2-5@m">
-              <div class="uk-card-body">
-
-                <h4 class="uk-card-title margin-0-bottom siege-font-medium">Top Operator stats</h4>
-                <hr class="uk-divider-small uk-margin-small" />
-
-                <div class="child-width-1-4" uk-grid>
-                  <div>
-                    <img style="height: 6rem" data-src="https://i.imgur.com/mF8eGXj.png"  id="operator_img_1" uk-tooltip='Recruit GSG 9' uk-img />
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="operator_kd_1">0</div></span>
-                    <span>KD</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="operator_wl_1">0</div></span>
-                    <span>WL</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="operator_playtime_1">0h</div></span>
-                    <span>Playtime</span>
-                  </div>
-                </div>
-
-                <div class="child-width-1-4 uk-margin-remove-top" uk-grid>
-                  <div>
-                    <img style="height: 6rem" data-src="https://i.imgur.com/MEvmmGf.png"  id="operator_img_2" uk-tooltip='Recruit Spetsnaz' uk-img />
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="operator_kd_2">0</div></span>
-                    <span>KD</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="operator_wl_2">0</div></span>
-                    <span>WL</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="operator_playtime_2">0h</div></span>
-                    <span>Playtime</span>
-                  </div>
-                </div>
-
-                <hr class="uk-margin-remove" />
-
-                <div class="child-width-1-4 uk-margin-remove-top" uk-grid>
-                  <div>
-                    <img style="height: 6rem" data-src="https://i.imgur.com/Pd7krMT.png"  id="operator_img_3" uk-tooltip='Recruit FBI SWAT' uk-img />
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="operator_kd_3">0</div></span>
-                    <span>KD</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="operator_wl_3">0</div></span>
-                    <span>WL</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="operator_playtime_3">0h</div></span>
-                    <span>Playtime</span>
-                  </div>
-                </div>
-
-                <div class="child-width-1-4 uk-margin-remove-top" uk-grid>
-                  <div>
-                    <img style="height: 6rem" data-src="https://i.imgur.com/D05DqQW.png"  id="operator_img_4" uk-tooltip='Recruit GIGN' uk-img />
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="operator_kd_4">0</div></span>
-                    <span>KD</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="operator_wl_4">0</div></span>
-                    <span>WL</span>
-                  </div>
-                  <div class="flex-col-cen-mid">
-                    <span class="text-nowrap text-large siege-font-normal"><div id="operator_playtime_4">0h</div></span>
-                    <span>Playtime</span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            -->
-
           </div>
 
         </div>
-        <div id="operators-page" class="switcher-page" hidden>Operators Page</div>
-        <div id="seasons-page" class="switcher-page" hidden>Seasons Page</div>
+        <div id="operators-page" class="switcher-page" hidden>
+
+          <table id="operator_table" class="sortable">
+            <thead id="operator_table_head" class="pls-no-click">
+              <tr>
+                <th class="sorttable_nosort uk-flex uk-flex-center hidden-mobile">🖼️</th>
+                <th class="sorttable_nosort hidden-mobile">Operator</th>
+                <th class="text-center sorttable_numeric">KD</th>
+                <th class="text-center sorttable_numeric">WL</th>
+                <th class="text-center sorttable_numeric">HS%</th>
+                <th class="text-center sorttable_numeric hidden-mobile">Melees</th>
+                <th class="text-center sorttable_numeric hidden-mobile">Aces</th>
+                <th class="text-center sorttable_numeric hidden-mobile">Playtime</th>
+              </tr>
+            </thead>
+            <tbody id="operator_table_body"></tbody>
+          </table>
+
+        </div>
+
+
+        <div id="seasons-page" class="switcher-page">
+          
+        </div>
+
+
         <div id="weapons-page" class="switcher-page" hidden>Weapons Page</div>
         <div id="trends-page" class="switcher-page" hidden>Trends Page</div>
       </div>
