@@ -72,7 +72,7 @@ table tbody#tableDataPlace tr td {
     cursor: wait;
 }
 
-@media screen and (max-width: 1000px) {
+@media (max-width: 1000px) {
     .hidden-mobile {
         display: none;
     }

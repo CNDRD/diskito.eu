@@ -7,7 +7,7 @@ body .main {
     justify-content: space-evenly;
 }
 
-@media screen and (max-width: 1000px) {
+@media (max-width: 1000px) {
     body .main {
         justify-content: flex-start;
     }

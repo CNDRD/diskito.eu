@@ -7,7 +7,7 @@
     flex-flow: column;
     padding-bottom: 2rem;
 }
-@media screen and (max-width: 1000px) {
+@media (max-width: 1000px) {
     .main {
         margin-top: 5rem;
     }
@@ -76,7 +76,7 @@
     cursor: wait;
 }
 
-@media screen and (max-width: 1000px) {
+@media (max-width: 1000px) {
     .user-header {
         justify-content: center;
     }
@@ -98,7 +98,7 @@
 .main > div.divider.blank {
     border-top: none;
 }
-@media screen and (max-width: 1000px) {
+@media (max-width: 1000px) {
     .main > div.divider.blank.visible-mobile {
         border-top: 1px solid var(--gray);
     }
@@ -116,7 +116,7 @@
     margin-left: 1.2rem;
 }
 
-@media screen and (max-width: 1000px) {
+@media (max-width: 1000px) {
     .main > #switcher > * {
         margin-top: .5rem;
     }
@@ -132,7 +132,7 @@
     flex-flow: row nowrap;
     justify-content: space-evenly;
 }
-@media screen and (max-width: 1000px) {
+@media (max-width: 1000px) {
     #overall-page > #first-row {
         flex-wrap: wrap;
     }
@@ -214,6 +214,49 @@
 
 /*
     OPERATORS PAGE END
+*/
+
+
+
+/*
+    WEAPONS PAGE
+*/
+
+#weapons-page > #top-3-weapons {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+#weapons-page > #top-3-weapons > div {
+    width: 25%;
+}
+#weapons-page > #all-weapons {
+    margin: 1rem;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+#weapons-page > #all-weapons > div {
+    width: 25%;
+    padding: 1rem;
+    margin: 1rem 0 1rem 0;
+}
+
+@media (max-width: 1000px) {
+    #weapons-page > #top-3-weapons > div {
+        width: 100%;
+    }
+    #weapons-page > #all-weapons > div {
+        width: 45%;
+        padding: 0.3rem;
+        margin: 1rem 0 1rem 0;
+    }
+}
+
+/*
+    WEAPONS PAGE END
 */
 
 
@@ -300,7 +343,7 @@
 .child-width-1-6 > * {
     width: calc(100% * 1 / 6.001);
 }
-@media screen and (max-width: 1000px) {
+@media (max-width: 1000px) {
     .width-full-mobile {
         width: 100% !important;
     }
@@ -367,7 +410,7 @@
     box-shadow: rgba(99, 99, 99, 0.4) 2px 4px 16px 0px;
 }
 
-@media screen and (max-width: 1000px) {
+@media (max-width: 1000px) {
     .card {
         padding: 2rem 0 2rem 0;
     }

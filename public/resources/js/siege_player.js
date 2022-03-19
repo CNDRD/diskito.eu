@@ -9,8 +9,8 @@ firebase.database().ref(`GameStats/R6Sv${VERSION}/all_data/${id}`).once("value")
   let d = snapshot.val();
   overallPage(d);
   operatorsPage(d);
+  weaponsPage(d);
   //trendsPage(d);
-  //weaponsPage(d);
 });
 
 firebase.database().ref(`GameStats/R6Sv${VERSION}/seasonal_data/${id}`).once("value").then(snapshot => {
@@ -34,7 +34,7 @@ function seasonsPage(d) {
     }
 
     seasonsHTML += `
-    <div class="card card-shadow-around width-1-1 margin-1-bottom"
+    <div class="card card-shadow-around no-hover width-1-1 margin-1-bottom"
          style="border-right: 1.7rem; border-style: none solid none none; border-color: ${getSeasonColorRGB(s.season)};">
 
       <div class="flex-row-nowrap-cent-evenly">
@@ -90,6 +90,7 @@ function seasonsPage(d) {
   $("#seasons-page").append(`<div class="flex-col-reverse">${seasonsHTML}</div>`);
 };
 
+
 function overallPage(d) {
   updateHeader(d);
   updateSeasonalCard(d);
@@ -112,63 +113,38 @@ function operatorsPage(d) {
 function weaponsPage(d) {
   let weapons = d.weapons;
 
-  let mostKills = getBestWeaponInStat(weapons, "kills");
-  let bestHsRatio = getBestWeaponInStat(weapons, "hs_accuracy");
-  let mostPlayed = getBestWeaponInStat(weapons, "rounds_played");
-  updateBestWeaponInStat(mostKills, "mostKills");
-  updateBestWeaponInStat(bestHsRatio, "bestHsRatio");
-  updateBestWeaponInStat(mostPlayed, "mostPlayed");
+  updateBestWeaponInStat(getBestWeaponInStat(weapons, "kills"), "mostKills");
+  updateBestWeaponInStat(getBestWeaponInStat(weapons, "hs_accuracy"), "bestHsRatio");
+  updateBestWeaponInStat(getBestWeaponInStat(weapons, "rounds_played"), "mostPlayed");
 
   weapons.sort(function (a, b) { return b.kills - a.kills }).forEach(w => {
     let wl = (w.rounds_played) != 0 ? roundTwo((w.rounds_won / (w.rounds_won + w.rounds_lost)) * 100) : 0;
     let hs = (w.hs_accuracy) != 0 ? roundTwo(w.hs_accuracy * 100) : 0;
 
-    $("#weaponsGrid").append(`
-    
-      <div>
-        <div class="uk-card uk-card-secondary uk-card-body uk-grid-collapse uk-light">
-          <h3 class="cndrd-font-normal uk-text-emphasis">
-            ${w.name}
-          </h3>
-          
-          <div class="uk-flex uk-flex-column uk-text-center uk-text-large">
-            <div>
-              <span class="uk-text-emphasis cndrd-font-normal">${addSpaces(w.kills)}</span> Kills
-            </div>
-            
-            <div>
-              <span class="uk-text-emphasis cndrd-font-normal">${addSpaces(w.rounds_played)}</span> Rounds Played
-            </div>
-            <div>
-              <span class="uk-text-emphasis cndrd-font-normal">${hs}%</span> HS Acc
-            </div>
-            <div>
-              <span class="uk-text-emphasis cndrd-font-normal">${wl}%</span> W/L
-            </div>
-              
-          </div>
-        </div>
+    $("#all-weapons").append(`
+      <div class="flex-col-cen-mid card-shadow-around no-hover">
+        <div class="text-large siege-font-normal">${w.name}</div>
+        <div><span class="siege-font-normal">${addSpaces(w.kills)}</span> Kills</div>
+        <div><span class="siege-font-normal">${addSpaces(w.rounds_played)}</span> Rounds Played</div>
+        <div><span class="siege-font-normal">${hs}%</span> HS Acc</div>
+        <div><span class="siege-font-normal">${wl}%</span> W/L</div>
       </div>
-    
     `);
+
   });
 
 };
-
 function updateBestWeaponInStat(w, stat) {
   $(`#BWIS_${stat}_name`).text(w.name);
-  $(`#BWIS_${stat}_kills`).text(`${w.kills} Kills`);
-  $(`#BWIS_${stat}_roundsPlayed`).text(`${w.rounds_played} Rounds Played`);
-  $(`#BWIS_${stat}_hsAcc`).text(`${roundTwo(w.hs_accuracy * 100)}% HS Acc`);
-  $(`#BWIS_${stat}_image`).attr("data-src", w.image_url);
+  $(`#BWIS_${stat}_kills`).text(w.kills);
+  $(`#BWIS_${stat}_roundsPlayed`).text(w.rounds_played);
+  $(`#BWIS_${stat}_hsAcc`).text(roundTwo(w.hs_accuracy * 100));
+  $(`#BWIS_${stat}_image`).attr("src", w.imgur_url);
 };
 function getBestWeaponInStat(weapons, stat) {
   let i = 0;
   weapons = weapons.sort(function (a, b) { return b[stat] - a[stat] });
-
-  while (weapons[i].headshots < 5 && weapons[i].kills < 5) {
-    i++;
-  }
+  while (weapons[i].headshots < 5 && weapons[i].kills < 5) { i++; }
 
   return weapons[i];
 };

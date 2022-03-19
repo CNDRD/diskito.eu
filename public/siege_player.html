@@ -100,7 +100,7 @@
         <div id="overall" class="switcher-button switch-button">Overall</div>
         <div id="operators" class="switcher-button switch-button">Operators</div>
         <div id="seasons" class="switcher-button switch-button">Seasons</div>
-        <div hidden id="weapons" class="switcher-button switch-button">Weapons</div>
+        <div id="weapons" class="switcher-button switch-button">Weapons</div>
         <div hidden id="trends" class="switcher-button switch-button">Trends</div>
       </div>
 
@@ -108,7 +108,7 @@
 
       <div id="pages">
 
-        <div id="overall-page" class="switcher-page">
+        <div id="overall-page" class="switcher-page" hidden>
 
           <!-- 1st Row -->
           <div id="first-row" class="card-shadow-around">
@@ -618,11 +618,41 @@
           </table>
 
         </div>
-        <div id="seasons-page" class="switcher-page" hidden>
+        <div id="seasons-page" class="switcher-page">
+        </div>
+        <div id="weapons-page" class="switcher-page"hidden>
+
+          <div id="top-3-weapons" class="card card-shadow-around">
+            <div class="flex-col-cen-mid">
+              <div class="text-large-2 siege-font-medium">Most Kills</div>
+              <div id="BWIS_mostKills_name" class="text-large siege-font-normal">Gun</div>
+              <div><span id="BWIS_mostKills_kills" class="siege-font-normal">0</span> Kills</div>
+              <div><span id="BWIS_mostKills_roundsPlayed" class="siege-font-normal">0</span> Rounds Played</div>
+              <div><span id="BWIS_mostKills_hsAcc" class="siege-font-normal">0%</span> HS Acc</div>
+              <img id="BWIS_mostKills_image" alt="🔫" />
+            </div>
+            <div class="flex-col-cen-mid">
+              <div class="text-large-2 siege-font-medium">Best HS Ratio</div>
+              <div id="BWIS_bestHsRatio_name" class="text-large siege-font-normal">Gun</div>
+              <div><span id="BWIS_bestHsRatio_kills" class="siege-font-normal">0</span> Kills</div>
+              <div><span id="BWIS_bestHsRatio_roundsPlayed" class="siege-font-normal">0</span> Rounds Played</div>
+              <div><span id="BWIS_bestHsRatio_hsAcc" class="siege-font-normal">0%</span> HS Acc</div>
+              <img id="BWIS_bestHsRatio_image" alt="🔫" />
+            </div>
+            <div class="flex-col-cen-mid">
+              <div class="text-large-2 siege-font-medium">Most Played</div>
+              <div id="BWIS_mostPlayed_name" class="text-large siege-font-normal">Gun</div>
+              <div><span id="BWIS_mostPlayed_kills" class="siege-font-normal">0</span> Kills</div>
+              <div><span id="BWIS_mostPlayed_roundsPlayed" class="siege-font-normal">0</span> Rounds Played</div>
+              <div><span id="BWIS_mostPlayed_hsAcc" class="siege-font-normal">0%</span> HS Acc</div>
+              <img id="BWIS_mostPlayed_image" alt="🔫" />
+            </div>
+          </div>
+          <div id="all-weapons"></div>
+
         </div>
 
 
-        <div id="weapons-page" class="switcher-page" hidden>Weapons Page</div>
         <div id="trends-page" class="switcher-page" hidden>Trends Page</div>
       </div>
 
