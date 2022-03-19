@@ -87,14 +87,7 @@ function seasonsPage(d) {
     </div>`;
   };
 
-  seasonsHTML = `
-  <div id="seasons-page">
-    <div class="flex-col-reverse">
-      ${seasonsHTML}
-    </div>
-  </div>`;
-
-  $("#seasons-page").replaceWith(seasonsHTML);
+  $("#seasons-page").append(`<div class="flex-col-reverse">${seasonsHTML}</div>`);
 };
 
 function overallPage(d) {
