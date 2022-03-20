@@ -588,7 +588,7 @@ $(document).ready(function () {
     $(`#${this.id}-page`).show();
   });
 
-  /* Seasonal ranked / casual switcher */
+  /* Seasonal ranked / casual / event switcher */
   $(".sqs-button").click(function () {
 
     $(".sqs-page").each((i, obj) => {
