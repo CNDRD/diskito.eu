@@ -277,23 +277,6 @@ function trendsPage(d) {
   };
   theChart = new Chart(document.getElementById("chartCanvas"), chartConfig);
 };
-/*
-document.getElementById("chartSelector").onchange = function(){
-  // Replace the dataset
-  chartConfig.data.datasets = [trendsDatasets[document.getElementById("chartSelector").value]];
-  // Update the chart
-  theChart.update();
-};
-document.getElementById("chartBezierRange").onchange = function(){
-  let val = document.getElementById("chartBezierRange").value;
-  // Update the shown value
-  $("#chartBezierRangeLabel").text(`Curve Tension (${val})`);
-  // Update the tension in config
-  chartConfig.data.datasets[0].tension = val;
-  // Update the chart
-  theChart.update();
-};
-*/
 
 
 function overallPage(d) {
@@ -522,6 +505,24 @@ firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").the
 });
 $(document).ready(function () {
 
+  /* Trends switcher */
+  document.getElementById("chartSelector").onchange = function(){
+    // Replace the dataset
+    chartConfig.data.datasets = [trendsDatasets[document.getElementById("chartSelector").value]];
+    // Update the chart
+    theChart.update();
+  };
+  document.getElementById("chartBezierRange").onchange = function(){
+    let val = document.getElementById("chartBezierRange").value;
+    // Update the shown value
+    $("#chartBezierRangeLabel").text(`Curve Tension (${val})`);
+    // Update the tension in config
+    chartConfig.data.datasets[0].tension = val;
+    // Update the chart
+    theChart.update();
+  };
+
+  /* Siege manual update request button */
   let requested = 0;
   let updateText = "⏰ Please wait, updating..";
   $("#siegeManualUpdateButton").click(() => {
@@ -566,6 +567,7 @@ $(document).ready(function () {
     $("#siegeManualUpdateButton").text(updateText)
   });
 
+  /* Siege Server Status */
   $.getJSON("https://game-status-api.ubisoft.com/v1/instances", data => {
     $.each(data, (key, val) => {
       if (val["AppID "] === "e3d5ea9e-50bd-43b7-88bf-39794f4e3d40") {

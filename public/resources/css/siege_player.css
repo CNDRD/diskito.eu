@@ -260,6 +260,39 @@
 */
 
 
+/*
+    TRENDS PAGE
+*/
+#trends-page {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-items: center;
+}
+#trends-page > #chart-select-range-parent {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: baseline;
+    justify-content: center;
+    margin-left: 1.5rem;
+}
+#trends-page > #chart-select-range-parent #chartSelector {
+    font-size: 1rem;
+    line-height: 1;
+    height: 2rem;
+    border-radius: 0;
+    background-color: var(--background-color);
+}
+#trends-page > #canvas-parent {
+    margin-top: 2rem;
+    width: 100%;
+}
+
+/*
+    TRENDS PAGE END
+*/
+
+
 
 /* 
     Random Utils 
@@ -366,6 +399,9 @@
 }
 .margin-0-bottom {
     margin-bottom: 0;
+}
+.margin-1-bottom {
+    margin-bottom: 1;
 }
 
 .margin-0-y {

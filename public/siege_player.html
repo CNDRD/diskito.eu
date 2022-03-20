@@ -101,14 +101,14 @@
         <div id="operators" class="switcher-button switch-button">Operators</div>
         <div id="seasons" class="switcher-button switch-button">Seasons</div>
         <div id="weapons" class="switcher-button switch-button">Weapons</div>
-        <div hidden id="trends" class="switcher-button switch-button">Trends</div>
+        <div id="trends" class="switcher-button switch-button">Trends</div>
       </div>
 
       <div class="divider blank visible-mobile"></div>
 
       <div id="pages">
 
-        <div id="overall-page" class="switcher-page" hidden>
+        <div id="overall-page" class="switcher-page">
 
           <!-- 1st Row -->
           <div id="first-row" class="card-shadow-around">
@@ -599,6 +599,7 @@
           </div>
 
         </div>
+
         <div id="operators-page" class="switcher-page" hidden>
 
           <table id="operator_table" class="sortable">
@@ -618,9 +619,11 @@
           </table>
 
         </div>
-        <div id="seasons-page" class="switcher-page">
+
+        <div id="seasons-page" class="switcher-page" hidden>
         </div>
-        <div id="weapons-page" class="switcher-page"hidden>
+
+        <div id="weapons-page" class="switcher-page" hidden>
 
           <div id="top-3-weapons" class="card card-shadow-around">
             <div class="flex-col-cen-mid">
@@ -652,8 +655,22 @@
 
         </div>
 
+        <div id="trends-page" class="switcher-page" hidden>
+          <div id="chart-select-range-parent" class="siege-font-normal margin-1-bottom">
+            <div>
+              <label for="chartSelector">Select Data</label>
+              <select id="chartSelector"></select>
+            </div>
+            <div class="margin-1-left">
+              <label id="chartBezierRangeLabel" for="chartBezierRange">Curve Tension (0.6)</label>
+              <input id="chartBezierRange" type="range" min="0" max="20" value="0.6" step="0.1" />
+            </div>
+          </div>
+          <div id="canvas-parent">
+            <canvas id="chartCanvas"></canvas>
+          </div>
+        </div>
 
-        <div id="trends-page" class="switcher-page" hidden>Trends Page</div>
       </div>
 
     </div>
