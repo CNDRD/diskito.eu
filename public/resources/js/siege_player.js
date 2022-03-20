@@ -10,7 +10,7 @@ firebase.database().ref(`GameStats/R6Sv${VERSION}/all_data/${id}`).once("value")
   overallPage(d);
   operatorsPage(d);
   weaponsPage(d);
-  //trendsPage(d);
+  trendsPage(d);
 });
 
 firebase.database().ref(`GameStats/R6Sv${VERSION}/seasonal_data/${id}`).once("value").then(snapshot => {
@@ -91,12 +91,6 @@ function seasonsPage(d) {
 };
 
 
-function overallPage(d) {
-  updateHeader(d);
-  updateSeasonalCard(d);
-  updateSeasonalQueueCard(d);
-  updateGamemodesCard(d);
-};
 function operatorsPage(d) {
   let atk = d.operators.atk;
   let def = d.operators.def;
@@ -107,6 +101,32 @@ function operatorsPage(d) {
   OPS.forEach(op => {
     $("#operator_table_body").append(getOperatorRow(op));
   });
+};
+function getOperatorRow(op) {
+  let kd = op.death == 0 ? "0" : roundTwo(op.kills / op.death);
+  let wl = (op.matches_won + op.matches_lost) == 0 ? "0" : roundTwo(op.matches_won / (op.matches_won + op.matches_lost) * 100);
+  let hs = op.kills == 0 ? "0" : roundTwo((op.headshots / op.kills) * 100);
+  let ace_count = Math.round((op.rounds_with_an_ace/100)*op.rounds_played);
+
+  let name = `
+    <div class="flex-row-nowrap-cent-mid">
+      <div class="text-large siege-font-medium">${op.name}</div>
+      <img class="margin-1-left" src="${countryCodeToFlag(op.country_code)}" onerror="this.style.display='none'" />
+    </div>
+    <div class="text-small">${getSeasonNameFromCode(op.year_introduced)} | ${op.unit}</div>
+  `;
+
+  return `
+    <tr>
+      <td> <img src="${op.name === "Azami" ? "https://i.imgur.com/QnqklyT.png" : op.icon_url}" style="height: 4rem" /> </td>
+      <td class="operator_name_cell">${name}</td>
+      <td sorttable_customkey="${kd * 100}">${kd}</td>
+      <td sorttable_customkey="${wl * 100}">${wl}%</td>
+      <td sorttable_customkey="${hs * 100}">${hs}%</td>
+      <td sorttable_customkey="${op.melee_kills}">${addSpaces(op.melee_kills)}</td>
+      <td sorttable_customkey="${ace_count}">${ace_count}</td>
+      <td sorttable_customkey="${op.time_played}">${getPlaytime(op.minutes_played)}</td>
+    </tr>`
 };
 
 
@@ -276,6 +296,12 @@ document.getElementById("chartBezierRange").onchange = function(){
 */
 
 
+function overallPage(d) {
+  updateHeader(d);
+  updateSeasonalCard(d);
+  updateSeasonalQueueCard(d);
+  updateGamemodesCard(d);
+};
 function updateHeader(d) {
   $("#profile_picture").attr("src", `https://ubisoft-avatars.akamaized.net/${d.ubisoftID}/default_256_256.png`);
 
@@ -393,32 +419,6 @@ function updateGamemodesCard(d) {
   };
 };
 
-function getOperatorRow(op) {
-  let kd = op.death == 0 ? "0" : roundTwo(op.kills / op.death);
-  let wl = (op.matches_won + op.matches_lost) == 0 ? "0" : roundTwo(op.matches_won / (op.matches_won + op.matches_lost) * 100);
-  let hs = op.kills == 0 ? "0" : roundTwo((op.headshots / op.kills) * 100);
-  let ace_count = Math.round((op.rounds_with_an_ace/100)*op.rounds_played);
-
-  let name = `
-    <div class="flex-row-nowrap-cent-mid">
-      <div class="text-large siege-font-medium">${op.name}</div>
-      <img class="margin-1-left" src="${countryCodeToFlag(op.country_code)}" onerror="this.style.display='none'" />
-    </div>
-    <div class="text-small">${getSeasonNameFromCode(op.year_introduced)} | ${op.unit}</div>
-  `;
-
-  return `
-    <tr>
-      <td> <img src="${op.name === "Azami" ? "https://i.imgur.com/QnqklyT.png" : op.icon_url}" style="height: 4rem" /> </td>
-      <td class="operator_name_cell">${name}</td>
-      <td sorttable_customkey="${kd * 100}">${kd}</td>
-      <td sorttable_customkey="${wl * 100}">${wl}%</td>
-      <td sorttable_customkey="${hs * 100}">${hs}%</td>
-      <td sorttable_customkey="${op.melee_kills}">${addSpaces(op.melee_kills)}</td>
-      <td sorttable_customkey="${ace_count}">${ace_count}</td>
-      <td sorttable_customkey="${op.time_played}">${getPlaytime(op.minutes_played)}</td>
-    </tr>`
-};
 
 function reduceNameLength(a, len = 14) {
   return a.length > (len) ? `${a.substr(0, len)}..` : a.substr(0, len)
