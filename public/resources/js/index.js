@@ -16,6 +16,7 @@ firebase.database().ref("widget").on("value", snapshot => {
           </div>
         </div>
         <div class="activity">
+          ${widgetSpotify(user.activities)}
           ${getWidgetActivity(user.activities)}
         </div>
       </div>`;
@@ -40,7 +41,19 @@ function getWidgetActivity(activities) {
 
   gaem = reduceStringLength(gaem , 23);
 
-  return gaem;
+  return `<div style="margin-left: 5px;">${gaem}</div>`;
+};
+function widgetSpotify(activities) {
+  if (!activities || activities.spotify == false || activities.spotify == "none" || activities.spotify == undefined) { return ""; }
+
+  let wh = 17;
+  let spotify = `
+    <div style="margin-left: 7px;">
+      <a target="_blank" rel="noreferrer" href="${activities.spotify.url}" aria-label="${activities.spotify.artist} - ${activities.spotify.title}" data-cooltipz-dir="top">
+        <img src="/resources/svg/spotify.svg" width=${wh} height=${wh} uk-svg />
+      </a>
+    </div>`;
+  return spotify
 };
 
 const currentYear = new Date().getFullYear();

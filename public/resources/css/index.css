@@ -92,6 +92,12 @@ body .main .section.widget .users .user .us .status.status-idle {
 body .main .section.widget .users .user .us .status.status-dnd {
     background-color: var(--w-dnd);
 }
+body .main .section.widget .users .user .activity {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-end;
+}
 
 body .main .section.voice .header {
     flex-grow: 100%;
