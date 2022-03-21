@@ -54,8 +54,9 @@
     box-shadow: rgba(99, 99, 99, 0.4) 4px 8px 16px 0px;
     transition: box-shadow 0.2s ease-in-out;
 }
-.user-header > .left > #profile_picture:hover {
-    box-shadow: rgba(99, 99, 99, 0.4) 6px 12px 16px 0px;
+.dark-mode .user-header > .left > #profile_picture {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
+    transition: box-shadow 0.2s ease-in-out;
 }
 .user-header > .left > #username {
     line-height: 100%;
@@ -219,6 +220,24 @@
 
 
 /*
+    SEASONS PAGE
+*/
+@media (max-width: 1000px) {
+    .seasonal-card {
+        width: calc(100% - 1.7rem) !important;
+    }
+    .seasonal-card > div > div > div.flex-col-cen-mid {
+        margin: .5rem 0 .5rem 0;
+    }
+}
+
+/*
+    SEASONS PAGE END
+*/
+
+
+
+/*
     WEAPONS PAGE
 */
 
@@ -230,6 +249,9 @@
 }
 #weapons-page > #top-3-weapons > div {
     width: 25%;
+}
+.dark-mode #weapons-page > #top-3-weapons > div > img {
+    filter: invert(100%);
 }
 #weapons-page > #all-weapons {
     margin: 1rem;
@@ -319,6 +341,11 @@
 .text-middle {
     vertical-align: middle !important;
 }
+@media (max-width: 1000px) {
+    .text-center-mobile {
+        text-align: center !important;
+    }
+}
 
 
 .flex-wrap {
@@ -351,11 +378,57 @@
     align-items: center;
     justify-content: space-evenly;
 }
+.flex-row-wrap-cent-evenly {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
 .flex-row-base-between {
     display: flex;
     flex-direction: row;
     align-items: baseline;
     justify-content: space-between;
+}
+.flex-row-cent-between {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.width-1-4 {
+    width: 25%;
+}
+.width-3-4 {
+    width: 75%;
+}
+
+@media (max-width: 1000px) {
+    .width-1-4-mobile {
+        width: 25% !important;
+    }
+    .width-full-mobile {
+        width: 100% !important;
+    }
+    .child-width-1-1-mobile > * {
+        width: 100% !important;
+    }
+    .child-width-1-2-mobile > * {
+        width: 50% !important;
+    }
+    .child-width-1-3-mobile > * {
+        width: calc(100% * 1 / 3.001) !important;
+    }
+    .child-width-1-4-mobile > * {
+        width: 25% !important;
+    }
+    .child-width-1-5-mobile > * {
+        width: 20% !important;
+    }
+    .child-width-1-6-mobile > * {
+        width: calc(100% * 1 / 6.001) !important;
+    }
 }
 
 .child-width-1-1 > * {
@@ -375,11 +448,6 @@
 }
 .child-width-1-6 > * {
     width: calc(100% * 1 / 6.001);
-}
-@media (max-width: 1000px) {
-    .width-full-mobile {
-        width: 100% !important;
-    }
 }
 
 .margin-1-top {
@@ -401,20 +469,21 @@
     margin-bottom: 0;
 }
 .margin-1-bottom {
-    margin-bottom: 1;
+    margin-bottom: 1rem;
 }
 
 .margin-0-y {
     margin-top: 0;
     margin-bottom: 0;
 }
-.padding-05-y {
-    padding-top: .5;
-    padding-bottom: .5;
+.margin-1-y {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
-.margin-0-x {
-    margin-left: 0;
-    margin-right: 0;
+
+.padding-1-x {
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .child-margin-1-top > * {
@@ -435,23 +504,43 @@
     margin: 1rem;
     padding: 2rem;
 }
-.card-shadow-below {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-}
 .card-shadow-around {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     transition: box-shadow 0.2s ease-in-out;
 }
+.dark-mode .card-shadow-around {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
 .card-shadow-around:not(.no-hover):hover {
     box-shadow: rgba(99, 99, 99, 0.4) 2px 4px 16px 0px;
+}
+.dark-mode .card-shadow-around:not(.no-hover):hover {
+    box-shadow: rgba(0, 0, 0, 0.4) 2px 4px 16px 0px;
 }
 
 @media (max-width: 1000px) {
     .card {
         padding: 2rem 0 2rem 0;
+        margin: 0;
     }
     .card-shadow-below,
     .card-shadow-around {
         box-shadow: none;
+    }
+}
+
+
+/* Peekaboo */
+.hidden-other {
+    display: none;
+}
+@media (max-width: 1000px) {
+    .hidden-mobile {
+        display: none;
+    }
+    .hidden-other {
+        display: block;
     }
 }

@@ -34,49 +34,37 @@ function seasonsPage(d) {
     }
 
     seasonsHTML += `
-    <div class="card card-shadow-around no-hover width-1-1 margin-1-bottom"
+    <div class="seasonal-card card card-shadow-around no-hover width-1-1 margin-1-bottom"
          style="border-right: 1.7rem; border-style: none solid none none; border-color: ${getSeasonColorRGB(s.season)};">
 
-      <div class="flex-row-nowrap-cent-evenly">
-        <div class="uk-text-left width-1-4-mobile">
-          <div class="text-large-2 siege-font-medium" style="color:${getSeasonColorRGB(s.season)}; font-style: italic;">${s.season_name}</div>
-          <i>${getSeasonStartDate(s.season)}</i>
-          <i>${s.season_code}</i>
+      <div class="flex-row-wrap-cent-evenly">
+
+        <div class="uk-text-left margin-1-y width-1-4 width-full-mobile text-center-mobile">
+          <div class="text-large-2 siege-font-medium text-nowrap" style="color:${getSeasonColorRGB(s.season)}; font-style: italic;">${s.season_name}</div>
+          <i>${getSeasonStartDate(s.season)} ${s.season_code}</i>
         </div>
 
-        <div>
+        <div class="flex-row-wrap-cent-evenly width-3-4 width-full-mobile child-width-1-2-mobile child-width-1-5">
           <div class="flex-col-cen-mid siege-font-normal">
             <div>Rank</div>
-            <img class="padding-05-y" style="height: 4rem" src="${getRankImageFromRankName(rank)}"/>
+            <img style="height: 4rem; margin: .5rem 0 .5rem 0;" src="${getRankImageFromRankName(rank)}"/>
             <div>${mmr} MMR</div>
           </div>
-        </div>
-
-        <div>
           <div class="flex-col-cen-mid siege-font-normal">
             <div>Max Rank</div>
-            <img class="padding-05-y" style="height: 4rem" src="${getRankImageFromRankName(maxRank)}" />
+            <img style="height: 4rem; margin: .5rem 0 .5rem 0;" src="${getRankImageFromRankName(maxRank)}" />
             <div>${maxMmr} MMR</div>
           </div>
-        </div>
-
-        <div>
           <div style="height: 100%" class="flex-col-cen-mid">
             <div><span class="siege-font-normal">${s.deaths != 0 ? roundTwo(s.kills / s.deaths) : 0}</span> K/D</div>
             <div><span class="siege-font-normal">${s.kills}</span> Kills</div>
             <div><span class="siege-font-normal">${s.deaths}</span> Deaths</div>
           </div>
-        </div>
-
-        <div>
           <div style="height: 100%" class="flex-col-cen-mid">
             <div><span class="siege-font-normal">${s.losses != 0 ? roundTwo(s.wins / s.losses) : 0}</span> WL</div>
             <div><span class="siege-font-normal">${s.wins}</span> Wins</div>
             <div><span class="siege-font-normal">${s.losses}</span> Losses</div>
           </div>
-        </div>
-
-        <div>
           <div style="height: 100%" class="flex-col-cen-mid">
             <div><span class="siege-font-normal">${s.abandons}</span> Abandon${s.abandons == 1 ? "" : "s"}</div>
             <div><span class="siege-font-normal">${s.wins + s.losses}</span> Match${s.wins + s.losses == 1 ? "" : "es"}</div>
@@ -111,21 +99,21 @@ function getOperatorRow(op) {
   let name = `
     <div class="flex-row-nowrap-cent-mid">
       <div class="text-large siege-font-medium">${op.name}</div>
-      <img class="margin-1-left" src="${countryCodeToFlag(op.country_code)}" onerror="this.style.display='none'" />
+      <img class="margin-1-left hidden-mobile" src="${countryCodeToFlag(op.country_code)}" onerror="this.style.display='none'" />
     </div>
-    <div class="text-small">${getSeasonNameFromCode(op.year_introduced)} | ${op.unit}</div>
+    <div class="text-small hidden-mobile">${getSeasonNameFromCode(op.year_introduced)} | ${op.unit}</div>
   `;
 
   return `
     <tr>
-      <td> <img src="${op.name === "Azami" ? "https://i.imgur.com/QnqklyT.png" : op.icon_url}" style="height: 4rem" /> </td>
+      <td class="hidden-mobile"> <img src="${op.name === "Azami" ? "https://i.imgur.com/QnqklyT.png" : op.icon_url}" style="height: 4rem" /> </td>
       <td class="operator_name_cell">${name}</td>
       <td sorttable_customkey="${kd * 100}">${kd}</td>
       <td sorttable_customkey="${wl * 100}">${wl}%</td>
       <td sorttable_customkey="${hs * 100}">${hs}%</td>
-      <td sorttable_customkey="${op.melee_kills}">${addSpaces(op.melee_kills)}</td>
-      <td sorttable_customkey="${ace_count}">${ace_count}</td>
-      <td sorttable_customkey="${op.time_played}">${getPlaytime(op.minutes_played)}</td>
+      <td class="hidden-mobile" sorttable_customkey="${op.melee_kills}">${addSpaces(op.melee_kills)}</td>
+      <td class="hidden-mobile" sorttable_customkey="${ace_count}">${ace_count}</td>
+      <td class="hidden-mobile" sorttable_customkey="${op.time_played}">${getPlaytime(op.minutes_played)}</td>
     </tr>`
 };
 
@@ -181,8 +169,8 @@ function trendsPage(d) {
     const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
     return {
       label: _label,
-      backgroundColor: "rgba(0, 255, 229, 0.9)",
-      borderColor: "rgba(0, 255, 229, 0.4)",
+      backgroundColor: "rgba(194, 180, 122, 0.9)",
+      borderColor: "rgba(194, 180, 122, 0.4)",
 
       pointStyle: "circle",
       pointRadius: 7,

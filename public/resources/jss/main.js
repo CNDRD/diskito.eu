@@ -24,6 +24,7 @@ function changeTheme(toWhat) {
       localStorage.setItem("theme", "☀️");
       document.documentElement.style.setProperty("--background-color", "hsl(46, 100%, 97%)");
       document.documentElement.style.setProperty("--chaun-blue", "hsl(212, 33%, 23%)");
+      $("html").removeClass("dark-mode");
       break;
     case "🌑":
     case "Dark Mode":
@@ -32,6 +33,7 @@ function changeTheme(toWhat) {
       localStorage.setItem("theme", "🌑");
       document.documentElement.style.setProperty("--background-color", "hsl(212, 33%, 23%)");
       document.documentElement.style.setProperty("--chaun-blue", "hsl(46, 100%, 97%)");
+      $("html").addClass("dark-mode");
       break;
   };
 
