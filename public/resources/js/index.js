@@ -46,11 +46,11 @@ function getWidgetActivity(activities) {
 function widgetSpotify(activities) {
   if (!activities || activities.spotify == false || activities.spotify == "none" || activities.spotify == undefined) { return ""; }
 
-  let wh = 17;
   let spotify = `
     <div style="margin-left: 7px;">
-      <a target="_blank" rel="noreferrer" href="${activities.spotify.url}" aria-label="${activities.spotify.artist} - ${activities.spotify.title}" data-cooltipz-dir="top">
-        <img src="/resources/svg/spotify.svg" width=${wh} height=${wh} uk-svg />
+      <a target="_blank" rel="noreferrer" href="${activities.spotify.url}"
+         class="hint--left hint--rounded hint-no-arrow" aria-label="${activities.spotify.artist} - ${activities.spotify.title}">
+        <img src="/resources/svg/spotify.svg" width=17 height=17 />
       </a>
     </div>`;
   return spotify
