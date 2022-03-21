@@ -42,3 +42,9 @@ html, body {
 .chat-totals .stats .stat:not(:last-of-type) {
     margin-bottom: 1rem;
 }
+
+@media (max-width: 1000px) {
+    .voice-totals {
+        margin-top: 2rem;
+    }
+}
