@@ -25,6 +25,18 @@
     justify-content: flex-start;
     align-items: flex-end
 }
+@media (max-width: 1000px) {
+    .user-header,
+    .user-header > .left,
+    .user-header > .right {
+        flex-flow: column wrap !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    .user-header > .left > #username {
+        margin: .5rem 0 .5rem 0 !important;
+    }
+}
 .user-header > .left > .header-stats {
     display: flex;
     flex-flow: row wrap;
@@ -527,7 +539,7 @@
     }
     .card-shadow-below,
     .card-shadow-around {
-        box-shadow: none;
+        box-shadow: none !important;
     }
 }
 
