@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html class="pretty-scrollbar" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Loads of stats and other things about the Diskíto Discord server.">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Firebase JS -->
+    <script src="/__/firebase/8.7.1/firebase-app.js"></script>
+    <script src="/__/firebase/8.7.1/firebase-database.js"></script>
+    <script src="/__/firebase/init.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom CSS & JS -->
+    <link rel="stylesheet" href="/resources/css/normalize.css" />
+    <link rel="stylesheet" href="/resources/css/main.css" />
+    <link rel="stylesheet" href="/resources/css/voice.css" />
+    <script defer src="/resources/jss/myFunctions.js" charset="utf-8"></script>
+
+    <script defer src="/resources/jss/main.js" charset="utf-8"></script>
+    <script src="/resources/js/voice.js" charset="utf-8"></script>
+
+    <title>Diskíto</title>
+    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
+
+  </head>
+  <body>
+
+    <nav class="navbar">
+      <div class="branding">
+        <a href="/"><span id="dvojbodka">:</span>Diskíto</a>
+      </div>
+      <div class="navigation">
+        <a href="/totals">Totals</a>
+        <a href="/leaderboards">Leaderboards</a>
+        <a href="/siege">Siege</a>
+        <a href="/voice">Voice</a>
+        <a href="/quotes">Quotes</a>
+      </div>
+      <div class="at-right">
+        <div class="join-button">
+          <a target="_blank" rel="noreferrer" href="https://discord.com/invite/sXDbtp4">Join</a>
+        </div>
+        <div id="theme-switch" class="theme-switch">🌑</div>
+      </div>
+    </nav>
+    <nav class="navbar-mobile">
+      <div id="menu">MENU</div>
+      <div id="hidden">
+        <div id="first">
+          <div id="mobile-theme-switch" class="theme-switch">Dark Mode</div>
+          <a href="/">Home</a>
+        </div>
+        <a href="/totals">Server Totals</a>
+        <a href="/leaderboards">Leaderboards</a>
+        <a href="/siege">Siege</a>
+        <a href="/voice">Voice Stats</a>
+        <a href="/quotes">Quotes</a>
+        <a target="_blank" rel="noreferrer" href="https://discord.com/invite/sXDbtp4">Discord Invite Link</a>
+      </div>
+    </nav>
+
+    <div id="main">
+
+      <div class="data-switcher">
+        <div id="daily-voice-this-year" class="data-switcher-button siege-font-normal">Daily Voice this year</div>
+        <div id="total-time-spent-per-user" class="data-switcher-button siege-font-normal">Total Time Spent per User</div>
+        <div id="longest-voice-session" class="data-switcher-button siege-font-normal">Longest Voice Sessions</div>
+        <div id="total-time-per-user" class="data-switcher-button siege-font-normal">Total Time per User</div>
+        <div id="yearly-user-time" class="data-switcher-button siege-font-normal">Yearly User Time</div>
+      </div>
+
+      <div id="charts">
+        <!-- Daily Voice this year -->
+        <div id="daily-voice-this-year-card" class="chart-card">
+          <h3 class="text-center" id="dailyChartH3">Daily Voice this year</h3>
+          <canvas id="dailyChartCanvas"></canvas>
+        </div>
+        <!-- Total Time Spent per User -->
+        <div id="total-time-spent-per-user-card" class="chart-card" style="display: none;">
+          <h3 class="text-center" id="totalChartH3">Time Spent per User this Year</h3>
+          <canvas id="totalChartCanvas"></canvas>
+        </div>
+        <!-- Longest Voice Sessions -->
+        <div id="longest-voice-session-card" class="chart-card" style="display: none;">
+          <h3 class="text-center" id="lvsChartH3">Longest Voice Sessions</h3>
+          <canvas id="lvsChartCanvas"></canvas>
+        </div>
+        <!-- Total Time Spent per User since ever -->
+        <div id="total-time-per-user-card" class="chart-card" style="display: none;">
+          <h3 class="text-center" id="totalTotalChartH3">Total Time Spent per User since ever</h3>
+          <canvas id="totalTotalChartCanvas"></canvas>
+        </div>
+        <!-- Yearly User Time -->
+        <div id="yearly-user-time-card" class="chart-card" style="display: none;">
+          <h3 class="text-center" id="yearlyUserTimeChartH3">Yearly User Time</h3>
+          <canvas id="yearlyUserTimeChartCanvas"></canvas>
+        </div>
+      </div>
+
+      <div id="year-switcher">
+        <div id="year-switcher-header">Check data from other years</div>
+        <div id="year-switcher-years"></div>
+      </div>
+        
+    </div>
+
+  </body>
+  
+</html>
