@@ -568,12 +568,17 @@ $(document).ready(function () {
 
   /* Page switcher */
   $(".switcher-button").click(function () {
-
     $(".switcher-page").each((i, obj) => {
       $(`#${obj.id}`).hide();
     });
-
     $(`#${this.id}-page`).show();
+  });
+
+  /* Automatically show the wanted page */
+  $(".switcher-page").each((i, obj) => {
+    if (i == $("#switcher").attr("data-active-page")) {
+      $(`#${obj.id}`).show();
+    }
   });
 
   /* Seasonal ranked / casual / event switcher */
