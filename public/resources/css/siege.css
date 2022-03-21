@@ -50,6 +50,7 @@ table tbody#tableDataPlace tr td {
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-evenly;
+    min-height: 2rem;
 }
 
 .main .above-table {

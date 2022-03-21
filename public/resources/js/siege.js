@@ -1,9 +1,11 @@
 
 let VERSION = 11;
+let RANKED_LEVEL_TRESHOLD = 50;
 
 
 let ranked = [];
 let unranked = [];
+let level = [];
 let clown = 0;
 firebase.database().ref(`GameStats/R6Sv${VERSION}/main_data`).once("value").then(snapshot => {
   firebase.database().ref(`GameStats/R6Sv${VERSION}/mmr_watch`).once("value").then(mmrSnapshot => {
@@ -11,14 +13,22 @@ firebase.database().ref(`GameStats/R6Sv${VERSION}/main_data`).once("value").then
 
     snapshot.forEach(childSnapshot => {
       let cd = childSnapshot.val();
-      if (cd.ranked.max_mmr !== -1){ ranked.push(cd); } else { unranked.push(cd); }
+      console.log(cd);
+      if (cd.ranked.max_mmr !== -1) {
+        ranked.push(cd);
+      } else if (cd.level < RANKED_LEVEL_TRESHOLD) {
+        level.push(cd);
+      } else {
+        unranked.push(cd);
+      }
     });
 
-    ranked.sort(function(a,b){return b.currentMMR - a.currentMMR})
-    unranked.sort(function(a,b){return b.currentMMR - a.currentMMR})
+    ranked.sort(function(a,b){return b.ranked.mmr - a.ranked.mmr});
+    unranked.sort(function(a,b){return b.ranked.mmr - a.ranked.mmr});
 
     ranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, mmrWatch[u.ubisoftID])); });
     unranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, mmrWatch[u.ubisoftID], true)); });
+    level.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, mmrWatch[u.ubisoftID])); });
   });
 });
 
@@ -71,7 +81,7 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
   let mmrChange = rank.last_mmr_change == undefined ? '0' : rank.last_mmr_change;
   let prevMMR = getPrevRankMMR(rank.mmr);
   let nextMMR = getNextRankMMR(rank.mmr);
-  let rankCell = getRankCell(rank, unrank);
+  let rankCell = getRankCell(rank, unrank, u.level);
   let mmrWatchChangeColor = "";
 
   if (mmrWatch.adjustment) {
@@ -81,7 +91,7 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
   };
 
 
-  let a = `
+  return `
     <tr>
       <td class="hidden-mobile" sorttable_customkey="${clown}">
         <img style="height: 4rem;" src="${pfpLink}" />
@@ -120,25 +130,28 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
       <td class="hidden-mobile" sorttable_customkey="${u.totalPlaytime}">
         ${playtime}
       </td>
-    </tr>`;
-  return a
+    </tr>
+  `;
 };
 
-function getRankCell(r, unrank=false) {
-  let rankedCell = `
+function getRankCell(r, unrank=false, level) {
+  if (level < RANKED_LEVEL_TRESHOLD) {
+    return `<div class="rank-img-cell"> <span>level ${level}</span> </div>`;
+  }
+  if (unrank) {
+    return `
+      <div class="rank-img-cell">
+        <img class="hidden-mobile" style="height: 3.5rem;" src="${getRankImageFromMMR(r.mmr)}" />
+        <span>${r.wins+r.losses} / 10</span>
+      </div>
+    `;
+  }
+  return `
     <div class="rank-img-cell">
       <img style="height: 4rem;" src="${getRankImageFromMMR(r.mmr)}" />
       <img style="height: 3.5rem;" class="hidden-mobile" src="${getRankImageFromMMR(r.max_mmr)}" />
     </div>
   `;
-  let unrankedCell = `
-    <div class="rank-img-cell">
-      <img class="hidden-mobile" style="height: 3.5rem;" src="${getRankImageFromMMR(r.currentMMR)}" />
-      <span>${r.wins+r.losses} / 10</span>
-    </div>
-  `;
-  if (unrank) { return unrankedCell }
-  else { return rankedCell }
 };
 
 function getPlaytime(s) {
