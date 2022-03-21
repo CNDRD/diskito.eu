@@ -1,10 +1,12 @@
-# Diskíto Website  
+<div style="text-align: center;">  
 
-[diskito.eu](https://diskito.eu) - The Diskíto Website  
-[Discord](https://discord.com/invite/sXDbtp4) - Discord invite Link  
+# Diskíto Website Repo
 
-Through the power of Firebase this code represents the Live version  
+### [diskito.eu](https://diskito.eu) | [Diskíto](https://discord.com/invite/sXDbtp4)
 
-Old design is archived in the [halfmoon branch](https://github.com/CNDRD/Diskito-Website/tree/halfmoon) (available online [here](https://halfmoon.diskito.eu/))  
 
-Made with ♥ & [UIkit](https://getuikit.com/), [Atom](https://atom.io/), [Firebase](https://firebase.google.com/)  
+Old designs:  
+[`/uikit`](https://github.com/CNDRD/diskito.eu/tree/uikit) - [uikit.diskito.eu](https://uikit.diskito.eu/)  
+[`/halfmoon`](https://github.com/CNDRD/diskito.eu/tree/halfmoon) - [halfmoon.diskito.eu](https://halfmoon.diskito.eu/)  
+
+</div>
