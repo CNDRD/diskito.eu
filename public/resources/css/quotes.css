@@ -1,0 +1,45 @@
+#main {
+    width: 100%;
+    max-width: 1000px;
+    margin: 3rem 0 3rem 0;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+@media (min-width: 2000px) {
+    #main {
+        max-width: 1500px;
+    }
+}
+
+.card {
+    margin: 1rem;
+    padding: 2rem;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    transition: box-shadow 0.2s ease-in-out;
+}
+.dark-mode .card {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.card > .quote-parent > .quote-text::before,
+.card > .quote-parent > .quote-text::after {
+    font-size: 2rem;
+    position: relative;
+}
+.card > .quote-parent > .quote-text::before {
+    content: "“";
+}
+.card > .quote-parent > .quote-text::after {
+    content: "”";
+}
+
+.card > .author-date {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    margin-top: .5rem;
+}
