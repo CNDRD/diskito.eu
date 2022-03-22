@@ -124,6 +124,10 @@ body .main .section.voice #voice-stats .voice-lines {
     flex-flow: row wrap;
     align-items: center;
     justify-content: space-evenly;
+    padding: .5rem 0 .5rem 0;
+}
+body .main .section.voice #voice-stats .voice-lines > .user {
+    width: 45%;
 }
 body .main .section.voice #voice-stats .user {
     display: flex;
