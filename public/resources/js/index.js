@@ -16,6 +16,7 @@ firebase.database().ref("widget").on("value", snapshot => {
           </div>
         </div>
         <div class="activity">
+          ${widgetVoiceIcons(user.voice)}
           ${widgetSpotify(user.activities)}
           ${getWidgetActivity(user.activities)}
         </div>
@@ -49,12 +50,52 @@ function widgetSpotify(activities) {
   let spotify = `
     <div style="margin-left: 7px;">
       <a target="_blank" rel="noreferrer" href="${activities.spotify.url}"
-         class="hint--left hint--rounded hint-no-arrow" aria-label="${activities.spotify.artist} - ${activities.spotify.title}">
+         class="hint--left hint--rounded hint--no-arrow" aria-label="${activities.spotify.artist} - ${activities.spotify.title}">
         <img src="/resources/svg/spotify.svg" width=17 height=17 />
       </a>
     </div>`;
   return spotify
 };
+function widgetVoiceIcons(voice) {
+
+  let mic = "🎙️";
+  let selfMuted = `${mic}❕`;
+  let serverMuted = `${mic}❗`;
+
+  let earphones = "🎧";
+  let selfDeafened = `${earphones}❕`;
+  let serverDeafened = `${earphones}❗`;
+
+  let screenshare = "🖥️";
+  let videoshare = "🤳";
+
+
+  let icons = ''
+  // Not in voice
+  if (voice.mute == undefined || voice.deaf == undefined || voice.self_mute == undefined || voice.self_deaf == undefined) { return '' }
+
+  // Screen sharing
+  if (voice.self_stream != undefined && voice.self_stream) { icons += screenshare }
+  // Video
+  if (voice.self_video != undefined && voice.self_video) { icons += videoshare }
+
+  // Speaking
+  if (voice.mute != undefined && voice.mute) { icons += serverMuted }
+  else if (voice.self_mute != undefined && voice.self_mute) { icons += selfMuted }
+  else { icons += mic }
+
+  // Listening
+  if (voice.deaf != undefined && voice.deaf) { icons += serverDeafened }
+  else if (voice.self_deaf != undefined && voice.self_deaf) { icons += selfDeafened }
+  else { icons += earphones }
+
+  return `
+    <div class="hint--left hint--rounded hint--no-arrow" aria-label="${icons}">
+      ${icons != "" ? "🔊" : ""}
+    </div>
+  `;
+};
+
 
 const currentYear = new Date().getFullYear();
 firebase.database().ref(`voice/${currentYear}/in`).on('value', (snapshot) => {
