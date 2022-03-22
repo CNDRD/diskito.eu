@@ -26,6 +26,12 @@ body .main .section.links {
     align-items: baseline;
     justify-content: flex-start;
 }
+.links-divider {
+    width: 20%;
+    padding: 0;
+    margin: .4rem 0 .4rem 0;
+    border: 1px solid var(--chaun-blue);
+}
 body .main .section.links a {
     padding: 0.2rem;
     text-decoration: none;
