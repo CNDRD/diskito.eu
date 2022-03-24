@@ -30,7 +30,7 @@ body .main .section.links {
     width: 20%;
     padding: 0;
     margin: .4rem 0 .4rem 0;
-    border: 1px solid var(--chaun-blue);
+    border-top: 1px solid var(--chaun-blue);
 }
 body .main .section.links a {
     padding: 0.2rem;
