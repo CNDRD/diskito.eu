@@ -13,7 +13,7 @@ firebase.database().ref(`GameStats/R6Sv${VERSION}/main_data`).once("value").then
 
     snapshot.forEach(childSnapshot => {
       let cd = childSnapshot.val();
-      console.log(cd);
+      
       if (cd.ranked.max_mmr !== -1) {
         ranked.push(cd);
       } else if (cd.level < RANKED_LEVEL_TRESHOLD) {
