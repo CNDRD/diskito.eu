@@ -25,6 +25,7 @@ firebase.database().ref(`GameStats/R6Sv${VERSION}/main_data`).once("value").then
 
     ranked.sort(function(a,b){return b.ranked.mmr - a.ranked.mmr});
     unranked.sort(function(a,b){return b.ranked.mmr - a.ranked.mmr});
+    level.sort(function(a,b){return b.level - a.level});
 
     ranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, mmrWatch[u.ubisoftID])); });
     unranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, mmrWatch[u.ubisoftID], true)); });
