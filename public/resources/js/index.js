@@ -90,7 +90,7 @@ function widgetVoiceIcons(voice) {
   else { icons += earphones }
 
   return `
-    <div class="hint--left hint--rounded hint--no-arrow" aria-label="${icons}">
+    <div class="hint--left hint--rounded hint--no-arrow voice-icons pls-no-click" aria-label="${icons}">
       ${icons != "" ? "🔊" : ""}
     </div>
   `;

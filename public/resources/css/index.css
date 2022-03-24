@@ -104,6 +104,9 @@ body .main .section.widget .users .user .activity {
     align-items: center;
     justify-content: flex-end;
 }
+body .main .section.widget > .users > .user > .activity > .voice-icons {
+    cursor: default;
+}
 
 body .main .section.voice .header {
     flex-grow: 100%;
