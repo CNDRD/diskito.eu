@@ -80,8 +80,8 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
   let wl = rank.losses == 0 ? 0 : roundTwo(rank.wins / (rank.wins + rank.losses) * 100);
   let mmrChangeColor = rank.last_mmr_change >= 0 ? ( rank.last_mmr_change == 0 ? "" : "color: var(--w-online)" ) : "color: var(--w-dnd)";
   let mmrChange = rank.last_mmr_change == undefined ? '0' : rank.last_mmr_change;
-  let prevMMR = getPrevRankMMR(rank.mmr);
-  let nextMMR = getNextRankMMR(rank.mmr);
+  let prevMMR = getPrevRankMMR(rank.mmr, rank.season);
+  let nextMMR = getNextRankMMR(rank.mmr, rank.season);
   let rankCell = getRankCell(rank, unrank, u.level);
   let mmrWatchChangeColor = "";
 
@@ -142,15 +142,15 @@ function getRankCell(r, unrank=false, level) {
   if (unrank) {
     return `
       <div class="rank-img-cell">
-        <img class="hidden-mobile" style="height: 3.5rem;" src="${getRankImageFromMMR(r.mmr)}" />
+        <img class="hidden-mobile" style="height: 3.5rem;" src="${getRankImageFromMMR(r.mmr, r.season)}" />
         <span>${r.wins+r.losses} / 10</span>
       </div>
     `;
   }
   return `
     <div class="rank-img-cell">
-      <img style="height: 4rem;" src="${getRankImageFromMMR(r.mmr)}" />
-      <img style="height: 3.5rem;" class="hidden-mobile" src="${getRankImageFromMMR(r.max_mmr)}" />
+      <img style="height: 4rem;" src="${getRankImageFromMMR(r.mmr, r.season)}" />
+      <img style="height: 3.5rem;" class="hidden-mobile" src="${getRankImageFromMMR(r.max_mmr, r.season)}" />
     </div>
   `;
 };

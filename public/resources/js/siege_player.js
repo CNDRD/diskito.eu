@@ -297,12 +297,12 @@ function updateSeasonalCard(d) {
   $("#season").css("color", getSeasonColorRGB(r.season));
   $("#season_code").text(getSeasonCodeFromNumber(r.season));
 
-  $("#next_rank_mmr").text(addSpaces(getNextRankMMR(r.mmr)));
-  $("#prev_rank_mmr").text(addSpaces(getPrevRankMMR(r.mmr)));
+  $("#next_rank_mmr").text(addSpaces(getNextRankMMR(r.mmr, r.season)));
+  $("#prev_rank_mmr").text(addSpaces(getPrevRankMMR(r.mmr, r.season)));
 
   $("#current_rank_mmr").text(addSpaces(r.mmr));
   $("#current_rank_name").text(r.rank);
-  $("#current_rank_img").attr("src", getRankImageFromMMR(r.mmr));
+  $("#current_rank_img").attr("src", getRankImageFromMMR(r.mmr, r.season));
 
   $("#last_mmr_change").text(r.last_mmr_change);
   $("#last_mmr_change").addClass(r.last_mmr_change >= 0 ? (r.last_mmr_change == 0 ? "" : "text-success") : "text-danger");
@@ -313,14 +313,14 @@ function updateSeasonalCard(d) {
 
   $("#max_mmr").text(`${addSpaces(parseInt(r.max_mmr))} MMR`);
   $("#max_mmr_name").text(r.max_rank);
-  $("#max_rank_img").attr("src", getRankImageFromMMR(r.max_mmr));
+  $("#max_rank_img").attr("src", getRankImageFromMMR(r.max_mmr, r.season));
 
   // _casual
-  $("#next_rank_mmr_casual").text(addSpaces(getNextRankMMR(c.mmr)));
-  $("#prev_rank_mmr_casual").text(addSpaces(getPrevRankMMR(c.mmr)));
+  $("#next_rank_mmr_casual").text(addSpaces(getNextRankMMR(c.mmr, c.season)));
+  $("#prev_rank_mmr_casual").text(addSpaces(getPrevRankMMR(c.mmr, c.season)));
   $("#current_rank_mmr_casual").text(addSpaces(c.mmr));
   $("#current_rank_name_casual").text(c.rank);
-  $("#current_rank_img_casual").attr("src", getRankImageFromMMR(c.mmr));
+  $("#current_rank_img_casual").attr("src", getRankImageFromMMR(c.mmr, c.season));
   $("#last_mmr_change_casual").text(c.last_mmr_change);
   $("#last_mmr_change_casual").addClass(c.last_mmr_change >= 0 ? (c.last_mmr_change == 0 ? "" : "text-success") : "text-danger");
   $("#seasonal_kd_casual").text(c.deaths == 0 ? 0 : roundTwo(c.kills / c.deaths));
@@ -328,11 +328,11 @@ function updateSeasonalCard(d) {
   $("#seasonal_games_casual").text((c.wins + c.losses) == 0 ? 0 : addSpaces(c.wins + c.losses));
 
   // _event
-  $("#next_rank_mmr_event").text(addSpaces(getNextRankMMR(e.mmr)));
-  $("#prev_rank_mmr_event").text(addSpaces(getPrevRankMMR(e.mmr)));
+  $("#next_rank_mmr_event").text(addSpaces(getNextRankMMR(e.mmr, e.season)));
+  $("#prev_rank_mmr_event").text(addSpaces(getPrevRankMMR(e.mmr, e.season)));
   $("#current_rank_mmr_event").text(addSpaces(e.mmr));
   $("#current_rank_name_event").text(e.rank);
-  $("#current_rank_img_event").attr("src", getRankImageFromMMR(e.mmr));
+  $("#current_rank_img_event").attr("src", getRankImageFromMMR(e.mmr, e.season));
   $("#last_mmr_change_event").text(e.last_mmr_change);
   $("#last_mmr_change_event").addClass(e.last_mmr_change >= 0 ? (e.last_mmr_change == 0 ? "" : "text-success") : "text-danger");
   $("#seasonal_kd_event").text(e.deaths == 0 ? 0 : roundTwo(e.kills / e.deaths));
