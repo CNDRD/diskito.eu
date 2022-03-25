@@ -32,6 +32,13 @@ body .main .section.links {
     margin: .4rem 0 .4rem 0;
     border-top: 1px solid var(--chaun-blue);
 }
+body > .main > .section.links > [target="_blank"]::after {
+    content: "🔗";
+    font-size: 1rem;
+    vertical-align: top;
+    display: inline-block;
+    text-decoration: none;
+}
 body .main .section.links a {
     padding: 0.2rem;
     text-decoration: none;
