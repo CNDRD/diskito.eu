@@ -1,10 +1,10 @@
-html, body {
-    height: 97%;
-}
 
 .center-container {
-    display: grid;
-    place-items: center;
+    margin-top: 6rem;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: space-evenly;
     height: 100%;
     width: 100%;
     font-size: 2rem;
@@ -46,5 +46,9 @@ html, body {
 @media (max-width: 1000px) {
     .voice-totals {
         margin-top: 2rem;
+    }
+    .center-container {
+        margin-top: 4rem;
+        font-size: 1.75rem;
     }
 }
