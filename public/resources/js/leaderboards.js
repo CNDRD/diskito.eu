@@ -29,12 +29,11 @@ firebase.database().ref("users").orderByKey().once("value").then(function(snapsh
 });
 
 function getStatsDataRow(u, i) {
-    console.log(u);
     let a = `
       <!-- ${u.discordID} | ${u.username} -->
       <tr>
         <td class="hidden-mobile">
-          ${i}
+          ${i+1}
         </td>
         <td class="hidden-mobile">
             <img style="height: 3rem;" src="${u.avatar_url}" />
