@@ -152,6 +152,7 @@
 }
 #overall-page > #first-row > #seasonal-card {
     width: calc(100% * 1 / 3.001);
+    margin: auto 0 auto 0;
 }
 #overall-page > #first-row > #seasonal-card > #seasonal-header {
     display: flex;
