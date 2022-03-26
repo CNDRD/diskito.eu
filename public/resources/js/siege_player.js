@@ -501,9 +501,9 @@ firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").the
     let now = parseInt(Date.now() / 1000);
     let diff = now - last_update;
 
-    $("#lastUpdated").replaceWith(`<span id="lastUpdated">${getUpdateTimeString(diff)}</span>`);
+    $("#lastUpdated").text(getUpdateTimeString(diff));
 
-    if (diff >= 180) { $("#siegeManualUpdateButton").removeAttr("hidden"); }
+    if (diff >= 180) { $("#siegeManualUpdateButton").css("opacity", "1"); }
   }, 1000);
 
   firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).on("value", snapshot => {
