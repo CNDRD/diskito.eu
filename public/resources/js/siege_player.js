@@ -291,6 +291,7 @@ function updateHeader(d) {
 function updateSeasonalCard(d) {
   let r = d.seasonal.ranked;
   let c = d.seasonal.casual;
+  let w = d.seasonal.deathmatch;
   let e = d.seasonal.events;
 
   $("#season").text(getSeasonNameFromNumber(r.season));
@@ -327,6 +328,18 @@ function updateSeasonalCard(d) {
   $("#seasonal_wl_casual").text((c.wins + c.losses) == 0 ? 0 : `${roundTwo(c.wins / (c.wins + c.losses) * 100)}%`);
   $("#seasonal_games_casual").text((c.wins + c.losses) == 0 ? 0 : addSpaces(c.wins + c.losses));
 
+  // _casual
+  $("#next_rank_mmr_deathmatch").text(addSpaces(getNextRankMMR(w.mmr, w.season)));
+  $("#prev_rank_mmr_deathmatch").text(addSpaces(getPrevRankMMR(w.mmr, w.season)));
+  $("#current_rank_mmr_deathmatch").text(addSpaces(w.mmr));
+  $("#current_rank_name_deathmatch").text(w.rank);
+  $("#current_rank_img_deathmatch").attr("src", getRankImageFromMMR(w.mmr, w.season));
+  $("#last_mmr_change_deathmatch").text(w.last_mmr_change);
+  $("#last_mmr_change_deathmatch").addClass(w.last_mmr_change >= 0 ? (w.last_mmr_change == 0 ? "" : "text-success") : "text-danger");
+  $("#seasonal_kd_deathmatch").text(w.deaths == 0 ? 0 : roundTwo(w.kills / w.deaths));
+  $("#seasonal_wl_deathmatch").text((w.wins + w.losses) == 0 ? 0 : `${roundTwo(w.wins / (w.wins + w.losses) * 100)}%`);
+  $("#seasonal_games_deathmatch").text((w.wins + w.losses) == 0 ? 0 : addSpaces(w.wins + w.losses));
+
   // _event
   $("#next_rank_mmr_event").text(addSpaces(getNextRankMMR(e.mmr, e.season)));
   $("#prev_rank_mmr_event").text(addSpaces(getPrevRankMMR(e.mmr, e.season)));
@@ -343,6 +356,13 @@ function updateSeasonalQueueCard(d) {
 
   for (let name in d.seasonal) {
     let data = d.seasonal[name];
+
+    if (data.wins === 0 && data.losses === 0 && name != "ranked") {
+      console.log(name);
+      $(`#sqs-${name}`).hide();
+      $(`#sqs-${name}-page`).hide();
+      $(`#seasonal-${name}-parent`).hide();
+    }
 
     let kd = data.deaths == 0 ? 0 : roundTwo(data.kills / data.deaths);
     let wl = (data.wins + data.losses) == 0 ? 0 : roundTwo(data.wins / (data.wins + data.losses) * 100)

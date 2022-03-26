@@ -39,26 +39,26 @@
   <body>
 
     <nav class="navbar">
-        <div class="branding">
-          <a href="/"><span id="dvojbodka">:</span>Diskíto</a>
+      <div class="branding">
+        <a href="/"><span id="dvojbodka">:</span>Diskíto</a>
+      </div>
+      <div class="navigation">
+        <a href="/totals">Totals</a>
+        <a href="/leaderboards">Leaderboards</a>
+        <a href="/siege">Siege</a>
+        <a href="/voice">Voice</a>
+        <a href="/quotes">Quotes</a>
+      </div>
+      <div class="at-right">
+        <div class="join-button">
+          <a target="_blank" rel="noreferrer" href="https://discord.com/invite/sXDbtp4">Join</a>
         </div>
-        <div class="navigation">
-          <a href="/totals">Totals</a>
-          <a href="/leaderboards">Leaderboards</a>
-          <a href="/siege">Siege</a>
-          <a href="/voice">Voice</a>
-          <a href="/quotes">Quotes</a>
-        </div>
-        <div class="at-right">
-          <div class="join-button">
-            <a target="_blank" rel="noreferrer" href="https://discord.com/invite/sXDbtp4">Join</a>
-          </div>
-          <div id="theme-switch" class="theme-switch">🌑</div>
-        </div>
+        <div id="theme-switch" class="theme-switch">🌑</div>
+      </div>
     </nav>
     <nav class="navbar-mobile">
-    <div id="menu">MENU</div>
-    <div id="hidden">
+      <div id="menu">MENU</div>
+      <div id="hidden">
         <div id="first">
         <div id="mobile-theme-switch" class="theme-switch">Dark Mode</div>
         <a href="/">Home</a>
@@ -69,7 +69,7 @@
         <a href="/voice">Voice Stats</a>
         <a href="/quotes">Quotes</a>
         <a target="_blank" rel="noreferrer" href="https://discord.com/invite/sXDbtp4">Discord Invite Link</a>
-    </div>
+      </div>
     </nav>
 
     <div class="main">
@@ -124,6 +124,7 @@
               <div id="sqs" class="pls-no-click margin-1-top">
                 <div id="sqs-ranked" class="sqs-button siege-font-normal">Ranked</div>
                 <div id="sqs-casual" class="sqs-button siege-font-normal margin-1-left">Casual</div>
+                <div id="sqs-deathmatch" class="sqs-button siege-font-normal margin-1-left">Deathmatch</div>
                 <div id="sqs-events" class="sqs-button siege-font-normal margin-1-left">Event</div>
               </div>
 
@@ -185,6 +186,30 @@
 
                   </div>
                 </div>
+                <!-- Deathmatch -->
+                <div id="sqs-deathmatch-page" class="sqs-page" hidden>
+                  <div class="child-width-1-1 flex-wrap">
+
+                    <div class="flex-col-cen-mid">
+                      <div class="flex-col-cen-mid">
+                        <span class="text-nowrap" id="next_rank_mmr_deathmatch">0</span>
+                        <img style="height: 8rem" id="current_rank_img_deathmatch" src="https://i.imgur.com/RpPdtbU.png" uk-img />
+                        <span class="text-nowrap" id="prev_rank_mmr_deathmatch">0</span>
+                      </div>
+                      <span class="text-nowrap siege-font-normal" id="current_rank_name_deathmatch">
+                        Unranked
+                      </span>
+                      <span class="margin-1-top text-nowrap">
+                        Current MMR
+                      </span>
+                      <div class="flex-row-nowrap-cent-mid">
+                        <i class="text-nowrap margin-1-right siege-font-normal" id="last_mmr_change_deathmatch">±0</i>
+                        <span class="text-nowrap siege-font-medium" id="current_rank_mmr_deathmatch">0</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
                 <!-- Events -->
                 <div id="sqs-events-page" class="sqs-page" hidden>
                   <div class="child-width-1-1 flex-wrap">
@@ -216,72 +241,103 @@
             <!-- Queue Card -->
             <div id="queue-card" class="card width-full-mobile">
 
-              <div class="flex-row-base-between">
-                <h4 class="text-large margin-0-y siege-font-medium">Ranked stats</h4>
+              <div id="seasonal-ranked-parent">
+                <div class="flex-row-base-between">
+                  <h4 class="text-large margin-0-y siege-font-medium">Ranked stats</h4>
+                </div>
+                <hr />
+                <div class="child-width-1-4 flex-nowrap">
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="ranked_kd">0.00</span>
+                    <span>KD</span>
+                  </div>
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="ranked_kills_deaths">0</span>
+                    <span>K / D</span>
+                  </div>
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="ranked_wl">0</span>
+                    <span>WL</span>
+                  </div>
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="ranked_win_lose">0</span>
+                    <span>W / L</span>
+                  </div>
+                </div>
               </div>
-              <hr />
-              <div class="child-width-1-4 flex-nowrap">
-                <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="ranked_kd">0.00</span>
-                  <span>KD</span>
+              
+              <div id="seasonal-casual-parent">
+                <div class="flex-row-base-between">
+                  <h4 class="text-large margin-0-bottom siege-font-medium">Casual stats</h4>
                 </div>
-                <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="ranked_kills_deaths">0</span>
-                  <span>K / D</span>
-                </div>
-                <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="ranked_wl">0</span>
-                  <span>WL</span>
-                </div>
-                <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="ranked_win_lose">0</span>
-                  <span>W / L</span>
+                <hr />
+                <div class="child-width-1-4 flex-nowrap">
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="casual_kd">0.00</span>
+                    <span>KD</span>
+                  </div>
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="casual_kills_deaths">0</span>
+                    <span>K / D</span>
+                  </div>
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="casual_wl">0</span>
+                    <span>WL</span>
+                  </div>
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="casual_win_lose">0</span>
+                    <span>W / L</span>
+                  </div>
                 </div>
               </div>
 
-              <div class="flex-row-base-between">
-                <h4 class="text-large margin-0-bottom siege-font-medium">Casual stats</h4>
-              </div>
-              <hr />
-              <div class="child-width-1-4 flex-nowrap">
-                <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="casual_kd">0.00</span>
-                  <span>KD</span>
+              <div id="seasonal-deathmatch-parent">
+                <div class="flex-row-base-between">
+                  <h4 class="text-large margin-0-bottom siege-font-medium">Deathmatch stats</h4>
                 </div>
-                <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="casual_kills_deaths">0</span>
-                  <span>K / D</span>
-                </div>
-                <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="casual_wl">0</span>
-                  <span>WL</span>
-                </div>
-                <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="casual_win_lose">0</span>
-                  <span>W / L</span>
+                <hr />
+                <div class="child-width-1-4 flex-nowrap">
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="deathmatch_kd">0.00</span>
+                    <span>KD</span>
+                  </div>
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="deathmatch_kills_deaths">0</span>
+                    <span>K / D</span>
+                  </div>
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="deathmatch_wl">0</span>
+                    <span>WL</span>
+                  </div>
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="deathmatch_win_lose">0</span>
+                    <span>W / L</span>
+                  </div>
                 </div>
               </div>
 
-              <div class="flex-row-base-between">
-                <h4 class="text-large margin-0-bottom siege-font-medium">Event stats</h4>
-              </div>
-              <hr />
-              <div class="child-width-1-4 flex-nowrap">
-                <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="events_kd">0.00</span>
-                  <span>KD</span>
+              <div id="seasonal-events-parent">
+                <div class="flex-row-base-between">
+                  <h4 class="text-large margin-0-bottom siege-font-medium">Event stats</h4>
                 </div>
-                <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="events_kills_deaths">0</span>
-                  <span>K / D</span>
-                </div>
-                <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="events_wl">0</span>
-                  <span>WL</span>
-                </div>
-                <div class="flex-col-cen-mid">
-                  <span class="text-nowrap text-large siege-font-normal" id="events_win_lose">0</span>
-                  <span>W / L</span>
+                <hr />
+                <div class="child-width-1-4 flex-nowrap">
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="events_kd">0.00</span>
+                    <span>KD</span>
+                  </div>
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="events_kills_deaths">0</span>
+                    <span>K / D</span>
+                  </div>
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="events_wl">0</span>
+                    <span>WL</span>
+                  </div>
+                  <div class="flex-col-cen-mid">
+                    <span class="text-nowrap text-large siege-font-normal" id="events_win_lose">0</span>
+                    <span>W / L</span>
+                  </div>
                 </div>
               </div>
 
