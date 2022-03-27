@@ -110,6 +110,7 @@ firebase.database().ref(`voice/${currentYear}/in`).on('value', (snapshot) => {
   if (snapshot.val() != null) {
     $("#voice").show();
     
+    let uTS = Math.floor(Date.now() / 1000);
     let inVoice = [];
     let todayFromDB = 0;
 
@@ -119,16 +120,15 @@ firebase.database().ref(`voice/${currentYear}/in`).on('value', (snapshot) => {
 
     /* Connect usernames with timestamps */
     snapshot.forEach(childSnapshot => {
+      todayFromDB += (uTS - childSnapshot.val());
+
       firebase.database().ref(`users/${childSnapshot.key}/username`).once("value").then(usernameSnapshot => {
-        firebase.database().ref(`widget/${childSnapshot.key}/voice`).once("value").then(widgetSnapshot => {
 
-          inVoice.push({
-            username: usernameSnapshot.val(),
-            userTimestamp: childSnapshot.val(),
-            voice: widgetSnapshot.val(),
-          });
-
+        inVoice.push({
+          username: usernameSnapshot.val(),
+          userTimestamp: childSnapshot.val(),
         });
+
       });
     });
 
