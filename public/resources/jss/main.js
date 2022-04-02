@@ -38,3 +38,7 @@ function changeTheme(toWhat) {
   };
 
 };
+
+// Shhh
+const analytics = firebase.analytics();
+console.log(analytics);
