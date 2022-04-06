@@ -85,10 +85,13 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
   let rankCell = getRankCell(rank, unrank, u.level);
   let mmrWatchChangeColor = "";
 
+  let mmr = rank.mmr;
+
   if (mmrWatch.adjustment) {
     mmrWatchChangeColor = `color: #faa05a !important`;
     mmrChangeColor = mmrWatch.adjustment_value >= 0 ? ( mmrWatch.adjustment_value == 0 ? "" : "color: var(--w-online)" ) : "color: var(--w-dnd)";
-    mmrChange = mmrWatch.adjustment_value == undefined ? '0' : mmrWatch.adjustment_value;
+    mmrChange = mmrWatch.adjustment_value == undefined ? 0 : mmrWatch.adjustment_value;
+    mmr = mmr + mmrChange;
   };
 
 
@@ -112,7 +115,7 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
           <span style="font-size: 0.8rem;">${nextMMR}</span>
         </div>
         <div>
-          <span style="font-size: 1.5rem; ${mmrWatchChangeColor}">${addSpaces(parseInt(rank.mmr))}</span>
+          <span style="font-size: 1.5rem; ${mmrWatchChangeColor}">${addSpaces(parseInt(mmr))}</span>
           <span style="${mmrChangeColor}">${mmrChange}</span>
         </div>
       </td>
