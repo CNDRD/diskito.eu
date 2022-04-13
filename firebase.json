@@ -6,6 +6,13 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "redirects": [
+      {
+        "source": "/discord",
+        "destination": "https://discord.com/invite/sXDbtp4",
+        "type": 302
+      }
     ]
   }
 }
