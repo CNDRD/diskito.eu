@@ -2,7 +2,7 @@
 
 # Diskíto Website Repo
 
-### [diskito.eu](https://diskito.eu) | [Diskíto](https://discord.com/invite/sXDbtp4)
+### [diskito.eu](https://diskito.eu) | [Diskíto](https://diskito.eu/discord)
 
 
 Old designs:  
