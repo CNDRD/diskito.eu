@@ -35,8 +35,10 @@ firebase.database().ref(`GameStats/R6Sv${VERSION}/main_data`).once("value").then
 
 firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").then(snapshot => {
   last_update = snapshot.val();
+  
+  $("#lastUpdated").attr("aria-label", getTimeString(last_update));
 
-  let lastUpdateInterval = setInterval(function () {
+  setInterval(() => {
     let now = parseInt(Date.now() / 1000);
     let diff = now - last_update;
 
@@ -68,7 +70,6 @@ function getUpdateTimeString(s) {
 
   return msg
 };
-
 
 function getStatsRow(u, clown, mmrWatch, unrank=false) {
   let rank = u.ranked;
@@ -120,10 +121,14 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
         </div>
       </td>
       <td>
-        ${kd}
+        <span style="cursor: pointer;" class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(rank.kills)} / ${addSpaces(rank.deaths)}">
+          ${kd}
+        </span>
       </td>
       <td>
-        ${wl}%
+        <span style="cursor: pointer;" class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(rank.wins)} / ${addSpaces(rank.losses)}">
+          ${wl}%
+        </span>
       </td>
       <td class="hidden-mobile">
         <div class="uk-flex uk-flex-row uk-flex-middle">
@@ -132,7 +137,9 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
         </div>
       </td>
       <td class="hidden-mobile" sorttable_customkey="${u.totalPlaytime}">
-        ${playtime}
+        <span style="cursor: pointer;" class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(u.totalPlaytime)} seconds">
+          ${playtime}
+        </span>
       </td>
     </tr>
   `;
@@ -164,6 +171,15 @@ function getPlaytime(s) {
   minutes = Math.floor(s / 60);
   seconds = s % 60;
   return [hours, minutes, seconds]
+};
+
+function getTimeString(ts) {
+  let options = {
+    year: "numeric", month: "long", day: "2-digit",
+    hour: "2-digit", minute: "2-digit", second: "2-digit",
+    hour12: false,
+  };
+  return new Date(ts*1000).toLocaleDateString("en-US", options);
 };
 
 $(document).ready(function(){

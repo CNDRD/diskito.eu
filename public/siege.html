@@ -19,6 +19,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
 
+    <!-- Hint.css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css">
+
     <!-- Custom CSS & JS -->
     <link rel="stylesheet" href="/resources/css/normalize.css" />
     <link rel="stylesheet" href="/resources/css/main.css" />
@@ -82,7 +85,11 @@
 
         <div class="right">
           <div>
-            Last update: <span id="lastUpdated">???</span> ago
+            Last update:
+            <span id="lastUpdated"style="cursor: pointer;" class="hint--top hint--rounded hint--no-arrow">
+              ???
+            </span>
+            ago
           </div>
           <div id="siegeManualUpdateButton" class="pls-no-click" style="opacity: 0;">
             🔁Request Update
