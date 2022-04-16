@@ -4,15 +4,20 @@ if (theme) { changeTheme(theme); }
 
 $(document).ready(function(){
 
-  $("#menu").click(function(){
-    $("#hidden").slideToggle(150);
-  });
+  $("#menu").click(() => toggleMobileNavbar());
+  $("#restt").click(() => toggleMobileNavbar());
 
   $(".theme-switch").click(function(){
     changeTheme(this.innerHTML);
   });
 
 });
+
+
+function toggleMobileNavbar() {
+  $("#hidden").slideToggle(150);
+  $("#restt").fadeToggle(150);
+};
 
 function changeTheme(toWhat) {
   
@@ -41,4 +46,3 @@ function changeTheme(toWhat) {
 
 // Shhh
 const analytics = firebase.analytics();
-console.log(analytics);

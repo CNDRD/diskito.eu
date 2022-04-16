@@ -157,6 +157,9 @@ body {
 .navbar-mobile {
     display: none;
 }
+#restt {
+    display: none;
+}
 
 @media (max-width: 1000px) {
     .navbar {
@@ -170,6 +173,15 @@ body {
         z-index: 100;
         box-shadow: 0 3px 6px 0 rgba(0,0,0,.2);
     }
+
+    #restt {
+        height: 100vh;
+        background: rgba(0, 0, 0, .1);
+        color: transparent;
+        z-index: 99;
+    }
+
+
     #menu {
         background: var(--background-color);
         color: var(--chaun-blue);
@@ -210,6 +222,7 @@ body {
     #hidden > a:last-child {
         color: var(--chaun-red);
         font-weight: 700;
+        box-shadow: 0 3px 6px 0 rgba(0,0,0,.2);
     }
 }
 
