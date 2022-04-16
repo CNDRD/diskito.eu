@@ -42,16 +42,22 @@ function getStatsDataRow(u, i) {
             ${reduceNameLength(u.username.split("#")[0])}
         </td>
         <td sorttable_customkey="${u.xp}" class="hidden-mobile">
-          ${u.level}
+            <span class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(u.xp)} XP">
+                ${u.level}
+            </span>
         </td>
         <td sorttable_customkey="${u.messages_count}">
             ${addSpaces(u.messages_count)}
         </td>
         <td sorttable_customkey="${u.currentYearVoice}">
-            ${getOneTime(u.currentYearVoice)}h
+            <span class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(u.currentYearVoice)} seconds">
+                ${getOneTime(u.currentYearVoice)}h
+            </span>
         </td>
         <td sorttable_customkey="${u.money}" class="hidden-mobile">
-            ${abbreviateNumber(u.money)}
+            <span class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(u.money)} shekels">
+                ${abbreviateNumber(u.money)}
+            </span>
         </td>
         <td sorttable_customkey="${u.reacc_points}" class="hidden-mobile">
             ${addSpaces(u.reacc_points)}
