@@ -51,7 +51,7 @@ function widgetSpotify(activities) {
     <div style="margin-left: 7px;">
       <a target="_blank" rel="noreferrer" href="${activities.spotify.url}"
          class="hint--left hint--rounded hint--no-arrow" aria-label="${activities.spotify.artist} - ${activities.spotify.title}">
-        <img src="/resources/svg/spotify.svg" width=17 height=17 />
+        <img src="/resources/svg/spotify.svg" width=17 height=17 alt="Spotify" />
       </a>
     </div>`;
   return spotify
