@@ -212,9 +212,5 @@ function getVoiceTime(s) {
   return `${hours}:${minutes}:${seconds}`;
 };
 function getTodayFirebaseString() {
-  let dateObj = (new Date()).toLocaleString('cs-CZ', { year:'numeric',month:'numeric',day:'numeric' }).split('.');
-  let year = dateObj[2];
-  let month = dateObj[1];
-  let day = dateObj[0];
-  return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`.replaceAll(' ','')
+  return new Date().toLocaleString("cs-CZ", { year:"numeric", month:"2-digit", day:"2-digit" }).replace(". ", "-").replace(". ", "-");
 };
