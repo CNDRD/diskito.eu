@@ -39,7 +39,9 @@ function getStatsDataRow(u, i) {
             <img style="height: 3rem;" src="${u.avatar_url}" />
         </td>
         <td class="name">
-            ${reduceNameLength(u.username.split("#")[0])}
+            <a href="/user?id=${u.discordID}">
+                ${reduceNameLength(u.username.split("#")[0])}
+            </a>
         </td>
         <td sorttable_customkey="${u.xp}" class="hidden-mobile">
             <span class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(u.xp)} XP">

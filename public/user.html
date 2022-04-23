@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class="pretty-scrollbar" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Loads of stats and other things about the Diskíto Discord server.">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Firebase JS -->
+    <script src="/__/firebase/8.7.1/firebase-app.js"></script>
+    <script src="/__/firebase/8.7.1/firebase-database.js"></script>
+    <script src="/__/firebase/8.7.1/firebase-analytics.js"></script>
+    <script src="/__/firebase/init.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS & JS -->
+    <link rel="stylesheet" href="/resources/css/normalize.css" />
+    <link rel="stylesheet" href="/resources/css/main.css" />
+    <link rel="stylesheet" href="/resources/css/user.css" />
+    <script defer src="/resources/jss/myFunctions.js" charset="utf-8"></script>
+
+    <script defer src="/resources/jss/main.js" charset="utf-8"></script>
+    <script src="/resources/js/user.js" charset="utf-8"></script>
+
+    <title>Diskíto</title>
+    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
+
+  </head>
+  <body>
+
+    <nav class="navbar">
+      <div class="branding">
+        <a href="/"><span id="dvojbodka">:</span>Diskíto</a>
+      </div>
+      <div class="navigation">
+        <a href="/totals">Totals</a>
+        <a href="/leaderboards">Leaderboards</a>
+        <a href="/siege">Siege</a>
+        <a href="/voice">Voice</a>
+        <a href="/quotes">Quotes</a>
+      </div>
+      <div class="at-right">
+        <div class="join-button">
+          <a target="_blank" rel="noreferrer" href="/discord">Join</a>
+        </div>
+        <div id="theme-switch" class="theme-switch">🌑</div>
+      </div>
+    </nav>
+    <nav class="navbar-mobile">
+      <div id="menu">MENU</div>
+      <div id="hidden">
+        <div id="first">
+          <div id="mobile-theme-switch" class="theme-switch">Dark Mode</div>
+          <a href="/">Home</a>
+        </div>
+        <a href="/totals">Server Totals</a>
+        <a href="/leaderboards">Leaderboards</a>
+        <a href="/siege">Siege</a>
+        <a href="/voice">Voice Stats</a>
+        <a href="/quotes">Quotes</a>
+        <a target="_blank" rel="noreferrer" href="/discord">Discord Invite Link</a>
+      </div>
+      <div id="restt"></div>
+    </nav>
+
+    <div class="center-container">
+
+        <div class="header">
+            <img id="pfp" src="" />
+            <div class="other">
+                <div id="username">Username</div>
+
+                <div id="spotify" hidden>
+                    <a id="spotify-link" href="">
+                        <img src="/resources/svg/spotify.svg" alt="Spotify" width="16" />
+                    </a>
+                    <div id="artist"></div> - <div id="title"></div>
+                </div>
+
+                <div id="activities"></div>
+
+                <div id="hypesquad"></div>
+
+                <div class="joined">
+                    <div>
+                        <div id="joined-diskito"></div>
+                        <div>Joined Diskíto</div>
+                    </div>
+                    <div>
+                        <div id="joined-discord"></div>
+                        <div>Joined Discord</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="cards" class="cards">
+
+            <div class="card">
+                <div class="statname">Level</div>
+                <div id="level" class="statvalue"></div>
+            </div>
+            <div class="card">
+                <div class="statname">XP</div>
+                <div id="xp" class="statvalue"></div>
+            </div>
+            <div class="card">
+                <div class="statname">Shekels</div>
+                <div id="shekels" class="statvalue"></div>
+            </div>
+            <div class="card">
+                <div class="statname">Messages</div>
+                <div id="messages" class="statvalue"></div>
+            </div>
+            <div class="card">
+                <div class="statname">Reaction Points</div>
+                <div id="rp" class="statvalue"></div>
+            </div>
+            <div id="avg-cicina-card" class="card">
+                <div class="statname">Average Cicina</div>
+                <div id="avg-cicina" class="statvalue"></div>
+            </div>
+            <div id="longest-cicina-card" class="card">
+                <div class="statname">Longest Cicina</div>
+                <div id="longest-cicina" class="statvalue"></div>
+            </div>
+            <div id="cicina-tries-card" class="card">
+                <div class="statname">Cicina Tries</div>
+                <div id="cicina-tries" class="statvalue"></div>
+            </div>
+            <div id="total-voice-card" class="card">
+                <div class="statname">Total Voice</div>
+                <div id="total-voice" class="statvalue"></div>
+            </div>
+
+            
+        </div>
+
+    </div>
+
+  </body>
+  
+</html>
