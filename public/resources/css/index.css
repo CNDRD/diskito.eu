@@ -14,7 +14,7 @@ body .main {
 }
 
 body .main .section {
-    height: 20rem;
+    height: 22rem;
     margin-top: 5rem;
     padding-left: 1rem;
     border-left: 5px solid var(--chaun-red);
