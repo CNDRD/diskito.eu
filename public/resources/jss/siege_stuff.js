@@ -221,6 +221,12 @@ let seasonsDict = {
     hex: "#ffb52c",
     code: "Y7S1",
     startDate: "2022-03-15"
+  },
+  26: {
+    name: "Vector Glare",
+    hex: "#60cdb0",
+    code: "Y7S2",
+    startDate: "2022-06-14"
   }
 };
 
