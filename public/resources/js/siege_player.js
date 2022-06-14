@@ -1,5 +1,7 @@
 let id = new URLSearchParams(window.location.search).get("id");
-let VERSION = 11;
+
+let ver = new URLSearchParams(window.location.search).get("ver");
+let VERSION = ver == undefined ? 11 : ver;
 
 firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").then(snapshot => {
   $("#lastUpdatedText").text(diff_minutes(new Date(snapshot.val() * 1000), new Date()));

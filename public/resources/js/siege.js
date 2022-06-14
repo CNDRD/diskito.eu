@@ -1,5 +1,6 @@
+let ver = new URLSearchParams(window.location.search).get("ver");
+let VERSION = ver == undefined ? 11 : ver;
 
-let VERSION = 11;
 let RANKED_LEVEL_TRESHOLD = 50;
 
 
