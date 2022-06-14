@@ -314,7 +314,7 @@ function updateSeasonalCard(d) {
   $("#seasonal_wl").text((r.wins + r.losses) == 0 ? 0 : `${roundTwo(r.wins / (r.wins + r.losses) * 100)}%`);
   $("#seasonal_games").text((r.wins + r.losses) == 0 ? 0 : addSpaces(r.wins + r.losses));
 
-  $("#max_mmr").text(`${addSpaces(parseInt(r.max_mmr))} MMR`);
+  $("#max_mmr").text(`${addSpaces(parseInt(r.max_mmr === -1 ? 0 : r.max_mmr))} MMR`);
   $("#max_mmr_name").text(r.max_rank);
   $("#max_rank_img").attr("src", getRankImageFromMMR(r.max_mmr, r.season));
 
