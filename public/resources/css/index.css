@@ -121,6 +121,8 @@ body .main .section.voice .header {
     font-size: 3rem;
     margin-bottom: 1rem;
 }
+
+
 body .main .section.voice #voice-stats {
     height: 100%;
     display: flex;
@@ -131,34 +133,32 @@ body .main .section.voice #voice-stats {
 body .main .section.voice #voice-stats .voice-lines {
     width: 100%;
     display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: .5rem 0 .5rem 0;
-}
-body .main .section.voice #voice-stats .voice-lines > .user {
-    width: 45%;
+    flex-flow: column wrap;
+    padding: 0.5rem 0 0.5rem 0;
+    align-content: center;
 }
 body .main .section.voice #voice-stats .user {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
     font-weight: 500;
-    font-size: 2rem;
+    font-size: 1.7rem;
 }
 body .main .section.voice #voice-stats .username {
     font-weight: 500;
-    font-size: 2rem;
+    margin-right: 1rem;
 }
 body .main .section.voice #voice-stats .time {
     font-weight: 400;
-    font-size: 2rem;
 }
 body .main .section.voice #voice-stats .voice-total {
     width: 100%;
     display: flex;
     flex-flow: row wrap;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+}
+body .main .section.voice #voice-stats .voice-total .user {
+    font-size: 1.8rem;
 }

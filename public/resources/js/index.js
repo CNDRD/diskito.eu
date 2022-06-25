@@ -160,6 +160,7 @@ firebase.database().ref(`voice/${currentYear}/in`).on('value', (snapshot) => {
 
 function replaceTimes(rtData) {
   let ppl = rtData.currentlyInVoice.length == 1 ? "User" : "Users";
+  let seshAndTodaySame = rtData.totalSessionSeconds == rtData.totalVoiceSecondsToday;
   let xd = `
   <div id="voice-stats">
 
@@ -172,7 +173,7 @@ function replaceTimes(rtData) {
     </div>
 
     <div class="voice-total">
-      <div class="user">
+      <div class="user" ${seshAndTodaySame ? 'style="display:none;"' : ""}">
         <div class="username">Session</div>
         <div class="time">${getVoiceTime(rtData.totalSessionSeconds)}</div>
       </div>
