@@ -43,9 +43,17 @@
     margin-bottom: 1rem;
 }
 
+.money-totals .or {
+    margin-top: .3rem;
+    font-size: 1.2rem;
+}
+
 @media (max-width: 1000px) {
-    .voice-totals {
+    .stats-container > *:not(:first-of-type) {
         margin-top: 2rem;
+    }
+    .stats-container > *:last-of-type {
+        margin-bottom: 2rem;
     }
     .center-container {
         margin-top: 4rem;

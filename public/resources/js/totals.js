@@ -3,6 +3,12 @@ let currentYear = new Date().getFullYear()
 let currrentTimeInVoice = 0;
 let usersInVoiceCount = 0;
 
+
+firebase.database().ref("moneyTotals").on("value", moneySnapshot => {
+  replaceMoney(moneySnapshot.val());
+});
+
+
 firebase.database().ref(`voice/${currentYear}/in`).once("value").then(snapshot => {
 
   snapshot.forEach(childSnapshot => {
@@ -52,6 +58,13 @@ function replaceVoice(tv) {
   $('#minutes').text(addSpaces(Math.round((tv/60)*10)/10));
   $('#hours').text(addSpaces(Math.round((tv/60/60)*10)/10));
   $('#days').text(addSpaces(Math.round((tv/60/60/24)*10)/10));
+};
+function replaceMoney(money) {
+  $('#claim').text(addSpaces(money.claim, ","));
+  $('#blackjack_bet').text(addSpaces(money.blackjack_bet, ","));
+  $('#blackjack_winnings').text(addSpaces(money.blackjack_winnings, ","));
+  $('#slots_bet').text(addSpaces(money.slots_bet, ","));
+  $('#slots_winnings').text(addSpaces(money.slots_winnings, ","));
 };
 
 
