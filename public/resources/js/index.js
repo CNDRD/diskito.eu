@@ -6,7 +6,9 @@ firebase.database().ref("widget").on("value", snapshot => {
     let user = childSnapshot.val();
     if (user.status == "offline") { return }
 
-    let a = `
+    let on_mobile = user.is_on_mobile ? "📱" : "";
+
+    $("#widget").append(`
       <!-- ${user.username} -->
       <div class="user">
         <div class="us">
@@ -19,9 +21,10 @@ firebase.database().ref("widget").on("value", snapshot => {
           ${widgetVoiceIcons(user.voice)}
           ${widgetSpotify(user.activities)}
           ${getWidgetActivity(user.activities)}
+          ${on_mobile}
         </div>
-      </div>`;
-    $("#widget").append(a);
+      </div>
+    `);
 
     nowOnline++;
   });
@@ -161,7 +164,8 @@ firebase.database().ref(`voice/${currentYear}/in`).on('value', (snapshot) => {
 function replaceTimes(rtData) {
   let ppl = rtData.currentlyInVoice.length == 1 ? "User" : "Users";
   let seshAndTodaySame = rtData.totalSessionSeconds == rtData.totalVoiceSecondsToday;
-  let xd = `
+
+  $("#voice-stats").replaceWith(`
   <div id="voice-stats">
 
     <div class="header">
@@ -184,8 +188,7 @@ function replaceTimes(rtData) {
     </div>
 
   </div>
-  `;
-  $("#voice-stats").replaceWith(xd);
+  `);
 };
 function getVoiceUserLines(rtData) {
   let xd = "";
