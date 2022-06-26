@@ -12,8 +12,6 @@ if (userid != null) {
             $("#bot_developer").replaceWith(`<img id="bot_developer" src="/resources/svg/verified_bot_developer.svg" width=22 height=22 />`);
         }
 
-        console.log(user);
-
         $("#pfp").attr("src", user.avatar_url);
         $("#username").text(user.username.split("#")[0]);
         $("#level").text(user.level);
@@ -58,7 +56,7 @@ if (userid != null) {
         let w = snapshot.val();
         let activities = "";
 
-        console.log(w);
+        $("#pfp").attr("style", `border-right: 10px solid var(--${ w.status == "offline" ? "gray" : ( "w-" + w.status ) });`)
 
         if (w.activities.spotify != "none" && w.activities.spotify != undefined) {
             $("#artist").text(w.activities.spotify.artist);
