@@ -16,6 +16,7 @@
     font-size: 2rem;
 }
 #main > #nfts {
+    max-width: 1300px;
     margin-top: 2rem;
     display: flex;
     flex-flow: row wrap;
@@ -23,6 +24,7 @@
     justify-content: space-evenly;
 }
 #main > #nfts > img {
+    margin: 1rem;
     width: 15rem;
     will-change: transform;
     transition: transform 250ms ease;
