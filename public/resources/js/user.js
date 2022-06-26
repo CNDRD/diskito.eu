@@ -82,6 +82,8 @@ if (userid != null) {
                 else { activities += `, ${activity}`; }
             });
             $("#activities").text(activities);
+        } else {
+            $("#activities").hide();
         }
 
         if (w.house != "none" && w.house != undefined) {
