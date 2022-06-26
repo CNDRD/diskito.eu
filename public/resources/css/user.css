@@ -35,9 +35,15 @@
     margin-left: .5rem;
 }
 
+#badges {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
 #spotify,
-#activities,
-#hypesquad {
+#activities {
     margin-bottom: .25rem;
 }
 

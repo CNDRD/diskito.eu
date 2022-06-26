@@ -8,7 +8,11 @@ if (userid != null) {
     firebase.database().ref(`users/${userid}`).on("value", snapshot => {
         let user = snapshot.val();
 
-        checkAndHideMissing(user);
+        if (userid == 210471447649320970n) {
+            $("#bot_developer").replaceWith(`<img id="bot_developer" src="/resources/svg/verified_bot_developer.svg" width=22 height=22 />`);
+        }
+
+        console.log(user);
 
         $("#pfp").attr("src", user.avatar_url);
         $("#username").text(user.username.split("#")[0]);
@@ -32,12 +36,14 @@ if (userid != null) {
         if (!user.all_time_total_voice) { $("#total-voice-card").hide(); }
         else { $("#total-voice").text(`${addSpaces(secondsToHours(user.all_time_total_voice))}h`); }
         
+
+        $(".voice").remove();
         possibleVoiceYears.forEach(voiceYear => {
             let time = user[`voice_year_${voiceYear}`];
 
             if (time) {
                 $("#cards").append(`
-                    <div class="card">
+                    <div class="card voice">
                         <div class="statname">${voiceYear} Voice</div>
                         <div class="statvalue">${addSpaces(secondsToHours(time))}h</div>
                     </div>
@@ -52,6 +58,8 @@ if (userid != null) {
         let w = snapshot.val();
         let activities = "";
 
+        console.log(w);
+
         if (w.activities.spotify != "none" && w.activities.spotify != undefined) {
             $("#artist").text(w.activities.spotify.artist);
             $("#title").text(w.activities.spotify.title);
@@ -61,6 +69,14 @@ if (userid != null) {
             $("#spotify").hide();
         }
 
+        if (w.activities.custom != "none" && w.activities.custom != undefined) {
+            if ( w.activities.custom.emoji_url != "none" ) {
+                $("#custom_emote").replaceWith(`<img id="custom_emote" src="${w.activities.custom.emoji_url}" width=22 height=22 />`);
+            }
+            else if ( w.activities.custom.emoji_url == "none" && w.activities.custom.emoji_name != "none" ) {
+                $("#custom_emote").replaceWith(`<span id="custom_emote">${w.activities.custom.emoji_name}</span>`);
+            }
+        }
 
         if (w.activities.other) {
             w.activities.other.forEach(activity => {
@@ -71,8 +87,11 @@ if (userid != null) {
         }
 
         if (w.house != "none" && w.house != undefined) {
-            $("#hypesquad").text(`House ${capitalize(w.house)}`);
+            $("#hypesquad").replaceWith(`<img id="hypesquad" src="/resources/svg/hypesquad_${w.house}.svg" width=27 height=27 />`);
         }
+
+        if ( w.is_on_mobile ) { $("#on_mobile").replaceWith(`<img id="on_mobile" src="/resources/svg/on_mobile.svg" width=20 height=20 />`); }
+        else { $("#on_mobile").remove(); }
 
     });
 
@@ -97,12 +116,4 @@ function capitalize([first, ...rest]) {
 
 function range(size, startAt = 0) {
     return [...Array(size).keys()].map(i => i + startAt);
-};
-
-function checkAndHideMissing(user) {
-
-    console.log(user);
-
-    
-
 };
