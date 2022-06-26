@@ -16,7 +16,7 @@ if (userid != null) {
                 $("#h").text(`${snpsht.val().split("#")[0]}'s NFT Collection`);
             });
 
-            $("#bottom-text").text(`This collection is worth ${Object.keys(ids).length*10}K shekels`);
+            $("#bottom-text").text(`This collection is worth ₪${Object.keys(ids).length*10}K shekels`);
 
         }
     });

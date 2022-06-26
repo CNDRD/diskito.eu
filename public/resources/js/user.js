@@ -14,7 +14,7 @@ if (userid != null) {
         $("#username").text(user.username.split("#")[0]);
         $("#level").text(user.level);
         $("#xp").text(addSpaces(user.xp));
-        $("#shekels").text(addSpaces(user.money));
+        $("#shekels").text(`₪ ${addSpaces(user.money)}`);
         $("#messages").text(addSpaces(user.messages_count));
         $("#rp").text(addSpaces(user.reacc_points));
         $("#joined-diskito").text(stringDateFromTimestamp(user.joined_server*1000));

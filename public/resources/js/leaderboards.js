@@ -57,8 +57,8 @@ function getStatsDataRow(u, i) {
             </span>
         </td>
         <td sorttable_customkey="${u.money}" class="hidden-mobile">
-            <span class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(u.money)} shekels">
-                ${abbreviateNumber(u.money)}
+            <span class="hint--top hint--rounded hint--no-arrow" aria-label="₪ ${addSpaces(u.money)} shekels">
+                ₪ ${abbreviateNumber(u.money)}
             </span>
         </td>
         <td sorttable_customkey="${u.reacc_points}" class="hidden-mobile">
