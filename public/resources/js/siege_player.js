@@ -35,6 +35,10 @@ function seasonsPage(d) {
       mmr = maxMmr = 0;
     }
 
+    if ((s.wins + s.losses + s.abandons) === 0) {
+      continue;
+    }
+
     seasonsHTML += `
     <div class="seasonal-card card card-shadow-around no-hover width-1-1 margin-1-bottom"
          style="border-right: 1.7rem; border-style: none solid none none; border-color: ${getSeasonColorRGB(s.season)};">
@@ -77,7 +81,11 @@ function seasonsPage(d) {
     </div>`;
   };
 
-  $("#seasons-page").append(`<div class="flex-col-reverse">${seasonsHTML}</div>`);
+  if (seasonsHTML === "") {
+    $("#seasons").hide();
+  } else {
+    $("#seasons-page").append(`<div class="flex-col-reverse">${seasonsHTML}</div>`);
+  }
 };
 
 
