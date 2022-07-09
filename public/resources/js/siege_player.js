@@ -97,6 +97,7 @@ function operatorsPage(d) {
   OPS.sort(function (a, b) { return b.minutes_played - a.minutes_played });
 
   OPS.forEach(op => {
+    if (op.name === "Unknown Operator") { return; }
     $("#operator_table_body").append(getOperatorRow(op));
   });
 };
