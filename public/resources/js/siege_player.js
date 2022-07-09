@@ -156,7 +156,7 @@ function updateBestWeaponInStat(w, stat) {
   $(`#BWIS_${stat}_name`).text(w.name);
   $(`#BWIS_${stat}_kills`).text(w.kills);
   $(`#BWIS_${stat}_roundsPlayed`).text(w.rounds_played);
-  $(`#BWIS_${stat}_hsAcc`).text(roundTwo(w.hs_accuracy * 100));
+  $(`#BWIS_${stat}_hsAcc`).text(`${roundTwo(w.hs_accuracy * 100)}%`);
   $(`#BWIS_${stat}_image`).attr("src", w.imgur_url);
 };
 function getBestWeaponInStat(weapons, stat) {
