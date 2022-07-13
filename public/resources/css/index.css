@@ -82,10 +82,14 @@ body .main .section.widget .users .user .us {
     justify-content: flex-start;
 }
 body .main .section.widget .users .user .us .username {
+    text-decoration: none;
     padding-left: 5px;
     margin-right: 1rem;
     font-weight: 500;
     font-size: 1rem;
+}
+body .main .section.widget .users .user .us .username:hover {
+    text-decoration: underline var(--chaun-blue);
 }
 body .main .section.widget .users .user .us .status {
     position: relative;
@@ -104,6 +108,9 @@ body .main .section.widget .users .user .us .status.status-idle {
 }
 body .main .section.widget .users .user .us .status.status-dnd {
     background-color: var(--w-dnd);
+}
+body .main .section.widget .users .user .us .status.status-streaming {
+    background-color: var(--w-streaming);
 }
 body .main .section.widget .users .user .activity {
     display: flex;

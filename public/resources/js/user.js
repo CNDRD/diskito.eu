@@ -56,7 +56,10 @@ if (userid != null) {
         let w = snapshot.val();
         let activities = "";
 
-        $("#pfp").attr("style", `border-right: 10px solid var(--${ w.status == "offline" ? "gray" : ( "w-" + w.status ) });`)
+        let border_color = w.status == "offline" ? "gray" : ( "w-" + w.status );
+        border_color = w.streaming ? "w-streaming" : border_color; // change to purple in case of streaming
+        
+        $("#pfp").attr("style", `border-right: 10px solid var(--${border_color});`)
 
         if (w.activities.spotify != "none" && w.activities.spotify != undefined) {
             $("#artist").text(w.activities.spotify.artist);

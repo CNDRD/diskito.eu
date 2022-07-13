@@ -7,15 +7,16 @@ firebase.database().ref("widget").on("value", snapshot => {
     if (user.status == "offline") { return }
 
     let on_mobile = user.is_on_mobile ? "📱" : "";
+    let status = user.streaming ? "streaming" : user.status;
 
     $("#widget").append(`
       <!-- ${user.username} -->
       <div class="user">
         <div class="us">
-          <div class="status status-${user.status}"></div>
-          <div class="username">
+          <div class="status status-${status}"></div>
+          <a href="/user?id=${childSnapshot.key}" class="username">
             ${user.username}
-          </div>
+          </a>
         </div>
         <div class="activity">
           ${widgetVoiceIcons(user.voice)}
