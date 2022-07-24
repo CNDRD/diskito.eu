@@ -14,6 +14,14 @@ $(document).ready(function(){
 });
 
 
+// Should've done this a long time ago...
+// Shoves one navbar into all the pages
+$.get("/resources/html/navbar-links.html", (data) => {
+  $(data).insertBefore("#mobile-invite-link");
+  $(".navigation").append(data);
+});
+
+
 function toggleMobileNavbar() {
   $("#hidden").slideToggle(150);
   $("#restt").fadeToggle(150);
