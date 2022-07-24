@@ -10,6 +10,7 @@ body .main {
 @media (max-width: 1000px) {
     body .main {
         justify-content: flex-start;
+        margin-bottom: 2rem;
     }
 }
 
@@ -165,6 +166,7 @@ body .main .section.voice #voice-stats .voice-total {
     flex-flow: row wrap;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 1rem;
 }
 body .main .section.voice #voice-stats .voice-total .user {
     font-size: 1.8rem;
