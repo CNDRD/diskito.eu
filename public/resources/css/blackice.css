@@ -61,7 +61,7 @@
     opacity: 1;
 }
 
-.gun[data-gun="Le Roc"] {
+.gun[data-gun="Le Roc"] > img {
     filter: invert(100%);
 }
 
