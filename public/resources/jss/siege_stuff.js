@@ -227,6 +227,12 @@ let seasonsDict = {
     hex: "#60cdb0",
     code: "Y7S2",
     startDate: "2022-06-14"
+  },
+  27: {
+    name: "Brutal Swarm",
+    hex: "#dac924",
+    code: "Y7S3",
+    startDate: "2022-09-14"
   }
 };
 
