@@ -1,3 +1,6 @@
+:root {
+    --img-shadow: drop-shadow(5px 5px 5px rgba(131, 127, 127, 0.435));
+}
 
 #firebaseui-auth-container {
     margin-top: 25rem;
@@ -44,7 +47,7 @@
     transform: scale(1.05);
 }
 .gun.clicked > img {
-    filter: invert(100%);
+    filter: invert(100%) var(--img-shadow);
 }
 
 .gun::after {
@@ -61,12 +64,15 @@
     opacity: 1;
 }
 
-.gun[data-gun="Le Roc"] > img {
-    filter: invert(100%);
+.gun > img[data-gun="Le Roc"] {
+    filter: invert(100%) var(--img-shadow);
+}
+.gun.clicked > img[data-gun="Le Roc"] {
+    filter: var(--img-shadow);
 }
 
 .gun > img {
-    filter: drop-shadow(5px 5px 5px rgba(131, 127, 127, 0.435));
+    filter: var(--img-shadow);
     width: 15rem;
     -webkit-user-drag: none;
     -khtml-user-drag: none;
