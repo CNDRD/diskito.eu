@@ -6,7 +6,7 @@
 
 .header {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     align-items: center;
     justify-content: center;
     margin-bottom: 2rem;
@@ -88,4 +88,26 @@
 .card > .statvalue {
     font-size: 2rem;
     font-weight: bold;
+}
+
+
+@media (max-width: 1000px) {
+    .center-container {
+        width: 100%;
+    }
+
+    .cards {
+        margin-bottom: 2rem;
+    }
+    .card {
+        width: 40%;
+        margin: .25rem 0 .25rem 0;
+        padding: .5rem 0 .5rem 0;
+    }
+    .card > .statname {
+        font-size: 1rem;
+    }
+    .card > .statvalue {
+        font-size: 1.5rem;
+    }
 }
