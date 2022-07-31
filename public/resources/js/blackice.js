@@ -16,7 +16,8 @@ firebase.auth().onAuthStateChanged((user) => {
         $("#firebaseui-auth-container").hide();
 
         firebase.database().ref(`blackice/${firebase.auth().currentUser.uid}`).once('value').then( (snapshot) => {
-            all_clicked = Object.keys(snapshot.val());
+            let dbdata = snapshot.val();
+            all_clicked = dbdata ? Object.keys(dbdata) : [];
             generateSkins();
         });
         
