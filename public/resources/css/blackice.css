@@ -79,3 +79,16 @@
     -moz-user-drag: none;
     -o-user-drag: none;
 }
+
+@media (max-width: 1000px) {
+    #guns {
+        max-width: 100%;
+    }
+    .gun {
+        padding: 0 0 1rem 0;
+        margin: 0 0 .5rem 0;
+    }
+    .gun > img {
+        width: 10rem;
+    }
+}
