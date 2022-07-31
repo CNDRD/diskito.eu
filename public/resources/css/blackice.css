@@ -1,0 +1,75 @@
+
+#firebaseui-auth-container {
+    margin-top: 25rem;
+}
+
+
+#blackice {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#searchInput {
+    padding: 0;
+    font-size: 2rem;
+    line-height: 2;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    margin: .5rem 0 .5rem 0;
+}
+#searchInput:focus-visible {
+    outline: none;
+}
+
+#guns {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    max-width: 80%;
+    margin: 1.5rem 0 5rem 0;
+}
+.gun {
+    cursor: pointer;
+    transition: ease-in-out .2s;
+    padding: .75rem;
+    margin: .5rem;
+}
+.gun:hover {
+    transform: scale(1.1);
+}
+.gun:active {
+    transform: scale(1.05);
+}
+.gun.clicked > img {
+    filter: invert(100%);
+}
+
+.gun::after {
+    content: attr(data-gun);
+    position: absolute;
+    margin-top: .5rem;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+    transition: ease-in-out .15s;
+    opacity: 0;
+}
+.gun:hover::after {
+    opacity: 1;
+}
+
+.gun[data-gun="Le Roc"] {
+    filter: invert(100%);
+}
+
+.gun > img {
+    filter: drop-shadow(5px 5px 5px rgba(131, 127, 127, 0.435));
+    width: 15rem;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
