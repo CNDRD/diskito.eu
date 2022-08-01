@@ -1,5 +1,9 @@
 :root {
-    --img-shadow: drop-shadow(5px 5px 5px rgba(131, 127, 127, 0.435));
+    --img-shadow-size: 10px;
+    --img-shadow: drop-shadow(var(--img-shadow-size) var(--img-shadow-size) var(--img-shadow-size) rgba(131, 127, 127, 0.435));
+}
+.dark-mode {
+    --img-shadow: drop-shadow(var(--img-shadow-size) var(--img-shadow-size) var(--img-shadow-size) rgba(41, 40, 40, 0.435));
 }
 
 #firebaseui-auth-container {
