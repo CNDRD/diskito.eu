@@ -207,6 +207,10 @@
             "type": "Marksman Rifle",
             "silhouette": "https://i.imgur.com/QIpmJkI.png"
         },
+        "CAMRS": {
+            "type": "Marksman Rifle",
+            "silhouette": "https://i.imgur.com/jRgdhPK.png"
+        },
 
         "ACS12": {
             "type": "Shotgun",
