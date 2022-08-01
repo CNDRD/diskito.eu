@@ -23,6 +23,9 @@ a {
     border-radius: 0.2rem;
     box-shadow: rgb(99 99 99 / 40%) 4px 8px 16px 0px;
 }
+.dark-mode .game {
+    box-shadow: rgba(33, 32, 32, 0.4) 4px 8px 16px 0px;
+}
 .game:hover {
     transform: scale(1.02);
 }
