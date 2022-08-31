@@ -30,7 +30,7 @@ function countryCodeToFlag(cc) {
     HR: "5rYMZfhKKItdtUVRBLxZqm/79d895f738c7db6b742afcf041ddd612/flag-croatia.png",
     IE: "4ZTCTE7yj5Yp1NEaLL40f1/5f61da3cf0eff0666b769585ec2a9df4/flag-ireland.png"
   };
-  return `https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/${x[cc]}` || "Wrong code";
+  return `https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/${x[cc]}` || "Wrong country code";
 };
 function getUniqueAbilityImage(op) {
   return operatorDict[op].uniqueAbilityImageURL || "Wrong operator";

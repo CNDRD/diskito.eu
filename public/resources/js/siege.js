@@ -1,5 +1,5 @@
 let ver = new URLSearchParams(window.location.search).get("ver");
-let VERSION = ver == undefined ? 11 : ver;
+let VERSION = ver == undefined ? 12 : ver;
 
 let RANKED_LEVEL_TRESHOLD = 50;
 
@@ -89,7 +89,7 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
 
   let mmr = rank.mmr;
 
-  if (mmrWatch.adjustment) {
+  if (mmrWatch.adjustment_value != 0) {
     mmrWatchChangeColor = `color: #faa05a !important`;
     mmrChangeColor = mmrWatch.adjustment_value >= 0 ? ( mmrWatch.adjustment_value == 0 ? "" : "color: var(--w-online)" ) : "color: var(--w-dnd)";
     mmrChange = mmrWatch.adjustment_value == undefined ? 0 : mmrWatch.adjustment_value;

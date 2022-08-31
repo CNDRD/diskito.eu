@@ -1,7 +1,7 @@
 let id = new URLSearchParams(window.location.search).get("id");
 
 let ver = new URLSearchParams(window.location.search).get("ver");
-let VERSION = ver == undefined ? 11 : ver;
+let VERSION = ver == undefined ? 12 : ver;
 
 firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").then(snapshot => {
   $("#lastUpdatedText").text(diff_minutes(new Date(snapshot.val() * 1000), new Date()));
@@ -112,7 +112,7 @@ function getOperatorRow(op) {
       <div class="text-large siege-font-medium">${op.name}</div>
       <img class="margin-1-left hidden-mobile" src="${countryCodeToFlag(op.country_code)}" onerror="this.style.display='none'" />
     </div>
-    <div class="text-small hidden-mobile">${getSeasonNameFromCode(op.year_introduced)} | ${op.unit}</div>
+    <div class="text-small hidden-mobile">${getSeasonNameFromCode(op.season_introduced)} | ${op.unit}</div>
   `;
 
   return `
