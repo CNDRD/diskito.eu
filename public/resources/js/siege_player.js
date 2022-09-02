@@ -163,7 +163,7 @@ function updateBestWeaponInStat(w, stat) {
 function getBestWeaponInStat(weapons, stat) {
   let i = 0;
   weapons = weapons.sort(function (a, b) { return b[stat] - a[stat] });
-  while (weapons[i].headshots < 5 && weapons[i].kills < 5) { i++; }
+  while (weapons[i].headshots < 5 && weapons[i].kills < 5) { i++; if (i >= weapons.length) { return weapons[0]; } }
 
   return weapons[i];
 };
