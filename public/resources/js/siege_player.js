@@ -174,20 +174,37 @@ let theChart;
 let chartConfig;
 function trendsPage(d) {
   let allTrends = d.trends;
-  let labels = [];
+  let labels = {};
 
-  function getDefaultDataset(_label) {
-    const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
+  const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
+
+  let getDefaultScatterDataset = label_ => {
     return {
-      label: _label,
+      label: label_,
       backgroundColor: "rgba(194, 180, 122, 0.9)",
       borderColor: "rgba(194, 180, 122, 0.4)",
 
       pointStyle: "circle",
-      pointRadius: 7,
-      pointHoverRadius: 14,
+      pointRadius: 4,
+      pointHoverRadius: 6,
 
-      tension: 0.6,
+      showLine: false,
+
+      data: [],
+    };
+  };
+
+  let getDefaultLineDataset = label_ => {
+    return {
+      label: label_,
+      borderColor: "rgba(0, 180, 122, 0.6)",
+
+      pointStyle: "line",
+      pointRadius: 0,
+      pointHoverRadius: 0.1,
+
+      tension: 1,
+      cubicInterpolationMode: 'monotone',
 
       spanGaps: true,
       segment: {
@@ -199,70 +216,40 @@ function trendsPage(d) {
     };
   };
 
-  trendsDatasets["KD"] = getDefaultDataset("K / D");
-  trendsDatasets["WL"] = getDefaultDataset("W / L");
-  trendsDatasets["HS"] = getDefaultDataset("HS%");
-  trendsDatasets["MinutesPlayed"] = getDefaultDataset("Minutes Played");
-  trendsDatasets["MatchesPlayed"] = getDefaultDataset("Matches Played");
-  trendsDatasets["Aces"] = getDefaultDataset("Aces");
-  trendsDatasets["Revives"] = getDefaultDataset("Revives");
-  trendsDatasets["Assists"] = getDefaultDataset("Assists");
-  trendsDatasets["TeamKills"] = getDefaultDataset("Team Kills");
-  trendsDatasets["Trades"] = getDefaultDataset("Trades");
-  trendsDatasets["RoundsWithKOST"] = getDefaultDataset("Rounds With KOST");
-
-  for (trend in allTrends) {
-    let trendData = allTrends[trend];
-    labels.push(trend.replace(":", " 👉 "));
-
-    // When the value is null Chart.js can then show dashed lines in the graph
-    trendsDatasets["KD"]["data"].push(
-      trendData["kill_death_ratio"] != 0 ? trendData["kill_death_ratio"] : null
-    );
-    trendsDatasets["WL"]["data"].push(
-      trendData["win_loss_ratio"] != 0 ? trendData["win_loss_ratio"] : null
-    );
-    trendsDatasets["HS"]["data"].push(
-      trendData["headshot_accuracy"] != 0 ? roundTwo(trendData["headshot_accuracy"] * 100) : null
-    );
-    trendsDatasets["MinutesPlayed"]["data"].push(
-      trendData["minutes_played"] != 0 ? addSpaces(trendData["minutes_played"]) : null
-    );
-    trendsDatasets["MatchesPlayed"]["data"].push(
-      trendData["matches_played"] != 0 ? addSpaces(trendData["matches_played"]) : null
-    );
-    trendsDatasets["Aces"]["data"].push(
-      trendData["rounds_with_ace"] != 0 ? Math.ceil(trendData["rounds_with_ace"] * trendData["rounds_played"]) : null
-    );
-    trendsDatasets["Revives"]["data"].push(
-      trendData["revives"] != 0 ? addSpaces(trendData["revives"]) : null
-    );
-    trendsDatasets["Assists"]["data"].push(
-      trendData["assists"] != 0 ? addSpaces(trendData["assists"]) : null
-    );
-    trendsDatasets["TeamKills"]["data"].push(
-      trendData["team_kills"] != 0 ? addSpaces(trendData["team_kills"]) : null
-    );
-    trendsDatasets["Trades"]["data"].push(
-      trendData["trades"] != 0 ? addSpaces(trendData["trades"]) : null
-    );
-    trendsDatasets["RoundsWithKOST"]["data"].push(
-      trendData["rounds_with_kost"] != 0 ? Math.ceil(trendData["rounds_with_kost"] * trendData["rounds_played"]) : null
-    );
+  let trendNames = {
+    "kill_death_ratio": "K / D",
+    "win_loss_ratio": "W / L",
+    "headshot_accuracy": "Headshot Accuracy",
+    "kills_per_round": "Kills per Round",
+    "distance_per_round": "Distance per Round",
+    "rounds_survived": "Rounds Survived",
+    "rounds_with_a_kill": "Rounds with a Kill",
+    "rounds_with_kost": "Rounds with KOST",
+    "rounds_with_multi_kill": "Rounds with Multi-Kill",
+    "rounds_with_opening_death": "Rounds with Opening Death",
+    "rounds_with_opening_kill": "Rounds with Opening Kill",
   };
 
-  for (dataset in trendsDatasets) {
-    $("#chartSelector").append(
-      $("<option>", {
-        value: dataset,
-        text: trendsDatasets[dataset].label,
-      })
-    );
-  }
+  for (let trendName in trendNames) {
+    trendsDatasets[trendName] = {};
+    trendsDatasets[trendName]['line'] = getDefaultLineDataset(trendNames[trendName]);
+    trendsDatasets[trendName]['scatter'] = getDefaultScatterDataset(trendNames[trendName]);
+    $("#chartSelector").append( $("<option>", { value: trendName, text: trendNames[trendName] }) );
+
+    allTrends[trendName].actuals.map((v, i) => { labels[`Match #${i}`] = true; });
+    trendsDatasets[trendName].line.data = Array.from(allTrends[trendName].trend.values());
+    trendsDatasets[trendName].scatter.data = Array.from(allTrends[trendName].actuals.values());
+  };
 
   chartConfig = {
     type: "line",
-    data: { labels: labels, datasets: [trendsDatasets["KD"]] },
+    data: {
+      labels: Object.keys(labels),
+      datasets: [
+        trendsDatasets["kill_death_ratio"].line,
+        trendsDatasets["kill_death_ratio"].scatter,
+      ]
+    },
     options: {
       plugins: {
         legend: {
@@ -274,6 +261,7 @@ function trendsPage(d) {
       }
     }
   };
+
   theChart = new Chart(document.getElementById("chartCanvas"), chartConfig);
 };
 
@@ -282,7 +270,6 @@ function overallPage(d) {
   updateHeader(d);
   updateSeasonalCard(d);
   updateSeasonalQueueCard(d);
-  updateGamemodesCard(d);
 };
 function updateHeader(d) {
   $("#profile_picture").attr("src", `https://ubisoft-avatars.akamaized.net/${d.ubisoftID}/default_256_256.png`);
@@ -369,7 +356,6 @@ function updateSeasonalQueueCard(d) {
     let data = d.seasonal[name];
 
     if (data.wins === 0 && data.losses === 0 && name != "ranked") {
-      console.log(name);
       $(`#sqs-${name}`).hide();
       $(`#sqs-${name}-page`).hide();
       $(`#seasonal-${name}-parent`).hide();
@@ -384,41 +370,6 @@ function updateSeasonalQueueCard(d) {
     $(`#${name}_win_lose`).text(`${data.wins}/${data.losses}`);
   };
 
-};
-function updateGamemodesCard(d) {
-
-  for (let gamemode in d.gamemodes) {
-    let data = d.gamemodes[gamemode];
-
-    if (data.matches_played <= 0) {
-
-      $(`#${gamemode}_g_header`).hide();
-      $(`#${gamemode}_g_hr`).hide();
-      $(`#${gamemode}_g_body`).hide();
-
-    } else {
-      let win_loss_ratio = (data.rounds_won + data.rounds_lost) == 0 ? 0 : roundTwo(data.rounds_won / (data.rounds_won + data.rounds_lost) * 100);
-
-      $(`#${gamemode}_g_playtime`).text(getPlaytime(data.minutes_played))
-
-      $(`#${gamemode}_g_kd`).text(roundTwo(data.kill_death_ratio / 100));
-      $(`#${gamemode}_g_kills_deaths`).text(`${addSpaces(data.kills, ",")}/${addSpaces(data.death, ",")}`);
-      $(`#${gamemode}_g_wl`).text(`${roundTwo(win_loss_ratio)}%`);
-      $(`#${gamemode}_g_win_lose`).text(`${addSpaces(data.matches_won, ",")}/${addSpaces(data.matches_lost, ",")}`);
-
-      $(`#${gamemode}_g_hs`).text(`${data.headshot_accuracy}%`);
-      $(`#${gamemode}_g_melee`).text(addSpaces(data.melee_kills, ","));
-      $(`#${gamemode}_g_teamkills`).text(data.team_kills);
-      $(`#${gamemode}_g_trades`).text(addSpaces(data.trades));
-
-      $(`#${gamemode}_g_rounds`).text(addSpaces(data.rounds_played));
-      $(`#${gamemode}_g_kill_percentage`).text(`${data.rounds_with_a_kill}%`);
-      $(`#${gamemode}_g_kost_percentage`).text(`${data.rounds_with_kost}%`);
-      $(`#${gamemode}_g_ace_percentage`).text(`${data.rounds_with_an_ace}%`);
-
-    }
-
-  };
 };
 
 
@@ -522,21 +473,16 @@ firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").the
   });
 
 });
+
 $(document).ready(function () {
 
   /* Trends switcher */
   document.getElementById("chartSelector").onchange = function(){
     // Replace the dataset
-    chartConfig.data.datasets = [trendsDatasets[document.getElementById("chartSelector").value]];
-    // Update the chart
-    theChart.update();
-  };
-  document.getElementById("chartBezierRange").onchange = function(){
-    let val = document.getElementById("chartBezierRange").value;
-    // Update the shown value
-    $("#chartBezierRangeLabel").text(`Curve Tension (${val})`);
-    // Update the tension in config
-    chartConfig.data.datasets[0].tension = val;
+    chartConfig.data.datasets = [
+      trendsDatasets[document.getElementById("chartSelector").value].line,
+      trendsDatasets[document.getElementById("chartSelector").value].scatter
+    ];
     // Update the chart
     theChart.update();
   };
