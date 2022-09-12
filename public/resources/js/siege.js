@@ -89,7 +89,7 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
 
   let mmr = rank.mmr;
 
-  if (mmrWatch.adjustment_value != 0) {
+  if (mmrWatch.adjustment_value != 0 && false) {
     mmrWatchChangeColor = `color: #faa05a !important`;
     mmrChangeColor = mmrWatch.adjustment_value >= 0 ? ( mmrWatch.adjustment_value == 0 ? "" : "color: var(--w-online)" ) : "color: var(--w-dnd)";
     mmrChange = mmrWatch.adjustment_value == undefined ? 0 : mmrWatch.adjustment_value;
