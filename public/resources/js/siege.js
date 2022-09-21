@@ -45,7 +45,7 @@ firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").the
 
     $("#lastUpdated").text(getUpdateTimeString(diff));
 
-    if (diff >= 180) { $("#siegeManualUpdateButton").css("opacity", "1"); }
+    if (diff >= 180) { $("#siegeManualUpdateButton").css("visibility", "visible"); }
   }, 1000);
 
   firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).on("value", snapshot => {
