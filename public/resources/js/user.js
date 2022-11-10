@@ -9,7 +9,11 @@ if (userid != null) {
         let user = snapshot.val();
 
         if (userid == 210471447649320970n) {
-            $("#bot_developer").replaceWith(`<img id="bot_developer" src="/resources/svg/verified_bot_developer.svg" width=22 height=22 />`);
+            $("#bot_developer").replaceWith(`
+                <div id="bot_developer" class="hint--top hint--rounded hint--no-arrow" aria-label="Bot Developer">
+                    <img src="/resources/svg/verified_bot_developer.svg" width=22 height=22 />
+                </div>
+            `);
         }
 
         $("#pfp").attr("src", user.avatar_url);
@@ -71,12 +75,17 @@ if (userid != null) {
         }
 
         if (w.activities.custom != "none" && w.activities.custom != undefined) {
+            let custom = '';
+            let custom_text = w.activities.custom.name || '';
+
             if ( w.activities.custom.emoji_url != "none" ) {
-                $("#custom_emote").replaceWith(`<img id="custom_emote" src="${w.activities.custom.emoji_url}" width=22 height=22 />`);
+                custom = `<img src="${w.activities.custom.emoji_url}" />`;
             }
             else if ( w.activities.custom.emoji_url == "none" && w.activities.custom.emoji_name != "none" ) {
-                $("#custom_emote").replaceWith(`<span id="custom_emote">${w.activities.custom.emoji_name}</span>`);
+                custom = `<span>${w.activities.custom.emoji_name}</span>`;
             }
+            
+            $("#custom_emote").replaceWith(`<div id="custom_emote" class="hint--top hint--rounded hint--no-arrow" aria-label="${custom_text}">${custom}</div>`);
         }
 
         if (w.activities.other) {
@@ -90,10 +99,14 @@ if (userid != null) {
         }
 
         if (w.house != "none" && w.house != undefined) {
-            $("#hypesquad").replaceWith(`<img id="hypesquad" src="/resources/svg/hypesquad_${w.house}.svg" width=27 height=27 />`);
+            $("#hypesquad").replaceWith(`
+                <div id="hypesquad" class="hint--top hint--rounded hint--no-arrow" aria-label="House ${w.house[0].toUpperCase()}${w.house.slice(1)}">
+                    <img src="/resources/svg/hypesquad_${w.house}.svg" width=27 height=27 />
+                </div>
+            `);
         }
 
-        if ( w.is_on_mobile ) { $("#on_mobile").replaceWith(`<img id="on_mobile" src="/resources/svg/on_mobile.svg" width=20 height=20 />`); }
+        if ( w.is_on_mobile ) { $("#on_mobile").replaceWith(`<div id="on_mobile" class="hint--top hint--rounded hint--no-arrow" aria-label="On Mobile"><img src="/resources/svg/on_mobile.svg" width=20 height=20 /></div>`); }
         else { $("#on_mobile").remove(); }
 
     });
