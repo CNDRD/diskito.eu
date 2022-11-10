@@ -40,6 +40,16 @@
     display: flex;
     flex-flow: row wrap;
     align-items: center;
+    gap: .1rem;
+}
+#badges > div {
+    display: grid;
+    place-items: center;
+}
+
+#custom_emote > img {
+    height: 1rem;
+    margin-right: 0.1rem;
 }
 
 #spotify,
