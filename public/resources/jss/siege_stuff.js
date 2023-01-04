@@ -270,45 +270,52 @@ function getSeasonCodeFromNumber(s) {
 
 function getRankImageFromRankName(name) {
   rank_dict = {
-    "unranked": "RpPdtbU",
-    "undefined": "RpPdtbU",
+    "unranked": "0OFVqkI",
+    "undefined": "0OFVqkI",
 
-    "copper 5": "SNSfudP",
-    "copper 4": "7PiisA2",
-    "copper 3": "aNCvwAI",
-    "copper 2": "fUzUApd",
-    "copper 1": "eGuxE0k",
-    "bronze 5": "bbjMf4V",
-    "bronze 4": "75IEQkD",
-    "bronze 3": "GIt29R0",
-    "bronze 2": "sTIXKlh",
-    "bronze 1": "zKRDUdK",
-    "silver 5": "CbAbvOa",
-    "silver 4": "2Y8Yr11",
-    "silver 3": "zNUuJSn",
-    "silver 2": "utTa5mq",
-    "silver 1": "27ISr4q",
-    "gold 5": "z3QXlOl",
-    "gold 4": "YIWWNzf",
-    "gold 3": "JJvq35l",
-    "gold 2": "Fco8pIl",
-    "gold 1": "m8FFWGi",
-    "platinum 5": "sn85WXk",
-    "platinum 4": "H8xUCvN",
-    "platinum 3": "GpEpkDs",
-    "platinum 2": "P8IO0Sn",
-    "platinum 1": "52Y4EVg",
-    "emerald 5": "yOh47jP",
-    "emerald 4": "kVuSSQP",
-    "emerald 3": "hVn7Hg4",
-    "emerald 2": "0rCNP1k",
-    "emerald 1": "SKneT0z",
-    "diamond 5": "sulUfbu",
-    "diamond 4": "wFzVA39",
-    "diamond 3": "QkpH7f1",
-    "diamond 2": "HVojHVK",
-    "diamond 1": "1jAt1qh",
-    "champion": "tph0czo"
+    "copper 5": "Ux1rDjw",
+    "copper 4": "7YWtMtV",
+    "copper 3": "LrHvwNs",
+    "copper 2": "IIBimaN",
+    "copper 1": "oLZwkBa",
+
+    "bronze 5": "aQNXHQR",
+    "bronze 4": "UgKcPME",
+    "bronze 3": "DgVk34E",
+    "bronze 2": "xsJGsmE",
+    "bronze 1": "ktm9OM0",
+
+    "silver 5": "tinDJ0V",
+    "silver 4": "DTfqnBz",
+    "silver 3": "V6V5iyx",
+    "silver 2": "Xfrp58b",
+    "silver 1": "6HpERmx",
+
+    "gold 5": "GtTe4bu",
+    "gold 4": "4kpPsMS",
+    "gold 3": "tnX9jpW",
+    "gold 2": "uVjR5kD",
+    "gold 1": "tJ3tVr2",
+
+    "platinum 5": "WO3pfUp",
+    "platinum 4": "6Mev2HS",
+    "platinum 3": "wV52ySL",
+    "platinum 2": "qd71ZiS",
+    "platinum 1": "WU6vjNa",
+
+    "emerald 5": "KXtH98u",
+    "emerald 4": "YSaeYN6",
+    "emerald 3": "itcnov9",
+    "emerald 2": "eEYH4bl",
+    "emerald 1": "8FQRvNX",
+
+    "diamond 5": "ioGplDE",
+    "diamond 4": "arhoFpA",
+    "diamond 3": "RXAvoqX",
+    "diamond 2": "3BuBrb1",
+    "diamond 1": "miyZ9Yr",
+
+    "champion": "fTA4VtR"
   }
   return `https://i.imgur.com/${rank_dict[name.toLowerCase()]}.png`
 };
@@ -532,4 +539,4 @@ const seasonalRankMMRs = {
     {min_mmr: 4400, max_mmr: 4499, name: "Diamond 1"},
     {min_mmr: 4500, max_mmr: 999999, name: "Champions"}
   ],
-}
+};
