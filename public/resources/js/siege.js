@@ -1,52 +1,41 @@
 let ver = new URLSearchParams(window.location.search).get("ver");
-let VERSION = ver == undefined ? 12 : ver;
+let VERSION = ver == undefined ? 13 : ver;
 
 let RANKED_LEVEL_TRESHOLD = 50;
 
 
 let ranked = [];
 let unranked = [];
-let level = [];
-let clown = 0;
-firebase.database().ref(`GameStats/R6Sv${VERSION}/main_data`).once("value").then(snapshot => {
-  firebase.database().ref(`GameStats/R6Sv${VERSION}/mmr_watch`).once("value").then(mmrSnapshot => {
-    let mmrWatch = mmrSnapshot.val();
 
-    snapshot.forEach(childSnapshot => {
-      let cd = childSnapshot.val();
-      
-      if (cd.ranked.max_mmr !== -1) {
-        ranked.push(cd);
-      } else if (cd.level < RANKED_LEVEL_TRESHOLD) {
-        level.push(cd);
-      } else {
-        unranked.push(cd);
-      }
-    });
+firebase.database().ref(`GameStats/R6Sv${VERSION}`).once("value").then(snapshot => {
+  console.log(snapshot.val());
 
-    ranked.sort(function(a,b){return b.ranked.mmr - a.ranked.mmr});
-    unranked.sort(function(a,b){return b.ranked.mmr - a.ranked.mmr});
-    level.sort(function(a,b){return b.level - a.level});
+  // order by ranked.rank_points
+  snapshot.forEach(child => {
+    let cd = child.val();
+    cd.ubisoftID = child.key;
 
-    ranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, mmrWatch[u.ubisoftID])); });
-    unranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, mmrWatch[u.ubisoftID], true)); });
-    level.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, clown, mmrWatch[u.ubisoftID])); });
+    if (cd.playtime.level < RANKED_LEVEL_TRESHOLD) {
+      unranked.push(cd);
+    } else {
+      ranked.push(cd);
+    }
+
   });
+
+  ranked.sort(function(a,b){return b.ranked.rank_points - a.ranked.rank_points});
+  unranked.sort(function(a,b){return b.playtime.level - a.playtime.level});
+
+  ranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u)); });
+  unranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, true)); });
+
 });
+
 
 firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").then(snapshot => {
   last_update = snapshot.val();
   
   $("#lastUpdated").attr("aria-label", getTimeString(last_update));
-
-  setInterval(() => {
-    let now = parseInt(Date.now() / 1000);
-    let diff = now - last_update;
-
-    $("#lastUpdated").text(getUpdateTimeString(diff));
-
-    if (diff >= 180) { $("#siegeManualUpdateButton").css("visibility", "visible"); }
-  }, 1000);
 
   firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).on("value", snapshot => {
     if (snapshot.val() != last_update) { location.reload(); }
@@ -72,53 +61,38 @@ function getUpdateTimeString(s) {
   return msg
 };
 
-function getStatsRow(u, clown, mmrWatch, unrank=false) {
+function getStatsRow(u, unrank=false) {
   let rank = u.ranked;
   let pfpLink = `https://ubisoft-avatars.akamaized.net/${u.ubisoftID}/default_256_256.png`;
-  let ptRAW = getPlaytime(u.totalPlaytime);
+  let ptRAW = getPlaytime(u.playtime.total);
   let playtime = `${ptRAW[0]}h <span class="hidden-mobile">${ptRAW[1]}m ${ptRAW[2]}s</span>`;
 
   let kd = rank.deaths == 0 ? rank.kills : roundTwo(rank.kills / rank.deaths);
   let wl = rank.losses == 0 ? 0 : roundTwo(rank.wins / (rank.wins + rank.losses) * 100);
-  let mmrChangeColor = rank.last_mmr_change >= 0 ? ( rank.last_mmr_change == 0 ? "" : "color: var(--w-online)" ) : "color: var(--w-dnd)";
-  let mmrChange = rank.last_mmr_change == undefined ? '0' : rank.last_mmr_change;
-  let prevMMR = getPrevRankMMR(rank.mmr, rank.season);
-  let nextMMR = getNextRankMMR(rank.mmr, rank.season);
-  let rankCell = getRankCell(rank, unrank, u.level);
-  let mmrWatchChangeColor = "";
-
-  let mmr = rank.mmr;
-
-  if (mmrWatch.adjustment_value != 0 && false) {
-    mmrWatchChangeColor = `color: #faa05a !important`;
-    mmrChangeColor = mmrWatch.adjustment_value >= 0 ? ( mmrWatch.adjustment_value == 0 ? "" : "color: var(--w-online)" ) : "color: var(--w-dnd)";
-    mmrChange = mmrWatch.adjustment_value == undefined ? 0 : mmrWatch.adjustment_value;
-    mmr = mmr + mmrChange;
-  };
-
+  let rankCell = getRankCell(rank, unrank, u.playtime.level);
 
   return `
     <tr>
-      <td class="hidden-mobile" sorttable_customkey="${clown}">
+      <td class="hidden-mobile">
         <img style="height: 4rem;" src="${pfpLink}" />
       </td>
       <td class="name" style="min-width: 5rem;" sorttable_customkey="${u.mmr}">
+        <!--
         <a href="/siege_player?id=${u.ubisoftID}">
-          ${u.ubisoftUsername}
+          ${u.name}
         </a>
+        -->
+        ${u.name}
       </td>
       <td>
         ${rankCell}
       </td>
       <td class="hidden-mobile">
         <div>
-          <span style="font-size: 0.8rem;">${prevMMR}</span>
-          <span>👉</span>
-          <span style="font-size: 0.8rem;">${nextMMR}</span>
+          <span style="font-size: 1.5rem;">${addSpaces(parseInt(rank.rank_points) % 100)}</span>
         </div>
         <div>
-          <span style="font-size: 1.5rem; ${mmrWatchChangeColor}">${addSpaces(parseInt(mmr))}</span>
-          <span style="${mmrChangeColor}">${mmrChange}</span>
+          <span style="font-size: 0.8rem; color: #888;">${rank.rank_points === 1000 ? '' : addSpaces(rank.rank_points)}</span>
         </div>
       </td>
       <td>
@@ -131,14 +105,8 @@ function getStatsRow(u, clown, mmrWatch, unrank=false) {
           ${wl}%
         </span>
       </td>
-      <td class="hidden-mobile">
-        <div class="uk-flex uk-flex-row uk-flex-middle">
-          <img style="height: 4rem;" src="${u.operators.atk.icon_url}" />
-          <img style="height: 4rem;" src="${u.operators.def.icon_url}" />
-        </div>
-      </td>
-      <td class="hidden-mobile" sorttable_customkey="${u.totalPlaytime}">
-        <span style="cursor: pointer;" class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(u.totalPlaytime)} seconds">
+      <td class="hidden-mobile" sorttable_customkey="${u.playtime.total}">
+        <span style="cursor: pointer;" class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(u.playtime.total)} seconds">
           ${playtime}
         </span>
       </td>
@@ -153,15 +121,15 @@ function getRankCell(r, unrank=false, level) {
   if (unrank) {
     return `
       <div class="rank-img-cell">
-        <img class="hidden-mobile" style="height: 3.5rem;" src="${getRankImageFromMMR(r.mmr, r.season)}" />
+        <img class="hidden-mobile" style="height: 3.5rem;" src="${getRankImageFromMMR(r.rank_points, r.season_id)}" />
         <span>${r.wins+r.losses} / 10</span>
       </div>
     `;
   }
   return `
     <div class="rank-img-cell">
-      <img style="height: 4rem;" src="${getRankImageFromMMR(r.mmr, r.season)}" />
-      <img style="height: 3.5rem;" class="hidden-mobile" src="${getRankImageFromMMR(r.max_mmr, r.season)}" />
+      <img style="height: 4rem;" src="${getRankImageFromMMR(r.rank_points, r.season_id)}" />
+      <img style="height: 3.5rem;" class="hidden-mobile" src="${getRankImageFromMMR(r.max_rank_points, r.season_id)}" />
     </div>
   `;
 };
@@ -184,51 +152,6 @@ function getTimeString(ts) {
 };
 
 $(document).ready(function(){
-  let requested = 0;
-  let updateText = "⏰ Please wait, updating..";
-
-  $("#siegeManualUpdateButton").click(() => {
-
-    $.each( $("#siegeManualUpdateButton").attr("class").split(/\s+/) , (index, item) => {
-      if (item === "requested") { requested += 1; }
-    });
-
-    switch (requested) {
-      case 0:
-        $("#siegeManualUpdateButton").addClass("requested");
-        firebase.database().ref("GameStats/updateRequests/R6S").set(parseInt(Date.now()/1000));
-        break;
-      case 1:
-        updateText = "What are you doing?";
-        break;
-      case 2:
-        updateText = "More clicks != faster load times";
-        break;
-      case 10:
-        updateText = "This ain't GTA 5";
-        break;
-      case 50:
-        updateText = "🎵 Woah, we're half way there 🎵";
-        break;
-      case 100:
-        updateText = "Are you done?";
-        break;
-      case 1000:
-        updateText = "Seems not..";
-        break;
-      case 10000:
-        updateText = "I'm calling the cops on you";
-        break;
-      case 10000:
-        updateText = "Serisously, stop";
-        break;
-      case 100000:
-        updateText = "Aight, whatever dude, I give up";
-        break;
-    }
-    $("#siegeManualUpdateButton").text(updateText)
-  });
-
 
   $.getJSON("https://game-status-api.ubisoft.com/v1/instances", data => {
     $.each(data, (key, val) => {
