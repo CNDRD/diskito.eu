@@ -236,7 +236,7 @@ let seasonsDict = {
   },
   28: {
     name: "Solar Raid",
-    hex: "#d03314",
+    hex: "#d03315",
     code: "Y7S4",
     startDate: "2022-12-07"
   }
