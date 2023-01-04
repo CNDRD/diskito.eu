@@ -8,9 +8,7 @@ let ranked = [];
 let unranked = [];
 
 firebase.database().ref(`GameStats/R6Sv${VERSION}`).once("value").then(snapshot => {
-  console.log(snapshot.val());
 
-  // order by ranked.rank_points
   snapshot.forEach(child => {
     let cd = child.val();
     cd.ubisoftID = child.key;
@@ -20,7 +18,6 @@ firebase.database().ref(`GameStats/R6Sv${VERSION}`).once("value").then(snapshot 
     } else {
       ranked.push(cd);
     }
-
   });
 
   ranked.sort(function(a,b){return b.ranked.rank_points - a.ranked.rank_points});
