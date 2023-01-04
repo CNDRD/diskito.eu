@@ -34,6 +34,11 @@ firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").the
   
   $("#lastUpdated").attr("aria-label", getTimeString(last_update));
 
+  setInterval(() => {
+    let now = parseInt(Date.now() / 1000);
+    $("#lastUpdated").text(getUpdateTimeString(now - last_update));
+  }, 1000);
+
   firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).on("value", snapshot => {
     if (snapshot.val() != last_update) { location.reload(); }
   });
