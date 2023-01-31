@@ -11,7 +11,7 @@ div.overflow {
     -webkit-overflow-scrolling: touch;
 }
 div.main {
-    margin-top: 5rem;
+    margin-top: 3rem;
     display: flow-root;
     box-sizing: content-box;
     max-width: 1200px;
