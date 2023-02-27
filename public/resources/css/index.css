@@ -50,6 +50,7 @@ body .main .section.links a {
 }
 body .main .section.links a:hover {
     text-decoration: underline var(--chaun-red);
+    cursor: pointer;
 }
 body .main .section.links .header {
     font-weight: 700;
