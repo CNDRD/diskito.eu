@@ -219,3 +219,14 @@ function getVoiceTime(s) {
 function getTodayFirebaseString() {
   return new Date().toLocaleString("cs-CZ", { year:"numeric", month:"2-digit", day:"2-digit" }).replace(". ", "-").replace(". ", "-");
 };
+
+function kockyLink(that) {
+
+  fetch('https://api.cndrd.xyz/kocky')
+    .then(response => response.json())
+    .then(data => {
+      navigator.clipboard.writeText(data.url)
+        .then(() => that.innerHTML = "📋 Copied!");
+    });
+
+};
