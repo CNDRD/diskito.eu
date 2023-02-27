@@ -3,7 +3,7 @@ body .main {
     width: 100%;
     display: flex;
     flex-flow: row wrap;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-evenly;
 }
 
@@ -15,6 +15,7 @@ body .main {
 }
 
 body .main .section {
+    min-height: 22rem;
     margin-top: 5rem;
     padding-left: 1rem;
     border-left: 5px solid var(--chaun-red);
@@ -49,7 +50,6 @@ body .main .section.links a {
 }
 body .main .section.links a:hover {
     text-decoration: underline var(--chaun-red);
-    cursor: pointer;
 }
 body .main .section.links .header {
     font-weight: 700;
