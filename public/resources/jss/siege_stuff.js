@@ -239,7 +239,14 @@ let seasonsDict = {
     hex: "#d03315",
     code: "Y7S4",
     startDate: "2022-12-07"
-  }
+  },
+  
+  29: {
+    name: "Commanding Force",
+    hex: "#45abf3",
+    code: "Y8S1",
+    start_date: "2023-03-07"
+  },
 };
 
 function getSeasonColorRGB(s) {
