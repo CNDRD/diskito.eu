@@ -1,4 +1,6 @@
-
+:root {
+    --big-divider: 2rem;
+}
 
 .main {
     margin-top: 2rem;
@@ -13,6 +15,7 @@
     flex-direction: column;
     align-items: center;
     gap: .5rem;
+    margin-bottom: var(--big-divider);
 }
 
 #avatar {
@@ -48,4 +51,25 @@
     .main {
         margin-top: 5rem;
     }
+}
+
+#roles {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    gap: .5rem;
+    max-width: 1000px;
+    margin-top: var(--big-divider);
+}
+#roles > #roles-header {
+    width: 100%;
+    text-align: center;
+}
+#roles > .role {
+    border-width: 1.5px;
+    border-style: solid;
+    border-radius: .5rem;
+    font-size: .85rem;
+    padding: .2rem .4rem;
 }
