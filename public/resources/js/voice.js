@@ -1,3 +1,4 @@
+import { c, supabase } from '../jss/main.js';
 
 const actuallyCurrentYear = new Date().getFullYear();
 const currentYear = new URLSearchParams(window.location.search).get("year") || actuallyCurrentYear;
@@ -20,64 +21,19 @@ $(document).ready(function () {
 
 });
 
-firebase.database().ref(`voice/${currentYear}/total`).once('value').then(users => {
-  let lvsData = [];
-  let totalData = [];
-  let voiceTreshold = 1800; // 30minutes
-
-  users.forEach(user => {
-    let u = user.val()
-    let username = prettifyUsernameForChart(u.name);
-    // If voice time is above 'voiceTreshold' minutes push it to the graph
-    if (u.voice >= voiceTreshold){ totalData.push({time:secondsToHours(u.voice), user:username}) };
-    if (u.lvs >= voiceTreshold){ lvsData.push({time:secondsToHours(u.lvs), user:username}) };
-  });
-
-  // Sort the data
-  totalData = totalData.sort(function(a, b){ return b.time - a.time });
-  lvsData = lvsData.sort(function(a, b){ return b.time - a.time });
-
-
-  let totalYearlyVoiceChart = new Chart(document.getElementById("totalChartCanvas"), {
-    type: 'bar',
-    data: {
-      labels: totalData.map( ({user}) => user ),
-      datasets: [{
-        label: 'Hours',
-        data: totalData.map( ({time}) => time ),
-        backgroundColor: "rgba(96, 63, 173, 0.75)",
-      }]
-    },
-    options: { plugins: { legend: { display: false } } }
-  });
-
-  let lvsVoiceChart = new Chart(document.getElementById("lvsChartCanvas"), {
-    type: 'bar',
-    data: {
-      labels: lvsData.map( ({user}) => user ),
-      datasets: [{
-        label: 'Hours',
-        data: lvsData.map( ({time}) => time ),
-        backgroundColor: "rgba(249, 87, 56, 0.8)",
-      }]
-    },
-    options: { plugins: { legend: { display: false } } }
-  });
-
-});
-
-firebase.database().ref(`voice/${currentYear}/day`).once('value').then(days => {
+async function dailyChart () {
   let dates = [];
   let times = [];
 
-  days.forEach(day => {
-    dates.push(fixDate(day.key));
-    times.push(day.val() != 0 ? secondsToHours(day.val()) : null)
+  const { data: dailyData } = await supabase.from('daily_voice').select('date, seconds').gte('date', `${currentYear}-1-1`).lte('date', `${currentYear}-12-31`);
+  
+  dailyData.forEach(day => {
+    dates.push(fixDate(day.date));
+    times.push(day.seconds != 0 ? secondsToHours(day.seconds) : null);
   });
 
   const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
 
-  // Give the data to the graph
   let dailyVoiceChart = new Chart(document.getElementById("dailyChartCanvas"), {
     type: "line",
     data: {
@@ -116,96 +72,146 @@ firebase.database().ref(`voice/${currentYear}/day`).once('value').then(days => {
     }
   });
 
-});
+};
 
-firebase.database().ref(`users`).once('value').then(users => {
-  let userTimes = [];
-  let yearlyTimes = {};
-  let yearlyNames = [];
 
-  // Need empty lists so i can push data to them later
-  for (let yr = 2020; yr <= currentYear; yr++) { yearlyTimes[yr] = []; }
 
-  users.forEach(u => {
-    u = u.val();
+// firebase.database().ref(`voice/${currentYear}/total`).once('value').then(users => {
+//   let lvsData = [];
+//   let totalData = [];
+//   let voiceTreshold = 1800; // 30minutes
 
-    if (u.in_server) {
-      let time = u.all_time_total_voice;
-      let name = u.username;
+//   users.forEach(user => {
+//     let u = user.val()
+//     let username = prettifyUsernameForChart(u.name);
+//     // If voice time is above 'voiceTreshold' minutes push it to the graph
+//     if (u.voice >= voiceTreshold){ totalData.push({time:secondsToHours(u.voice), user:username}) };
+//     if (u.lvs >= voiceTreshold){ lvsData.push({time:secondsToHours(u.lvs), user:username}) };
+//   });
 
-      if (time != undefined && time > 18000 ) {
-        // All Time Total Voice Stuff
-        userTimes.push({ time:secondsToHours(time), user: prettifyUsernameForChart(name) });
+//   // Sort the data
+//   totalData = totalData.sort(function(a, b){ return b.time - a.time });
+//   lvsData = lvsData.sort(function(a, b){ return b.time - a.time });
 
-        // Yearly User Time
-        if (time > (4*60)) {
-          yearlyNames.push(name);
 
-          for (yr in yearlyTimes) {
-            yearlyTimes[yr].push(`voice_year_${yr}` in u ? secondsToHours(u[`voice_year_${yr}`]) : null);
-          }
-        }
+//   let totalYearlyVoiceChart = new Chart(document.getElementById("totalChartCanvas"), {
+//     type: 'bar',
+//     data: {
+//       labels: totalData.map( ({user}) => user ),
+//       datasets: [{
+//         label: 'Hours',
+//         data: totalData.map( ({time}) => time ),
+//         backgroundColor: "rgba(96, 63, 173, 0.75)",
+//       }]
+//     },
+//     options: { plugins: { legend: { display: false } } }
+//   });
 
-      }
-    };
+//   let lvsVoiceChart = new Chart(document.getElementById("lvsChartCanvas"), {
+//     type: 'bar',
+//     data: {
+//       labels: lvsData.map( ({user}) => user ),
+//       datasets: [{
+//         label: 'Hours',
+//         data: lvsData.map( ({time}) => time ),
+//         backgroundColor: "rgba(249, 87, 56, 0.8)",
+//       }]
+//     },
+//     options: { plugins: { legend: { display: false } } }
+//   });
 
-  });
+// });
 
-  // Remove duplicate names
-  yearlyNames = [...new Set(yearlyNames)];
+// firebase.database().ref(`users`).once('value').then(users => {
+//   let userTimes = [];
+//   let yearlyTimes = {};
+//   let yearlyNames = [];
+
+//   // Need empty lists so i can push data to them later
+//   for (let yr = 2020; yr <= currentYear; yr++) { yearlyTimes[yr] = []; }
+
+//   users.forEach(u => {
+//     u = u.val();
+
+//     if (u.in_server) {
+//       let time = u.all_time_total_voice;
+//       let name = u.username;
+
+//       if (time != undefined && time > 18000 ) {
+//         // All Time Total Voice Stuff
+//         userTimes.push({ time:secondsToHours(time), user: prettifyUsernameForChart(name) });
+
+//         // Yearly User Time
+//         if (time > (4*60)) {
+//           yearlyNames.push(name);
+
+//           for (let yr in yearlyTimes) {
+//             yearlyTimes[yr].push(`voice_year_${yr}` in u ? secondsToHours(u[`voice_year_${yr}`]) : null);
+//           }
+//         }
+
+//       }
+//     };
+
+//   });
+
+//   // Remove duplicate names
+//   yearlyNames = [...new Set(yearlyNames)];
     
-  // Generate datasets
-  let yearlyDatasets = [];
+//   // Generate datasets
+//   let yearlyDatasets = [];
 
-  for (yr in yearlyTimes) {
-    let color = generateRandomColorRGB();
-    console.log(color);
+//   for (let yr in yearlyTimes) {
+//     let color = generateRandomColorRGB();
 
-    yearlyDatasets.push({
-      label: yr,
-      data: yearlyTimes[yr],
-      backgroundColor: `rgba(${color.r}, ${color.g}, ${color.b}, 0.7)`,
-      stack: "Stack 0",
-    });
-  };
+//     yearlyDatasets.push({
+//       label: yr,
+//       data: yearlyTimes[yr],
+//       backgroundColor: `rgba(${color.r}, ${color.g}, ${color.b}, 0.7)`,
+//       stack: "Stack 0",
+//     });
+//   };
 
-  let yearlyUserTimeChart = new Chart(document.getElementById("yearlyUserTimeChartCanvas"), {
-    type: 'bar',
-    data: {
-      labels: yearlyNames,
-      datasets: yearlyDatasets,
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: "If the colors are too similar, refresh the page"
-        }
-      }
-    }
-  });
+//   let yearlyUserTimeChart = new Chart(document.getElementById("yearlyUserTimeChartCanvas"), {
+//     type: 'bar',
+//     data: {
+//       labels: yearlyNames,
+//       datasets: yearlyDatasets,
+//     },
+//     options: {
+//       responsive: true,
+//       plugins: {
+//         title: {
+//           display: true,
+//           text: "If the colors are too similar, refresh the page"
+//         }
+//       }
+//     }
+//   });
 
-  // Sort the data
-  userTimes = userTimes.sort(function(a, b){ return b.time - a.time });
-  // Split the data for the Chart to monch over
-  let times = userTimes.map( ({time}) => time );
-  let usernames = userTimes.map( ({user}) => user );
+//   // Sort the data
+//   userTimes = userTimes.sort(function(a, b){ return b.time - a.time });
+//   // Split the data for the Chart to monch over
+//   let times = userTimes.map( ({time}) => time );
+//   let usernames = userTimes.map( ({user}) => user );
 
-  let allTimeTotalVoiceChart = new Chart(document.getElementById("totalTotalChartCanvas"), {
-    type: 'bar',
-    data: {
-      labels: usernames,
-      datasets: [{
-        label: 'Hours',
-        data: times,
-        backgroundColor: "rgba(131, 79, 31, 0.8)",
-      }]
-    },
-    options: { plugins: { legend: { display: false } } }
-  });
+//   let allTimeTotalVoiceChart = new Chart(document.getElementById("totalTotalChartCanvas"), {
+//     type: 'bar',
+//     data: {
+//       labels: usernames,
+//       datasets: [{
+//         label: 'Hours',
+//         data: times,
+//         backgroundColor: "rgba(131, 79, 31, 0.8)",
+//       }]
+//     },
+//     options: { plugins: { legend: { display: false } } }
+//   });
 
-});
+// });
+
+
+await dailyChart();
 
 
 function prettifyUsernameForChart(u) {

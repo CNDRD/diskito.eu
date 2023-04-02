@@ -1,6 +1,6 @@
 #main {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1400px;
     margin: 3rem 0 3rem 0;
     display: flex;
     flex-flow: row wrap;
@@ -17,11 +17,10 @@
     margin: 1rem;
     padding: 2rem;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    transition: box-shadow 0.2s ease-in-out;
+    cursor: default;
 }
 .dark-mode .card {
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
-    transition: box-shadow 0.2s ease-in-out;
 }
 
 .card > .quote-parent > .quote-text::before,
@@ -44,7 +43,7 @@
     margin-top: .5rem;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1400px) {
     .card {
         width: 100%;
     }

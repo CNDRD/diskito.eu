@@ -1,48 +1,32 @@
-let ver = new URLSearchParams(window.location.search).get("ver");
-let VERSION = ver == undefined ? 13 : ver;
+import { c, supabase, settings } from '../jss/main.js';
 
 let RANKED_LEVEL_TRESHOLD = 50;
-
-
 let ranked = [];
 let unranked = [];
 
-firebase.database().ref(`GameStats/R6Sv${VERSION}`).once("value").then(snapshot => {
+const { data: siegeData } = await supabase.from('siege_stats').select('ubi_id, name, playtime, ranked');
 
-  snapshot.forEach(child => {
-    let cd = child.val();
-    cd.ubisoftID = child.key;
-
-    if (cd.playtime.level < RANKED_LEVEL_TRESHOLD) {
-      unranked.push(cd);
-    } else {
-      ranked.push(cd);
-    }
-  });
-
-  ranked.sort(function(a,b){return b.ranked.rank_points - a.ranked.rank_points});
-  unranked.sort(function(a,b){return b.playtime.level - a.playtime.level});
-
-  ranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u)); });
-  unranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, true)); });
-
+siegeData.forEach(player => {
+  if (player.playtime.level < RANKED_LEVEL_TRESHOLD) {
+    unranked.push(player);
+  } else {
+    ranked.push(player);
+  }
 });
 
+ranked.sort(function(a,b) {return b.ranked.rank_points - a.ranked.rank_points} );
+unranked.sort(function(a,b) {return b.playtime.level - a.playtime.level} );
 
-firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).once("value").then(snapshot => {
-  last_update = snapshot.val();
-  
-  $("#lastUpdated").attr("aria-label", getTimeString(last_update));
+ranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u)); });
+unranked.forEach(u => { $("#tableDataPlace").append(getStatsRow(u, true)); });
+
+await settings('last_siege_update').then(data => {
+  $("#lastUpdated").attr("aria-label", getTimeString(data.value));
 
   setInterval(() => {
     let now = parseInt(Date.now() / 1000);
-    $("#lastUpdated").text(getUpdateTimeString(now - last_update));
+    $("#lastUpdated").text(getUpdateTimeString(now - data.value));
   }, 1000);
-
-  firebase.database().ref(`GameStats/lastUpdate/R6Sv${VERSION}`).on("value", snapshot => {
-    if (snapshot.val() != last_update) { location.reload(); }
-  });
-
 });
 
 function getUpdateTimeString(s) {
@@ -65,7 +49,7 @@ function getUpdateTimeString(s) {
 
 function getStatsRow(u, unrank=false) {
   let rank = u.ranked;
-  let pfpLink = `https://ubisoft-avatars.akamaized.net/${u.ubisoftID}/default_256_256.png`;
+  let pfpLink = `https://ubisoft-avatars.akamaized.net/${u.ubi_id}/default_256_256.png`;
   let ptRAW = getPlaytime(u.playtime.total);
   let playtime = `${ptRAW[0]}h <span class="hidden-mobile">${ptRAW[1]}m ${ptRAW[2]}s</span>`;
 
@@ -79,11 +63,6 @@ function getStatsRow(u, unrank=false) {
         <img style="height: 4rem;" src="${pfpLink}" />
       </td>
       <td class="name" style="min-width: 5rem;" sorttable_customkey="${u.mmr}">
-        <!--
-        <a href="/siege_player?id=${u.ubisoftID}">
-          ${u.name}
-        </a>
-        -->
         ${u.name}
       </td>
       <td>
@@ -137,11 +116,11 @@ function getRankCell(r, unrank=false, level) {
 };
 
 function getPlaytime(s) {
-  hours = Math.floor(s / 3600);
+  let hours = Math.floor(s / 3600);
   s %= 3600;
-  minutes = Math.floor(s / 60);
-  seconds = s % 60;
-  return [hours, minutes, seconds]
+  let minutes = Math.floor(s / 60);
+  let seconds = s % 60;
+  return [hours, minutes, seconds];
 };
 
 function getTimeString(ts) {

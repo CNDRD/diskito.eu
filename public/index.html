@@ -28,8 +28,8 @@
     <link rel="stylesheet" href="/resources/css/index.css" />
     <script defer src="/resources/jss/myFunctions.js" charset="utf-8"></script>
 
-    <script defer src="/resources/jss/main.js" charset="utf-8"></script>
-    <script src="/resources/js/index.js" charset="utf-8"></script>
+    <script defer type="module" src="/resources/jss/main.js" charset="utf-8"></script>
+    <script defer type="module" src="/resources/js/index.js" charset="utf-8"></script>
 
     <title>Diskíto</title>
     <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
@@ -64,10 +64,8 @@
     <div class="main">
       <div class="section links">
         <div class="header">Links</div>
-        <a id="kocky" onclick="kockyLink(this)">MINECRAFT</a>
-        <div class="links-divider"></div>
         <a href="/who_asked">Who Asked?</a>
-        <a href="/blackice">Black Ice Tracker</a>
+        <!-- <a href="/blackice">Black Ice Tracker</a> -->
         <div class="links-divider"></div>
         <a target="_blank" rel="noreferrer" href="https://github.com/CNDRD/Bruce">Bruce GitHub</a>
         <a target="_blank" rel="noreferrer" href="https://github.com/CNDRD/Diskito-Website">Website GitHub</a>
@@ -75,11 +73,6 @@
         <a target="_blank" rel="noreferrer" href="https://www.reddit.com/r/diskito/">r/Diskito</a>
         <a target="_blank" rel="noreferrer" href="https://www.curseforge.com/minecraft/texture-packs/diskito">Resource Pack</a>
         <a target="_blank" rel="noreferrer" href="/discord">discord.gg/sXDbtp4</a>
-      </div>
-
-      <div class="section widget">
-        <div id="nowOnline" class="online">? Online</div>
-        <div id="widget" class="users"></div>
       </div>
 
       <div id="voice" class="section voice" style="display:none;">
