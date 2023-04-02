@@ -65,6 +65,10 @@ body {
     background-color: var(--background-color);
 }
 
+html[data-logged-in="false"] .swli {
+    display: none !important;
+}
+
 /* Navbar */
 .navbar {
     min-width: 96%;
@@ -93,6 +97,7 @@ body {
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
+    gap: 1.5rem;
 }
 .navbar .navigation a {
     font-weight: 500;
@@ -103,6 +108,11 @@ body {
     display: inline-block;
     position: relative;
     color: var(--chaun-blue);
+}
+.navbar .navigation .divider {
+    height: 2rem;
+    width: 1px;
+    background-color: var(--chaun-blue);
 }
 .navbar .navigation a:after {
     content: '';
@@ -120,9 +130,6 @@ body {
     transform: scaleX(1);
     transform-origin: bottom left;
 }
-.navbar .navigation a:not(:last-child) {
-    margin-right: 1.5rem;
-}
 
 .navbar .at-right {
     display: flex;
@@ -139,7 +146,8 @@ body {
     font-size: 2rem;
     cursor: pointer;
 }
-.navbar .at-right .join-button a {
+
+.navbar .at-right .login-button {
     display: flex;
     align-items: center;
     justify-content: right;
@@ -151,8 +159,8 @@ body {
     will-change: transform;
     transition: transform 0.25s ease-out;
 }
-.navbar .at-right .join-button a:hover {
-    transform: scale(1.1);
+.navbar .at-right .login-button:hover {
+    cursor: pointer;
 }
 
 .navbar-mobile {
@@ -221,7 +229,12 @@ body {
         width: 50%;
         text-decoration: none;
     }
-    #hidden > a:last-child {
+    #hidden .divider {
+        width: 100%;
+        height: 2px;
+        background-color: var(--chaun-red);
+    }
+    #hidden > :last-child {
         color: var(--chaun-red);
         font-weight: 700;
     }

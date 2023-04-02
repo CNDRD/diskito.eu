@@ -3,8 +3,15 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 export const supabase = createClient('https://leyoegxpprcdstxvtecg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxleW9lZ3hwcHJjZHN0eHZ0ZWNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzk5NDA1NDIsImV4cCI6MTk5NTUxNjU0Mn0.yNr2o0psosNcfQX52uoOZc7pvn0YzysqpgdCE-f2kFM')
 export const c = console.log.bind(console);
 
-const { data } = await supabase.auth.getSession();
-export const UUID = data.session ? data.session.user.id : null;
+const { data: authData } = await supabase.auth.getSession();
+export const UUID = authData.session ? authData.session.user.id : null;
+export const userAuth = authData;
+
+if (authData.session) {
+  toggleLoggedIn(true);
+} else {
+  toggleLoggedIn(false);
+}
 
 export async function settings(sysid=undefined) {
   const { data: settings, error: settingsError } = await supabase.from('settings').select('*');
@@ -29,6 +36,9 @@ $(document).ready(function(){
   $(".theme-switch").click(function(){
     changeTheme(this.innerHTML);
   });
+
+  $('.login-button:not(.logout)').click(() => supabase.auth.signInWithOAuth({ provider: 'discord' }));
+  $('.login-button.logout').click(() => { supabase.auth.signOut(); toggleLoggedIn(false); });
 
 });
 
@@ -57,7 +67,18 @@ function changeTheme(toWhat) {
 
 };
 
+function toggleLoggedIn(inOut) {
+  if (inOut) {
+    $(".login-button").addClass("logout").text("Logout");
+    $('html').attr('data-logged-in', true);
+  }
+  else {
+    $(".login-button").removeClass("logout").text("Login");
+    $('html').attr('data-logged-in', false);
+  }
+};
+
 $.get("/resources/html/navbar-links.html", (data) => {
-  $(data).insertBefore("#mobile-invite-link");
+  $(data).insertBefore("#hidden .login-button");
   $(".navigation").append(data);
 });

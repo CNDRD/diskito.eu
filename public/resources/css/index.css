@@ -11,6 +11,12 @@ body .main {
     body .main {
         justify-content: flex-start;
         margin-bottom: 2rem;
+        flex-flow: column;
+        align-items: center;
+    }
+    body .main .section.join {
+        min-height: 10rem;
+        margin-top: 8rem;
     }
 }
 
@@ -171,4 +177,24 @@ body .main .section.voice #voice-stats .voice-total {
 }
 body .main .section.voice #voice-stats .voice-total .user {
     font-size: 1.8rem;
+}
+
+body .main .section.join {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    border-left: none;
+}
+body .main .section.join > a {
+    font-weight: 700;
+    font-size: 3rem;
+    text-decoration: none;
+    color: var(--chaun-red);
+    transition: transform 0.2s ease-in-out;
+}
+body .main .section.join > a:hover {
+    transform: scale(1.1);
+    cursor: pointer;
 }
