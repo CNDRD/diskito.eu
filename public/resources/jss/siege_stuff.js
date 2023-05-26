@@ -322,7 +322,8 @@ function getRankImageFromRankName(name) {
     "diamond 2": "3BuBrb1",
     "diamond 1": "miyZ9Yr",
 
-    "champion": "fTA4VtR"
+    "champion": "fTA4VtR",
+    "champions": "fTA4VtR",
   }
   return `https://i.imgur.com/${rank_dict[name.toLowerCase()]}.png`
 };
