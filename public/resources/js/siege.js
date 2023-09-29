@@ -72,24 +72,18 @@ function getStatsRow(u, unrank=false) {
         <div>
           <span style="font-size: 1.5rem;">${addSpaces(parseInt(rank.rank_points) % 100)}</span>
         </div>
-        <div>
-          <span style="font-size: 0.8rem; color: #888;">${rank.rank_points === 1000 ? '' : addSpaces(rank.rank_points)}</span>
-        </div>
+        <div class="smol-dark">${addSpaces(rank.rank_points)}</div>
       </td>
       <td>
-        <span style="cursor: pointer;" class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(rank.kills)} / ${addSpaces(rank.deaths)}">
-          ${kd}
-        </span>
+        <div>${kd}</div>
+        <div class="smol-dark">${addSpaces(rank.kills)} / ${addSpaces(rank.deaths)}</div>
       </td>
       <td>
-        <span style="cursor: pointer;" class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(rank.wins)} / ${addSpaces(rank.losses)}">
-          ${wl}%
-        </span>
+        <div>${wl}%</div>
+        <div class="smol-dark">${addSpaces(rank.wins)} / ${addSpaces(rank.losses)}</div>
       </td>
       <td class="hidden-mobile" sorttable_customkey="${u.playtime.total}">
-        <span style="cursor: pointer;" class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(u.playtime.total)} seconds">
-          ${playtime}
-        </span>
+        ${playtime}
       </td>
     </tr>
   `;
