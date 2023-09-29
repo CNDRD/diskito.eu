@@ -36,6 +36,11 @@ table tbody#tableDataPlace tr td {
     vertical-align: middle;
 }
 
+table tbody#tableDataPlace tr td > .smol-dark {
+    font-size: 0.8rem;
+    color: #888;
+}
+
 @media (max-width: 1000px) {
     .hidden-mobile {
         display: none;

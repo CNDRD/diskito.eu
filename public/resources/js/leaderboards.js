@@ -24,17 +24,15 @@ function getStatsDataRow(u, i) {
             </a>
         </td>
         <td sorttable_customkey="${u.xp}" class="hidden-mobile">
-            <span class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(u.xp)} XP">
-                ${u.level}
-            </span>
+            <div>${u.level}</div>
+            <div class="smol-dark">${addSpaces(u.xp)} XP</div>
         </td>
         <td sorttable_customkey="${u.messages}">
             ${addSpaces(u.messages)}
         </td>
         <td sorttable_customkey="${u.total_voice}">
-            <span class="hint--top hint--rounded hint--no-arrow" aria-label="${addSpaces(u.total_voice)} seconds">
-                ${getOneTime(u.total_voice)}h
-            </span>
+            <div>${getOneTime(u.total_voice)}h</div>
+            <div class="smol-dark">${addSpaces(u.total_voice)} s</div>
         </td>
         <td class="hidden-mobile">
             ${addSpaces(u.longest_cicina)} cm
