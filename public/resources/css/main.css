@@ -1,6 +1,7 @@
 :root {
     --bj-gold: hsl(48, 37%, 62%);
-    --chaun-blue: hsl(212, 33%, 23%);
+    --chaun-blue-old: hsl(212, 33%, 23%);
+    --chaun-blue: hsl(225deg, 3%, 11%);
     --chaun-blue-d: hsl(213, 81%, 8%);
     --chaun-red: hsl(359, 83%, 63%);
 

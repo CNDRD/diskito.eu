@@ -20,6 +20,13 @@ export async function settings(sysid=undefined) {
   return settings;
 };
 
+let root = document.querySelector(':root');
+let rootStyles = getComputedStyle(root);
+let colors = {
+  bg: rootStyles.getPropertyValue('--background-color'),
+  fg: rootStyles.getPropertyValue('--chaun-blue'),
+};
+
 let theme = localStorage.getItem('theme');
 if (theme) { changeTheme(theme); }
 
@@ -50,8 +57,8 @@ function changeTheme(toWhat) {
       $("#theme-switch").text("🌑");
       $("#mobile-theme-switch").text("Dark Mode");
       localStorage.setItem("theme", "☀️");
-      document.documentElement.style.setProperty("--background-color", "hsl(46, 100%, 97%)");
-      document.documentElement.style.setProperty("--chaun-blue", "hsl(212, 33%, 23%)");
+      document.documentElement.style.setProperty("--background-color", colors.bg);
+      document.documentElement.style.setProperty("--chaun-blue", colors.fg);
       $("html").removeClass("dark-mode");
       break;
     case "🌑":
@@ -59,8 +66,8 @@ function changeTheme(toWhat) {
       $("#theme-switch").text("☀️");
       $("#mobile-theme-switch").text("Light Mode");
       localStorage.setItem("theme", "🌑");
-      document.documentElement.style.setProperty("--background-color", "hsl(212, 33%, 23%)");
-      document.documentElement.style.setProperty("--chaun-blue", "hsl(46, 100%, 97%)");
+      document.documentElement.style.setProperty("--background-color", colors.fg);
+      document.documentElement.style.setProperty("--chaun-blue", colors.bg);
       $("html").addClass("dark-mode");
       break;
   };
