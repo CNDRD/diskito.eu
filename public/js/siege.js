@@ -240,7 +240,7 @@ function _getRankImageFromRankName(name) {
 
 
 
-$('#show-match-tracker').click();
+// $('#show-match-tracker').click();
 
 // Match Tracker
 async function showMatchTracker() {
