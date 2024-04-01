@@ -33,11 +33,35 @@
         
         <div id="picker">
             <div id="show-stats" class="selected">Stats</div>
-            <div id="show-match-tracker">Match tracker</div>
+            <div id="show-match-tracker" data-loaded="false">Match tracker</div>
         </div>
 
         <main class="picker-thangs" id="stats"></main>
-        <main class="picker-thangs" id="match-tracker" style="display: none;">Coming soon..</main>
+        <main class="picker-thangs" id="match-tracker" style="display: none;">
+
+            <div id="player-picker">
+                <div class="header">Who's in the lobby</div>
+                <div id="players"></div>
+            </div>
+
+            <div id="map-picker">
+                <div class="header">Map being played</div>
+                <div id="maps"></div>
+            </div>
+
+            <div id="additional-note">
+                <div class="header">Additional note</div>
+                <textarea id="note" placeholder="Any additional notes?"></textarea>
+            </div>
+
+            <div id="find-match-parent">
+                <div class="header">Find match with selected players in the lobby</div>
+                <div id="find-match">Find match</div>
+            </div>
+
+            <div id="nothing-info">This all does nothing so far..</div>
+
+        </main>
 
     </body>
 </html>

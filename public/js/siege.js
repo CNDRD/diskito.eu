@@ -3,11 +3,16 @@ import { c, supabase, spinner, addSpaces, roundTwo, settings, UUID } from './mai
 
 
 if (UUID) {
-    $('#picker > div').on('click', function() {
+    $('#picker > div').on('click', async function() {
         $('#picker > div').removeClass('selected');
         $(this).addClass('selected');
         $('.picker-thangs').hide();
         $(`#${this.id.replace('show-', '')}`).fadeIn('fast');
+
+        if (this.id === 'show-match-tracker' && this.dataset.loaded === 'false') {
+            this.dataset.loaded = 'true';
+            await showMatchTracker();
+        }
     });
 }
 else {
@@ -231,4 +236,96 @@ function _getRankImageFromRankName(name) {
       "champions": "fTA4VtR",
     }
     return `https://i.imgur.com/${rank_dict[name.toLowerCase()]}.png`
+};
+
+
+
+$('#show-match-tracker').click();
+
+// Match Tracker
+async function showMatchTracker() {
+
+    /* ------------------------ */
+    /* Set up available players */
+    /* ------------------------ */
+
+    let { data: playersDb } = await supabase.from('siege_stats').select('ubi_id, name').order('name', { ascending: true });
+    
+    playersDb.forEach(player => {
+        $('#player-picker > #players').append(`
+            <div class="player" data-uuid="${player.ubi_id}">
+                <img src="https://ubisoft-avatars.akamaized.net/${player.ubi_id}/default_256_256.png" />
+                <div>${player.name}</div>
+            </div>
+        `);
+    });
+
+    $('#player-picker > #players > .player').on('click', function() {
+        
+        if (!this.classList.contains('selected')) {
+            let selectedPlayers = $('#player-picker > #players > .player.selected').length;
+            if (selectedPlayers === 5) { return; }
+        }
+
+        $(this).toggleClass('selected');
+    });
+
+
+
+    /* ----------------------------------- */
+    /* Set up maps to pick what we playing */
+    /* ----------------------------------- */
+
+    let maps = {
+        bank:          { name: 'Bank',             src: '/images/maps/bank.png'           },
+        border:        { name: 'Border',           src: '/images/maps/border.png'         },
+        chalet:        { name: 'Chalet',           src: '/images/maps/chalet.png'         },
+        clubhouse:     { name: 'Clubhouse',        src: '/images/maps/clubhouse.png'      },
+        coastline:     { name: 'Coastline',        src: '/images/maps/coastline.png'      },
+        consulate:     { name: 'Consulate',        src: '/images/maps/consulate.png'      },
+        emeraldplains: { name: 'Emerald Plains',   src: '/images/maps/emeraldplains.png'  },
+        kafe:          { name: 'Kafe Dostoyevsky', src: '/images/maps/kafe.png'           },
+        kanal:         { name: 'Kanal',            src: '/images/maps/kanal.png'          },
+        lair:          { name: 'Lair',             src: '/images/maps/lair.png'           },
+        nhvnlabs:      { name: 'Nighthaven Labs',  src: '/images/maps/nighthavenlabs.png' },
+        oregon:        { name: 'Oregon',           src: '/images/maps/oregon.png'         },
+        outback:       { name: 'Outback',          src: '/images/maps/outback.png'        },
+        skyscraper:    { name: 'Skyscraper',       src: '/images/maps/skyscraper.png'     },
+        themepark:     { name: 'Theme Park',       src: '/images/maps/themepark.png'      },
+        villa:         { name: 'Villa',            src: '/images/maps/villa.png'          },
+    };
+
+    Object.keys(maps).forEach(map => {
+        $('#maps').append(`
+            <div class="map" data-sysid="${map}">
+                <img src="${maps[map].src}" />
+                <div>${maps[map].name}</div>
+            </div>        
+        `);
+    });
+
+    $('#maps > .map').on('click', function() {
+        $('#maps > .map').removeClass('selected');
+        $(this).toggleClass('selected');
+    });
+
+
+
+    /* -------------- */
+    /* Find the match */
+    /* -------------- */
+
+    $('#find-match').on('click', async function() {
+        this.innerHTML = spinner(true);
+
+        let players = $('#player-picker > #players > .player.selected');
+        players = Array.from(players).map(player => player.dataset.uuid);
+
+        let map = $('#maps > .map.selected').attr('data-sysid');
+        let note = $('#note').val();
+
+
+        c({ players, map, note });
+    });
+
 };
