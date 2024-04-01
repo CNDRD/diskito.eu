@@ -80,13 +80,6 @@ nav {
         justify-content: center;
         font-size: 1.69rem;
 
-        &:hover {
-            color: $yellow-txt;
-        }
-        &:active {
-            color: $main-txt;
-        }
-
         > #dvojbodka {
             color: $bj-gold;
         }
