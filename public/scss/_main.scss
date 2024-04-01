@@ -1,0 +1,44 @@
+
+@import './_variables.scss';
+@import './_navbar.scss';
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+}
+
+html {
+    font-size: 16px;
+    background-color: $chaun-blue;
+}
+body {
+    margin-top: 0;
+}
+
+.spinner {
+    animation: spinner-rotate 1s linear infinite;
+}
+@keyframes spinner-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+::selection {
+    background: $bj-gold;
+    color: $main-bg;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: $main-bg;
+}
+::-webkit-scrollbar-thumb {
+    background: $gray-bg;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: $gray-bg-hover;
+}

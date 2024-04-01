@@ -1,0 +1,99 @@
+
+@import './_main.scss';
+
+
+
+#picker {
+    margin-block: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: fit-content;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.5rem;
+
+    > div {
+        transition: all .1s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            color: $bj-gold;
+        }
+
+        &.selected {
+            color: $bj-gold;
+        }
+    }
+}
+
+main {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+
+    &#stats {
+
+        > #above-table {
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+
+            #siegePcStatus {
+                > .spinner {
+                    height: 1rem;
+                }
+            }
+
+            #lastUpdated {
+                > .spinner {
+                    height: 1rem;
+                }
+            }
+        }
+
+        > table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            -webkit-border-horizontal-spacing: 0px;
+            -webkit-border-vertical-spacing: 0px;
+
+            > thead {
+                > tr {
+                    > th {
+                        padding: .2rem 1rem .2rem 1rem;
+                        font-size: 1.15rem;
+                    }
+                }
+            }
+
+            > tbody {
+                > tr {
+                    > td {
+                        text-align: center;
+                        vertical-align: middle;
+
+                        // Name
+                        &:nth-child(2) {
+                            text-align: left;
+                            padding-left: 1rem;
+                        }
+
+                        > .smol-dark {
+                            font-size: .8rem;
+                            color: $gray-border;
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+
+}

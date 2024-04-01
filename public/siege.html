@@ -1,104 +1,40 @@
 <!DOCTYPE html>
-<html class="pretty-scrollbar" lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Loads of stats and other things about the Diskíto Discord server.">
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content=":D">
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
-    <!-- Firebase JS -->
-    <script src="/__/firebase/8.7.1/firebase-app.js"></script>
-    <script src="/__/firebase/8.7.1/firebase-database.js"></script>
-    <script src="/__/firebase/8.7.1/firebase-analytics.js"></script>
-    <script src="/__/firebase/init.js"></script>
+        <!-- JS & CSS -->
+        <link rel="stylesheet" href="/css/siege.css" />
+        <script defer src="/js/siege.js" type="module" charset="utf-8"></script>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
-
-    <!-- Custom CSS & JS -->
-    <link rel="stylesheet" href="/resources/css/normalize.css" />
-    <link rel="stylesheet" href="/resources/css/main.css" />
-    <link rel="stylesheet" href="/resources/css/siege.css" />
-    <script defer src="/resources/jss/myFunctions.js" charset="utf-8"></script>
-    <script defer src="/resources/jss/siege_stuff.js" charset="utf-8"></script>
-
-    <script defer type="module" src="/resources/jss/main.js" charset="utf-8"></script>
-    <script defer type="module" src="/resources/js/siege.js" charset="utf-8"></script>
-    <script defer src="/resources/jss/sorttable.js" charset="utf-8"></script>
-
-    <title>Diskíto</title>
-    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
-
-  </head>
-  <body>
-
-    <nav class="navbar">
-      <div class="branding">
-        <a href="/"><span id="dvojbodka">:</span>Diskíto</a>
-      </div>
-      <div class="navigation"></div>
-      <div class="at-right">
-        <div class="login-button">Login</div>
-        <div id="theme-switch" class="theme-switch">🌑</div>
-      </div>
-    </nav>
-    <nav class="navbar-mobile">
-      <div id="menu">MENU</div>
-      <div id="hidden">
-        <div id="first">
-          <div id="mobile-theme-switch" class="theme-switch">Dark Mode</div>
-          <a href="/">Home</a>
-        </div>
-        <div class="login-button">Login</div>
-      </div>
-      <div id="restt"></div>
-    </nav>
-
-    <div class="main">
-
-      <div class="above-table">
-
-        <div class="left">
-          <span>PC Server Status:</span>
-          <span id="siegePcStatus">???</span>
-        </div>
-
-        <div class="right">
-          <div>
-            Last update:
-            <span id="lastUpdated"style="cursor: pointer;" class="hint--top hint--rounded hint--no-arrow">
-              ???
-            </span>
-            ago
-          </div>
-        </div>
+        <title>Diskíto | Siege</title>
+        <link rel="shortcut icon" href="/images/diskito_pfp.jpg" />
         
-      </div>
+    </head>
+    <body>
+        
+        <nav>
+            <a href="/" class="logo"><span id="dvojbodka">:</span>Diskíto</a>
+            <div class="links">
+                <a href="/siege">Siege</a>
+                <a href="/quotes">Quotes</a>
+            </div>
+            <a href="/discord" class="dscrd" target="_blank"><img src="/images/discord.svg" alt="Discord"></a>
+            <a href="" class="toggle-mnu"><span></span></a>
+        </nav>
+        
+        <div id="picker">
+            <div id="show-stats" class="selected">Stats</div>
+            <div id="show-match-tracker">Match tracker</div>
+        </div>
 
-      <div class="overflow">
-          
-        <table class="sortable">
-          <thead class="pls-no-click">
-            <tr>
-              <th class="sorttable_numeric hidden-mobile">🖼️</th>
-              <th class="sorttable_alpha name">Peep</th>
-              <th class="sorttable_numeric">Rank <span class="hidden-mobile">(max)</span></th>
-              <th class="sorttable_numeric hidden-mobile">MMR</th>
-              <th class="sorttable_numeric" uk-tooltip="Seasonal">K/D</th>
-              <th class="sorttable_numeric" uk-tooltip="Seasonal">W/L</th>
-              <th class="sorttable_numeric hidden-mobile" uk-tooltip="Total">Time Played</th>
-            </tr>
-          </thead>
-          <tbody id="tableDataPlace"></tbody>
-        </table>
+        <main class="picker-thangs" id="stats"></main>
+        <main class="picker-thangs" id="match-tracker" style="display: none;">Coming soon..</main>
 
-      </div>
-    </div>
-    
-  </body>
-  
+    </body>
 </html>

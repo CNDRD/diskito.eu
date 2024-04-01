@@ -1,0 +1,77 @@
+
+@import './_main.scss';
+
+
+main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-block: 3rem;
+    padding-inline: 3rem;
+
+    @media screen and (max-width: $mobile-threshold) {
+        padding-inline: 0;
+    }
+
+    > .quote {
+        border: 1px solid $gray-border;
+        border-radius: 5px;
+        padding: 1rem;
+
+        @media screen and (max-width: $mobile-threshold) {
+            width: 100%;
+        }
+
+        > .text {
+            text-align: center;
+            
+            @media screen and (max-width: $mobile-threshold) {
+                text-align: left;
+            }
+
+            &::before {
+                content: "“";
+                color: $bj-gold;
+                font-size: 2rem;
+                line-height: 1;
+            }
+            &::after {
+                content: "”";
+                color: $bj-gold;
+                font-size: 2rem;
+                line-height: 1;
+            }
+        }
+
+        > .author-date {
+            width: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-end;
+            margin-top: .5rem;
+            gap: .2rem;
+
+            > .author {
+                font-style: italic;
+                font-weight: 300;
+                color: $main-txt-dark;
+
+                &::before {
+                    content: "— ";
+                }
+                &::after {
+                    content: ", ";
+                }
+            }
+
+            > .date {
+                font-style: italic;
+                font-weight: 300;
+                color: $main-txt-dark;
+            }
+        }
+
+    }
+}

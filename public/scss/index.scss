@@ -1,0 +1,24 @@
+
+@import './_main.scss';
+
+
+main {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > a {
+        text-decoration: none;
+        font-size: 2rem;
+        font-weight: 900;
+        letter-spacing: 1px;
+        transition: color .1s ease-in-out;
+
+        &:hover {
+            color: $main-txt-dark;
+        }
+    }
+}
+

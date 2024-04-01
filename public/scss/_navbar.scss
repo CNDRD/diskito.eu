@@ -1,0 +1,207 @@
+
+nav {
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    display: flex;
+    height: $navbar-height;
+    align-items: center;
+    justify-content: space-between;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    position: sticky;
+    top: 0;
+    z-index: 99999999999999999;
+    max-width: 2000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 5rem;
+    padding-right: 5rem;
+
+    @media screen and (max-width: $mobile-threshold) {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+
+        .links {
+            opacity: 0;
+            transition: opacity 0.1s linear;
+        }
+
+        &.show-mobile-menu {
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            background: $login-bg;
+
+            .links {
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                position: absolute;
+                top: $navbar-height;
+                left: 0;
+                width: 100vw;
+                height: calc(100vh - 3rem);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                z-index: $mobile-menu-z-index;
+                font-size: 2.5rem;
+                background: rgba(0, 0, 0, .5);
+                color: transparent;
+                transition: opacity 0.1s linear;
+                opacity: 1;
+
+                div {
+                    width: 50vw;
+                    height: 1px;
+                }
+
+                a:last-child {
+                    margin-bottom: 5rem;
+                }
+            }
+
+            .dscrd {
+                height: 3rem;
+            }
+
+        }
+    }
+
+    .logo {
+        font-weight: 900;
+        letter-spacing: 1px;
+        color: $main-txt;
+        user-select: none;
+        text-decoration: none;
+        transition: color .1s ease-in-out;
+        display: flex;
+        justify-content: center;
+        font-size: 1.69rem;
+
+        &:hover {
+            color: $yellow-txt;
+        }
+        &:active {
+            color: $main-txt;
+        }
+
+        > #dvojbodka {
+            color: $bj-gold;
+        }
+    }
+
+    .links {
+        display: flex;
+        gap: 1rem;
+        line-height: 1;
+
+        a {
+            text-decoration: none;
+            color: $main-txt;
+            transition: color .1s ease-in-out;
+            position: relative;
+            user-select: none;
+
+            &:hover {
+                color: $main-txt-hover;
+            }
+            &:active {
+                color: $main-txt;
+            }
+
+            &.active::after {
+                content: '';
+                background-color: $main-txt-dark;
+                width: 110%;
+                height: 1px;
+                position: absolute;
+                top: -3px;
+                left: -5%;
+            }
+        }
+
+        div {
+            background: $gray-border;
+            width: 1px;
+        }
+
+        @media screen and (max-width: $mobile-threshold) {
+            display: none;
+        }
+    }
+
+    .dscrd {
+        height: 2rem;
+        aspect-ratio: 1/1;
+        filter: invert(100%) sepia(5%) saturate(172%) hue-rotate(78deg) brightness(115%) contrast(86%);
+        transition: .1s transform ease-in-out;
+        margin-right: 5.5rem;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+        &:active {
+            transform: scale(1);
+        }
+    }
+
+    .toggle-mnu {
+        display: none;
+    }
+
+    @media screen and (max-width: $mobile-threshold) {
+        z-index: $navbar-z-index;
+
+        .dscrd {
+            display: none;
+        }
+
+        .toggle-mnu {
+            display: block;
+            width: 28px;
+            height: 28px;
+            margin-top: 10px;
+            margin-right: 10px;
+
+            span:after, span:before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 9px;
+            }
+
+            span:after {
+                top: 18px;
+            }
+
+            span {
+                position: relative;
+                display: block;
+            }
+
+            span, span:after, span:before {
+                width: 100%;
+                height: 2px;
+                background-color: #fff;
+                transition: all 0.3s;
+                backface-visibility: hidden;
+                border-radius: 2px;
+            }
+
+            &.on span {
+                background-color: transparent;
+            }
+
+            &.on span:before {
+                transform: rotate(45deg) translate(-1px, 0px);
+            }
+
+            &.on span:after {
+                transform: rotate(-45deg) translate(6px, -7px);
+            }
+        }
+
+    }
+}

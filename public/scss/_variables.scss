@@ -1,0 +1,63 @@
+
+$chaun-blue-old: hsl(212, 33%, 23%);
+$chaun-blue: hsl(225deg, 3%, 11%);
+$chaun-blue-d: hsl(213, 81%, 8%);
+$chaun-red: hsl(359, 83%, 63%);
+
+$gray: hsl(220, 1%, 58%);
+
+$w-online: #32d296;
+$w-idle: #faa05a;
+$w-dnd: #f0506e;
+$w-streaming: #573591;
+
+$main-bg: hsl(225deg 3% 11%);
+$main-txt: hsl(0, 0%, 100%);
+$main-txt-hover: hsl(0deg 0% 83%);
+$main-txt-dark: hsl(0, 0%, 60%);
+
+$login-bg: hsl(0, 0%, 14%);
+$login-btn-bg: #2e2e2e;
+$login-btn-bg-hover: #343434;
+
+$bj-gold: hsl(48, 37%, 62%);
+$modal-bg: #242424;
+
+$green-txt: #4cc48a;
+$green-txt-hover: #3aae7a;
+$green-txt-active: #2e8e5f;
+$green-bg: #0c1f17;
+$green-bg-hover: #0e2a1f;
+$green-bg-active: #0c1f17;
+$green-border: #1b543a;
+
+$yellow-txt: #f0c000;
+$yellow-txt-hover: #e0b000;
+$yellow-bg: #221a00;
+$yellow-bg-hover: #3e3000;
+$yellow-bg-active: #352800;
+$yellow-border: #594a05;
+
+$red-txt: #ff6369;
+$red-bg: #291415;
+$red-bg-hover: #3a1c1f;
+$red-bg-active: #291415;
+$red-border: #822025;
+
+$gray-txt: #ededed;
+$gray-txt-hover: #dcdcdc;
+$gray-bg: #2e2e2e;
+$gray-bg-hover: #343434;
+$gray-bg-active: #2e2e2e;
+$gray-border: #888888;
+
+
+$border-radius: 5px;
+$login-z-index: 99999;
+$login-bg-z-index: $login-z-index - 1;
+$navbar-z-index: 10000;
+$navbar-bg-z-index: $navbar-z-index - 1;
+$mobile-menu-z-index: 5000;
+
+$navbar-height: 3rem;
+$mobile-threshold: 1000px;

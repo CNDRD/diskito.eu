@@ -1,68 +1,36 @@
 <!DOCTYPE html>
-<html class="pretty-scrollbar" lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Loads of stats and other things about the Diskíto Discord server.">
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content=":D">
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
-    <!-- Firebase JS -->
-    <script src="/__/firebase/8.7.1/firebase-app.js"></script>
-    <script src="/__/firebase/8.7.1/firebase-database.js"></script>
-    <script src="/__/firebase/8.7.1/firebase-analytics.js"></script>
-    <script src="/__/firebase/init.js"></script>
+        <!-- JS & CSS -->
+        <link rel="stylesheet" href="/css/quotes.css" />
+        <script defer src="/js/quotes.js" type="module" charset="utf-8"></script>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+        <title>Diskíto | Quotes</title>
+        <link rel="shortcut icon" href="/images/diskito_pfp.jpg" />
+        
+    </head>
+    <body>
+        
+        <nav>
+            <a href="/" class="logo"><span id="dvojbodka">:</span>Diskíto</a>
+            <div class="links">
+                <a href="/siege">Siege</a>
+                <a href="/quotes">Quotes</a>
+            </div>
+            <a href="/discord" class="dscrd" target="_blank"><img src="/images/discord.svg" alt="Discord"></a>
+            <a href="" class="toggle-mnu"><span></span></a>
+        </nav>
+        
+        <main>
 
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        </main>
 
-    <!-- Custom CSS & JS -->
-    <link rel="stylesheet" href="/resources/css/normalize.css" />
-    <link rel="stylesheet" href="/resources/css/main.css" />
-    <link rel="stylesheet" href="/resources/css/quotes.css" />
-    <script defer src="/resources/jss/myFunctions.js" charset="utf-8"></script>
-
-    <script defer type="module" src="/resources/jss/main.js" charset="utf-8"></script>
-    <script defer type="module" src="/resources/js/quotes.js" charset="utf-8"></script>
-
-    <title>Diskíto</title>
-    <link rel="shortcut icon" href="/resources/img/diskito_pfp.jpg" />
-
-  </head>
-  <body>
-
-    <nav class="navbar">
-      <div class="branding">
-        <a href="/"><span id="dvojbodka">:</span>Diskíto</a>
-      </div>
-      <div class="navigation"></div>
-      <div class="at-right">
-        <div class="login-button">Login</div>
-        <div id="theme-switch" class="theme-switch">🌑</div>
-      </div>
-    </nav>
-    <nav class="navbar-mobile">
-      <div id="menu">MENU</div>
-      <div id="hidden">
-        <div id="first">
-          <div id="mobile-theme-switch" class="theme-switch">Dark Mode</div>
-          <a href="/">Home</a>
-        </div>
-        <div class="login-button">Login</div>
-      </div>
-      <div id="restt"></div>
-    </nav>
-
-    <div id="main">
-
-    </div>
-
-  </body>
-  
+    </body>
 </html>
