@@ -2,6 +2,10 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 export const supabase = createClient('https://leyoegxpprcdstxvtecg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxleW9lZ3hwcHJjZHN0eHZ0ZWNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzk5NDA1NDIsImV4cCI6MTk5NTUxNjU0Mn0.yNr2o0psosNcfQX52uoOZc7pvn0YzysqpgdCE-f2kFM')
 
+const { data: authData } = await supabase.auth.getSession();
+export const UUID = authData.session ? authData.session.user.id : null;
+export const userAuth = authData;
+
 export const c = console.log.bind(console);
 
 export function addSpaces(x, char=" ") { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, char); };

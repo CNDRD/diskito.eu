@@ -57,15 +57,32 @@ nav {
                     height: 1px;
                 }
 
-                a:last-child {
-                    margin-bottom: 5rem;
+                .dscrd {
+                    height: 3rem;
+                    margin: 0;
+                }
+
+            }
+
+            .login-btn {
+                position: absolute;
+                top: 70vh;
+                transition: opacity .1s linear;
+                opacity: 1;
+                z-index: $mobile-menu-z-index + 1;
+                display: flex;
+                justify-content: center;
+                padding: .2rem 0;
+                font-size: 2rem;
+                min-width: 0;
+                width: 100vw;
+                color: $green-txt;
+                line-height: 1;
+
+                &.logout {
+                    color: $red-txt;
                 }
             }
-
-            .dscrd {
-                height: 3rem;
-            }
-
         }
     }
 
@@ -79,6 +96,7 @@ nav {
         display: flex;
         justify-content: center;
         font-size: 1.69rem;
+        padding-left: 1rem;
 
         > #dvojbodka {
             color: $bj-gold;
@@ -120,23 +138,56 @@ nav {
             width: 1px;
         }
 
+        .dscrd {
+            height: 1.3rem;
+            aspect-ratio: 1/1;
+            filter: invert(100%) sepia(5%) saturate(172%) hue-rotate(78deg) brightness(115%) contrast(86%);
+            transition: .1s transform ease-in-out;
+            margin-right: 5.5rem;
+    
+            &:hover {
+                transform: scale(1.1);
+            }
+            &:active {
+                transform: scale(1);
+            }
+        }
+
         @media screen and (max-width: $mobile-threshold) {
             display: none;
         }
     }
 
-    .dscrd {
-        height: 2rem;
-        aspect-ratio: 1/1;
-        filter: invert(100%) sepia(5%) saturate(172%) hue-rotate(78deg) brightness(115%) contrast(86%);
-        transition: .1s transform ease-in-out;
-        margin-right: 5.5rem;
+    .login-btn {
+        text-decoration: none;
+        color: $main-txt;
+        transition: color .1s ease-in-out;
+        user-select: none;
+        display: flex;
+        justify-content: center;
+        letter-spacing: 1px;
+        margin-right: 1.69rem;
+
+        &.logout {
+            &:hover {
+                color: $red-txt;
+                cursor: pointer;
+            }
+            &:active {
+                color: $red-border;
+            }
+        }
 
         &:hover {
-            transform: scale(1.1);
+            color: $green-txt;
+            cursor: pointer;
         }
         &:active {
-            transform: scale(1);
+            color: $green-txt-active;
+        }
+
+        @media screen and (max-width: $mobile-threshold) {
+            display: none;
         }
     }
 
@@ -146,10 +197,6 @@ nav {
 
     @media screen and (max-width: $mobile-threshold) {
         z-index: $navbar-z-index;
-
-        .dscrd {
-            display: none;
-        }
 
         .toggle-mnu {
             display: block;

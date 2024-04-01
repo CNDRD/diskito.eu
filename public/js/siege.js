@@ -1,14 +1,19 @@
-import { c, supabase, spinner, addSpaces, roundTwo, settings } from './main.js';
+import { c, supabase, spinner, addSpaces, roundTwo, settings, UUID } from './main.js';
 
 
 
+if (UUID) {
+    $('#picker > div').on('click', function() {
+        $('#picker > div').removeClass('selected');
+        $(this).addClass('selected');
+        $('.picker-thangs').hide();
+        $(`#${this.id.replace('show-', '')}`).fadeIn('fast');
+    });
+}
+else {
+    $('#show-match-tracker').remove();
+}
 
-$('#picker > div').on('click', function() {
-    $('#picker > div').removeClass('selected');
-    $(this).addClass('selected');
-    $('.picker-thangs').hide();
-    $(`#${this.id.replace('show-', '')}`).fadeIn('fast');
-});
 
 
 

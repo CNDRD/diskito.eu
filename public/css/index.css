@@ -56,11 +56,27 @@ nav {
     width: 50vw;
     height: 1px;
   }
-  nav.show-mobile-menu .links a:last-child {
-    margin-bottom: 5rem;
-  }
-  nav.show-mobile-menu .dscrd {
+  nav.show-mobile-menu .links .dscrd {
     height: 3rem;
+    margin: 0;
+  }
+  nav.show-mobile-menu .login-btn {
+    position: absolute;
+    top: 70vh;
+    transition: opacity 0.1s linear;
+    opacity: 1;
+    z-index: 5001;
+    display: flex;
+    justify-content: center;
+    padding: 0.2rem 0;
+    font-size: 2rem;
+    min-width: 0;
+    width: 100vw;
+    color: #4cc48a;
+    line-height: 1;
+  }
+  nav.show-mobile-menu .login-btn.logout {
+    color: #ff6369;
   }
 }
 nav .logo {
@@ -73,6 +89,7 @@ nav .logo {
   display: flex;
   justify-content: center;
   font-size: 1.69rem;
+  padding-left: 1rem;
 }
 nav .logo > #dvojbodka {
   color: hsl(48deg, 37%, 62%);
@@ -108,23 +125,52 @@ nav .links div {
   background: #888888;
   width: 1px;
 }
-@media screen and (max-width: 1000px) {
-  nav .links {
-    display: none;
-  }
-}
-nav .dscrd {
-  height: 2rem;
+nav .links .dscrd {
+  height: 1.3rem;
   aspect-ratio: 1/1;
   filter: invert(100%) sepia(5%) saturate(172%) hue-rotate(78deg) brightness(115%) contrast(86%);
   transition: 0.1s transform ease-in-out;
   margin-right: 5.5rem;
 }
-nav .dscrd:hover {
+nav .links .dscrd:hover {
   transform: scale(1.1);
 }
-nav .dscrd:active {
+nav .links .dscrd:active {
   transform: scale(1);
+}
+@media screen and (max-width: 1000px) {
+  nav .links {
+    display: none;
+  }
+}
+nav .login-btn {
+  text-decoration: none;
+  color: hsl(0deg, 0%, 100%);
+  transition: color 0.1s ease-in-out;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  letter-spacing: 1px;
+  margin-right: 1.69rem;
+}
+nav .login-btn.logout:hover {
+  color: #ff6369;
+  cursor: pointer;
+}
+nav .login-btn.logout:active {
+  color: #822025;
+}
+nav .login-btn:hover {
+  color: #4cc48a;
+  cursor: pointer;
+}
+nav .login-btn:active {
+  color: #2e8e5f;
+}
+@media screen and (max-width: 1000px) {
+  nav .login-btn {
+    display: none;
+  }
 }
 nav .toggle-mnu {
   display: none;
@@ -132,9 +178,6 @@ nav .toggle-mnu {
 @media screen and (max-width: 1000px) {
   nav {
     z-index: 10000;
-  }
-  nav .dscrd {
-    display: none;
   }
   nav .toggle-mnu {
     display: block;
@@ -186,7 +229,7 @@ html {
 }
 
 body {
-  margin-top: 0;
+  margin: 0;
 }
 
 .spinner {
