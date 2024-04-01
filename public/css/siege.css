@@ -329,5 +329,10 @@ main#stats > table > tbody > tr > td > .smol-dark {
   font-size: 0.8rem;
   color: #888888;
 }
+@media screen and (max-width: 1000px) {
+  main#stats > table .hide-mobile {
+    display: none;
+  }
+}
 
 /*# sourceMappingURL=siege.css.map */

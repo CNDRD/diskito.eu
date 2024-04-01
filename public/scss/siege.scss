@@ -92,6 +92,14 @@ main {
                 }
             }
 
+            @media screen and (max-width: $mobile-threshold) {
+
+                .hide-mobile {
+                    display: none;
+                }
+
+            }
+
         }
 
     }

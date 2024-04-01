@@ -97,7 +97,7 @@ async function showStats() {
 
         rows += `
             <tr>
-                <td>
+                <td class="hide-mobile">
                     <img style="height: 4rem;" src="${pfpLink}" />
                 </td>
                 <td class="name" style="min-width: 5rem;">
@@ -106,7 +106,7 @@ async function showStats() {
                 <td>
                     ${rankCell}
                 </td>
-                <td>
+                <td class="hide-mobile">
                     <div>
                         <span style="font-size: 1.5rem;">${addSpaces(parseInt(rank.rank_points) % 100)}</span>
                     </div>
@@ -120,12 +120,11 @@ async function showStats() {
                     <div>${wl}%</div>
                     <div class="smol-dark">${addSpaces(rank.wins)} / ${addSpaces(rank.losses)}</div>
                 </td>
-                <td>
+                <td class="hide-mobile">
                     ${playtime}
                 </td>
             </tr>
         `;
-
     });
 
     table = `
@@ -145,13 +144,13 @@ async function showStats() {
         <table id="siege-stats" class="sortable">
             <thead>
                 <tr>
-                <th>🖼️</th>
-                <th>Peep</th>
-                <th>Rank (max)</th>
-                <th>MMR</th>
-                <th>K/D</th>
-                <th>W/L</th>
-                <th>Time Played</th>
+                    <th class="hide-mobile">🖼️</th>
+                    <th>Peep</th>
+                    <th>Rank (max)</th>
+                    <th class="hide-mobile">MMR</th>
+                    <th>K/D</th>
+                    <th>W/L</th>
+                    <th class="hide-mobile">Time Played</th>
                 </tr>
             </thead>
             <tbody>
@@ -177,7 +176,7 @@ function _getRankCell(r, level) {
     return `
       <div class="rank-img-cell">
         <img style="height: 4rem;" src="${_getRankImageFromRankName(r.rank)}" />
-        <img style="height: 3.5rem;" src="${_getRankImageFromRankName(r.max_rank)}" />
+        <img style="height: 3.5rem;" class="hide-mobile" src="${_getRankImageFromRankName(r.max_rank)}" />
       </div>
     `;
 };
@@ -233,4 +232,3 @@ function _getRankImageFromRankName(name) {
     }
     return `https://i.imgur.com/${rank_dict[name.toLowerCase()]}.png`
 };
-
