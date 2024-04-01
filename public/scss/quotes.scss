@@ -10,6 +10,9 @@ main {
     gap: 1rem;
     margin-block: 3rem;
     padding-inline: 3rem;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
 
     @media screen and (max-width: $mobile-threshold) {
         padding-inline: 0;
