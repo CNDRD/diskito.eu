@@ -245,3 +245,7 @@ nav {
 
     }
 }
+
+html[data-logged-in="true"] nav div.links a[href="/matches"] {
+    display: block !important;
+}

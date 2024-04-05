@@ -9,8 +9,8 @@
         <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
         <!-- JS & CSS -->
-        <script defer src="/js/navbar.js" type="module" charset="utf-8"></script>
         <link rel="stylesheet" href="/css/siege.css" />
+        <script defer src="/js/navbar.js" type="module" charset="utf-8"></script>
         <script defer src="/js/siege.js" type="module" charset="utf-8"></script>
 
         <title>Diskíto | Siege</title>
@@ -23,6 +23,7 @@
             <a href="/" class="logo"><span id="dvojbodka">:</span>Diskíto</a>
             <div class="links">
                 <a href="/siege">Siege</a>
+                <a href="/matches" style="display: none;">Matches</a>
                 <a href="/quotes">Quotes</a>
                 <div></div>
                 <a href="/discord" class="dscrd" target="_blank"><img src="/images/discord.svg" alt="Discord"></a>
@@ -31,57 +32,7 @@
             <a href="" class="toggle-mnu"><span></span></a>
         </nav>
         
-        <div id="picker">
-            <div id="show-stats" class="selected">Stats</div>
-            <div id="show-match-tracker" data-loaded="false">Match tracker</div>
-        </div>
-
-        <main class="picker-thangs" id="stats"></main>
-        <main class="picker-thangs" id="match-tracker" style="display: none;">
-
-            <div id="player-picker">
-                <div class="header">Who's in the lobby</div>
-                <div id="players"></div>
-            </div>
-
-            <div id="map-picker">
-                <div class="header">Map being played</div>
-                <div id="maps"></div>
-            </div>
-
-            <div id="additional-note">
-                <div class="header">Additional note</div>
-                <textarea id="note" placeholder="Any additional notes?"></textarea>
-            </div>
-
-            <div id="find-match-parent">
-                <div class="header">Find match with selected players in the lobby</div>
-                <div id="find-match">Find match</div>
-            </div>
-
-            <div id="nothing-info">This all does nothing so far..</div>
-
-        </main>
-
-        <!--
-            PLAN
-
-        1.
-            Finish the inputs - error check
-
-        2.
-            Show matches that have been tracked and add a datapoint if the match is over
-            In that case we will fetch the data about how the match went from Ubisoft
-        
-        3.
-            Maybe move all of this into its very own /matches page
-            (maybe do this first)
-        
-        4.
-            Page with finished matches and there we can show the data about the match
-            (for shits and giggles)
-
-        -->
+        <main id="stats"></main>
 
     </body>
 </html>

@@ -10,7 +10,7 @@ nav {
   font-size: 1.3rem;
   position: sticky;
   top: 0;
-  z-index: 100000000000000020;
+  z-index: 100000000000000000;
   max-width: 2000px;
   margin-left: auto;
   margin-right: auto;
@@ -31,7 +31,7 @@ nav {
   nav.show-mobile-menu {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    background: hsl(0deg, 0%, 14%);
+    background: hsl(0, 0%, 14%);
   }
   nav.show-mobile-menu .links {
     backdrop-filter: blur(5px);
@@ -82,7 +82,7 @@ nav {
 nav .logo {
   font-weight: 900;
   letter-spacing: 1px;
-  color: hsl(0deg, 0%, 100%);
+  color: hsl(0, 0%, 100%);
   user-select: none;
   text-decoration: none;
   transition: color 0.1s ease-in-out;
@@ -92,7 +92,7 @@ nav .logo {
   padding-left: 1rem;
 }
 nav .logo > #dvojbodka {
-  color: hsl(48deg, 37%, 62%);
+  color: hsl(48, 37%, 62%);
 }
 nav .links {
   display: flex;
@@ -101,20 +101,20 @@ nav .links {
 }
 nav .links a {
   text-decoration: none;
-  color: hsl(0deg, 0%, 100%);
+  color: hsl(0, 0%, 100%);
   transition: color 0.1s ease-in-out;
   position: relative;
   user-select: none;
 }
 nav .links a:hover {
-  color: hsl(0deg, 0%, 83%);
+  color: hsl(0, 0%, 83%);
 }
 nav .links a:active {
-  color: hsl(0deg, 0%, 100%);
+  color: hsl(0, 0%, 100%);
 }
 nav .links a.active::after {
   content: "";
-  background-color: hsl(0deg, 0%, 60%);
+  background-color: hsl(0, 0%, 60%);
   width: 110%;
   height: 1px;
   position: absolute;
@@ -145,7 +145,7 @@ nav .links .dscrd:active {
 }
 nav .login-btn {
   text-decoration: none;
-  color: hsl(0deg, 0%, 100%);
+  color: hsl(0, 0%, 100%);
   transition: color 0.1s ease-in-out;
   user-select: none;
   display: flex;
@@ -218,6 +218,115 @@ nav .toggle-mnu {
   }
 }
 
+html[data-logged-in=true] nav div.links a[href="/matches"] {
+  display: block !important;
+}
+
+.msg {
+  padding: 0.5rem 0.75rem;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 6px;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-weight: 300;
+  line-height: 1.5;
+  white-space: nowrap;
+  transition: all 0.2s;
+  backdrop-filter: blur(7px);
+  border-color: oklch(from var(--color) l c h/0.25);
+  background: oklch(from var(--color) calc(l * 0.75) c h/0.5);
+  color: oklch(from var(--color) calc(l * 1.6) c h);
+}
+.msg > svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.msg > div {
+  width: fit-content;
+}
+.msg[data-type=warning] {
+  --color: oklch(61.47% 0.16 64.21);
+}
+.msg[data-type=error] {
+  --color: oklch(62.8% 0.25 29.23);
+  --color: red;
+}
+.msg[data-type=success] {
+  --color: oklch(47.06% 0.17 148.76);
+  --color: hsl(145 100% 25%);
+}
+.msg[data-type=note] {
+  --color: oklch(41.84% 0 0);
+}
+.msg[data-type=tip] {
+  --color: oklch(53.24% 0.23 256.22);
+}
+.msg[data-type=magic] {
+  --color: oklch(58.11% 0.31 307.02);
+}
+
+.btn {
+  border: 1px solid oklch(from var(--color) l c h/0.25);
+  padding: 0.2rem 0.4rem;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+  color: oklch(from var(--color) calc(l * 1.6) c h);
+  background-color: oklch(from var(--color) calc(l * 0.75) c h/0.5);
+  display: flex;
+  justify-content: center;
+  height: 1.3rem;
+  align-items: center;
+  transition: background-color 0.2s, color 0.2s;
+}
+.btn.smol {
+  padding: 0.1rem 0.2rem;
+  height: 1rem;
+  font-size: 0.8rem;
+}
+.btn[disabled] {
+  cursor: not-allowed;
+  user-select: none;
+  color: oklch(from var(--color) calc(l * 1.6) c h/2);
+}
+.btn[data-off] {
+  cursor: not-allowed;
+  user-select: none;
+  filter: grayscale(1);
+}
+.btn:not([disabled]):not([data-off]):hover {
+  color: oklch(from var(--color) calc(l * 1.5) c h);
+  background-color: oklch(from var(--color) calc(l * 0.5) c h/0.5);
+}
+.btn:not([disabled]):not([data-off]):active {
+  background-color: transparent;
+}
+.btn[data-type=warning] {
+  --color: oklch(61.47% 0.16 64.21);
+}
+.btn[data-type=error] {
+  --color: oklch(62.8% 0.25 29.23);
+  --color: red;
+}
+.btn[data-type=success] {
+  --color: oklch(47.06% 0.17 148.76);
+  --color: hsl(145 100% 25%);
+}
+.btn[data-type=note] {
+  --color: oklch(41.84% 0 0);
+}
+.btn[data-type=tip] {
+  --color: oklch(53.24% 0.23 256.22);
+}
+.btn[data-type=magic] {
+  --color: oklch(58.11% 0.31 307.02);
+}
+.btn > .spinner {
+  height: 1.2rem;
+}
+
 * {
   font-family: "Montserrat", sans-serif;
   color: white;
@@ -225,7 +334,7 @@ nav .toggle-mnu {
 
 html {
   font-size: 16px;
-  background-color: hsl(225deg, 3%, 11%);
+  background: hsl(0, 0%, 2%);
 }
 
 body {
@@ -245,8 +354,8 @@ body {
   }
 }
 ::selection {
-  background: hsl(48deg, 37%, 62%);
-  color: hsl(225deg, 3%, 11%);
+  background: hsl(48, 37%, 62%);
+  color: hsl(225, 3%, 11%);
 }
 
 ::-webkit-scrollbar {
@@ -254,7 +363,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(225deg, 3%, 11%);
+  background: hsl(225, 3%, 11%);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -265,227 +374,51 @@ body {
   background: #343434;
 }
 
-#picker {
-  margin-block: 3rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  width: fit-content;
-  justify-items: center;
-  align-items: center;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 1.5rem;
-}
-#picker > div {
-  transition: all 0.1s ease-in-out;
-  cursor: pointer;
-}
-#picker > div:hover {
-  color: hsl(48deg, 37%, 62%);
-}
-#picker > div.selected {
-  color: hsl(48deg, 37%, 62%);
-}
-
 main {
   margin-left: auto;
   margin-right: auto;
   width: fit-content;
+  margin-top: 3rem;
 }
-main#stats > #above-table {
+main > #above-table {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
 }
-main#stats > #above-table #siegePcStatus > .spinner {
+main > #above-table #siegePcStatus > .spinner {
   height: 1rem;
 }
-main#stats > #above-table #lastUpdated > .spinner {
+main > #above-table #lastUpdated > .spinner {
   height: 1rem;
 }
-main#stats > table {
+main > table {
   border-collapse: collapse;
   border-spacing: 0;
   -webkit-border-horizontal-spacing: 0px;
   -webkit-border-vertical-spacing: 0px;
 }
-main#stats > table > thead > tr > th {
+main > table > thead > tr > th {
   padding: 0.2rem 1rem 0.2rem 1rem;
   font-size: 1.15rem;
 }
-main#stats > table > tbody > tr > td {
+main > table > tbody > tr > td {
   text-align: center;
   vertical-align: middle;
 }
-main#stats > table > tbody > tr > td:nth-child(2) {
+main > table > tbody > tr > td:nth-child(2) {
   text-align: left;
   padding-left: 1rem;
 }
-main#stats > table > tbody > tr > td > .smol-dark {
+main > table > tbody > tr > td > .smol-dark {
   font-size: 0.8rem;
   color: #888888;
 }
 @media screen and (max-width: 1000px) {
-  main#stats > table .hide-mobile {
+  main > table .hide-mobile {
     display: none;
   }
-}
-main#match-tracker {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-bottom: 10rem;
-}
-main#match-tracker > #player-picker {
-  max-width: 50rem;
-}
-main#match-tracker > #player-picker > .header {
-  text-align: center;
-  margin-bottom: 0.75rem;
-}
-main#match-tracker > #player-picker > #players {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-main#match-tracker > #player-picker > #players > .player {
-  display: flex;
-  align-items: center;
-  border-radius: 50rem;
-  border: 1px solid #888888;
-  border-left: 0;
-  height: 2rem;
-  cursor: pointer;
-  transition: all 0.1s ease-out;
-}
-main#match-tracker > #player-picker > #players > .player > img {
-  height: calc(2rem + 2px);
-  border-radius: 50%;
-  filter: grayscale(1);
-}
-main#match-tracker > #player-picker > #players > .player > div {
-  padding-inline: 0.7rem;
-  user-select: none;
-  color: #888888;
-  transition: all 0.1s ease-out;
-}
-main#match-tracker > #player-picker > #players > .player:hover {
-  border-color: hsl(48deg, 37%, 62%);
-  transition: all 0.1s ease-in;
-}
-main#match-tracker > #player-picker > #players > .player:hover > img {
-  filter: grayscale(0);
-}
-main#match-tracker > #player-picker > #players > .player:hover > div {
-  color: white;
-  transition: all 0.1s ease-in;
-}
-main#match-tracker > #player-picker > #players > .player.selected {
-  border-color: hsl(48deg, 37%, 62%);
-}
-main#match-tracker > #player-picker > #players > .player.selected > img {
-  filter: grayscale(0);
-}
-main#match-tracker > #player-picker > #players > .player.selected > div {
-  color: white;
-}
-main#match-tracker > #map-picker .header {
-  text-align: center;
-  margin-bottom: 0.75rem;
-}
-main#match-tracker > #map-picker > #maps {
-  display: grid;
-  grid-template-columns: repeat(4, 10rem);
-  justify-items: center;
-  width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-}
-main#match-tracker > #map-picker > #maps > .map {
-  position: relative;
-  cursor: pointer;
-}
-main#match-tracker > #map-picker > #maps > .map > img {
-  width: 100%;
-  height: 100%;
-  user-select: none;
-  pointer-events: none;
-}
-main#match-tracker > #map-picker > #maps > .map > div {
-  position: absolute;
-  top: 0;
-  backdrop-filter: blur(3px);
-  padding: 0.25rem;
-  width: 100%;
-  text-align: center;
-  box-sizing: border-box;
-  text-shadow: 1px 1px 5px black;
-  transition: all 0.1s ease-out;
-}
-main#match-tracker > #map-picker > #maps > .map.selected > div {
-  transition: all 0.1s ease-in;
-  background: hsl(48deg, 37%, 62%);
-  color: black;
-  text-shadow: none;
-}
-main#match-tracker > #additional-note {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-main#match-tracker > #additional-note > textarea {
-  width: 20rem;
-  min-height: 5rem;
-  background-color: transparent;
-  color: white;
-  border: 1px solid #888888;
-  resize: vertical;
-}
-main#match-tracker > #find-match-parent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-main#match-tracker > #find-match-parent > #find-match {
-  border: 1px solid hsl(0deg, 0%, 60%);
-  padding: 0.2rem 0.4rem;
-  border-radius: 5px;
-  cursor: pointer;
-  user-select: none;
-  border-color: #1b543a;
-  color: #4cc48a;
-  background-color: #0c1f17;
-  display: flex;
-  width: 10ch;
-  justify-content: center;
-  height: 1.5rem;
-  align-items: center;
-}
-main#match-tracker > #find-match-parent > #find-match > .spinner {
-  height: 1.2rem;
-}
-main#match-tracker > #find-match-parent > #find-match:hover {
-  color: #3aae7a;
-}
-main#match-tracker > #nothing-info {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  background: hsl(359deg, 83%, 63%);
-  color: hsl(213deg, 81%, 8%);
-  font-weight: 600;
-  height: 2rem;
-  align-items: center;
 }
 
 /*# sourceMappingURL=siege.css.map */

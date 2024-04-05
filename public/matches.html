@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content=":D">
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+        <!-- JS & CSS -->
+        <link rel="stylesheet" href="/css/matches.css" />
+        <script defer src="/js/navbar.js" type="module" charset="utf-8"></script>
+        <script defer src="/js/matches.js" type="module" charset="utf-8"></script>
+
+        <title>Diskíto | Match tracker</title>
+        <link rel="shortcut icon" href="/images/diskito_pfp.jpg" />
+        
+    </head>
+    <body>
+        
+        <nav>
+            <a href="/" class="logo"><span id="dvojbodka">:</span>Diskíto</a>
+            <div class="links">
+                <a href="/siege">Siege</a>
+                <a href="/matches" style="display: none;">Matches</a>
+                <a href="/quotes">Quotes</a>
+                <div></div>
+                <a href="/discord" class="dscrd" target="_blank"><img src="/images/discord.svg" alt="Discord"></a>
+            </div>
+            <div id="login-popup-button" class="login-btn login">Login</div>
+            <a href="" class="toggle-mnu"><span></span></a>
+        </nav>
+        
+        <switch id="new-or-existing-switch">
+            <div class="header">Which Way, Western Man?</div>
+            <div class="switcharoo">
+                <div id="new-match" class="btn" data-type="success">New match</div>
+                <div id="existing-matches" class="btn" data-type="warning">Existing matches</div>
+            </div>
+        </switch>
+
+        <main id="match-tracker" style="display: none;">
+
+            <div id="do_we_know_the_match_id">
+                <div class="header">Do you have the Match ID?</div>
+                <div id="match_id_fork">
+                    <div id="match_id_fork-no" class="btn" data-type="warning">No</div>
+                    <div id="match_id_fork-yes" class="btn" data-type="success">Yes</div>
+                </div>
+            </div>
+
+            <div id="match-id-picker" style="display: none;">
+                <div class="header">Enter the Match ID</div>
+                <input id="match-id" type="text" />
+            </div>
+
+            <div id="player-picker" style="display: none;">
+                <div class="header">Who's in the lobby</div>
+                <div id="players"></div>
+            </div>
+
+            <div id="map-picker" style="display: none;">
+                <div class="header">Map being played</div>
+                <div id="maps"></div>
+            </div>
+
+            <div id="additional-note" style="display: none;">
+                <div class="header">Additional note</div>
+                <textarea id="note" placeholder="Any additional notes?"></textarea>
+            </div>
+
+            <div id="find-match-parent" style="display: none;">
+                <div id="find-match-errors" style="display: none;"></div>
+                <div id="find-match">Find match</div>
+            </div>
+
+        </main>
+
+        <main id="match-viewer" style="display: none;">
+            
+            <table id="tracked-matches" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Created</th>
+                        <th>Map</th>
+                        <th>Stack</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+        </main>
+
+    </body>
+</html>
