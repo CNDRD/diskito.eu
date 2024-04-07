@@ -366,10 +366,12 @@
                                 > :last-child {
                                     display: flex;
                                     flex-direction: row;
+                                    align-items: baseline;
                                     gap: .2rem;
 
                                     > div {
                                         color: $gray-border;
+                                        font-size: .8rem;
                                     }
                                 }
                             }

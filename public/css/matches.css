@@ -656,10 +656,12 @@ body {
 #match-details > #ranked_stats > table > tbody > tr > td[data-what=rank] > .rank_rp > :last-child {
   display: flex;
   flex-direction: row;
+  align-items: baseline;
   gap: 0.2rem;
 }
 #match-details > #ranked_stats > table > tbody > tr > td[data-what=rank] > .rank_rp > :last-child > div {
   color: #888888;
+  font-size: 0.8rem;
 }
 #match-details > #ranked_stats > table > tbody > tr > td[data-what=kd] {
   text-align: center;
