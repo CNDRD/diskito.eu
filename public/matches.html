@@ -32,7 +32,7 @@
             <a href="" class="toggle-mnu"><span></span></a>
         </nav>
         
-        <switch id="new-or-existing-switch">
+        <switch id="new-or-existing-switch" style="display: none;">
             <div class="header">Which Way, Western Man?</div>
             <div class="switcharoo">
                 <div id="new-match" class="btn" data-type="success">New match</div>
@@ -90,6 +90,63 @@
                 </thead>
                 <tbody></tbody>
             </table>
+
+        </main>
+
+        <main id="match-details" style="display: none;">
+
+            <div id="info">
+                <div class="thang">
+                    <div class="key">Map</div>
+                    <div class="value" id="map"></div>
+                </div>
+                <div class="thang">
+                    <div class="key">Stack</div>
+                    <div class="value" id="stack"></div>
+                </div>
+                <div class="thang">
+                    <div class="key">Note</div>
+                    <div class="value" id="match-note"></div>
+                </div>
+                
+                <div class="thang">
+                    <div class="key">Tracked at</div>
+                    <div class="value" id="tracked-at"></div>
+                </div>
+                <div class="thang" style="display: none;">
+                    <div class="key">Match start</div>
+                    <div class="value" id="match-start"></div>
+                </div>
+                <div class="thang" style="display: none;">
+                    <div class="key">Match end</div>
+                    <div class="value" id="match-end"></div>
+                </div>
+                <div class="thang" style="display: none;">
+                    <div class="key">Outcome</div>
+                    <div class="value" id="outcome"></div>
+                </div>
+
+            </div>
+
+            <div id="ranked_stats">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Player</th>
+                            <th>Rank</th>
+                            <th>KD</th>
+                            <th>WL</th>
+                            <th>TRN</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ranked_stats_table_place"></tbody>
+                </table>
+            </div>
+
+            <div id="rounds-breakdown">
+
+            </div>
 
         </main>
 

@@ -228,7 +228,7 @@ html[data-logged-in=true] nav div.links a[href="/matches"] {
   border-style: solid;
   border-radius: 6px;
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   align-items: center;
   font-weight: 300;
   line-height: 1.5;
@@ -245,6 +245,7 @@ html[data-logged-in=true] nav div.links a[href="/matches"] {
 }
 .msg > div {
   width: fit-content;
+  text-wrap: pretty;
 }
 .msg[data-type=warning] {
   --color: oklch(61.47% 0.16 64.21);
@@ -280,11 +281,17 @@ html[data-logged-in=true] nav div.links a[href="/matches"] {
   height: 1.3rem;
   align-items: center;
   transition: background-color 0.2s, color 0.2s;
+  text-decoration: none;
 }
 .btn.smol {
   padding: 0.1rem 0.2rem;
   height: 1rem;
   font-size: 0.8rem;
+}
+.btn.big {
+  padding: 0.4rem 0.8rem;
+  height: 2rem;
+  font-size: 1.2rem;
 }
 .btn[disabled] {
   cursor: not-allowed;

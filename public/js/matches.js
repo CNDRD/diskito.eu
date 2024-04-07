@@ -1,4 +1,8 @@
-import { c, supabase, spinner, message, userAuth } from './main.js';
+import { c, supabase, spinner, message, userAuth, roundTwo, addSpaces } from './main.js';
+import { _getRankImageFromRankName } from './siege.js';
+
+const urlParams = new URLSearchParams(window.location.search);
+let matchId = urlParams.get('matchId') || undefined;
 
 let maps = {
     bank:          { name: 'Bank',             src: '/images/maps/bank.png'           },
@@ -22,8 +26,187 @@ let matchesData = {};
 
 
 
+if (matchId) { await loadMatchDetails(matchId); }
+else { $('#new-or-existing-switch').fadeIn('fast'); }
 
-$('#new-or-existing-switch').fadeIn('fast');
+
+
+
+/* ------------------------
+
+    Show one match details
+
+*/
+
+
+async function loadMatchDetails(matchId) {
+    $('#match-details').fadeIn('fast');
+    $('#map').html(spinner());
+    $('#stack').html(spinner());
+    $('#tracked-at').html(spinner());
+    $('#match-note').html(spinner());
+
+    const { data: matchDb } = await supabase.from('tracked_matches').select('*').eq('id', matchId);
+    let match = matchDb[0];
+
+    let diskitoPlayers = await loadUpPlayers(true);
+    diskitoPlayers = diskitoPlayers.map(player => player.ubi_id);
+
+
+
+    /* ---------------- */
+    /* Basic match Info */
+
+    let map = maps[match.map].name;
+    let stack = match.stack;
+
+    $('#map').text(map);
+    $('#stack').text(stack + 'x');
+    $('#match-note').text(match.note).parent().toggle(match.note !== '');
+
+    if (match.raw_data_archived === null) {
+        $('#tracked-at').text(simpleDateTime(match.created_at)).parent().show();
+    }
+    else {
+        $('#tracked-at').parent().hide();
+        $('#match-start').text(simpleDateTime(match.raw_data_archived.start_time)).parent().show();
+        $('#match-end').text(simpleDateTime(match.raw_data_archived.end_time)).parent().show();
+    }
+
+
+
+    /* ---------------------------------------------------- */
+    /* If we have the archived data we can figure out teams */
+
+    let ourTeamId = undefined;
+    let ourTeamPlayers = [];
+    if (match?.raw_data_archived) {
+        let rounds = match.raw_data_archived.rounds;
+        let firstRound = rounds[0];
+
+        let firstTeam = firstRound.teams[0];
+        let secondTeam = firstRound.teams[1];
+
+        let firstTeamPlayers = firstTeam.players.map(player => player.profile_id);
+        let secondTeamPlayers = secondTeam.players.map(player => player.profile_id);
+
+        let ourTeamIsFirst = firstTeamPlayers.some(player => diskitoPlayers.includes(player));
+        ourTeamPlayers = ourTeamIsFirst ? firstTeamPlayers : secondTeamPlayers;
+        ourTeamId = ourTeamIsFirst ? firstTeam.id : secondTeam.id;
+    }
+
+
+
+    /* -------------------- */
+    /* Ranked players' data */
+
+    let ourPlayers = [];
+    let otherPlayers = [];
+    Object.keys(match.ranked_stats).forEach(player => {
+        match.ranked_stats[player].ourTeam = ourTeamPlayers.includes(player);
+        match.ranked_stats[player].diskito = diskitoPlayers.includes(player);
+
+        if (match.ranked_stats[player].diskito) {
+            ourPlayers.unshift(player);
+        }
+        else {
+            if (match.ranked_stats[player].ourTeam) {
+                ourPlayers.push(player);
+            }
+            else {
+                otherPlayers.push(player);
+            }
+        }
+    });
+
+    let prevWasDiskito = true;
+    let prevWasOurTeam = true;
+    [...ourPlayers, ...otherPlayers].forEach(player => {
+        let row = '';
+        let pd = match.ranked_stats[player];
+
+        row += `<td data-what="pfp"><img src="https://ubisoft-avatars.akamaized.net/${player}/default_256_256.png" /></td>`;
+
+        let persona = pd.persona ? `<div class="persona">${pd.persona}</div>` : '';
+        row += `<td data-what="player"><div>${pd.name}</div>${persona}</td>`;
+
+        row += `
+            <td data-what="rank">
+                <img src="${_getRankImageFromRankName(pd.rank)}" />
+                <div class="rank_rp">
+                    <div>${pd.rank}</div>
+                    <div>${addSpaces(pd.rank_points)} <div>RP</div></div>
+                </div>
+            </td>
+        `;
+
+        let kd = pd.deaths == 0 ? pd.kills : roundTwo(pd.kills / pd.deaths);
+        row += `
+            <td data-what="kd">
+                <div>${kd}</div>
+                <div class="smol-dark">${addSpaces(pd.kills)} / ${addSpaces(pd.deaths)}</div>
+            </td>
+        `;
+
+        let wl = pd.losses == 0 ? 0 : roundTwo(pd.wins / (pd.wins + pd.losses) * 100);
+        row += `
+            <td data-what="wl">
+                <div>${wl}%</div>
+                <div class="smol-dark">${addSpaces(pd.wins)} / ${addSpaces(pd.losses)}</div>
+            </td>
+        `;
+
+        row += `
+            <td data-what="trn-link">
+                <a href="https://r6.tracker.network/profile/id/${player}" target="_blank">
+                    <img src="/icons/data_exploration.svg" />
+                </a>
+            </td>
+        `;
+
+        // Dividers
+        let cols = $('#ranked_stats > table > thead > tr > th').length;
+        if (prevWasDiskito && !pd.diskito) {
+            $('#ranked_stats_table_place').append(`<tr class="separator"><td colspan="${cols}"></td></tr>`);
+        }
+        if (prevWasOurTeam && !pd.ourTeam) {
+            $('#ranked_stats_table_place').append(`<tr class="team-separator"><td colspan="${cols}"></td></tr>`);
+        }
+        prevWasDiskito = pd.diskito;
+        prevWasOurTeam = pd.ourTeam;
+
+        // Finally add our wanted row
+        $('#ranked_stats_table_place').append(`<tr>${row}</tr>`);
+    });
+
+
+
+    /* ----------------------------------- */
+    /* Optionally show how each round went */
+
+    if (match?.raw_data_archived) {
+        c('raw_data_archived', match.raw_data_archived);
+
+        let rounds = match.raw_data_archived.rounds;
+
+        rounds.forEach((round, i) => {
+            c(i, 'round', round);
+        });
+    }
+
+};
+
+
+
+
+
+
+
+/* -------------------------------------------
+
+    Find new matches OR view existing matches
+
+*/
 
 let findNew = undefined;
 $('#new-or-existing-switch > .switcharoo > .btn').on('click', async function() {
@@ -34,10 +217,6 @@ $('#new-or-existing-switch > .switcharoo > .btn').on('click', async function() {
     $(`#${findNew ? 'match-tracker' : 'match-viewer'}`).fadeIn('fast');
     if (!findNew) { await loadTrackedMatches(); }
 });
-
-
-
-
 
 async function loadTrackedMatches() {
     let spnr = spinner();
@@ -53,35 +232,19 @@ async function loadTrackedMatches() {
     matches.forEach(match => {
         matchesData[match.id] = match;
 
-        c(match);
-
         let akschuns = ``;
         let haveFullData = match.raw_data_archived !== null;
-        let playerStack = 0;
-
-        let rawData = match.raw_data || {};
-        let rawDataArchived = match.raw_data_archived || {};
         let map = maps[match.map].name;
-        let note = match.note || '--';
         let created_at = simpleDateTime(match.created_at);
 
-        rawData.connected_profile_ids.forEach(playerId => {
-            if (!playerIdToName[playerId]) { return; }
-            playerStack++;
-        });
-
-        if (haveFullData) { akschuns += `<div class="btn smol" data-type="magic">Rounds</div>`; }
+        if (haveFullData) { akschuns += `<a href="/matches?matchId=${match.id}" class="btn smol" data-type="magic">Details</a>`; }
         else { akschuns += `<div class="btn smol" data-type="warning">Ended?</div>`; }
-
-        akschuns += `<div data-btn-details" class="btn smol" data-type="note">Details</div>`;
-
-
 
         $('#tracked-matches > tbody').append(`
             <tr data-match-id="${match.id}">
                 <td data-what="created_at">${created_at}</td>
                 <td data-what="map">${map}</td>
-                <td data-what="player-stack">${playerStack}-stack</td>
+                <td data-what="player-stack">${match.stack}-stack</td>
                 <td data-what="akschuns">${akschuns}</td>
             </tr>
         `);
@@ -103,8 +266,6 @@ function simpleDateTime(date) {
 
 
 
-
-
 let doWe = undefined;
 $('#match_id_fork > .btn').on('click', async function() {
     if (doWe !== undefined) { return; }
@@ -118,7 +279,7 @@ $('#match_id_fork > .btn').on('click', async function() {
     }
     else {
         $('#player-picker').fadeIn('fast');
-        $(message('This will take a while. Depending on luck and how many matches are being currently played..', 'warning')).insertAfter('#do_we_know_the_match_id');
+        $('<div>'+message('This is a complex operation scanning thousands of matches that could take minutes to complete..', 'warning')+'</div>').insertBefore('#find-match-parent');
         await loadUpPlayers();
     }
     loadUpMaps();
@@ -186,13 +347,21 @@ $('#match_id_fork > .btn').on('click', async function() {
                     body: JSON.stringify({ playersIds: players, mapSysid: map, note: note, matchId: matchId, requestedBy: requestedBy }),
                 }
             )
+            .then(response => response.json())
             .then(data => {
                 
-                c(data);
-                
-                // TODO: Properly parse the data and display a meaningful output..
+                let matchId = data?.matchId;
 
-            })
+                if (matchId) {
+                    $('#find-match').replaceWith(`<button class="btn big" data-type="success" onclick="location.href='/matches?matchId=${matchId}'">Match details</button>`);
+                    $('#find-match-parent').append(message(`Took <i>only</i> ${roundTwo(data.time)}s 😅`, 'note'));
+                }
+                else {
+                    $('#find-match').replaceWith(`<button class="btn big" onclick="location.reload();" data-type="error">Try again..</button>`);
+                    $('#find-match-parent').prepend(message('No match found..', 'error'));
+                }
+
+            });
 
         }
         else {

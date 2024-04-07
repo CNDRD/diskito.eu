@@ -164,7 +164,7 @@ function _getRankCell(r, level) {
       </div>
     `;
 };
-function _getRankImageFromRankName(name) {
+export function _getRankImageFromRankName(name) {
     let rank_dict = {
       "unranked": "0OFVqkI",
       "undefined": "0OFVqkI",

@@ -13,11 +13,17 @@
     height: 1.3rem;
     align-items: center;
     transition: background-color .2s, color .2s;
+    text-decoration: none;
 
     &.smol {
         padding: .1rem .2rem;
         height: 1rem;
         font-size: .8rem;
+    }
+    &.big {
+        padding: .4rem .8rem;
+        height: 2rem;
+        font-size: 1.2rem;
     }
 
     &[disabled] {

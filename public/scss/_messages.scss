@@ -7,7 +7,7 @@
 	border-style: solid;
 	border-radius: 6px;
 	display: flex;
-	gap: .5rem;
+	gap: 1rem;
 	align-items: center;
 	font-weight: 300;
 	line-height: 1.5;
@@ -25,6 +25,7 @@
     }
     > div {
         width: fit-content;
+        text-wrap: pretty;
     }
 
     &[data-type=warning] {

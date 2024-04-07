@@ -138,11 +138,12 @@
 
             > #maps {
                 display: grid;
-                grid-template-columns: repeat(4, 10rem);
+                grid-template-columns: repeat(4, 1fr);
                 justify-items: center;
                 width: fit-content;
                 margin-left: auto;
                 margin-right: auto;
+                max-width: 40rem;
 
                 > .spinner {
                     grid-column: 1 / 5;
@@ -268,5 +269,146 @@
         }
 
     }
+
+}
+
+
+
+
+#match-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 10rem;
+    margin-top: 3rem;
+
+
+    > #info {
+
+        > .thang {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1rem;
+            justify-items: end;
+
+            > .value {
+
+                &#tracked-at {
+                    font-variant-numeric: tabular-nums;
+                }
+                &#match-start {
+                    font-variant-numeric: tabular-nums;
+                }
+                &#match-end {
+                    font-variant-numeric: tabular-nums;
+                }
+
+                > .spinner {
+                    height: 1rem;
+                }
+            }
+        }
+
+    }
+
+
+    > #ranked_stats {
+        > table {
+            > tbody {
+                > tr {
+
+                    &.separator {
+                        height: 1px;
+                        background: $gray-border;
+                    }
+                    &.team-separator {
+                        height: 1px;
+                        background: $red-border;
+                    }
+
+                    > td {
+
+                        &[data-what=pfp] {
+                            padding-right: .5rem;
+
+                            > img {
+                                width: 3rem;
+                            }
+                        }
+
+                        &[data-what=player] {
+                            > .persona {
+                                font-size: .9rem;
+                                color: $gray-border;
+                                font-weight: 300;
+                            }
+                        }
+
+                        &[data-what=rank] {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+
+                            > img {
+                                height: 3rem;
+                                padding-right: .5rem;
+                            }
+
+                            > .rank_rp {
+                                display: flex;
+                                flex-direction: column;
+
+                                > :first-child {
+                                    font-size: .8rem;
+                                    color: $gray-border;
+                                }
+                                > :last-child {
+                                    display: flex;
+                                    flex-direction: row;
+                                    gap: .2rem;
+
+                                    > div {
+                                        color: $gray-border;
+                                    }
+                                }
+                            }
+                        }
+
+                        &[data-what=kd] {
+                            text-align: center;
+
+                            > .smol-dark {
+                                font-size: .8rem;
+                                color: $gray-border;
+                            }
+                        }
+                        &[data-what=wl] {
+                            text-align: center;
+
+                            > .smol-dark {
+                                font-size: .8rem;
+                                color: $gray-border;
+                            }
+                        }
+
+                        &[data-what=trn-link] {
+                            text-align: center;
+
+                            > a {
+                                > img {
+                                    width: 2rem;
+                                    filter: invert(1);
+                                    padding-inline: .5rem;
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
 
 }
