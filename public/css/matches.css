@@ -591,6 +591,10 @@ body {
   flex-direction: column;
   gap: 0.1rem;
 }
+#match-viewer > #tracked-matches > tbody > tr > td[data-what=akschuns] > [data-update-archived] > img {
+  filter: invert(1);
+  height: 2rem;
+}
 
 #match-details {
   display: flex;

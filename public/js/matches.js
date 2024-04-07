@@ -251,6 +251,29 @@ async function loadTrackedMatches() {
 
     });
 
+    $('[data-update-archived]').on('click', async function() {
+        $(this).html(spinner());
+        let matchId = this.dataset.updateArchived;
+        
+        fetch(
+            'https://api.cndrd.xyz/diskito/match_over',
+            { method: 'POST', body: JSON.stringify({ matchId: matchId }) }
+        )
+        .then(response => response.json())
+        .then(data => {
+            if (data?.matchId) {
+
+                $(this).html('<img src="/icons/check.svg" class="match_over_success" />')
+                setTimeout(() => { $(this).slideUp() }, 3_000);
+
+            }
+            else {
+                $(this).html('Ended??');
+            }
+        });
+
+    });
+
     spnr.remove();
     $('#tracked-matches').fadeIn('fast');
 };
