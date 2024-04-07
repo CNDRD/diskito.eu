@@ -407,7 +407,8 @@ body {
 }
 #match-tracker > div#do_we_know_the_match_id {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   gap: 1rem;
 }
 #match-tracker > div#do_we_know_the_match_id > #match_id_fork {

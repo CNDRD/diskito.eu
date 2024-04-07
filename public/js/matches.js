@@ -237,8 +237,8 @@ async function loadTrackedMatches() {
         let map = maps[match.map].name;
         let created_at = simpleDateTime(match.created_at);
 
-        if (haveFullData) { akschuns += `<a href="/matches?matchId=${match.id}" class="btn smol" data-type="magic">Details</a>`; }
-        else { akschuns += `<div class="btn smol" data-type="warning">Ended?</div>`; }
+        akschuns += `<a href="/matches?matchId=${match.id}" class="btn smol" data-type="magic">Details</a>`;
+        if (!haveFullData) { akschuns += `<div data-update-archived="${match.id}" class="btn smol" data-type="warning">Ended?</div>`; }
 
         $('#tracked-matches > tbody').append(`
             <tr data-match-id="${match.id}">
