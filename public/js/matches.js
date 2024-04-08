@@ -3,6 +3,7 @@ import { _getRankImageFromRankName } from './siege.js';
 
 const urlParams = new URLSearchParams(window.location.search);
 let matchId = urlParams.get('matchId') || undefined;
+let newOrExisting = urlParams.get('newOrExisting') || undefined;
 
 let maps = {
     bank:          { name: 'Bank',             src: '/images/maps/bank.png'           },
@@ -216,7 +217,15 @@ $('#new-or-existing-switch > .switcharoo > .btn').on('click', async function() {
     $(this).siblings().attr('data-off', '');
     $(`#${findNew ? 'match-tracker' : 'match-viewer'}`).fadeIn('fast');
     if (!findNew) { await loadTrackedMatches(); }
+
+    let url = new URL(window.location.href);
+    url.searchParams.set('newOrExisting', findNew ? 'new' : 'existing');
+    window.history.pushState({}, '', url);
 });
+if (newOrExisting) {
+    if (newOrExisting == 'new') { $('#new-match').trigger('click'); }
+    else if (newOrExisting == 'existing') { $('#existing-matches').trigger('click'); }
+}
 
 async function loadTrackedMatches() {
     let spnr = spinner();
@@ -310,89 +319,6 @@ $('#match_id_fork > .btn').on('click', async function() {
     $('#find-match-parent').fadeIn('fast');
     $('#map-picker').fadeIn('fast');
 
-    
-
-    /* -------------- */
-    /* Find the match */
-    /* -------------- */
-
-    $('#find-match').on('click', async function() {
-        let errors = false;
-        $('#find-match-errors').hide();
-        this.innerHTML = spinner(true);
-
-        let note = $('#note').val() || '';
-        let map = $('#maps > .map.selected').attr('data-sysid');
-        let players = undefined;
-        let matchId = undefined;
-        let requestedBy = userAuth.session.user.identities[0].id;
-
-        if (doWe) {
-            
-            matchId = $('#match-id').val();
-
-            if (!matchId) {
-                $('#find-match-errors').append(message('Match ID is required!', 'error')).show();
-                errors = true;
-            }
-            else if (!isUUID(matchId)) {
-                $('#find-match-errors').append(message('Match ID is not a valid UUID!', 'error')).show();
-                errors = true;
-            }
-            
-        }
-        else {
-
-            players = Array.from($('#players > .player.selected')).map(player => player.dataset.uuid);
-            
-            if (players.length === 0) {
-                $('#find-match-errors').append(message('You need to select at least one profile!', 'error')).show();
-                errors = true;
-            }
-            else if (players.length > 5) {
-                $('#find-match-errors').append(message('How the fuck did you select more than 5 profiles bro?!', 'error')).show();
-                errors = true;
-            }
-
-        }
-
-        if (map === undefined) {
-            $('#find-match-errors').append(message('A map has to be selected..', 'error')).show();
-            errors = true;
-        }
-        
-        if (!errors) {
-
-            fetch(
-                'https://api.cndrd.xyz/diskito/find_match',
-                {
-                    method: 'POST',
-                    body: JSON.stringify({ playersIds: players, mapSysid: map, note: note, matchId: matchId, requestedBy: requestedBy }),
-                }
-            )
-            .then(response => response.json())
-            .then(data => {
-                
-                let matchId = data?.matchId;
-
-                if (matchId) {
-                    $('#find-match').replaceWith(`<button class="btn big" data-type="success" onclick="location.href='/matches?matchId=${matchId}'">Match details</button>`);
-                    $('#find-match-parent').append(message(`Took <i>only</i> ${roundTwo(data.time)}s 😅`, 'note'));
-                }
-                else {
-                    $('#find-match').replaceWith(`<button class="btn big" onclick="location.reload();" data-type="error">Try again..</button>`);
-                    $('#find-match-parent').prepend(message('No match found..', 'error'));
-                }
-
-            });
-
-        }
-        else {
-            this.innerHTML = 'Try again..';
-        }
-
-    });
-
 });
 
 async function loadUpPlayers(justGetPlayers=false) {
@@ -456,3 +382,80 @@ function isUUID(stringCheck) {
     let uuidRegex = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/;
     return uuidRegex.test(stringCheck);
 };
+
+$('#find-match').on('click', async function() {
+    let errors = false;
+    $('#find-match-errors').hide();
+    this.innerHTML = spinner(true);
+
+    let note = $('#note').val() || '';
+    let map = $('#maps > .map.selected').attr('data-sysid');
+    let players = undefined;
+    let matchId = undefined;
+    let requestedBy = userAuth.session.user.identities[0].id;
+
+    if (doWe) {
+        
+        matchId = $('#match-id').val();
+
+        if (!matchId) {
+            $('#find-match-errors').append(message('Match ID is required!', 'error')).show();
+            errors = true;
+        }
+        else if (!isUUID(matchId)) {
+            $('#find-match-errors').append(message('Match ID is not a valid UUID!', 'error')).show();
+            errors = true;
+        }
+        
+    }
+    else {
+
+        players = Array.from($('#players > .player.selected')).map(player => player.dataset.uuid);
+        
+        if (players.length === 0) {
+            $('#find-match-errors').append(message('You need to select at least one profile!', 'error')).show();
+            errors = true;
+        }
+        else if (players.length > 5) {
+            $('#find-match-errors').append(message('How the fuck did you select more than 5 profiles bro?!', 'error')).show();
+            errors = true;
+        }
+
+    }
+
+    if (map === undefined) {
+        $('#find-match-errors').append(message('A map has to be selected..', 'error')).show();
+        errors = true;
+    }
+    
+    if (!errors) {
+
+        fetch(
+            'https://api.cndrd.xyz/diskito/find_match',
+            {
+                method: 'POST',
+                body: JSON.stringify({ playersIds: players, mapSysid: map, note: note, matchId: matchId, requestedBy: requestedBy }),
+            }
+        )
+        .then(response => response.json())
+        .then(data => {
+            
+            let matchId = data?.matchId;
+
+            if (matchId) {
+                $('#find-match').replaceWith(`<button class="btn big" data-type="success" onclick="location.href='/matches?matchId=${matchId}'">Match details</button>`);
+                $('#find-match-parent').append(message(`Took <i>only</i> ${roundTwo(data.time)}s 😅`, 'note'));
+            }
+            else {
+                $('#find-match').replaceWith(`<button class="btn big" onclick="location.reload();" data-type="error">Try again..</button>`);
+                $('#find-match-parent').prepend(message('No match found..', 'error'));
+            }
+
+        });
+
+    }
+    else {
+        this.innerHTML = 'Try again..';
+    }
+
+});
