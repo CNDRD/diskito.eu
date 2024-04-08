@@ -292,46 +292,145 @@
 
 
     > #info {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
 
-        > .thang {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 1rem;
-            justify-items: end;
-
-            > .value {
-
-                &#tracked-at {
-                    font-variant-numeric: tabular-nums;
+        > .info_group {
+            display: flex;
+            gap: .5rem;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+    
+            > .thang {
+                display: flex;
+                font-size: .9rem;
+                background: hsl(0 0% 14%);
+                border-radius: $border-radius;
+                cursor: default;
+    
+                > .key {
+                    padding: .25rem .5rem .25rem .5rem;
+                    color: $main-txt-hover;
                 }
-                &#match-start {
-                    font-variant-numeric: tabular-nums;
+                > .value {
+                    padding: .25rem .5rem .25rem .5rem;
+                    background: $gray-bg-active;
+                    border-radius: 5px;
+                    display: flex;
+                    align-items: center;
+    
+                    > .spinner {
+                        height: .9rem;
+                    }
                 }
-                &#match-end {
-                    font-variant-numeric: tabular-nums;
-                }
+            }
+    
+        }
+    }
+    
+    > #outcome_tab {
 
-                > .spinner {
-                    height: 1rem;
+        > .header {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        > table {
+            > tbody {
+                > tr {
+                    
+                    &.separator {
+                        height: 1px;
+                        background: #444;
+                        > td { padding: 0; }
+                    }
+                    &.team-separator {
+                        height: 1px;
+                        background: $red-border;
+                        > td { padding: 0; }
+                    }
+
+                    > td {
+                        padding: .1rem .75rem;
+
+                        &[data-what=pfp] {
+                            padding-right: .5rem;
+
+                            > img {
+                                width: 3rem;
+                            }
+                        }
+
+                        &[data-what=player] {
+                            > .persona {
+                                font-size: .9rem;
+                                color: $gray-border;
+                                font-weight: 300;
+                            }
+                        }
+
+                        &[data-what=kd] {
+                            text-align: center;
+
+                            > .smol-dark {
+                                font-size: .8rem;
+                                color: $gray-border;
+                            }
+                        }
+                        &[data-what=headshots] {
+                            text-align: center;
+
+                            > .smol-dark {
+                                font-size: .8rem;
+                                color: $gray-border;
+                            }
+                        }
+                        &[data-what=teamkills] {
+                            text-align: center;
+
+                            > .smol-dark {
+                                font-size: .8rem;
+                                color: $gray-border;
+                            }
+                        }
+
+                    }
                 }
             }
         }
-
     }
 
-
     > #ranked_stats {
+
+        > .header {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+        > .info {
+            text-align: center;
+            font-size: 1rem;
+            color: $gray-border;
+            margin-bottom: 1rem;
+        }
+
         > table {
             > tbody {
                 > tr {
 
                     &.separator {
                         height: 1px;
-                        background: $gray-border;
+                        background: #444;
+                        > td { padding: 0; }
                     }
                     &.team-separator {
                         height: 1px;
                         background: $red-border;
+                        > td { padding: 0; }
                     }
 
                     > td {

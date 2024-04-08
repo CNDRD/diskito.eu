@@ -604,31 +604,118 @@ body {
   margin-bottom: 10rem;
   margin-top: 3rem;
 }
-#match-details > #info > .thang {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1rem;
-  justify-items: end;
+#match-details > #info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
-#match-details > #info > .thang > .value#tracked-at {
-  font-variant-numeric: tabular-nums;
+#match-details > #info > .info_group {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-#match-details > #info > .thang > .value#match-start {
-  font-variant-numeric: tabular-nums;
+#match-details > #info > .info_group > .thang {
+  display: flex;
+  font-size: 0.9rem;
+  background: hsl(0, 0%, 14%);
+  border-radius: 5px;
+  cursor: default;
 }
-#match-details > #info > .thang > .value#match-end {
-  font-variant-numeric: tabular-nums;
+#match-details > #info > .info_group > .thang > .key {
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  color: hsl(0, 0%, 83%);
 }
-#match-details > #info > .thang > .value > .spinner {
-  height: 1rem;
+#match-details > #info > .info_group > .thang > .value {
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  background: #2e2e2e;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+#match-details > #info > .info_group > .thang > .value > .spinner {
+  height: 0.9rem;
+}
+#match-details > #outcome_tab > .header {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+#match-details > #outcome_tab > table > tbody > tr.separator {
+  height: 1px;
+  background: #444;
+}
+#match-details > #outcome_tab > table > tbody > tr.separator > td {
+  padding: 0;
+}
+#match-details > #outcome_tab > table > tbody > tr.team-separator {
+  height: 1px;
+  background: #822025;
+}
+#match-details > #outcome_tab > table > tbody > tr.team-separator > td {
+  padding: 0;
+}
+#match-details > #outcome_tab > table > tbody > tr > td {
+  padding: 0.1rem 0.75rem;
+}
+#match-details > #outcome_tab > table > tbody > tr > td[data-what=pfp] {
+  padding-right: 0.5rem;
+}
+#match-details > #outcome_tab > table > tbody > tr > td[data-what=pfp] > img {
+  width: 3rem;
+}
+#match-details > #outcome_tab > table > tbody > tr > td[data-what=player] > .persona {
+  font-size: 0.9rem;
+  color: #888888;
+  font-weight: 300;
+}
+#match-details > #outcome_tab > table > tbody > tr > td[data-what=kd] {
+  text-align: center;
+}
+#match-details > #outcome_tab > table > tbody > tr > td[data-what=kd] > .smol-dark {
+  font-size: 0.8rem;
+  color: #888888;
+}
+#match-details > #outcome_tab > table > tbody > tr > td[data-what=headshots] {
+  text-align: center;
+}
+#match-details > #outcome_tab > table > tbody > tr > td[data-what=headshots] > .smol-dark {
+  font-size: 0.8rem;
+  color: #888888;
+}
+#match-details > #outcome_tab > table > tbody > tr > td[data-what=teamkills] {
+  text-align: center;
+}
+#match-details > #outcome_tab > table > tbody > tr > td[data-what=teamkills] > .smol-dark {
+  font-size: 0.8rem;
+  color: #888888;
+}
+#match-details > #ranked_stats > .header {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+#match-details > #ranked_stats > .info {
+  text-align: center;
+  font-size: 1rem;
+  color: #888888;
+  margin-bottom: 1rem;
 }
 #match-details > #ranked_stats > table > tbody > tr.separator {
   height: 1px;
-  background: #888888;
+  background: #444;
+}
+#match-details > #ranked_stats > table > tbody > tr.separator > td {
+  padding: 0;
 }
 #match-details > #ranked_stats > table > tbody > tr.team-separator {
   height: 1px;
   background: #822025;
+}
+#match-details > #ranked_stats > table > tbody > tr.team-separator > td {
+  padding: 0;
 }
 #match-details > #ranked_stats > table > tbody > tr > td[data-what=pfp] {
   padding-right: 0.5rem;

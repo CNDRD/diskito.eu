@@ -72,6 +72,10 @@ async function loadMatchDetails(matchId) {
         $('#tracked-at').parent().hide();
         $('#match-start').text(simpleDateTime(match.raw_data_archived.start_time)).parent().show();
         $('#match-end').text(simpleDateTime(match.raw_data_archived.end_time)).parent().show();
+
+        let duration = new Date(match.raw_data_archived.end_time) - new Date(match.raw_data_archived.start_time);
+        duration = duration / 1000 / 60;
+        $('#match-duration').text('~' + Math.ceil(duration) + ' minutes').parent().show();
     }
 
 
@@ -122,7 +126,9 @@ async function loadMatchDetails(matchId) {
 
     let prevWasDiskito = true;
     let prevWasOurTeam = true;
-    [...ourPlayers, ...otherPlayers].forEach(player => {
+    let allPlayersOrdered = [...ourPlayers, ...otherPlayers];
+
+    allPlayersOrdered.forEach(player => {
         let row = '';
         let pd = match.ranked_stats[player];
 
@@ -185,14 +191,96 @@ async function loadMatchDetails(matchId) {
     /* ----------------------------------- */
     /* Optionally show how each round went */
 
+    let ourOutcome = 0;
+    let theirOutcome = 0;
+    let playerStats = {};
+
     if (match?.raw_data_archived) {
-        c('raw_data_archived', match.raw_data_archived);
+        match.raw_data_archived.rounds.forEach(round => {
 
-        let rounds = match.raw_data_archived.rounds;
+            let winnerRole = round.winner_role;
+            let ourTeamRole = round.teams.find(team => team.id === ourTeamId).role;
 
-        rounds.forEach((round, i) => {
-            c(i, 'round', round);
+            let ourTeamWon = winnerRole === ourTeamRole;
+            if (ourTeamWon) { ourOutcome++; }
+            else { theirOutcome++; }
+
+            round.teams.forEach(team => {
+                team.players.forEach(player => {
+
+                    if (!playerStats[player.profile_id]) {
+                        playerStats[player.profile_id] = { kills: 0, deaths: 0, assists: 0, headshots: 0, teamKills: 0, forgivenTeamKills: 0 };
+                    }
+
+                    playerStats[player.profile_id].kills += player.kills;
+                    playerStats[player.profile_id].deaths += player.deaths;
+                    playerStats[player.profile_id].assists += player.assists;
+                    playerStats[player.profile_id].headshots += player.headshots;
+                    playerStats[player.profile_id].teamKills += player.team_kills;
+                    playerStats[player.profile_id].forgivenTeamKills += player.forgiven_tk;
+
+                });
+            });
+
         });
+
+
+
+        $('#match-outcome').text(ourOutcome > theirOutcome ? 'VI VON' : 'L').parent().show();
+        $('#match-score').text(`${ourOutcome} - ${theirOutcome}`).parent().show();
+
+        let prevWasDiskito = true;
+        let prevWasOurTeam = true;
+
+        allPlayersOrdered.forEach(player => {
+            let row = '';
+            let ps = playerStats[player];
+            let pd = match.ranked_stats[player];
+
+            row += `<td data-what="pfp"><img src="https://ubisoft-avatars.akamaized.net/${player}/default_256_256.png" /></td>`;
+
+            let persona = pd.persona ? `<div class="persona">${pd.persona}</div>` : '';
+            row += `<td data-what="player"><div>${pd.name}</div>${persona}</td>`;
+
+            let kd = ps.deaths == 0 ? ps.kills : roundTwo(ps.kills / ps.deaths);
+            row += `
+                <td data-what="kd">
+                    <div>${kd}</div>
+                    <div class="smol-dark">${addSpaces(ps.kills)} / ${addSpaces(ps.deaths)} / ${addSpaces(ps.assists)}</div>
+                </td>
+            `;
+
+            let hsPercentage = ps.kills == 0 ? 0 : roundTwo(ps.headshots / ps.kills * 100);
+            row += `
+                <td data-what="headshots">
+                    <div>${ps.headshots}</div>
+                    <div class="smol-dark">${hsPercentage}%</div>
+                </td>
+            `;
+
+            row += `
+                <td data-what="teamkills">
+                    <div>${ps.teamKills}</div>
+                    <div class="smol-dark">${ps.forgivenTeamKills}</div>
+                </td>
+            `;
+
+            // Dividers
+            let cols = $('#outcome_tab > table > thead > tr > th').length;
+            if (prevWasDiskito && !pd.diskito) {
+                $('#outcome_tab_place').append(`<tr class="separator"><td colspan="${cols}"></td></tr>`);
+            }
+            if (prevWasOurTeam && !pd.ourTeam) {
+                $('#outcome_tab_place').append(`<tr class="team-separator"><td colspan="${cols}"></td></tr>`);
+            }
+            prevWasDiskito = pd.diskito;
+            prevWasOurTeam = pd.ourTeam;
+
+            // Finally add our wanted row
+            $('#outcome_tab_place').append(`<tr>${row}</tr>`);
+        });
+
+        $('#outcome_tab').show();
     }
 
 };

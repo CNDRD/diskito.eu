@@ -96,37 +96,67 @@
         <main id="match-details" style="display: none;">
 
             <div id="info">
-                <div class="thang">
-                    <div class="key">Map</div>
-                    <div class="value" id="map"></div>
+                <div class="info_group">
+                    <div class="thang">
+                        <div class="key">Map</div>
+                        <div class="value" id="map"></div>
+                    </div>
+                    <div class="thang">
+                        <div class="key">Stack</div>
+                        <div class="value" id="stack"></div>
+                    </div>
+                    <div class="thang" style="display: none;">
+                        <div class="key">Outcome</div>
+                        <div class="value" id="match-outcome"></div>
+                    </div>
+                    <div class="thang" style="display: none;">
+                        <div class="key">Score</div>
+                        <div class="value" id="match-score"></div>
+                    </div>
                 </div>
-                <div class="thang">
-                    <div class="key">Stack</div>
-                    <div class="value" id="stack"></div>
+                <div class="info_group">
+                    <div class="thang">
+                        <div class="key">Note</div>
+                        <div class="value" id="match-note"></div>
+                    </div>
+                    <div class="thang">
+                        <div class="key">Tracked at</div>
+                        <div class="value" id="tracked-at"></div>
+                    </div>
+                    <div class="thang" style="display: none;">
+                        <div class="key">Match start</div>
+                        <div class="value" id="match-start"></div>
+                    </div>
+                    <div class="thang" style="display: none;">
+                        <div class="key">Match end</div>
+                        <div class="value" id="match-end"></div>
+                    </div>
+                    <div class="thang" style="display: none;">
+                        <div class="key">Duration</div>
+                        <div class="value" id="match-duration"></div>
+                    </div>
                 </div>
-                <div class="thang">
-                    <div class="key">Note</div>
-                    <div class="value" id="match-note"></div>
-                </div>
-                <div class="thang">
-                    <div class="key">Tracked at</div>
-                    <div class="value" id="tracked-at"></div>
-                </div>
-                <div class="thang" style="display: none;">
-                    <div class="key">Match start</div>
-                    <div class="value" id="match-start"></div>
-                </div>
-                <div class="thang" style="display: none;">
-                    <div class="key">Match end</div>
-                    <div class="value" id="match-end"></div>
-                </div>
-                <div class="thang" style="display: none;">
-                    <div class="key">Outcome</div>
-                    <div class="value" id="outcome"></div>
-                </div>
+            </div>
+            
+            <div id="outcome_tab" style="display: none;">
+                <div class="header">Match Outcome</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Player</th>
+                            <th>KDA</th>
+                            <th>HS</th>
+                            <th>TKs</th>
+                        </tr>
+                    </thead>
+                    <tbody id="outcome_tab_place"></tbody>
+                </table>
             </div>
 
             <div id="ranked_stats">
+                <div class="header">Ranked Stats</div>
+                <div class="info">From the time of the match</div>
                 <table>
                     <thead>
                         <tr>
@@ -140,10 +170,6 @@
                     </thead>
                     <tbody id="ranked_stats_table_place"></tbody>
                 </table>
-            </div>
-
-            <div id="rounds-breakdown">
-
             </div>
 
         </main>
