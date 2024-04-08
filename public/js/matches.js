@@ -532,7 +532,7 @@ $('#find-match').on('click', async function() {
 
             if (matchId) {
                 $('#find-match').replaceWith(`<button class="btn big" data-type="success" onclick="location.href='/matches?matchId=${matchId}'">Match details</button>`);
-                $('#find-match-parent').append(message(`Took <i>only</i> ${roundTwo(data.time)}s 😅`, 'note'));
+                $('#find-match-parent').append(message(`Took ${roundTwo(data.time)}s 😅`, 'note'));
             }
             else {
                 $('#find-match').replaceWith(`<button class="btn big" onclick="location.reload();" data-type="error">Try again..</button>`);
