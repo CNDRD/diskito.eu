@@ -9,7 +9,7 @@ let maps = {
     bank:          { name: 'Bank',             src: '/images/maps/bank.png'           },
     border:        { name: 'Border',           src: '/images/maps/border.png'         },
     chalet:        { name: 'Chalet',           src: '/images/maps/chalet.png'         },
-    clubhouse:     { name: 'Clubhouse',        src: '/images/maps/clubhouse.png'      },
+    clubhouse:     { name: 'Club House',       src: '/images/maps/clubhouse.png'      },
     coastline:     { name: 'Coastline',        src: '/images/maps/coastline.png'      },
     consulate:     { name: 'Consulate',        src: '/images/maps/consulate.png'      },
     emeraldplains: { name: 'Emerald Plains',   src: '/images/maps/emeraldplains.png'  },
