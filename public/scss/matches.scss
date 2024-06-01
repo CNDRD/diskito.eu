@@ -260,9 +260,9 @@
                         font-variant-numeric: tabular-nums;
                     }
                     &[data-what=outcome] > div {
-                        display: flex;
-                        flex-direction: column;
-                        gap: .1rem;
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: .3rem;
                     }
                     &[data-what=akschuns] > div {
                         display: flex;
