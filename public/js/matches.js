@@ -33,6 +33,7 @@ else { $('#new-or-existing-switch').fadeIn('fast'); }
 
 
 
+
 /* ------------------------
 
     Show one match details
@@ -330,6 +331,7 @@ async function loadTrackedMatches() {
         matchesData[match.id] = match;
 
         let akschuns = ``;
+        let outcome = '';
         let haveFullData = match.raw_data_archived !== null;
         let map = maps[match.map].name;
         let created_at = simpleDateTime(match.created_at);
@@ -337,12 +339,23 @@ async function loadTrackedMatches() {
         akschuns += `<a href="/matches?matchId=${match.id}" class="btn smol" data-type="magic">Details</a>`;
         if (!haveFullData) { akschuns += `<div data-update-archived="${match.id}" class="btn smol" data-type="warning">Ended?</div>`; }
 
+        if (match.outcome) {
+            let vi_von = match.outcome.vi_von ? 'VI VON' : 'L';
+            let vi_von_type = match.outcome.vi_von ? 'success' : 'error';
+            
+            outcome = `
+                <div class="btn smol" data-type="${vi_von_type}">${vi_von}</div>
+                <div class="btn smol" data-type="note">${match.outcome.our_outcome} - ${match.outcome.their_outcome}</div>
+            `;
+        }
+
         $('#tracked-matches > tbody').append(`
             <tr data-match-id="${match.id}">
                 <td data-what="created_at">${created_at}</td>
                 <td data-what="map">${map}</td>
                 <td data-what="player-stack">${match.stack}-stack</td>
-                <td data-what="akschuns">${akschuns}</td>
+                <td data-what="outcome"><div>${outcome}</div></td>
+                <td data-what="akschuns"><div>${akschuns}</div></td>
             </tr>
         `);
 
