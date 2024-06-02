@@ -4,6 +4,7 @@ import { _getRankImageFromRankName } from './siege.js';
 const urlParams = new URLSearchParams(window.location.search);
 let matchId = urlParams.get('matchId') || undefined;
 let newOrExisting = urlParams.get('newOrExisting') || undefined;
+let diskitoPlayers = undefined;
 
 let maps = {
     bank:          { name: 'Bank',             src: '/images/maps/bank.png'           },
@@ -329,12 +330,13 @@ async function loadTrackedMatches() {
     matches.forEach(match => {
         let akschuns = '';
         let outcome = '';
-        let haveFullData = match.outcome !== null;
         let map = maps[match.map].name;
         let created_at = simpleDateTime(match.created_at);
 
         akschuns += `<a href="/matches?matchId=${match.id}" class="btn smol" data-type="magic">Details</a>`;
-        if (!haveFullData) { akschuns += `<div data-update-archived="${match.id}" class="btn smol" data-type="warning">Ended?</div>`; }
+        if (match.outcome == null) {
+            akschuns += `<div data-update-archived="${match.id}" class="btn smol" data-type="warning">Ended?</div>`;
+        }
 
         if (match.outcome) {
             let vi_von = match.outcome.vi_von ? 'W' : 'L';
@@ -427,7 +429,9 @@ async function loadUpPlayers(justGetPlayers=false) {
     /* Set up available players */
     /* ------------------------ */
 
+    if (diskitoPlayers && justGetPlayers) { return diskitoPlayers; }
     let { data: playersDb } = await supabase.from('siege_stats').select('ubi_id, name').order('name', { ascending: true });
+    diskitoPlayers = playersDb;
     if (justGetPlayers) { return playersDb; }
 
     let playersHtml = '';
