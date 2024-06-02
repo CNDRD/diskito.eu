@@ -23,7 +23,6 @@ let maps = {
     themepark:     { name: 'Theme Park',       src: '/images/maps/themepark.png'      },
     villa:         { name: 'Villa',            src: '/images/maps/villa.png'          },
 };
-let matchesData = {};
 
 
 
@@ -321,18 +320,16 @@ async function loadTrackedMatches() {
     spnr.id = 'tracked-matches-spinner';
     $('#match-viewer').prepend(spnr);
 
-    const { data: matches } = await supabase.from('tracked_matches').select('*').order('created_at', { ascending: false });
+    const { data: matches } = await supabase.from('tracked_matches').select('id, outcome, created_at, map, stack').order('created_at', { ascending: false });
     let players = await loadUpPlayers(true);
     
     let playerIdToName = {};
     players.forEach(player => playerIdToName[player.ubi_id] = player.name);
 
     matches.forEach(match => {
-        matchesData[match.id] = match;
-
-        let akschuns = ``;
+        let akschuns = '';
         let outcome = '';
-        let haveFullData = match.raw_data_archived !== null;
+        let haveFullData = match.outcome !== null;
         let map = maps[match.map].name;
         let created_at = simpleDateTime(match.created_at);
 
