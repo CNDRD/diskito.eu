@@ -43,6 +43,8 @@ function _getUpdateTimeString(s) {
 
 $(document).ready(function(){
 
+    if (window.location !== '/siege') return;
+
     $.getJSON("https://game-status-api.ubisoft.com/v1/instances", data => {
         $.each(data, (key, val) => {
             if (val["AppID "] === "e3d5ea9e-50bd-43b7-88bf-39794f4e3d40") {
