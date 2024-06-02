@@ -5,6 +5,8 @@ const urlParams = new URLSearchParams(window.location.search);
 let matchId = urlParams.get('matchId') || undefined;
 let newOrExisting = urlParams.get('newOrExisting') || undefined;
 let diskitoPlayers = undefined;
+let matchOffset = 20;
+let matchOffsetCnt = 10;
 
 let maps = {
     bank:          { name: 'Bank',             src: '/images/maps/bank.png'           },
@@ -318,14 +320,38 @@ if (newOrExisting) {
 
 async function loadTrackedMatches() {
     let spnr = spinner();
-    spnr.id = 'tracked-matches-spinner';
     $('#match-viewer').prepend(spnr);
 
-    const { data: matches } = await supabase.from('tracked_matches').select('id, outcome, created_at, map, stack').order('created_at', { ascending: false });
-    let players = await loadUpPlayers(true);
-    
-    let playerIdToName = {};
-    players.forEach(player => playerIdToName[player.ubi_id] = player.name);
+    let matchQuery = supabase
+        .from('tracked_matches')
+        .select('id, outcome, created_at, map, stack')
+        .order('created_at', { ascending: false });
+
+    let { data: matches } = await matchQuery.range(0, matchOffset);
+
+    showTrackedMatches(matches);
+
+    $('#match-viewer').append(`<div data-load-more class="btn" data-type="warning">Load more</div>`);
+
+    $('[data-load-more]').on('click', async function() {
+        $(this).html(spinner());
+
+        let { data: moreMatches } = await matchQuery.range(matchOffset, matchOffset+matchOffsetCnt);
+        matchOffset += matchOffsetCnt;
+
+        showTrackedMatches(moreMatches);
+
+        if (moreMatches.length < matchOffsetCnt) {
+            return $(this).remove();
+        }
+
+        $(this).html('Load more');
+    });
+
+    spnr.remove();
+    $('#tracked-matches').fadeIn('fast');
+};
+function showTrackedMatches(matches) {
 
     matches.forEach(match => {
         let akschuns = '';
@@ -360,7 +386,7 @@ async function loadTrackedMatches() {
 
     });
 
-    $('[data-update-archived]').on('click', async function() {
+    $('[data-update-archived]').off().on('click', async function() {
         $(this).html(spinner());
         let matchId = this.dataset.updateArchived;
         
@@ -371,10 +397,8 @@ async function loadTrackedMatches() {
         .then(response => response.json())
         .then(data => {
             if (data?.matchId) {
-
                 $(this).html('<img src="/icons/check.svg" class="match_over_success" />')
                 setTimeout(() => { $(this).slideUp() }, 3_000);
-
             }
             else {
                 $(this).html('Ended??');
@@ -383,8 +407,6 @@ async function loadTrackedMatches() {
 
     });
 
-    spnr.remove();
-    $('#tracked-matches').fadeIn('fast');
 };
 
 function simpleDateTime(date) {
