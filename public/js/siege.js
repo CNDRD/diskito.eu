@@ -43,7 +43,7 @@ function _getUpdateTimeString(s) {
 
 $(document).ready(function(){
 
-    if (window.location !== '/siege') return;
+    if (window.location.pathname !== '/siege') return;
 
     $.getJSON("https://game-status-api.ubisoft.com/v1/instances", data => {
         $.each(data, (key, val) => {
