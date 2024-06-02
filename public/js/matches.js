@@ -337,7 +337,7 @@ async function loadTrackedMatches() {
         if (!haveFullData) { akschuns += `<div data-update-archived="${match.id}" class="btn smol" data-type="warning">Ended?</div>`; }
 
         if (match.outcome) {
-            let vi_von = match.outcome.vi_von ? 'VI VON' : 'L';
+            let vi_von = match.outcome.vi_von ? 'W' : 'L';
             let vi_von_type = match.outcome.vi_von ? 'success' : 'error';
             
             outcome = `
