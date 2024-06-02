@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content=":D">
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+        <!-- JS & CSS -->
+        <link rel="stylesheet" href="/css/leaderboard.css" />
+        <script defer src="/js/navbar.js" type="module" charset="utf-8"></script>
+        <script defer src="/js/leaderboard.js" type="module" charset="utf-8"></script>
+
+        <title>Diskíto | Leaderboard</title>
+        <link rel="shortcut icon" href="/images/diskito_pfp.jpg" />
+        
+    </head>
+    <body>
+        
+        <nav>
+            <a href="/" class="logo"><span id="dvojbodka">:</span>Diskíto</a>
+            <div class="links">
+                <a href="/leaderboard">Leaderboard</a>
+                <a href="/siege">Siege</a>
+                <a href="/matches" style="display: none;">Matches</a>
+                <a href="/quotes">Quotes</a>
+                <div></div>
+                <a href="/discord" class="dscrd" target="_blank"><img src="/images/discord.svg" alt="Discord"></a>
+            </div>
+            <div id="login-popup-button" class="login-btn login">Login</div>
+            <a href="" class="toggle-mnu"><span></span></a>
+        </nav>
+        
+        <main>
+            <div class="header">Leaderboard</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>🗿</th>
+                        <th data-srt="name">Name</th>
+                        <th data-srt="lvl">Lvl</th>
+                        <th data-srt="messages">Messages</th>
+                        <th data-srt="yearly-voice" data-current-year> Voice</th>
+                        <th data-srt="total-voice">Total Voice</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </main>
+
+    </body>
+</html>
