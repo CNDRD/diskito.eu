@@ -368,6 +368,11 @@ function showTrackedMatches(matches) {
             let vi_von = match.outcome.vi_von ? 'W' : 'L';
             let vi_von_type = match.outcome.vi_von ? 'success' : 'error';
             
+            if (match.outcome.our_outcome + match.outcome.their_outcome < 4) {
+                vi_von = 'C';
+                vi_von_type = 'warning';
+            }
+
             outcome = `
                 <div class="btn smol" data-type="${vi_von_type}">${vi_von}</div>
                 <div class="btn smol" data-type="note">${match.outcome.our_outcome} - ${match.outcome.their_outcome}</div>
