@@ -355,28 +355,13 @@ function showTrackedMatches(matches) {
 
     matches.forEach(match => {
         let akschuns = '';
-        let outcome = '';
+        let outcome = _parseOutcome(match.outcome);
         let map = maps[match.map].name;
         let created_at = simpleDateTime(match.created_at);
 
         akschuns += `<a href="/matches?matchId=${match.id}" class="btn smol" data-type="magic">Details</a>`;
         if (match.outcome == null) {
             akschuns += `<div data-update-archived="${match.id}" class="btn smol" data-type="warning">Ended?</div>`;
-        }
-
-        if (match.outcome) {
-            let vi_von = match.outcome.vi_von ? 'W' : 'L';
-            let vi_von_type = match.outcome.vi_von ? 'success' : 'error';
-            
-            if (match.outcome.our_outcome + match.outcome.their_outcome < 4) {
-                vi_von = 'C';
-                vi_von_type = 'warning';
-            }
-
-            outcome = `
-                <div class="btn smol" data-type="${vi_von_type}">${vi_von}</div>
-                <div class="btn smol" data-type="note">${match.outcome.our_outcome} - ${match.outcome.their_outcome}</div>
-            `;
         }
 
         $('#tracked-matches > tbody').append(`
@@ -404,6 +389,7 @@ function showTrackedMatches(matches) {
             if (data?.matchId) {
                 $(this).html('<img src="/icons/check.svg" class="match_over_success" />')
                 setTimeout(() => { $(this).slideUp() }, 3_000);
+                $(`[data-match-id="${data.matchId}"] > [data-what="outcome"] > div`).html(_parseOutcome(data.outcome));
             }
             else {
                 $(this).html('Ended??');
@@ -412,6 +398,22 @@ function showTrackedMatches(matches) {
 
     });
 
+    function _parseOutcome(data) {
+        if (!data) { return ''; }
+
+        let vi_von = data.vi_von ? 'W' : 'L';
+        let vi_von_type = data.vi_von ? 'success' : 'error';
+        
+        if ((data.our_outcome + data.their_outcome) < 4) {
+            vi_von = 'C';
+            vi_von_type = 'warning';
+        }
+
+        return `
+            <div class="btn smol" data-type="${vi_von_type}">${vi_von}</div>
+            <div class="btn smol" data-type="note">${data.our_outcome} - ${data.their_outcome}</div>
+        `;
+    };
 };
 
 function simpleDateTime(date) {
