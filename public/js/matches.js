@@ -4,33 +4,34 @@ import { _getRankImageFromRankName } from './siege.js';
 const urlParams = new URLSearchParams(window.location.search);
 let matchId = urlParams.get('matchId') || undefined;
 let newOrExisting = urlParams.get('newOrExisting') || undefined;
-let diskitoPlayers = undefined;
+let diskitoPlayersCache = undefined;
+let matchDetailsCache = {};
 let matchOffset = 20;
 let matchOffsetCnt = 10;
 
 let maps = {
-    bank:          { name: 'Bank',             src: '/images/maps/bank.png'           },
-    border:        { name: 'Border',           src: '/images/maps/border.png'         },
-    chalet:        { name: 'Chalet',           src: '/images/maps/chalet.png'         },
-    clubhouse:     { name: 'Club House',       src: '/images/maps/clubhouse.png'      },
-    coastline:     { name: 'Coastline',        src: '/images/maps/coastline.png'      },
-    consulate:     { name: 'Consulate',        src: '/images/maps/consulate.png'      },
-    emeraldplains: { name: 'Emerald Plains',   src: '/images/maps/emeraldplains.png'  },
-    kafe:          { name: 'Kafe Dostoyevsky', src: '/images/maps/kafe.png'           },
-    kanal:         { name: 'Kanal',            src: '/images/maps/kanal.png'          },
-    lair:          { name: 'Lair',             src: '/images/maps/lair.png'           },
-    nhvnlabs:      { name: 'Nighthaven Labs',  src: '/images/maps/nighthavenlabs.png' },
-    oregon:        { name: 'Oregon',           src: '/images/maps/oregon.png'         },
-    outback:       { name: 'Outback',          src: '/images/maps/outback.png'        },
-    skyscraper:    { name: 'Skyscraper',       src: '/images/maps/skyscraper.png'     },
-    themepark:     { name: 'Theme Park',       src: '/images/maps/themepark.png'      },
-    villa:         { name: 'Villa',            src: '/images/maps/villa.png'          },
+    bank:          { name: 'Bank',           src: '/images/maps/bank.png'           },
+    border:        { name: 'Border',         src: '/images/maps/border.png'         },
+    chalet:        { name: 'Chalet',         src: '/images/maps/chalet.png'         },
+    clubhouse:     { name: 'Club House',     src: '/images/maps/clubhouse.png'      },
+    coastline:     { name: 'Coastline',      src: '/images/maps/coastline.png'      },
+    consulate:     { name: 'Consulate',      src: '/images/maps/consulate.png'      },
+    emeraldplains: { name: 'Emerald Plains', src: '/images/maps/emeraldplains.png'  },
+    kafe:          { name: 'Kafe',           src: '/images/maps/kafe.png'           },
+    kanal:         { name: 'Kanal',          src: '/images/maps/kanal.png'          },
+    lair:          { name: 'Lair',           src: '/images/maps/lair.png'           },
+    nhvnlabs:      { name: 'NHVN Labs',      src: '/images/maps/nighthavenlabs.png' },
+    oregon:        { name: 'Oregon',         src: '/images/maps/oregon.png'         },
+    outback:       { name: 'Outback',        src: '/images/maps/outback.png'        },
+    skyscraper:    { name: 'Skyscraper',     src: '/images/maps/skyscraper.png'     },
+    themepark:     { name: 'Theme Park',     src: '/images/maps/themepark.png'      },
+    villa:         { name: 'Villa',          src: '/images/maps/villa.png'          },
 };
 
 
 
 if (matchId) { await loadMatchDetails(matchId); }
-else { $('#new-or-existing-switch').fadeIn('fast'); }
+$('#new-or-existing-switch').fadeIn('fast');
 
 
 
@@ -44,16 +45,26 @@ else { $('#new-or-existing-switch').fadeIn('fast'); }
 
 
 async function loadMatchDetails(matchId) {
+    $('#outcome_tab_place').html('');
+    $('#ranked_stats_table_place').html('');
+
     $('#match-details').fadeIn('fast');
-    $('#map').html(spinner());
-    $('#stack').html(spinner());
     $('#tracked-at').html(spinner());
-    $('#match-note').html(spinner());
 
-    const { data: matchDb } = await supabase.from('tracked_matches').select('*').eq('id', matchId);
-    let match = matchDb[0];
+    $('#map').css({ 'view-transition-name': `map_name_${matchId}` });
+    $('#stack').css({ 'view-transition-name': `stack_${matchId}` });
+    $('#match-outcome').css({ 'view-transition-name': `outcome_${matchId}` });
+    $('#match-score').css({ 'view-transition-name': `score_${matchId}` });
+    
+    if (!matchDetailsCache[matchId]) {
+        const { data: matchDb } = await supabase.from('tracked_matches').select('*').eq('id', matchId);
+        matchDetailsCache[matchId] = matchDb[0];
+    }
+    let match = matchDetailsCache[matchId];
+    
 
-    let diskitoPlayers = await loadUpPlayers(true);
+
+    let diskitoPlayers = await loadUpPlayers();
     diskitoPlayers = diskitoPlayers.map(player => player.ubi_id);
 
 
@@ -66,7 +77,6 @@ async function loadMatchDetails(matchId) {
 
     $('#map').text(map);
     $('#stack').text(stack + 'x');
-    $('#match-note').text(match.note).parent().toggle(match.note !== '');
 
     if (match.raw_data_archived === null) {
         $('#tracked-at').text(simpleDateTime(match.created_at)).parent().show();
@@ -167,10 +177,11 @@ async function loadMatchDetails(matchId) {
         `;
 
         row += `
-            <td data-what="trn-link">
-                <a href="https://r6.tracker.network/profile/id/${player}" target="_blank">
-                    <img src="/icons/data_exploration.svg" />
-                </a>
+            <td data-what="stats-links">
+                <div>
+                    <a class="btn smol" data-type="note" href="https://r6.tracker.network/profile/id/${player}" target="_blank">TRN</a>
+                    <a class="btn smol" data-type="note" href="https://stats.cc/siege/-/${player}" target="_blank">stats.cc</a>
+                </div>
             </td>
         `;
 
@@ -300,19 +311,39 @@ async function loadMatchDetails(matchId) {
 
 */
 
-let findNew = undefined;
+let newOrExistingLoaded = { new: false, existing: false };
 $('#new-or-existing-switch > .switcharoo > .btn').on('click', async function() {
-    if (findNew !== undefined) { return; }
-    findNew = this.id === 'new-match';
+    let findNew = this.id === 'new-match';
 
-    $(this).siblings().attr('data-off', '');
-    $(`#${findNew ? 'match-tracker' : 'match-viewer'}`).fadeIn('fast');
-    if (!findNew) { await loadTrackedMatches(); }
+    function toggleViews() {
+        $('#match-details').hide();
+        $(`#${findNew ? 'match-viewer' : 'match-tracker'}`).hide();
+        $(`#${findNew ? 'match-tracker' : 'match-viewer'}`).show();
+    };
+    
+    if (!document.startViewTransition) {
+        toggleViews();
+    }
+    else {
+        document.startViewTransition(() => { toggleViews() });
+    }
+    
+    if (findNew && !newOrExistingLoaded.new) {
+        loadUpMaps();
+        newOrExistingLoaded.new = true;
+    }
+    else if (!findNew && !newOrExistingLoaded.existing){
+        await loadTrackedMatches();
+        newOrExistingLoaded.existing = true;
+    }
 
     let url = new URL(window.location.href);
+    url.searchParams.delete('newOrExisting');
+    url.searchParams.delete('matchId');
     url.searchParams.set('newOrExisting', findNew ? 'new' : 'existing');
-    window.history.pushState({}, '', url);
+    window.history.pushState({}, (findNew ? 'New match' : 'Existing matches'), url);
 });
+
 if (newOrExisting) {
     if (newOrExisting == 'new') { $('#new-match').trigger('click'); }
     else if (newOrExisting == 'existing') { $('#existing-matches').trigger('click'); }
@@ -355,11 +386,11 @@ function showTrackedMatches(matches) {
 
     matches.forEach(match => {
         let akschuns = '';
-        let outcome = _parseOutcome(match.outcome);
+        let outcome = _parseOutcome(match.outcome, match.id);
         let map = maps[match.map].name;
         let created_at = simpleDateTime(match.created_at);
 
-        akschuns += `<a href="/matches?matchId=${match.id}" class="btn smol" data-type="magic">Details</a>`;
+        akschuns += `<div data-show-match="${match.id}" class="btn smol" data-type="magic">Details</div>`;
         if (match.outcome == null) {
             akschuns += `<div data-update-archived="${match.id}" class="btn smol" data-type="warning">Ended?</div>`;
         }
@@ -367,8 +398,8 @@ function showTrackedMatches(matches) {
         $('#tracked-matches > tbody').append(`
             <tr data-match-id="${match.id}">
                 <td data-what="created_at">${created_at}</td>
-                <td data-what="map">${map}</td>
-                <td data-what="player-stack">${match.stack}-stack</td>
+                <td data-what="map" style="view-transition-name: map_name_${match.id}">${map}</td>
+                <td data-what="player-stack" style="view-transition-name: stack_${match.id}">${match.stack}<span>x</span></td>
                 <td data-what="outcome"><div>${outcome}</div></td>
                 <td data-what="akschuns"><div>${akschuns}</div></td>
             </tr>
@@ -398,7 +429,7 @@ function showTrackedMatches(matches) {
 
     });
 
-    function _parseOutcome(data) {
+    function _parseOutcome(data, matchId) {
         if (!data) { return ''; }
 
         let vi_von = data.vi_von ? 'W' : 'L';
@@ -410,10 +441,31 @@ function showTrackedMatches(matches) {
         }
 
         return `
-            <div class="btn smol" data-type="${vi_von_type}">${vi_von}</div>
-            <div class="btn smol" data-type="note">${data.our_outcome} - ${data.their_outcome}</div>
+            <div class="btn smol" data-type="${vi_von_type}" style="view-transition-name: outcome_${matchId};">${vi_von}</div>
+            <div class="btn smol" data-type="note" style="text-wrap: nowrap; view-transition-name: score_${matchId}"">${data.our_outcome} : ${data.their_outcome}</div>
         `;
     };
+
+    $('[data-show-match]').off().on('click', async function() {
+        let matchId = this.dataset.showMatch;
+        
+        if (!document.startViewTransition) {
+            $('#match-viewer').hide();
+            await loadMatchDetails(matchId);
+        }
+        else {
+            document.startViewTransition(async () => {
+                $('#match-viewer').hide();
+                await loadMatchDetails(matchId);
+            });
+        }
+
+        let url = new URL(window.location.href);
+        url.searchParams.delete('newOrExisting');
+        url.searchParams.delete('matchId');
+        url.searchParams.set('matchId', matchId);
+        window.history.pushState({}, '', url);
+    });
 };
 
 function simpleDateTime(date) {
@@ -422,66 +474,18 @@ function simpleDateTime(date) {
     let mins = d.getMinutes();
     if (hrs < 10) { hrs = '0' + hrs; }
     if (mins < 10) { mins = '0' + mins; }
-    return `${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()} ${hrs}:${mins}`;
+    return `${d.getDate()}. ${d.getMonth() + 1}. '${d.getFullYear().toString().substr(-2)} ${hrs}:${mins}`;
 };
 
 
 
-let doWe = undefined;
-$('#match_id_fork > .btn').on('click', async function() {
-    if (doWe !== undefined) { return; }
-    doWe = this.id.replace('match_id_fork-', '') === 'yes';
+async function loadUpPlayers() {
+    if (diskitoPlayersCache) { return diskitoPlayersCache; }
 
-    $(this).siblings().attr('data-off', ''); // 'Turn off' the other button
-
-    if (doWe) {
-        $('#match-id').attr('placeholder', 'e.g. ' + crypto.randomUUID());
-        $('#match-id-picker').fadeIn('fast');
-    }
-    else {
-        $('#player-picker').fadeIn('fast');
-        $('<div>'+message('This is a complex operation scanning thousands of matches that could take minutes to complete..', 'warning')+'</div>').insertBefore('#find-match-parent');
-        await loadUpPlayers();
-    }
-    loadUpMaps();
-    $('#additional-note').fadeIn('fast');
-    $('#find-match-parent').fadeIn('fast');
-    $('#map-picker').fadeIn('fast');
-
-});
-
-async function loadUpPlayers(justGetPlayers=false) {
-    /* Init spinners */    
-    $('#player-picker > #players').html(spinner());
-    
-    /* ------------------------ */
-    /* Set up available players */
-    /* ------------------------ */
-
-    if (diskitoPlayers && justGetPlayers) { return diskitoPlayers; }
     let { data: playersDb } = await supabase.from('siege_stats').select('ubi_id, name').order('name', { ascending: true });
-    diskitoPlayers = playersDb;
-    if (justGetPlayers) { return playersDb; }
+    diskitoPlayersCache = playersDb;
 
-    let playersHtml = '';
-    playersDb.forEach(player => {
-        playersHtml += `
-            <div class="player" data-uuid="${player.ubi_id}">
-                <img src="https://ubisoft-avatars.akamaized.net/${player.ubi_id}/default_256_256.png" />
-                <div>${player.name}</div>
-            </div>
-        `;
-    });
-    $('#player-picker > #players').html(playersHtml);
-
-    $('#player-picker > #players > .player').on('click', function() {
-        if (!this.classList.contains('selected')) {
-            let selectedPlayers = $('#player-picker > #players > .player.selected').length;
-            if (selectedPlayers === 5) { return; }
-        }
-        $(this).toggleClass('selected');
-    });
-
+    return diskitoPlayersCache;
 };
 
 function loadUpMaps() {
@@ -509,50 +513,14 @@ function loadUpMaps() {
 
 };
 
-function isUUID(stringCheck) {
-    let uuidRegex = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/;
-    return uuidRegex.test(stringCheck);
-};
-
 $('#find-match').on('click', async function() {
     let errors = false;
     $('#find-match-errors').hide();
     this.innerHTML = spinner(true);
 
-    let note = $('#note').val() || '';
     let map = $('#maps > .map.selected').attr('data-sysid');
-    let players = undefined;
     let matchId = undefined;
     let requestedBy = userAuth.session.user.identities[0].id;
-
-    if (doWe) {
-        
-        matchId = $('#match-id').val();
-
-        if (!matchId) {
-            $('#find-match-errors').append(message('Match ID is required!', 'error')).show();
-            errors = true;
-        }
-        else if (!isUUID(matchId)) {
-            $('#find-match-errors').append(message('Match ID is not a valid UUID!', 'error')).show();
-            errors = true;
-        }
-        
-    }
-    else {
-
-        players = Array.from($('#players > .player.selected')).map(player => player.dataset.uuid);
-        
-        if (players.length === 0) {
-            $('#find-match-errors').append(message('You need to select at least one profile!', 'error')).show();
-            errors = true;
-        }
-        else if (players.length > 5) {
-            $('#find-match-errors').append(message('How the fuck did you select more than 5 profiles bro?!', 'error')).show();
-            errors = true;
-        }
-
-    }
 
     if (map === undefined) {
         $('#find-match-errors').append(message('A map has to be selected..', 'error')).show();
@@ -565,16 +533,14 @@ $('#find-match').on('click', async function() {
             'https://api.cndrd.xyz/diskito/find_match',
             {
                 method: 'POST',
-                body: JSON.stringify({ playersIds: players, mapSysid: map, note: note, matchId: matchId, requestedBy: requestedBy }),
+                body: JSON.stringify({ mapSysid: map, matchId: matchId, requestedBy: requestedBy }),
             }
         )
         .then(response => response.json())
         .then(data => {
             
-            let matchId = data?.matchId;
-
-            if (matchId) {
-                $('#find-match').replaceWith(`<button class="btn big" data-type="success" onclick="location.href='/matches?matchId=${matchId}'">Match details</button>`);
+            if (data?.matchId) {
+                $('#find-match').replaceWith(`<button class="btn big" data-type="success" onclick="location.href='/matches?matchId=${data.matchId}'">Match details</button>`);
                 $('#find-match-parent').append(message(`Took ${roundTwo(data.time)}s 😅`, 'note'));
             }
             else {

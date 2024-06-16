@@ -29,107 +29,6 @@
     > div {
         padding: 1rem;
 
-        &#do_we_know_the_match_id {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 1rem;
-
-            > #match_id_fork {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: center;
-                gap: 1rem;
-            }
-        }
-
-        &#match-id-picker {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-
-            > #match-id {
-                width: 36ch;
-                font-size: 1rem;
-                background: transparent;
-                border: 1px solid $gray-border;
-                border-radius: $border-radius;
-                text-align: center;
-            }
-        }
-
-        &#player-picker {
-            max-width: 50rem;
-
-            > .header {
-                text-align: center;
-                margin-bottom: .75rem;
-            }
-
-            > #players {
-                display: flex;
-                gap: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
-
-                > .player {
-                    $player_card_height: 2rem;
-
-                    display: flex;
-                    align-items: center;
-                    border-radius: 50rem;
-                    border: 1px solid $gray-border;
-                    border-left: 0;
-                    height: $player_card_height;
-                    cursor: pointer;
-                    transition: all .1s ease-out;
-
-                    > img {
-                        height: calc($player_card_height + 2px);
-                        border-radius: 50%;
-                        filter: grayscale(1);
-                    }
-
-                    > div {
-                        padding-inline: .7rem;
-                        user-select: none;
-                        color: $gray-border;
-                        transition: all .1s ease-out;
-                    }
-
-                    &:hover {
-                        border-color: $bj-gold;
-                        transition: all .1s ease-in;
-
-                        > img {
-                            filter: grayscale(0);
-                        }
-
-                        > div {
-                            color: white;
-                            transition: all .1s ease-in;
-                        }
-                    }
-
-                    &.selected {
-                        border-color: $bj-gold;
-                        
-                        > img {
-                            filter: grayscale(0);
-                        }
-
-                        > div {
-                            color: white;
-                        }
-                    }
-
-                }
-            }
-
-        }
-
         &#map-picker {
             
             .header {
@@ -184,23 +83,6 @@
                 }
             }
 
-        }
-
-        &#additional-note {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: .5rem;
-
-            > textarea {
-                width: 20rem;
-                min-height: 5rem;
-                background-color: transparent;
-                color: white;
-                border: 1px solid $gray-border;
-                resize: vertical;
-                padding: .8rem 1rem;
-            }
         }
 
         &#find-match-parent {
@@ -258,6 +140,13 @@
 
                     &[data-what=created_at] {
                         font-variant-numeric: tabular-nums;
+                    }
+                    &[data-what=player-stack] {
+                        text-align: center;
+                        
+                        > span {
+                            color: $gray-border;
+                        }
                     }
                     &[data-what=outcome] > div {
                         display: grid;
@@ -505,15 +394,14 @@
                             }
                         }
 
-                        &[data-what=trn-link] {
+                        &[data-what=stats-links] {
                             text-align: center;
-
-                            > a {
-                                > img {
-                                    width: 2rem;
-                                    filter: invert(1);
-                                    padding-inline: .5rem;
-                                }
+                            
+                            > div {
+                                margin-left: .3rem;
+                                display: flex;
+                                flex-direction: column;
+                                gap: .1rem;
                             }
                         }
 

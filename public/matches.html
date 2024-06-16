@@ -43,35 +43,12 @@
 
         <main id="match-tracker" style="display: none;">
 
-            <div id="do_we_know_the_match_id">
-                <div class="header">Do you have the Match ID?</div>
-                <div id="match_id_fork">
-                    <div id="match_id_fork-no" class="btn" data-type="warning">No</div>
-                    <div id="match_id_fork-yes" class="btn" data-type="success">Yes</div>
-                </div>
-            </div>
-
-            <div id="match-id-picker" style="display: none;">
-                <div class="header">Enter the Match ID</div>
-                <input id="match-id" type="text" />
-            </div>
-
-            <div id="player-picker" style="display: none;">
-                <div class="header">Who's in the lobby</div>
-                <div id="players"></div>
-            </div>
-
-            <div id="map-picker" style="display: none;">
+            <div id="map-picker">
                 <div class="header">Map being played</div>
                 <div id="maps"></div>
             </div>
 
-            <div id="additional-note" style="display: none;">
-                <div class="header">Additional note</div>
-                <textarea id="note" placeholder="Any additional notes?"></textarea>
-            </div>
-
-            <div id="find-match-parent" style="display: none;">
+            <div id="find-match-parent">
                 <div id="find-match-errors" style="display: none;"></div>
                 <div id="find-match">Find match</div>
             </div>
@@ -118,10 +95,6 @@
                 </div>
                 <div class="info_group">
                     <div class="thang">
-                        <div class="key">Note</div>
-                        <div class="value" id="match-note"></div>
-                    </div>
-                    <div class="thang">
                         <div class="key">Tracked at</div>
                         <div class="value" id="tracked-at"></div>
                     </div>
@@ -167,7 +140,7 @@
                             <th>Rank</th>
                             <th>KD</th>
                             <th>WL</th>
-                            <th>TRN</th>
+                            <th>Stats</th>
                         </tr>
                     </thead>
                     <tbody id="ranked_stats_table_place"></tbody>
