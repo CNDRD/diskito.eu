@@ -396,7 +396,8 @@
                         &[data-what=played-with-against] {
                             text-align: center;
 
-                            > span[data-cnt="0"] {
+                            > span[data-cnt="0"],
+                            > span:not([data-cnt]) {
                                 color: $gray-border;
                             }
                         }
