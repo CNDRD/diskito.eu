@@ -252,7 +252,7 @@ async function loadMatchDetails(matchId) {
 
 
 
-        $('#match-outcome').text(ourOutcome > theirOutcome ? 'VI VON' : 'L').parent().show();
+        $('#match-outcome').text(ourOutcome > theirOutcome ? 'W' : 'L').parent().show();
         $('#match-score').text(`${ourOutcome} - ${theirOutcome}`).parent().show();
 
         let prevWasDiskito = true;
