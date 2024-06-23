@@ -393,7 +393,13 @@
                                 color: $gray-border;
                             }
                         }
+                        &[data-what=played-with-against] {
+                            text-align: center;
 
+                            > span[data-cnt="0"] {
+                                color: $gray-border;
+                            }
+                        }
                         &[data-what=stats-links] {
                             text-align: center;
                             

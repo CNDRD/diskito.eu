@@ -140,6 +140,8 @@ async function loadMatchDetails(matchId) {
     let prevWasDiskito = true;
     let prevWasOurTeam = true;
     let allPlayersOrdered = [...ourPlayers, ...otherPlayers];
+    let playedWithAgainstCounts = await _fetchPlayedWithAgainstCounts(allPlayersOrdered);
+
 
     allPlayersOrdered.forEach(player => {
         let row = '';
@@ -173,6 +175,16 @@ async function loadMatchDetails(matchId) {
             <td data-what="wl">
                 <div>${wl}%</div>
                 <div class="smol-dark">${addSpaces(pd.wins)} / ${addSpaces(pd.losses)}</div>
+            </td>
+        `;
+
+        let with_ = playedWithAgainstCounts[player].with;
+        let against_ = playedWithAgainstCounts[player].against;
+        row += `
+            <td data-what="played-with-against">
+                <span data-cnt="${with_}">${with_}</span>
+                <span> / </span>
+                <span data-cnt="${against_}">${against_}</span>
             </td>
         `;
 
@@ -296,6 +308,20 @@ async function loadMatchDetails(matchId) {
 
         $('#outcome_tab').show();
     }
+
+
+    async function _fetchPlayedWithAgainstCounts(playerIds) {
+        let counts = {};
+        let playedWith_ = await supabase.from('played_with').select('player, count').in('player', playerIds);
+        let playedAgainst_ = await supabase.from('played_against').select('player, count').in('player', playerIds);
+
+        playerIds.forEach(player => { counts[player] = { with: 0, against: 0 }; });
+
+        playedWith_.data.forEach(pw => { counts[pw.player].with = pw.count; });
+        playedAgainst_.data.forEach(pa => { counts[pa.player].against = pa.count; });
+
+        return counts;
+    };
 
 };
 
