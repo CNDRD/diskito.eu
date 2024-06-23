@@ -49,7 +49,7 @@ async function loadMatchDetails(matchId) {
     $('#ranked_stats_table_place').html('');
 
     $('#match-details').fadeIn('fast');
-    $('#tracked-at').html(spinner());
+    $('#match-start').html(spinner());
 
     $('#map').css({ 'view-transition-name': `map_name_${matchId}` });
     $('#stack').css({ 'view-transition-name': `stack_${matchId}` });
@@ -78,11 +78,12 @@ async function loadMatchDetails(matchId) {
     $('#map').text(map);
     $('#stack').text(stack + 'x');
 
-    if (match.raw_data_archived === null) {
-        $('#tracked-at').text(simpleDateTime(match.created_at)).parent().show();
+    if (match.raw_data !== null) {
+        $('#match-server').text(_getServerName(match?.raw_data?.datacenter)).parent().show();
+        $('#match-start').text(simpleDateTime(match.raw_data.start_time)).parent().show();
     }
-    else {
-        $('#tracked-at').parent().hide();
+
+    if (match.raw_data_archived !== null) {
         $('#match-start').text(simpleDateTime(match.raw_data_archived.start_time)).parent().show();
         $('#match-end').text(simpleDateTime(match.raw_data_archived.end_time)).parent().show();
 
@@ -321,6 +322,51 @@ async function loadMatchDetails(matchId) {
         playedAgainst_.data.forEach(pa => { counts[pa.player].against = pa.count; });
 
         return counts;
+    };
+    function _getServerName(server) {
+        if (!server) { return 'Unknown' }
+        return {
+            'private/private': 'Private',
+
+            'gamelift/eu-north-1': 'AWS - Stockholm',
+            'gamelift/eu-south-1': 'AWS - Milan',
+            'gamelift/eu-central-1': 'AWS - Frankfurt',
+            'gamelift/eu-west-1': 'AWS - Ireland',
+            'gamelift/eu-west-2': 'AWS - London',
+            'gamelift/eu-west-3': 'AWS - Paris',
+            'gamelift/ap-northeast-3': 'AWS - Osaka',
+            'gamelift/ap-east-1': 'AWS - Hong Kong',
+            'gamelift/ap-northeast-1': 'AWS - Tokyo',
+            'gamelift/ap-northeast-2': 'AWS - Seoul',
+            'gamelift/ap-south-1': 'AWS - Mumbai',
+            'gamelift/ap-southeast-1': 'AWS - Singapore',
+            'gamelift/ap-southeast-2': 'AWS - Sydney',
+            'gamelift/us-east-1': 'AWS - Virginia',
+            'gamelift/us-east-2': 'AWS - Ohio',
+            'gamelift/us-west-1': 'AWS - California',
+            'gamelift/us-west-2': 'AWS - Oregon',
+            'gamelift/ca-central-1': 'AWS - Montreal',
+            'gamelift/me-south-1': 'AWS - Bahrain',
+            'gamelift/af-south-1': 'AWS - Cape Town',
+            'gamelift/cn-northwest-1': 'AWS - Ningxia',
+            'gamelift/cn-north-1': 'AWS - Beijing',
+            'gamelift/sa-east-1': 'AWS - Sao Paulo',
+
+            'playfab/eastus': 'MSFT - East US',
+            'playfab/westus': 'MSFT - West US',
+            'playfab/centralus': 'MSFT - Central US',
+            'playfab/southcentralus': 'MSFT - South Central US',
+            'playfab/eastasia': 'MSFT - East Asia',
+            'playfab/southeastasia': 'MSFT - Southeast Asia',
+            'playfab/uaenorth': 'MSFT - UAE North',
+            'playfab/japaneast': 'MSFT - Japan East',
+            'playfab/westeurope': 'MSFT - West Europe',
+            'playfab/northeurope': 'MSFT - North Europe',
+            'playfab/brazilsouth': 'MSFT - Brazil South',
+            'playfab/australiaeast': 'MSFT - Australia East',
+            'playfab/southafricanorth': 'MSFT - South Africa North',
+
+        }[server] || server;
     };
 
 };
