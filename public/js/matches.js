@@ -142,13 +142,17 @@ async function loadMatchDetails(matchId) {
     let prevWasOurTeam = true;
     let allPlayersOrdered = [...ourPlayers, ...otherPlayers];
     let playedWithAgainstCounts = await _fetchPlayedWithAgainstCounts(allPlayersOrdered);
-
+    let markedPlayers = await _fetchMarkedPlayers(allPlayersOrdered);
 
     allPlayersOrdered.forEach(player => {
         let row = '';
         let pd = match.ranked_stats[player];
 
-        row += `<td data-what="pfp"><img src="https://ubisoft-avatars.akamaized.net/${player}/default_256_256.png" /></td>`;
+        let markedPfp = [];
+        if (markedPlayers[player]?.cheater) { markedPfp.push('data-marked-cheater') }
+        if (markedPlayers[player]?.retard) { markedPfp.push('data-marked-retard') }
+        let markedStr = markedPfp.length ? markedPfp.join(' ') : '';
+        row += `<td data-what="pfp"><div ${markedStr}><img src="https://ubisoft-avatars.akamaized.net/${player}/default_256_256.png" /></div></td>`;
 
         let persona = pd.persona ? `<div class="persona">${pd.persona}</div>` : '';
         row += `<td data-what="player"><div>${pd.name}</div>${persona}</td>`;
@@ -197,6 +201,15 @@ async function loadMatchDetails(matchId) {
                 </div>
             </td>
         `;
+
+        let mark = '-';
+        if (!pd.diskito) {
+            mark = '';
+            mark += markedPlayers[player]?.cheater ? '' : '<div class="btn smol" data-type="error" data-mark-type="cheater">Cheater</div>';
+            mark += markedPlayers[player]?.retard ? '' : '<div class="btn smol" data-type="warning" data-mark-type="retard">Retard</div>';
+            mark = mark ? `<div data-player="${player}">${mark}</div>` : '-';
+        }
+        row += `<td data-what="mark">${mark}</td>`;
 
         // Dividers
         let cols = $('#ranked_stats > table > thead > tr > th').length;
@@ -323,6 +336,18 @@ async function loadMatchDetails(matchId) {
 
         return counts;
     };
+    async function _fetchMarkedPlayers(playerIds) {
+        let onlyNonDiskito = playerIds.filter(player => !diskitoPlayers.includes(player));
+        let markedDb = await supabase.from('siege_marked_players').select('ubi_id, game, why').in('ubi_id', onlyNonDiskito);
+        let marked = playerIds.reduce((acc, cur) => { acc[cur] = { cheater: false, retard: false }; return acc; }, {});
+
+        markedDb.data.forEach(plr => {
+            if (plr.why === 'cheater') { marked[plr.ubi_id].cheater = true; }
+            if (plr.why === 'retard')  { marked[plr.ubi_id].retard = true; }
+        });
+        
+        return marked;
+    };
     function _getServerName(server) {
         if (!server) { return 'Unknown' }
         return {
@@ -369,6 +394,29 @@ async function loadMatchDetails(matchId) {
         }[server] || server;
     };
 
+    $('[data-mark-type]').off().on('click', async function() {
+        $(this).html(spinner());
+
+        let player = this.parentElement.dataset.player;
+        let why = this.dataset.markType;
+
+        let marked = await supabase.from('siege_marked_players').insert({
+            ubi_id: player,
+            game: matchId,
+            why: why,
+            by: userAuth.session.user.identities[0].id
+        });
+
+        if (marked.status === 201) {
+            $(this).closest('tr').find('[data-what=pfp] > div').attr(`data-marked-${why}`, '');
+            $(this).html('<img src="/icons/check.svg" />');
+            setTimeout(() => { $(this).slideUp() }, 3_000);
+        }
+        else {
+            $(this).html(`${why[0].toUpperCase()}${why.slice(1)}`);
+        }
+
+    });
 };
 
 
