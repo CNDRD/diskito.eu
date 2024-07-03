@@ -3,7 +3,7 @@ import { _getRankImageFromRankName } from './siege.js';
 
 const urlParams = new URLSearchParams(window.location.search);
 let matchId = urlParams.get('matchId') || undefined;
-let newOrExisting = urlParams.get('newOrExisting') || undefined;
+let stuff = urlParams.get('stuff') || undefined;
 let diskitoPlayersCache = undefined;
 let matchDetailsCache = {};
 let matchOffset = 20;
@@ -31,9 +31,16 @@ let maps = {
 
 
 if (matchId) { await loadMatchDetails(matchId); }
-$('#new-or-existing-switch').fadeIn('fast');
+$('#stuff-switch').fadeIn('fast');
 
+$(window).on("popstate", function () {
+    let url = new URL(window.location.href);
+    let matchId = url.searchParams.get('matchId');
+    let stuff = url.searchParams.get('stuff');
 
+    if (matchId) { loadMatchDetails(matchId); }
+    if (stuff) { $(`#${stuff}`).trigger('click') }
+});
 
 
 
@@ -402,6 +409,7 @@ async function loadMatchDetails(matchId) {
 
         let marked = await supabase.from('siege_marked_players').insert({
             ubi_id: player,
+            name: match.ranked_stats[player].name,
             game: matchId,
             why: why,
             by: userAuth.session.user.identities[0].id
@@ -431,47 +439,90 @@ async function loadMatchDetails(matchId) {
 
 */
 
-let newOrExistingLoaded = { new: false, existing: false };
-$('#new-or-existing-switch > .switcharoo > .btn').on('click', async function() {
-    let findNew = this.id === 'new-match';
+let stuffData = {
+    new_match: {
+        loaded: false,
+        load_fn: loadUpMaps,
+        load_fn_await: false,
+        div_id: 'match-tracker',
+        last_loaded: null,
+        data_lifetime_minutes: 1,
+    },
+    existing_matches: {
+        loaded: false,
+        load_fn: loadTrackedMatches,
+        load_fn_await: true,
+        div_id: 'match-viewer',
+        last_loaded: null,
+        data_lifetime_minutes: 5,
+    },
+    marked_players: {
+        loaded: false,
+        load_fn: loadMarkedPlayers,
+        load_fn_await: true,
+        div_id: 'marked-players',
+        last_loaded: null,
+        data_lifetime_minutes: 3,
+    },
+};
 
-    function toggleViews() {
-        $('#match-details').hide();
-        $(`#${findNew ? 'match-viewer' : 'match-tracker'}`).hide();
-        $(`#${findNew ? 'match-tracker' : 'match-viewer'}`).show();
+
+
+$('#stuff-switch > .switcharoo > .btn').on('click', async function() {
+    let showStuff = this.id;
+
+    if (!document.startViewTransition) { await toggleViews() }
+    else { document.startViewTransition(async () => { await toggleViews() }) }
+    
+    async function toggleViews() {
+        // Hide everything
+        $('main').hide();
+
+        // If we have a cache lifetime, check if we need to reload the data
+        if (stuffData[showStuff].data_lifetime_minutes && stuffData[showStuff].last_loaded) {
+            let now = new Date();
+            let lastLoaded = new Date(stuffData[showStuff].last_loaded);
+            let diff = now - lastLoaded;
+
+            if (diff > stuffData[showStuff].data_lifetime_minutes * 60 * 1000) {
+                stuffData[showStuff].loaded = false;
+            }
+        }
+
+        // Load the stuff if not loaded yet
+        if (!stuffData[showStuff].loaded) {
+            stuffData[showStuff].loaded = true;
+            stuffData[showStuff].last_loaded = new Date();
+            if (stuffData[showStuff].load_fn_await) { await stuffData[showStuff].load_fn() }
+            else { stuffData[showStuff].load_fn() }
+        }
+
+        // Show the wanted stuf
+        $(`#${stuffData[showStuff].div_id}`).show();
+
+        // Update the URL
+        let url = new URL(window.location.href);
+        url.searchParams.delete('matchId');
+        url.searchParams.set('stuff', showStuff);
+        window.history.pushState({}, '', url);
     };
-    
-    if (!document.startViewTransition) {
-        toggleViews();
-    }
-    else {
-        document.startViewTransition(() => { toggleViews() });
-    }
-    
-    if (findNew && !newOrExistingLoaded.new) {
-        loadUpMaps();
-        newOrExistingLoaded.new = true;
-    }
-    else if (!findNew && !newOrExistingLoaded.existing){
-        await loadTrackedMatches();
-        newOrExistingLoaded.existing = true;
-    }
 
-    let url = new URL(window.location.href);
-    url.searchParams.delete('newOrExisting');
-    url.searchParams.delete('matchId');
-    url.searchParams.set('newOrExisting', findNew ? 'new' : 'existing');
-    window.history.pushState({}, (findNew ? 'New match' : 'Existing matches'), url);
 });
+if (stuff) { $(`#${stuff}`).trigger('click') }
 
-if (newOrExisting) {
-    if (newOrExisting == 'new') { $('#new-match').trigger('click'); }
-    else if (newOrExisting == 'existing') { $('#existing-matches').trigger('click'); }
-}
+
+
+
+
+/*
+    Existing matches viewer
+*/
 
 async function loadTrackedMatches() {
     let spnr = spinner();
     $('#match-viewer').prepend(spnr);
+
+    $('#tracked-matches > tbody').html('');
 
     let matchQuery = supabase
         .from('tracked_matches')
@@ -482,8 +533,10 @@ async function loadTrackedMatches() {
 
     showTrackedMatches(matches);
 
-    $('#match-viewer').append(`<div data-load-more class="btn" data-type="warning">Load more</div>`);
-
+    if (!$('[data-load-more]').length) {
+        $('#match-viewer').append(`<div data-load-more class="btn" data-type="warning">Load more</div>`);
+    }
+    
     $('[data-load-more]').on('click', async function() {
         $(this).html(spinner());
 
@@ -562,30 +615,28 @@ function showTrackedMatches(matches) {
 
         return `
             <div class="btn smol" data-type="${vi_von_type}" style="view-transition-name: outcome_${matchId};">${vi_von}</div>
-            <div class="btn smol" data-type="note" style="text-wrap: nowrap; view-transition-name: score_${matchId}"">${data.our_outcome} : ${data.their_outcome}</div>
+            <div class="btn smol" data-type="note" style="text-wrap: nowrap; view-transition-name: score_${matchId};">${data.our_outcome} : ${data.their_outcome}</div>
         `;
     };
 
     $('[data-show-match]').off().on('click', async function() {
-        let matchId = this.dataset.showMatch;
-        
-        if (!document.startViewTransition) {
-            $('#match-viewer').hide();
-            await loadMatchDetails(matchId);
-        }
-        else {
-            document.startViewTransition(async () => {
-                $('#match-viewer').hide();
-                await loadMatchDetails(matchId);
-            });
-        }
-
-        let url = new URL(window.location.href);
-        url.searchParams.delete('newOrExisting');
-        url.searchParams.delete('matchId');
-        url.searchParams.set('matchId', matchId);
-        window.history.pushState({}, '', url);
+        await showMatchDetails(this.dataset.showMatch);
     });
+};
+
+async function showMatchDetails(matchId) {
+    if (!document.startViewTransition) { await matchDetailsTransition() }
+    else { document.startViewTransition(async () => { await matchDetailsTransition() }) }
+
+    async function matchDetailsTransition() {
+        $('#match-viewer').hide();
+        await loadMatchDetails(matchId);
+    };
+
+    let url = new URL(window.location.href);
+    url.searchParams.delete('stuff');
+    url.searchParams.set('matchId', matchId);
+    window.history.pushState({}, '', url);
 };
 
 function simpleDateTime(date) {
@@ -599,6 +650,10 @@ function simpleDateTime(date) {
 
 
 
+/*
+    New match finder
+*/
+
 async function loadUpPlayers() {
     if (diskitoPlayersCache) { return diskitoPlayersCache; }
 
@@ -609,7 +664,12 @@ async function loadUpPlayers() {
 };
 
 function loadUpMaps() {
-    $('#maps').html(spinner());
+
+    if ($('#maps > .map').length) {
+        $('#maps > .map').removeClass('selected');
+        $('#find-match-parent').html('<div id="find-match-errors" style="display: none;"></div><div id="find-match">Find match</div>');
+        return;
+    }
 
     /* ----------------------------------- */
     /* Set up maps to pick what we playing */
@@ -676,3 +736,52 @@ $('#find-match').on('click', async function() {
     }
 
 });
+
+
+
+/*
+    Marked players viewer
+*/
+
+async function loadMarkedPlayers() {
+    $('#marked_players_list > tbody').html('');
+
+    let { data: markedPlayers } = await supabase
+        .from('siege_marked_players')
+        .select('ubi_id, name, game(id, outcome), why, by(username)')
+        .order('created_at', { ascending: false });
+    
+    markedPlayers.forEach(player => {
+        let why = `<div class="btn smol" data-type="error">${player.why[0].toUpperCase() + player.why.slice(1)}</div>`;
+        let outcome = `<div class="btn smol" data-show-match="${player.game.id}" data-type="magic">Details</div>`;
+        let actions = `<div data-unmark="${player.ubi_id}" class="btn smol" data-type="note">Unmark</div>`;
+
+        $('#marked_players_list > tbody').append(`
+            <tr class="marked_player" data-ubi-id="${player.ubi_id}">
+                <td data-what="name">${player.name}</td>
+                <td data-what="why">${why}</td>
+                <td data-what="outcome"><div>${outcome}</div></td>
+                <td data-what="by">${player.by.username}</td>
+                <td data-what="akschuns"><div>${actions}</div></td>
+            </tr>
+        `);
+    });
+
+    $('[data-show-match]').off().on('click', async function() {
+        await showMatchDetails(this.dataset.showMatch);
+    });
+
+    $('[data-unmark]').off().on('click', async function() {
+        $(this).html(spinner());
+        let unmarked = await supabase.from('siege_marked_players').delete().eq('ubi_id', this.dataset.unmark);
+
+        if (unmarked.status === 204) {
+            $(`[data-ubi-id="${this.dataset.unmark}"]`).slideUp();
+        }
+        else {
+            $(this).html('Unmark');
+        }
+
+    });
+};
+

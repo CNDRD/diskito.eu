@@ -2,7 +2,7 @@
 
 
 
-#new-or-existing-switch {
+#stuff-switch {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,8 +11,12 @@
 
     > .switcharoo {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
+
+        > .btn {
+            gap: .4rem;
+        }
     }
 }
 
@@ -122,7 +126,6 @@
 }
 
 
-
 #match-viewer {
     display: flex;
     flex-direction: column;
@@ -173,7 +176,6 @@
     }
 
 }
-
 
 
 #match-details {
@@ -467,4 +469,37 @@
     }
 
 
+}
+
+
+#marked-players {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 10rem;
+    margin-top: 3rem;
+
+    > #marked_players_list {
+        > tbody {
+            > tr {
+                > td {
+                    padding: .5rem;
+
+                    &[data-what=akschuns] > div {
+                        display: flex;
+                        flex-direction: column;
+                        gap: .1rem;
+
+                        > [data-unmark] {
+                            > img {
+                                filter: invert(1);
+                                height: 2rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

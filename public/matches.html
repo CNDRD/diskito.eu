@@ -33,11 +33,12 @@
             <a href="" class="toggle-mnu"><span></span></a>
         </nav>
         
-        <switch id="new-or-existing-switch" style="display: none;">
+        <switch id="stuff-switch" style="display: none;">
             <div class="header">Which Way, Western Man?</div>
             <div class="switcharoo">
-                <div id="new-match" class="btn" data-type="success">New match</div>
-                <div id="existing-matches" class="btn" data-type="warning">Existing matches</div>
+                <div id="new_match" class="btn" data-type="success">New match</div>
+                <div id="existing_matches" class="btn" data-type="warning">Existing matches</div>
+                <div id="marked_players" class="btn" data-type="error">Marked players</div>
             </div>
         </switch>
 
@@ -148,6 +149,22 @@
                     <tbody id="ranked_stats_table_place"></tbody>
                 </table>
             </div>
+
+        </main>
+
+        <main id="marked-players" style="display: none;">
+            <table id="marked_players_list">
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Reason</th>
+                        <th>Match</th>
+                        <th>By</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
 
         </main>
 
