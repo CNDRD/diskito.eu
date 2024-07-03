@@ -668,6 +668,7 @@ function loadUpMaps() {
     if ($('#maps > .map').length) {
         $('#maps > .map').removeClass('selected');
         $('#find-match-parent').html('<div id="find-match-errors" style="display: none;"></div><div id="find-match">Find match</div>');
+        $('#find-match').on('click', async function() { findMatch(this) });
         return;
     }
 
@@ -693,10 +694,12 @@ function loadUpMaps() {
 
 };
 
-$('#find-match').on('click', async function() {
+$('#find-match').on('click', async function() { findMatch(this) });
+function findMatch(that) {
     let errors = false;
     $('#find-match-errors').hide();
-    this.innerHTML = spinner(true);
+    
+    that.innerHTML = spinner(true);
 
     let map = $('#maps > .map.selected').attr('data-sysid');
     let matchId = undefined;
@@ -732,10 +735,10 @@ $('#find-match').on('click', async function() {
 
     }
     else {
-        this.innerHTML = 'Try again..';
+        
+        that.innerHTML = 'Try again..';
     }
-
-});
+};
 
 
 
