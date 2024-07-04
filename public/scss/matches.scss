@@ -486,6 +486,21 @@
                 > td {
                     padding: .5rem;
 
+                    &[data-what=banned] {
+                        text-align: center;
+                        
+                        &[data-banned=false] {
+                            color: $gray-border;
+                        }
+                        
+                        > .reason {
+                            font-size: .9rem;
+                        }
+                        > .date {
+                            font-size: .8rem;
+                        }
+                    }
+
                     &[data-what=akschuns] > div {
                         display: flex;
                         flex-direction: column;

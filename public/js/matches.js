@@ -751,13 +751,26 @@ async function loadMarkedPlayers() {
 
     let { data: markedPlayers } = await supabase
         .from('siege_marked_players')
-        .select('ubi_id, name, game(id, outcome), why, by(username)')
+        .select('ubi_id, name, game(id, outcome), why, by(username), ban_info')
         .order('created_at', { ascending: false });
     
     markedPlayers.forEach(player => {
-        let why = `<div class="btn smol" data-type="error">${player.why[0].toUpperCase() + player.why.slice(1)}</div>`;
+        let why = `<div class="btn smol" data-type="${player.why === 'cheater' ? 'error' : 'warning'}">${player.why[0].toUpperCase() + player.why.slice(1)}</div>`;
         let outcome = `<div class="btn smol" data-show-match="${player.game.id}" data-type="magic">Details</div>`;
-        let actions = `<div data-unmark="${player.ubi_id}" class="btn smol" data-type="note">Unmark</div>`;
+        let actions = '';
+
+        if (!player.ban_info) {
+            actions += `<div data-unmark="${player.ubi_id}" class="btn smol" data-type="note">Unmark</div>`;
+        }
+
+        let banned = 'Not yet..';
+        if (player.why === 'retard') { banned = '-' }
+        if (player.ban_info) {
+            banned = `
+                <div class="reason">${player.ban_info.reason}</div>
+                <div class="date">${simpleDateTime(player.ban_info.posted)}</div>
+            `;
+        }
 
         $('#marked_players_list > tbody').append(`
             <tr class="marked_player" data-ubi-id="${player.ubi_id}">
@@ -765,6 +778,7 @@ async function loadMarkedPlayers() {
                 <td data-what="why">${why}</td>
                 <td data-what="outcome"><div>${outcome}</div></td>
                 <td data-what="by">${player.by.username}</td>
+                <td data-what="banned" data-banned="${!!(player.ban_info)}">${banned}</td>
                 <td data-what="akschuns"><div>${actions}</div></td>
             </tr>
         `);
