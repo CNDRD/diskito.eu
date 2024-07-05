@@ -286,6 +286,14 @@
         > table {
             border-collapse: collapse;
 
+            > thead {
+                > tr {
+                    > th {
+                        padding-inline: .5rem;
+                    }
+                }
+            }
+
             > tbody {
                 > tr {
 
@@ -379,35 +387,15 @@
                         }
                         &[data-what=kd] {
                             text-align: center;
-
-                            > .smol-dark {
-                                font-size: .8rem;
-                                color: $gray-border;
-                            }
                         }
                         &[data-what=wl] {
                             text-align: center;
-
-                            > .smol-dark {
-                                font-size: .8rem;
-                                color: $gray-border;
-                            }
                         }
                         &[data-what=headshots] {
                             text-align: center;
-
-                            > .smol-dark {
-                                font-size: .8rem;
-                                color: $gray-border;
-                            }
                         }
                         &[data-what=teamkills] {
                             text-align: center;
-
-                            > .smol-dark {
-                                font-size: .8rem;
-                                color: $gray-border;
-                            }
                         }
                         &[data-what=played-with-against] {
                             text-align: center;
@@ -443,6 +431,14 @@
                                     }
                                 }
                             }
+                        }
+                        &[data-what=aces] {
+                            text-align: center;
+                        }
+
+                        > .smol-dark {
+                            font-size: .8rem;
+                            color: $gray-border;
                         }
 
                     }

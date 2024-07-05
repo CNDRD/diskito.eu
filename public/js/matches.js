@@ -222,6 +222,7 @@ async function loadMatchDetails(matchId) {
     let ourOutcome = 0;
     let theirOutcome = 0;
     let playerStats = {};
+    let aces = {};
 
     if (match?.raw_data_archived) {
         match.raw_data_archived.rounds.forEach(round => {
@@ -246,6 +247,11 @@ async function loadMatchDetails(matchId) {
                     playerStats[player.profile_id].headshots += player.headshots;
                     playerStats[player.profile_id].teamKills += player.team_kills;
                     playerStats[player.profile_id].forgivenTeamKills += player.forgiven_tk;
+
+                    if (player.kills === 5) {
+                        if (!aces[player.profile_id]) { aces[player.profile_id] = 0; }
+                        aces[player.profile_id]++;
+                    }
 
                 });
             });
@@ -289,6 +295,13 @@ async function loadMatchDetails(matchId) {
                 <td data-what="teamkills">
                     <div>${ps.teamKills}</div>
                     <div class="smol-dark">${ps.forgivenTeamKills}</div>
+                </td>
+            `;
+
+            let aces_ = aces[player] || 0;
+            row += `
+                <td data-what="aces">
+                    <div ${aces_ ? '' : 'class="smol-dark"'}>${aces_}</div>
                 </td>
             `;
 
