@@ -216,8 +216,8 @@ async function loadMatchDetails(matchId) {
 
 
 
-    /* ----------------------------------- */
-    /* Optionally show how each round went */
+    /* ------------------ */
+    /* Show match outcome */
 
     let ourOutcome = 0;
     let theirOutcome = 0;
