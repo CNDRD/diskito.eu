@@ -371,7 +371,7 @@ async function loadMatchDetails(matchId) {
         return cells;
     };
     function _viewTransition(player, match, what) {
-        return `view-transition-name: ${what}_${player}_${match.id};`;
+        return `view-transition-name: ${what}_${player}_${match};`;
     };
     
     async function _fetchPlayedWithAgainstCounts(playerIds) {
