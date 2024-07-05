@@ -292,7 +292,6 @@ async function loadMatchDetails(matchId) {
             `;
 
             row += cells.stats;
-            row += cells.mark;
 
             // Dividers
             let cols = $('#outcome_tab > table > thead > tr > th').length;
@@ -315,25 +314,25 @@ async function loadMatchDetails(matchId) {
         let cells = {pfp: '', name: '', stats: '', mark: ''};
         let pd = match.ranked_stats[player];
 
-        let pfpStyle = _viewTransitionStyle(player, matchId, 'pfp');
-        let nameStyle = _viewTransitionStyle(player, matchId, 'name');
-        let statsStyle = _viewTransitionStyle(player, matchId, 'stats-links');
-        let markStyle = _viewTransitionStyle(player, matchId, 'mark');
+        let pfpTransition = _viewTransition(player, matchId, 'pfp');
+        let nameTransition = _viewTransition(player, matchId, 'name');
+        let statsTransition = _viewTransition(player, matchId, 'stats-links');
+        let markTransition = _viewTransition(player, matchId, 'mark');
 
         /* Profile picture cell */
         let markedPfp = [];
         if (markedPlayers[player]?.cheater) { markedPfp.push('data-marked-cheater') }
         if (markedPlayers[player]?.retard) { markedPfp.push('data-marked-retard') }
         let markedStr = markedPfp.length ? markedPfp.join(' ') : '';
-        cells.pfp = `<td data-what="pfp" style="${pfpStyle}"><div ${markedStr}><img src="https://ubisoft-avatars.akamaized.net/${player}/default_256_256.png" /></div></td>`;
+        cells.pfp = `<td data-what="pfp"><div ${markedStr}><img style="${pfpTransition}" src="https://ubisoft-avatars.akamaized.net/${player}/default_256_256.png" /></div></td>`;
         
         /* Name & persona cell */
         let persona = pd.persona ? `<div class="persona">${pd.persona}</div>` : '';
-        cells.name = `<td data-what="player" style="${nameStyle}"><div>${pd.name}</div>${persona}</td>`;
+        cells.name = `<td data-what="player" style="${nameTransition}"><div>${pd.name}</div>${persona}</td>`;
 
         /* Stat pages links cell */
         cells.stats = `
-            <td data-what="stats-links" style="${statsStyle}">
+            <td data-what="stats-links" style="${statsTransition}">
                 <div>
                     <a class="btn smol" data-type="note" href="https://r6.tracker.network/profile/id/${player}" target="_blank">TRN</a>
                     <a class="btn smol" data-type="note" href="https://stats.cc/siege/-/${player}" target="_blank">stats.cc</a>
@@ -349,11 +348,11 @@ async function loadMatchDetails(matchId) {
             mark += markedPlayers[player]?.retard ? '' : '<div class="btn smol" data-type="warning" data-mark-type="retard">Retard</div>';
             mark = mark ? `<div data-player="${player}">${mark}</div>` : '-';
         }
-        cells.mark = `<td data-what="mark" style="${markStyle}">${mark}</td>`
+        cells.mark = `<td data-what="mark" style="${markTransition}">${mark}</td>`
 
         return cells;
     };
-    function _viewTransitionStyle(player, match, what) {
+    function _viewTransition(player, match, what) {
         return `view-transition-name: ${what}_${player}_${match.id};`;
     };
     
