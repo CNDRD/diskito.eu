@@ -155,7 +155,7 @@ async function loadMatchDetails(matchId) {
         let row = '';
         let pd = match.ranked_stats[player];
 
-        let cells = getPlayerPfpAndNameCell(player);
+        let cells = getSharedCells(player);
         row += cells.pfp;
         row += cells.name;
 
@@ -195,23 +195,8 @@ async function loadMatchDetails(matchId) {
             </td>
         `;
 
-        row += `
-            <td data-what="stats-links">
-                <div>
-                    <a class="btn smol" data-type="note" href="https://r6.tracker.network/profile/id/${player}" target="_blank">TRN</a>
-                    <a class="btn smol" data-type="note" href="https://stats.cc/siege/-/${player}" target="_blank">stats.cc</a>
-                </div>
-            </td>
-        `;
-
-        let mark = '-';
-        if (!pd.diskito) {
-            mark = '';
-            mark += markedPlayers[player]?.cheater ? '' : '<div class="btn smol" data-type="error" data-mark-type="cheater">Cheater</div>';
-            mark += markedPlayers[player]?.retard ? '' : '<div class="btn smol" data-type="warning" data-mark-type="retard">Retard</div>';
-            mark = mark ? `<div data-player="${player}">${mark}</div>` : '-';
-        }
-        row += `<td data-what="mark">${mark}</td>`;
+        row += cells.stats;
+        row += cells.mark;
 
         // Dividers
         let cols = $('#ranked_stats > table > thead > tr > th').length;
@@ -279,7 +264,7 @@ async function loadMatchDetails(matchId) {
             let ps = playerStats[player];
             let pd = match.ranked_stats[player];
 
-            let cells = getPlayerPfpAndNameCell(player);
+            let cells = getSharedCells(player);
             row += cells.pfp;
             row += cells.name;
 
@@ -306,13 +291,16 @@ async function loadMatchDetails(matchId) {
                 </td>
             `;
 
+            row += cells.stats;
+            row += cells.mark;
+
             // Dividers
             let cols = $('#outcome_tab > table > thead > tr > th').length;
             if (prevWasDiskito && !pd.diskito) {
-                $('#outcome_tab_place').append(`<tr class="separator"><td colspan="${cols}"></td></tr>`);
+                $('#outcome_tab_place').append(`<tr class="separator" style="view-transition-name: ${matchId}_separator"><td colspan="${cols}"></td></tr>`);
             }
             if (prevWasOurTeam && !pd.ourTeam) {
-                $('#outcome_tab_place').append(`<tr class="team-separator"><td colspan="${cols}"></td></tr>`);
+                $('#outcome_tab_place').append(`<tr class="team-separator" style="view-transition-name: ${matchId}_team-separator"><td colspan="${cols}"></td></tr>`);
             }
             prevWasDiskito = pd.diskito;
             prevWasOurTeam = pd.ourTeam;
@@ -323,21 +311,45 @@ async function loadMatchDetails(matchId) {
 
     }
 
-    function getPlayerPfpAndNameCell(player) {
-        let cells = {pfp: '', name: ''};
+    function getSharedCells(player) {
+        let cells = {pfp: '', name: '', stats: '', mark: ''};
         let pd = match.ranked_stats[player];
 
         let pfpStyle = _viewTransitionStyle(player, matchId, 'pfp');
         let nameStyle = _viewTransitionStyle(player, matchId, 'name');
+        let statsStyle = _viewTransitionStyle(player, matchId, 'stats-links');
+        let markStyle = _viewTransitionStyle(player, matchId, 'mark');
 
+        /* Profile picture cell */
         let markedPfp = [];
         if (markedPlayers[player]?.cheater) { markedPfp.push('data-marked-cheater') }
         if (markedPlayers[player]?.retard) { markedPfp.push('data-marked-retard') }
         let markedStr = markedPfp.length ? markedPfp.join(' ') : '';
         cells.pfp = `<td data-what="pfp" style="${pfpStyle}"><div ${markedStr}><img src="https://ubisoft-avatars.akamaized.net/${player}/default_256_256.png" /></div></td>`;
         
+        /* Name & persona cell */
         let persona = pd.persona ? `<div class="persona">${pd.persona}</div>` : '';
         cells.name = `<td data-what="player" style="${nameStyle}"><div>${pd.name}</div>${persona}</td>`;
+
+        /* Stat pages links cell */
+        cells.stats = `
+            <td data-what="stats-links" style="${statsStyle}">
+                <div>
+                    <a class="btn smol" data-type="note" href="https://r6.tracker.network/profile/id/${player}" target="_blank">TRN</a>
+                    <a class="btn smol" data-type="note" href="https://stats.cc/siege/-/${player}" target="_blank">stats.cc</a>
+                </div>
+            </td>
+        `;
+
+        /* Mark player cell */
+        let mark = '-';
+        if (!pd.diskito) {
+            mark = '';
+            mark += markedPlayers[player]?.cheater ? '' : '<div class="btn smol" data-type="error" data-mark-type="cheater">Cheater</div>';
+            mark += markedPlayers[player]?.retard ? '' : '<div class="btn smol" data-type="warning" data-mark-type="retard">Retard</div>';
+            mark = mark ? `<div data-player="${player}">${mark}</div>` : '-';
+        }
+        cells.mark = `<td data-what="mark" style="${markStyle}">${mark}</td>`
 
         return cells;
     };
@@ -448,6 +460,9 @@ async function loadMatchDetails(matchId) {
         function switchDetails(what_) {
             $('[data-match-details-tab]').hide();
             $(`[data-match-details-tab]#${what_}`).show();
+
+            $('#details-note > div').css('opacity', '0');
+            $(`#${what_}_note`).css('opacity', '1');
         };
 
         if (!document.startViewTransition) { switchDetails(what) }

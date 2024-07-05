@@ -273,14 +273,17 @@
         }
     }
 
-    > #outcome_tab {
-
-        > .header {
+    > #details-note {
+        > div {
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1rem;
+            color: $gray-border;
             margin-bottom: 1rem;
-            font-weight: 400;
+            opacity: 0;
         }
+    }
+
+    > #outcome_tab {
 
         > table {
             border-collapse: collapse;
@@ -378,6 +381,33 @@
                                 color: $gray-border;
                             }
                         }
+                        &[data-what=stats-links] {
+                            text-align: center;
+                            
+                            > div {
+                                margin-left: .3rem;
+                                display: flex;
+                                flex-direction: column;
+                                gap: .1rem;
+                            }
+                        }
+                        &[data-what=mark] {
+                            text-align: center;
+                            
+                            > div {
+                                margin-left: .3rem;
+                                display: flex;
+                                flex-direction: column;
+                                gap: .1rem;
+
+                                > div {
+                                    > img {
+                                        width: 2rem;
+                                        filter: invert(1);
+                                    }
+                                }
+                            }
+                        }
 
                     }
                 }
@@ -386,18 +416,6 @@
     }
 
     > #ranked_stats {
-
-        > .header {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 400;
-        }
-        > .info {
-            text-align: center;
-            font-size: 1rem;
-            color: $gray-border;
-            margin-bottom: 1rem;
-        }
 
         > table {
             border-collapse: collapse;
@@ -542,7 +560,7 @@
                                 > div {
                                     > img {
                                         width: 2rem;
-                                        filter: invert(1);                                    
+                                        filter: invert(1);
                                     }
                                 }
                             }
