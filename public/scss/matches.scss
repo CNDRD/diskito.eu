@@ -56,12 +56,35 @@
                 > .map {
                     position: relative;
                     cursor: pointer;
+                    overflow: hidden;
                     
+                    &:hover {
+                        > img {
+                            transform: scale(1);
+                        }
+                    }
+                    
+                    &.selected {
+
+                        > img {
+                            transform: scale(1);
+                        }
+
+                        > div {
+                            transition: all .1s ease-in;
+                            background: $bj-gold;
+                            color: black;
+                            text-shadow: none;
+                        }
+                    }
+
                     > img {
                         width: 100%;
                         height: 100%;
                         user-select: none;
                         pointer-events: none;
+                        transition: transform .2s;
+                        transform: scale(1.1);
                     }
 
                     > div {
@@ -76,14 +99,6 @@
                         transition: all .1s ease-out;
                     }
 
-                    &.selected {
-                        > div {
-                            transition: all .1s ease-in;
-                            background: $bj-gold;
-                            color: black;
-                            text-shadow: none;
-                        }
-                    }
                 }
             }
 
@@ -226,6 +241,38 @@
         }
     }
     
+    > #details-switch {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        > div {
+            border: 1px solid $gray-border;
+            text-align: center;
+            padding: .2rem .5rem;
+            cursor: pointer;
+            user-select: none;
+            transition: all .3s ease-out;
+
+            &:not(:last-child) {
+                border-right: none;
+            }
+            &:first-child {
+                border-radius: $border-radius 0 0 $border-radius;
+            }
+            &:last-child {
+                border-radius: 0 $border-radius $border-radius 0;
+            }
+
+            &:hover {
+                background: $gray-bg-hover;
+                transition: all .1s ease-in;
+            }
+            &.selected {
+                color: $bj-gold;
+            }
+        }
+    }
+
     > #outcome_tab {
 
         > .header {
@@ -236,6 +283,8 @@
         }
 
         > table {
+            border-collapse: collapse;
+
             > tbody {
                 > tr {
                     
@@ -258,6 +307,42 @@
 
                             > img {
                                 width: 3rem;
+                            }
+                        }
+                        &[data-what=pfp] {
+                            padding-right: .5rem;
+
+                            > div {
+                                > img {
+                                    width: 3rem;
+                                }
+
+                                border-inline: 2px solid transparent;
+                                position: relative;
+                                width: 3rem;
+                                height: 3rem;
+
+                                &[data-marked-retard] {
+                                    border: 2px solid $w-idle;
+                                    box-shadow: inset 0 0 0 99999px rgba($w-idle, .4);
+                                    border-radius: 5px;
+                                    overflow: hidden;
+
+                                    > img {
+                                        opacity: .45;
+                                    }
+                                }
+                                &[data-marked-cheater] {
+                                    border: 2px solid $chaun-red;
+                                    box-shadow: inset 0 0 0 99999px rgba($chaun-red, .4);
+                                    border-radius: 5px;
+                                    overflow: hidden;
+
+                                    > img {
+                                        opacity: .45;
+                                    }
+                                }
+
                             }
                         }
 
@@ -332,6 +417,7 @@
                     }
 
                     > td {
+                        padding: .1rem .75rem;
 
                         &[data-what=pfp] {
                             padding-right: .5rem;

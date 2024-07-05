@@ -155,14 +155,9 @@ async function loadMatchDetails(matchId) {
         let row = '';
         let pd = match.ranked_stats[player];
 
-        let markedPfp = [];
-        if (markedPlayers[player]?.cheater) { markedPfp.push('data-marked-cheater') }
-        if (markedPlayers[player]?.retard) { markedPfp.push('data-marked-retard') }
-        let markedStr = markedPfp.length ? markedPfp.join(' ') : '';
-        row += `<td data-what="pfp"><div ${markedStr}><img src="https://ubisoft-avatars.akamaized.net/${player}/default_256_256.png" /></div></td>`;
-
-        let persona = pd.persona ? `<div class="persona">${pd.persona}</div>` : '';
-        row += `<td data-what="player"><div>${pd.name}</div>${persona}</td>`;
+        let cells = getPlayerPfpAndNameCell(player);
+        row += cells.pfp;
+        row += cells.name;
 
         row += `
             <td data-what="rank">
@@ -273,7 +268,7 @@ async function loadMatchDetails(matchId) {
 
 
 
-        $('#match-outcome').text(ourOutcome > theirOutcome ? 'W' : 'L').parent().show();
+        $('#match-outcome').text((ourOutcome + theirOutcome) < 4 ? 'Cancelled' : (ourOutcome > theirOutcome ? 'W' : 'L')).parent().show();
         $('#match-score').text(`${ourOutcome} - ${theirOutcome}`).parent().show();
 
         let prevWasDiskito = true;
@@ -284,10 +279,9 @@ async function loadMatchDetails(matchId) {
             let ps = playerStats[player];
             let pd = match.ranked_stats[player];
 
-            row += `<td data-what="pfp"><img src="https://ubisoft-avatars.akamaized.net/${player}/default_256_256.png" /></td>`;
-
-            let persona = pd.persona ? `<div class="persona">${pd.persona}</div>` : '';
-            row += `<td data-what="player"><div>${pd.name}</div>${persona}</td>`;
+            let cells = getPlayerPfpAndNameCell(player);
+            row += cells.pfp;
+            row += cells.name;
 
             let kd = ps.deaths == 0 ? ps.kills : roundTwo(ps.kills / ps.deaths);
             row += `
@@ -327,10 +321,30 @@ async function loadMatchDetails(matchId) {
             $('#outcome_tab_place').append(`<tr>${row}</tr>`);
         });
 
-        $('#outcome_tab').show();
     }
 
+    function getPlayerPfpAndNameCell(player) {
+        let cells = {pfp: '', name: ''};
+        let pd = match.ranked_stats[player];
 
+        let pfpStyle = _viewTransitionStyle(player, matchId, 'pfp');
+        let nameStyle = _viewTransitionStyle(player, matchId, 'name');
+
+        let markedPfp = [];
+        if (markedPlayers[player]?.cheater) { markedPfp.push('data-marked-cheater') }
+        if (markedPlayers[player]?.retard) { markedPfp.push('data-marked-retard') }
+        let markedStr = markedPfp.length ? markedPfp.join(' ') : '';
+        cells.pfp = `<td data-what="pfp" style="${pfpStyle}"><div ${markedStr}><img src="https://ubisoft-avatars.akamaized.net/${player}/default_256_256.png" /></div></td>`;
+        
+        let persona = pd.persona ? `<div class="persona">${pd.persona}</div>` : '';
+        cells.name = `<td data-what="player" style="${nameStyle}"><div>${pd.name}</div>${persona}</td>`;
+
+        return cells;
+    };
+    function _viewTransitionStyle(player, match, what) {
+        return `view-transition-name: ${what}_${player}_${match.id};`;
+    };
+    
     async function _fetchPlayedWithAgainstCounts(playerIds) {
         let counts = {};
         let playedWith_ = await supabase.from('played_with').select('player, count').in('player', playerIds);
@@ -425,6 +439,28 @@ async function loadMatchDetails(matchId) {
         }
 
     });
+
+    $('#details-switch > div').off().on('click', function() {
+        let what = this.id.replace('_sw', '');
+        $('#details-switch > div').removeClass('selected');
+        $(this).addClass('selected');
+        
+        function switchDetails(what_) {
+            $('[data-match-details-tab]').hide();
+            $(`[data-match-details-tab]#${what_}`).show();
+        };
+
+        if (!document.startViewTransition) { switchDetails(what) }
+        else { document.startViewTransition(async () => { switchDetails(what) }) }
+    });
+
+    if ($('#outcome_tab_place > tr').length) {
+        $('#outcome_tab_sw').trigger('click');
+    }
+    else {
+        $('#ranked_stats_sw').trigger('click');
+        $('#details-switch').hide();
+    }
 };
 
 
@@ -540,7 +576,7 @@ async function loadTrackedMatches() {
     $('[data-load-more]').on('click', async function() {
         $(this).html(spinner());
 
-        let { data: moreMatches } = await matchQuery.range(matchOffset, matchOffset+matchOffsetCnt);
+        let { data: moreMatches } = await matchQuery.range(matchOffset+1, matchOffset+matchOffsetCnt);
         matchOffset += matchOffsetCnt;
 
         showTrackedMatches(moreMatches);

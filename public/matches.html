@@ -114,7 +114,12 @@
                 </div>
             </div>
             
-            <div id="outcome_tab" style="display: none;">
+            <div id="details-switch">
+                <div id="outcome_tab_sw">Outcome</div>
+                <div id="ranked_stats_sw">Ranked stats</div>
+            </div>
+
+            <div data-match-details-tab id="outcome_tab" style="display: none;">
                 <div class="header">Match Outcome</div>
                 <table>
                     <thead>
@@ -130,7 +135,7 @@
                 </table>
             </div>
 
-            <div id="ranked_stats">
+            <div data-match-details-tab id="ranked_stats" style="display: none;">
                 <div class="header">Ranked Stats</div>
                 <div class="info">From the time of the match</div>
                 <table>
