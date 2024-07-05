@@ -196,7 +196,8 @@ async function loadMatchDetails(matchId) {
         `;
 
         row += cells.stats;
-        row += cells.mark;
+        row += match.raw_data_archived !== null ? '' : cells.mark;
+        $('[data-mark-col-header]').toggle(match.raw_data_archived === null);
 
         // Dividers
         let cols = $('#ranked_stats > table > thead > tr > th').length;
