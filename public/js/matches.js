@@ -311,6 +311,10 @@ async function loadMatchDetails(matchId) {
 
     }
 
+
+
+    /* Functions to help with all of the shit above */
+
     function getSharedCells(player) {
         let cells = {pfp: '', name: '', stats: '', mark: ''};
         let pd = match.ranked_stats[player];
