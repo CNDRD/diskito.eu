@@ -454,6 +454,8 @@ async function loadMatchDetails(matchId) {
 
     $('#details-switch > div').off().on('click', function() {
         let what = this.id.replace('_sw', '');
+        if (this.classList.contains('selected')) { return; }
+        
         $('#details-switch > div').removeClass('selected');
         $(this).addClass('selected');
         
