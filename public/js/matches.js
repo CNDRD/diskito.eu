@@ -5,6 +5,7 @@ const urlParams = new URLSearchParams(window.location.search);
 let matchId = urlParams.get('matchId') || undefined;
 let stuff = urlParams.get('stuff') || undefined;
 let diskitoPlayersCache = undefined;
+let markedCheatersCache = undefined;
 let matchDetailsCache = {};
 let matchOffset = 20;
 let matchOffsetCnt = 10;
@@ -596,12 +597,12 @@ async function loadTrackedMatches() {
 
     let matchQuery = supabase
         .from('tracked_matches')
-        .select('id, outcome, created_at, map, stack')
+        .select('id, outcome, created_at, map, stack, our_team, enemy_team')
         .order('created_at', { ascending: false });
 
     let { data: matches } = await matchQuery.range(0, matchOffset);
 
-    showTrackedMatches(matches);
+    await showTrackedMatches(matches);
 
     if (!$('[data-load-more]').length) {
         $('#match-viewer').append(`<div data-load-more class="btn" data-type="warning">Load more</div>`);
@@ -613,7 +614,7 @@ async function loadTrackedMatches() {
         let { data: moreMatches } = await matchQuery.range(matchOffset+1, matchOffset+matchOffsetCnt);
         matchOffset += matchOffsetCnt;
 
-        showTrackedMatches(moreMatches);
+        await showTrackedMatches(moreMatches);
 
         if (moreMatches.length < matchOffsetCnt) {
             return $(this).remove();
@@ -625,30 +626,97 @@ async function loadTrackedMatches() {
     spnr.remove();
     $('#tracked-matches').fadeIn('fast');
 };
-function showTrackedMatches(matches) {
+async function showTrackedMatches(matches) {
+    let markedCheaters = await _getMarkedCheaters();
 
     matches.forEach(match => {
-        let akschuns = '';
-        let outcome = _parseOutcome(match.outcome, match.id);
         let map = maps[match.map].name;
         let created_at = simpleDateTime(match.created_at);
+        let outcome = _parseOutcome(match.outcome);
+        let akschuns = '';
 
-        akschuns += `<div data-show-match="${match.id}" class="btn smol" data-type="magic">Details</div>`;
-        if (match.outcome == null) {
-            akschuns += `<div data-update-archived="${match.id}" class="btn smol" data-type="warning">Ended?</div>`;
+        akschuns += `<a class="btn smol" data-show-match="${match.id}" data-type="magic">Details</a>`;
+        akschuns += match.outcome ? '' : `<div data-update-archived="${match.id}" class="btn smol" data-type="note">End match</div>`;
+
+        let marked_cheaters = '<div class="info"></div>';
+        let marked_count = 0;
+        let banned_count = 0;
+        let allPlayers = [...match.our_team, ...match.enemy_team];
+        allPlayers.forEach(player => {
+            c(markedCheaters[player]?.ban_info)
+            if (markedCheaters[player]) { marked_count++; }
+            if (markedCheaters[player]?.ban_info) { banned_count++; }
+        });
+
+        if (marked_count) {
+            let banned_cheaters = '';
+            if (banned_count) { banned_cheaters = `<span title="Banned"> (${banned_count})</span>`; }
+            marked_cheaters = `
+                <div class="info">
+                    <div class="title">Cheaters</div>
+                    <div class="data">${marked_count}${banned_cheaters}</div>
+                </div>
+            `;
         }
 
-        $('#tracked-matches > tbody').append(`
-            <tr data-match-id="${match.id}">
-                <td data-what="created_at">${created_at}</td>
-                <td data-what="map" style="view-transition-name: map_name_${match.id}">${map}</td>
-                <td data-what="player-stack" style="view-transition-name: stack_${match.id}">${match.stack}<span>x</span></td>
-                <td data-what="outcome"><div>${outcome}</div></td>
-                <td data-what="akschuns"><div>${akschuns}</div></td>
-            </tr>
+        $('#tracked-matches').append(`
+            <div data-match-id="${match.id}" data-has-cheaters-marked="${marked_count!==0}" data-has-cheaters-banned="${banned_count!==0}">
+                <div class="outcome" data-outcome="${outcome.sysid}" style="--_bg-map-img: url('${maps[match.map].src}');">${outcome.html}</div>
+                <div class="middle">
+                    <div class="info">
+                        <div class="title">Map</div>
+                        <div class="data">${map}</div>
+                    </div>
+                    <div class="info">
+                        <div class="title">Stack</div>
+                        <div class="data">${match.stack}</div>
+                    </div>
+                    <div class="info">
+                        <div class="title">Created</div>
+                        <div class="data">${created_at}</div>
+                    </div>
+                    ${marked_cheaters}
+                </div>
+                <div class="actions">${akschuns}</div>
+            </div>
         `);
 
     });
+
+    function _parseOutcome(data) {
+        let ret = { html: '', sysid: '' };
+
+        if (!data) { return ret; }
+
+        if ((data.our_outcome + data.their_outcome) < 4) {
+            data.our_outcome = 0;
+            data.their_outcome = 0;
+            ret.sysid = 'cancelled';
+        }
+
+        if (data.our_outcome > data.their_outcome) { ret.sysid = 'won' }
+        if (data.our_outcome < data.their_outcome) { ret.sysid = 'lost' }
+        
+        ret.html = `
+            <div class="our_outcome">${data.our_outcome}</div>
+            <div class="separator">:</div>
+            <div class="their_outcome">${data.their_outcome}</div>
+        `;
+
+        return ret;
+    };
+
+    async function _getMarkedCheaters() {
+        if (markedCheatersCache !== undefined && markedCheatersCache.date > new Date() - 60 * 1000) {
+            return markedCheatersCache.data;
+        }
+
+        let cheatersDb = await supabase.from('siege_marked_players').select('ubi_id, game, ban_info').eq('why', 'cheater');
+        let cheaters = cheatersDb.data.reduce((acc, cur) => { acc[cur.ubi_id] = cur; return acc; }, {});
+
+        markedCheatersCache = { date: new Date(), data: cheaters };
+        return markedCheatersCache.data;
+    };
 
     $('[data-update-archived]').off().on('click', async function() {
         $(this).html(spinner());
@@ -671,23 +739,6 @@ function showTrackedMatches(matches) {
         });
 
     });
-
-    function _parseOutcome(data, matchId) {
-        if (!data) { return ''; }
-
-        let vi_von = data.vi_von ? 'W' : 'L';
-        let vi_von_type = data.vi_von ? 'success' : 'error';
-        
-        if ((data.our_outcome + data.their_outcome) < 4) {
-            vi_von = 'C';
-            vi_von_type = 'warning';
-        }
-
-        return `
-            <div class="btn smol" data-type="${vi_von_type}" style="view-transition-name: outcome_${matchId};">${vi_von}</div>
-            <div class="btn smol" data-type="note" style="text-wrap: nowrap; view-transition-name: score_${matchId};">${data.our_outcome} : ${data.their_outcome}</div>
-        `;
-    };
 
     $('[data-show-match]').off().on('click', async function() {
         await showMatchDetails(this.dataset.showMatch);
