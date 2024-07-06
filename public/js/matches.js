@@ -197,8 +197,7 @@ async function loadMatchDetails(matchId) {
         `;
 
         row += cells.stats;
-        row += match.raw_data_archived !== null ? '' : cells.mark;
-        $('[data-mark-col-header]').toggle(match.raw_data_archived === null);
+        row += cells.mark;
 
         // Dividers
         let cols = $('#ranked_stats > table > thead > tr > th').length;
@@ -658,7 +657,9 @@ async function showTrackedMatches(matches) {
 
         $('#tracked-matches').append(`
             <div data-match-id="${match.id}" data-has-cheaters-marked="${marked_count!==0}" data-has-cheaters-banned="${banned_count!==0}">
-                <div class="outcome" data-outcome="${outcome.sysid}" style="--_bg-map-img: url('${maps[match.map].src}');">${outcome.html}</div>
+                <div class="outcome" data-outcome="${outcome.sysid}" style="--_bg-map-img: url('${maps[match.map].src}'); view-transition-name: score_${match.id}">
+                    ${outcome.html}
+                </div>
                 <div class="middle">
                     <div class="info">
                         <div class="title">Map</div>
