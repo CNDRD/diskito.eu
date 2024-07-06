@@ -643,7 +643,6 @@ async function showTrackedMatches(matches) {
         let banned_count = 0;
         let allPlayers = [...match.our_team, ...match.enemy_team];
         allPlayers.forEach(player => {
-            c(markedCheaters[player]?.ban_info)
             if (markedCheaters[player]) { marked_count++; }
             if (markedCheaters[player]?.ban_info) { banned_count++; }
         });
