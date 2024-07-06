@@ -159,7 +159,7 @@
 
         > [data-match-id] {
             display: grid;
-            grid-template-columns: $outcome-width 1fr auto;
+            grid-template-columns: $outcome-width 1fr 4rem;
             min-height: $card-height;
             gap: .5rem;
             --_image_border_color: hsl(0 0% 2%);
