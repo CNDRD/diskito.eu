@@ -593,7 +593,7 @@ async function loadTrackedMatches() {
     let spnr = spinner();
     $('#match-viewer').prepend(spnr);
 
-    $('#tracked-matches > tbody').html('');
+    $('#tracked-matches').html('');
 
     let matchQuery = supabase
         .from('tracked_matches')
@@ -632,16 +632,16 @@ async function showTrackedMatches(matches) {
     matches.forEach(match => {
         let map = maps[match.map].name;
         let created_at = simpleDateTime(match.created_at);
-        let outcome = _parseOutcome(match.outcome);
+        let outcome = _parseOutcome(match?.outcome);
         let akschuns = '';
 
         akschuns += `<a class="btn smol" data-show-match="${match.id}" data-type="magic">Details</a>`;
-        akschuns += match.outcome ? '' : `<div data-update-archived="${match.id}" class="btn smol" data-type="note">End match</div>`;
+        akschuns += match.outcome ? '' : `<div data-update-archived="${match.id}" class="btn smol" data-type="note">Ended?</div>`;
 
         let marked_cheaters = '<div class="info"></div>';
         let marked_count = 0;
         let banned_count = 0;
-        let allPlayers = [...match.our_team, ...match.enemy_team];
+        let allPlayers = match.our_team ? [...match.our_team, ...match.enemy_team] : [];
         allPlayers.forEach(player => {
             if (markedCheaters[player]) { marked_count++; }
             if (markedCheaters[player]?.ban_info) { banned_count++; }
@@ -706,7 +706,7 @@ async function showTrackedMatches(matches) {
     };
 
     async function _getMarkedCheaters() {
-        if (markedCheatersCache !== undefined && markedCheatersCache.date > new Date() - 60 * 1000) {
+        if (markedCheatersCache !== undefined) {
             return markedCheatersCache.data;
         }
 
@@ -730,7 +730,7 @@ async function showTrackedMatches(matches) {
             if (data?.matchId) {
                 $(this).html('<img src="/icons/check.svg" class="match_over_success" />')
                 setTimeout(() => { $(this).slideUp() }, 3_000);
-                $(`[data-match-id="${data.matchId}"] > [data-what="outcome"] > div`).html(_parseOutcome(data.outcome));
+                // $(`[data-match-id="${data.matchId}"] > [data-what="outcome"] > div`).html(_parseOutcome(data.outcome));
             }
             else {
                 $(this).html('Ended??');
@@ -742,6 +742,8 @@ async function showTrackedMatches(matches) {
     $('[data-show-match]').off().on('click', async function() {
         await showMatchDetails(this.dataset.showMatch);
     });
+
+    return true;
 };
 
 async function showMatchDetails(matchId) {
