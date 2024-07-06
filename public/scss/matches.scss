@@ -161,7 +161,7 @@
             display: grid;
             grid-template-columns: $outcome-width 1fr 4rem;
             min-height: $card-height;
-            gap: .5rem;
+            gap: .25rem;
             --_image_border_color: hsl(0 0% 2%);
             --_image_overlay_color: rgba(0, 0, 0, 0.25);
 
@@ -264,6 +264,13 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: space-evenly;
+
+                > a {
+                    > img {
+                        filter: invert(1);
+                        height: 2rem;
+                    }
+                }
             }
 
         }

@@ -728,7 +728,7 @@ async function showTrackedMatches(matches) {
             if (data?.matchId) {
                 $(this).html('<img src="/icons/check.svg" class="match_over_success" />')
                 setTimeout(() => { $(this).slideUp() }, 3_000);
-                // $(`[data-match-id="${data.matchId}"] > [data-what="outcome"] > div`).html(_parseOutcome(data.outcome));
+                $(`[data-match-id="${data.matchId}"] > .outcome`).html(_parseOutcome(data.outcome));
             }
             else {
                 $(this).html('Ended??');
