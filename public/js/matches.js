@@ -667,11 +667,11 @@ async function showTrackedMatches(matches) {
                     </div>
                     <div class="info">
                         <div class="title">Stack</div>
-                        <div class="data">${match.stack}</div>
+                        <div class="data" style="view-transition-name: stack_${match.id};">${match.stack}</div>
                     </div>
                     <div class="info">
                         <div class="title">Created</div>
-                        <div class="data">${created_at}</div>
+                        <div class="data" style="view-transition-name: map_name_${match.id};">${created_at}</div>
                     </div>
                     ${marked_cheaters}
                 </div>
