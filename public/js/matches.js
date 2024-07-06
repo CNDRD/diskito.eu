@@ -65,6 +65,12 @@ async function loadMatchDetails(matchId) {
     $('#match-outcome').css({ 'view-transition-name': `outcome_${matchId}` });
     $('#match-score').css({ 'view-transition-name': `score_${matchId}` });
     
+    $(`#match-details [data-what-h]`).each(function() {
+        $(`#match-details [data-what-h="${this.dataset.whatH}"]`).each(function() {
+            $(this).css({ 'view-transition-name': `thead_${this.dataset.whatH}_${matchId}` });
+        });
+    });
+
     if (!matchDetailsCache[matchId]) {
         const { data: matchDb } = await supabase.from('tracked_matches').select('*').eq('id', matchId);
         matchDetailsCache[matchId] = matchDb[0];
@@ -329,8 +335,6 @@ async function loadMatchDetails(matchId) {
 
     /* ----------------------- */
     /* Show ranked stats after */
-    c(match)
-
     if (match?.ranked_stats && match?.ranked_stats_after) {
         let prevWasDiskito = true;
         let prevWasOurTeam = true;
