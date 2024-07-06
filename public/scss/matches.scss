@@ -167,11 +167,11 @@
 
             &[data-has-cheaters-marked=true] {
                 --_image_border_color: #{ $w-idle };
-                --_image_overlay_color: rgba(250, 160, 90, .45);
+                --_image_overlay_color: rgba(250, 160, 90, .30);
             }
             &[data-has-cheaters-banned=true] {
                 --_image_border_color: #{ $chaun-red };
-                --_image_overlay_color: rgba(239, 82, 85, .45);
+                --_image_overlay_color: rgba(239, 82, 85, .30);
             }
 
             > .outcome {
@@ -195,7 +195,7 @@
 
                 &::after {
                     content: "";
-                    background-image: linear-gradient(rgba(0, 0, 0, .25), rgba(0, 0, 0, .25), var(--_bg-map-img));
+                    background-image: linear-gradient(var(--_image_overlay_color), var(--_image_overlay_color)), var(--_bg-map-img);
                     background-position: left;
                     background-size: cover;
                     background-repeat: no-repeat;
