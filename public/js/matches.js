@@ -55,6 +55,7 @@ $(window).on("popstate", function () {
 async function loadMatchDetails(matchId) {
     $('#outcome_tab_place').html('');
     $('#ranked_stats_table_place').html('');
+    $('#ranked_after_table_place').html('');
 
     $('#match-details').fadeIn('fast');
     $('#match-start').html(spinner());
@@ -98,6 +99,15 @@ async function loadMatchDetails(matchId) {
         let duration = new Date(match.raw_data_archived.end_time) - new Date(match.raw_data_archived.start_time);
         duration = duration / 1000 / 60;
         $('#match-duration').text('~' + Math.ceil(duration) + ' minutes').parent().show();
+    }
+
+    if (!match?.ranked_stats_after) {
+        $('#ranked_after_sw').remove();
+    }
+    else {
+        if (!$('#ranked_after_sw').length) {
+            $('#details-switch').append('<div id="ranked_after_sw">After</div>');
+        }
     }
 
 
@@ -159,16 +169,7 @@ async function loadMatchDetails(matchId) {
         let cells = getSharedCells(player);
         row += cells.pfp;
         row += cells.name;
-
-        row += `
-            <td data-what="rank">
-                <img src="${_getRankImageFromRankName(pd.rank)}" />
-                <div class="rank_rp">
-                    <div>${pd.rank}</div>
-                    <div>${addSpaces(pd.rank_points)} <div>RP</div></div>
-                </div>
-            </td>
-        `;
+        row += cells.ranked;
 
         let kd = pd.deaths == 0 ? pd.kills : roundTwo(pd.kills / pd.deaths);
         row += `
@@ -326,11 +327,62 @@ async function loadMatchDetails(matchId) {
 
 
 
+    /* ----------------------- */
+    /* Show ranked stats after */
+    c(match)
+
+    if (match?.ranked_stats && match?.ranked_stats_after) {
+        let prevWasDiskito = true;
+        let prevWasOurTeam = true;
+
+        allPlayersOrdered.forEach(player => {
+            let row = '';
+            let ps = playerStats[player];
+            let pd = match.ranked_stats[player];
+            let pdAfter = match.ranked_stats_after[player];
+
+            let cells = getSharedCells(player);
+            let cellsAfter = getSharedCells(player, true);
+            row += cells.pfp;
+            row += cells.name;
+
+            row += cells.ranked;
+            row += cellsAfter.ranked;
+
+            let mmrDiff = pdAfter.rank_points - pd.rank_points;
+            let mmrDiffStr = mmrDiff > 0 ? `+${mmrDiff}` : mmrDiff;
+            row += `
+                <td data-what="mmr-diff">
+                    <div data-change-positive="${mmrDiff > 0}">${mmrDiffStr}</div>
+                </td>
+            `;
+
+            row += cells.stats;
+    
+            // Dividers
+            let cols = $('#ranked_after > table > thead > tr > th').length;
+            if (prevWasDiskito && !pd.diskito) {
+                $('#ranked_after_table_place').append(`<tr class="separator" style="view-transition-name: ${matchId}_separator"><td colspan="${cols}"></td></tr>`);
+            }
+            if (prevWasOurTeam && !pd.ourTeam) {
+                $('#ranked_after_table_place').append(`<tr class="team-separator" style="view-transition-name: ${matchId}_team-separator"><td colspan="${cols}"></td></tr>`);
+            }
+            prevWasDiskito = pd.diskito;
+            prevWasOurTeam = pd.ourTeam;
+
+            // Finally add our wanted row
+            $('#ranked_after_table_place').append(`<tr>${row}</tr>`);
+        });
+    }
+
+
+
     /* Functions to help with all of the shit above */
 
-    function getSharedCells(player) {
-        let cells = {pfp: '', name: '', stats: '', mark: ''};
+    function getSharedCells(player, afterData=false) {
+        let cells = {pfp: '', name: '', stats: '', mark: '', ranked: ''};
         let pd = match.ranked_stats[player];
+        if (afterData) { pd = match.ranked_stats_after[player]; }
 
         let pfpTransition = _viewTransition(player, matchId, 'pfp');
         let nameTransition = _viewTransition(player, matchId, 'name');
@@ -347,6 +399,19 @@ async function loadMatchDetails(matchId) {
         /* Name & persona cell */
         let persona = pd.persona ? `<div class="persona">${pd.persona}</div>` : '';
         cells.name = `<td data-what="player" style="${nameTransition}"><div>${pd.name}</div>${persona}</td>`;
+
+        /* Ranked cell */
+        cells.ranked = `
+            <td data-what="rank">
+                <div>
+                    <img src="${_getRankImageFromRankName(pd.rank)}" />
+                    <div class="rank_rp">
+                        <div>${pd.rank}</div>
+                        <div>${addSpaces(pd.rank_points)} <div>RP</div></div>
+                    </div>
+                </div>
+            </td>
+        `;
 
         /* Stat pages links cell */
         cells.stats = `

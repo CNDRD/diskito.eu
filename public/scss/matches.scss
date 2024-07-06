@@ -484,32 +484,34 @@
                             }
                         }
                         &[data-what=rank] {
-                            display: flex;
-                            flex-direction: row;
-                            align-items: center;
-
-                            > img {
-                                height: 3rem;
-                                padding-right: .5rem;
-                            }
-
-                            > .rank_rp {
+                            > div {
                                 display: flex;
-                                flex-direction: column;
+                                flex-direction: row;
+                                align-items: center;
 
-                                > :first-child {
-                                    font-size: .8rem;
-                                    color: $gray-border;
+                                > img {
+                                    height: 3rem;
+                                    padding-right: .5rem;
                                 }
-                                > :last-child {
-                                    display: flex;
-                                    flex-direction: row;
-                                    align-items: baseline;
-                                    gap: .2rem;
 
-                                    > div {
-                                        color: $gray-border;
+                                > .rank_rp {
+                                    display: flex;
+                                    flex-direction: column;
+
+                                    > :first-child {
                                         font-size: .8rem;
+                                        color: $gray-border;
+                                    }
+                                    > :last-child {
+                                        display: flex;
+                                        flex-direction: row;
+                                        align-items: baseline;
+                                        gap: .2rem;
+
+                                        > div {
+                                            color: $gray-border;
+                                            font-size: .8rem;
+                                        }
                                     }
                                 }
                             }
@@ -563,6 +565,21 @@
                         }
                         &[data-what=aces] {
                             text-align: center;
+                        }
+                        &[data-what=mmr-diff] {
+                            > div {
+                                display: flex;
+                                justify-content: flex-end;
+                                font-variant-numeric: tabular-nums;
+                                
+                                &[data-change-positive=true] {
+                                    color: $w-online;
+                                }
+                                &[data-change-positive=false] {
+                                    color: $chaun-red;
+                                }
+                            }
+
                         }
 
                         > .smol-dark {
