@@ -648,12 +648,10 @@ async function showTrackedMatches(matches) {
         });
 
         if (marked_count) {
-            let banned_cheaters = '';
-            if (banned_count) { banned_cheaters = `<span title="Banned"> (${banned_count})</span>`; }
             marked_cheaters = `
                 <div class="info">
                     <div class="title">Cheaters</div>
-                    <div class="data">${marked_count}${banned_cheaters}</div>
+                    <div class="data">${marked_count}${banned_count ? `<span title="Banned"> (${banned_count})</span>` : ''}</div>
                 </div>
             `;
         }
