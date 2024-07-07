@@ -963,7 +963,7 @@ async function loadMarkedPlayers() {
 
     let { data: markedPlayers } = await supabase
         .from('marked_players')
-        .select('ubi_id, name, game(id, outcome), why, by(username), ban_info')
+        .select('ubi_id, name, game_id, game_outcome, why, username, ban_info')
         .order('created_at', { ascending: false });
     
     markedPlayers.forEach(player => {
