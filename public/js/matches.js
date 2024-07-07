@@ -7,8 +7,10 @@ let stuff = urlParams.get('stuff') || undefined;
 let diskitoPlayersCache = undefined;
 let markedCheatersCache = undefined;
 let matchDetailsCache = {};
-let matchOffset = 20;
+let matchOffsetStart = 20;
+let matchOffset = matchOffsetStart;
 let matchOffsetCnt = 10;
+let matchSelectedSeason = undefined;
 
 let maps = {
     bank:          { name: 'Bank',           src: '/images/maps/bank.png'           },
@@ -28,6 +30,21 @@ let maps = {
     themepark:     { name: 'Theme Park',     src: '/images/maps/themepark.png'      },
     villa:         { name: 'Villa',          src: '/images/maps/villa.png'          },
 };
+
+
+let availableSeasons = await supabase.from('tracked_matches_available_seasons').select('*').order('season', { ascending: false });
+availableSeasons.data.forEach((ssn, idx) => {
+    if (idx === 0) { matchSelectedSeason = ssn.season }
+    $('#tracked-matches-seasonal-switch').append(`<div ${idx===0?'class="selected"':''} data-season="${ssn.season}">${ssn.season}</div>`);
+});
+$('#tracked-matches-seasonal-switch > [data-season]').on('click', async function() {
+    $('#tracked-matches-seasonal-switch > [data-season]').removeClass('selected');
+    $(this).addClass('selected');
+
+    matchOffset = matchOffsetStart;
+    matchSelectedSeason = this.dataset.season;
+    await loadTrackedMatches();
+});
 
 
 
@@ -659,13 +676,14 @@ if (stuff) { $(`#${stuff}`).trigger('click') }
 
 async function loadTrackedMatches() {
     let spnr = spinner();
-    $('#match-viewer').prepend(spnr);
+    $('#tracked-matches-seasonal-switch').after(spnr);
 
     $('#tracked-matches').html('');
 
     let matchQuery = supabase
         .from('tracked_matches')
         .select('id, outcome, created_at, map, stack, our_team, enemy_team')
+        .eq('season', matchSelectedSeason)
         .order('created_at', { ascending: false });
 
     let { data: matches } = await matchQuery.range(0, matchOffset);
@@ -676,7 +694,7 @@ async function loadTrackedMatches() {
         $('#match-viewer').append(`<div data-load-more class="btn" data-type="warning">Load more</div>`);
     }
     
-    $('[data-load-more]').on('click', async function() {
+    $('[data-load-more]').off().on('click', async function() {
         $(this).html(spinner());
 
         let { data: moreMatches } = await matchQuery.range(matchOffset+1, matchOffset+matchOffsetCnt);
@@ -910,11 +928,16 @@ function findMatch(that) {
             }
         )
         .then(response => response.json())
-        .then(data => {
+        .then(async data => {
             
             if (data?.matchId) {
                 $('#find-match').replaceWith(`<button class="btn big" data-type="success" onclick="location.href='/matches?matchId=${data.matchId}'">Match details</button>`);
                 $('#find-match-parent').append(message(`Took ${roundTwo(data.time)}s 😅`, 'note'));
+            }
+            else if (data?.requestedBy) {
+                that.innerHTML = '🫡🫡';
+                let byWho = await supabase.from('users').select('username').eq('id', data.requestedBy);
+                $('#find-match-parent').prepend(message(`A match on <b><i>${maps[data.map].name}</i></b> is currently being searched by <b><i>${byWho.data[0].username}</i></b>`, 'warning'));
             }
             else {
                 $('#find-match').replaceWith(`<button class="btn big" onclick="location.reload();" data-type="error">Try again..</button>`);
@@ -925,7 +948,6 @@ function findMatch(that) {
 
     }
     else {
-        
         that.innerHTML = 'Try again..';
     }
 };
