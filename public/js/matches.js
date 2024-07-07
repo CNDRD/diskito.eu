@@ -989,7 +989,7 @@ async function loadMarkedPlayers() {
                 <td data-what="name">${player.name}</td>
                 <td data-what="why">${why}</td>
                 <td data-what="outcome"><div>${outcome}</div></td>
-                <td data-what="by">${player.by.username}</td>
+                <td data-what="by">${player.username}</td>
                 <td data-what="banned" data-banned="${!!(player.ban_info)}">${banned}</td>
                 <td data-what="akschuns"><div>${actions}</div></td>
             </tr>
