@@ -722,7 +722,7 @@ async function showTrackedMatches(matches) {
         let akschuns = '';
 
         akschuns += `<a class="btn smol" data-show-match="${match.id}" data-type="magic">Details</a>`;
-        akschuns += match.outcome ? '' : `<div data-update-archived="${match.id}" class="btn smol" data-type="note">Ended?</div>`;
+        akschuns += match.outcome ? '' : `<a data-update-archived="${match.id}" class="btn smol" data-type="note">Ended?</a>`;
 
         let marked_cheaters = '<div class="info"></div>';
         let marked_count = 0;
