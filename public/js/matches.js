@@ -997,6 +997,7 @@ async function loadMarkedPlayers() {
     });
 
     $('[data-show-match]').off().on('click', async function() {
+        $('#marked-players').hide();
         await showMatchDetails(this.dataset.showMatch);
     });
 
