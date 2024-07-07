@@ -962,7 +962,7 @@ async function loadMarkedPlayers() {
     $('#marked_players_list > tbody').html('');
 
     let { data: markedPlayers } = await supabase
-        .from('siege_marked_players')
+        .from('marked_players')
         .select('ubi_id, name, game(id, outcome), why, by(username), ban_info')
         .order('created_at', { ascending: false });
     
