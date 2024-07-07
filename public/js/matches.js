@@ -806,7 +806,7 @@ async function showTrackedMatches(matches) {
     $('[data-update-archived]').off().on('click', async function() {
         $(this).html(spinner());
         let matchId = this.dataset.updateArchived;
-        
+
         fetch(
             'https://api.cndrd.xyz/diskito/match_over',
             { method: 'POST', body: JSON.stringify({ matchId: matchId }) }
@@ -816,7 +816,9 @@ async function showTrackedMatches(matches) {
             if (data?.matchId) {
                 $(this).html('<img src="/icons/check.svg" class="match_over_success" />')
                 setTimeout(() => { $(this).slideUp() }, 3_000);
-                $(`[data-match-id="${data.matchId}"] > .outcome`).html(_parseOutcome(data.outcome));
+
+                let outcome = _parseOutcome(data.outcome);
+                $(`[data-match-id="${data.matchId}"] > .outcome`).attr('data-outcome', outcome.sysid).html(outcome.html);
             }
             else {
                 $(this).html('Ended??');
