@@ -963,12 +963,12 @@ async function loadMarkedPlayers() {
 
     let { data: markedPlayers } = await supabase
         .from('marked_players')
-        .select('ubi_id, name, game_id, game_outcome, why, username, ban_info')
+        .select('ubi_id, name, game_id, why, username, ban_info')
         .order('created_at', { ascending: false });
     
     markedPlayers.forEach(player => {
         let why = `<div class="btn smol" data-type="${player.why === 'cheater' ? 'error' : 'warning'}">${player.why[0].toUpperCase() + player.why.slice(1)}</div>`;
-        let outcome = `<div class="btn smol" data-show-match="${player.game.id}" data-type="magic">Details</div>`;
+        let outcome = `<div class="btn smol" data-show-match="${player.game_id}" data-type="magic">Details</div>`;
         let actions = '';
 
         if (!player.ban_info) {
