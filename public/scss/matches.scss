@@ -140,6 +140,7 @@
 }
 
 
+#played-with-against-popup,
 #match-viewer {
     display: flex;
     flex-direction: column;
@@ -148,7 +149,7 @@
     margin-bottom: 10rem;
     margin-top: 3rem;
 
-    > #tracked-matches {
+    > .match-list {
         display: flex;
         flex-direction: column;
         gap: .5rem;
@@ -499,11 +500,34 @@
                         }
                         &[data-what=played-with-against] {
                             text-align: center;
+                            cursor: default;
+
+                            &[data-clickable=true] {
+                                cursor: pointer;
+                                transition: ease-in .25s;
+
+                                &:hover {
+                                    font-size: 1.07rem;
+                                    transition: ease-out .15s;
+                                }
+
+                                > .eye {
+                                    opacity: .5;
+                                    
+                                    &:first-of-type {
+                                        margin-right: .25rem;
+                                    }
+                                    &:last-of-type {
+                                        margin-left: .25rem;
+                                    }
+                                }
+                            }
 
                             > span[data-cnt="0"],
                             > span:not([data-cnt]) {
                                 color: $gray-border;
                             }
+
                         }
                         &[data-what=stats-links] {
                             text-align: center;
@@ -643,5 +667,23 @@
         &.selected {
             color: $bj-gold;
         }
+    }
+}
+
+
+
+dialog {
+    color: white;
+    background-color: $modal-bg;
+    border: 1px solid $gray-border;
+    border-radius: $border-radius;
+    margin: auto !important;
+
+    &:focus-visible {
+        outline: none;
+    }
+
+    &::backdrop {
+        backdrop-filter: blur(2px);
     }
 }

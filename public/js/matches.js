@@ -6,6 +6,8 @@ let matchId = urlParams.get('matchId') || undefined;
 let stuff = urlParams.get('stuff') || undefined;
 let diskitoPlayersCache = undefined;
 let markedCheatersCache = undefined;
+let playedWithCache = {};
+let playedAgainstCache = {};
 let matchDetailsCache = {};
 let matchOffsetStart = 20;
 let matchOffset = matchOffsetStart;
@@ -63,9 +65,7 @@ $(window).on("popstate", function () {
 
 
 /* ------------------------
-
     Show one match details
-
 */
 
 
@@ -212,11 +212,15 @@ async function loadMatchDetails(matchId) {
 
         let with_ = playedWithAgainstCounts[player].with;
         let against_ = playedWithAgainstCounts[player].against;
+        let clickable_ = (with_ + against_) > 0 && !pd.diskito;
+
         row += `
-            <td data-what="played-with-against">
+            <td data-what="played-with-against" data-clickable="${clickable_}">
+                ${clickable_ ? '<span class="eye">👁️</span>' : ''}
                 <span data-cnt="${with_}">${with_}</span>
                 <span> / </span>
                 <span data-cnt="${against_}">${against_}</span>
+                ${clickable_ ? '<span class="eye">👁️</span>' : ''}
             </td>
         `;
 
@@ -235,7 +239,7 @@ async function loadMatchDetails(matchId) {
         prevWasOurTeam = pd.ourTeam;
 
         // Finally add our wanted row
-        $('#ranked_stats_table_place').append(`<tr>${row}</tr>`);
+        $('#ranked_stats_table_place').append(`<tr data-player="${player}">${row}</tr>`);
     });
 
 
@@ -574,6 +578,80 @@ async function loadMatchDetails(matchId) {
         else { document.startViewTransition(async () => { switchDetails(what) }) }
     });
 
+    $('[data-what="played-with-against"][data-clickable="true"]').off().on('click', async function() {
+        let playerClicked = this.parentElement.dataset.player;
+
+        $('body').append(`<dialog id="played-with-against-popup" class="popup"><div class="match-list">${spinner(true)}</div></dialog>`);
+        $('#played-with-against-popup')[0].showModal();
+
+        if (playedWithCache[playerClicked] === undefined) {
+            let playedWith = await supabase.from('played_with_matches').select('player, match_id').eq('player', playerClicked);
+            playedWithCache[playerClicked] = playedWith.data.map(pw => pw.match_id);
+        }
+
+        if (playedAgainstCache[playerClicked] === undefined) {
+            let playedAgainst = await supabase.from('played_against_matches').select('player, match_id').eq('player', playerClicked);
+            playedAgainstCache[playerClicked] = playedAgainst.data.map(pw => pw.match_id);
+        }
+
+        let playedWith = playedWithCache[playerClicked];
+        let playedAgainst = playedAgainstCache[playerClicked];
+        let matchIds = [...playedWith, ...playedAgainst];
+
+        let matchIdsUnique = [...new Set(matchIds)];
+        let matchesNotInCache = matchIdsUnique.filter(matchId => !matchDetailsCache[matchId]);
+
+        if (matchesNotInCache.length) {
+            let matches = await supabase.from('tracked_matches').select('*').in('id', matchesNotInCache);
+            matches.data.forEach(match => { matchDetailsCache[match.id] = match; });
+        }
+
+        let matchesToShow = matchIdsUnique.map(matchId => matchDetailsCache[matchId]);
+        
+
+        let matchesPopup = '';
+        matchesToShow.forEach(match => {
+            let outcome = _parseMatchOutcome(match?.outcome);
+
+            matchesPopup += `
+                <div data-match-id="${match.id}">
+                    <div class="outcome" data-outcome="${outcome.sysid}" style="--_bg-map-img: url('${maps[match.map].src}');">
+                        ${outcome.html}
+                    </div>
+                    <div class="middle">
+                        <div class="info">
+                            <div class="title">Map</div>
+                            <div class="data">${maps[match.map].name}</div>
+                        </div>
+                        <div class="info">
+                            <div class="title">Stack</div>
+                            <div class="data">${match.stack}x</div>
+                        </div>
+                        <div class="info">
+                            <div class="title">Created</div>
+                            <div class="data">${simpleDateTime(match.created_at)}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        $('#played-with-against-popup > .match-list').html(matchesPopup);
+
+        $('#played-with-against-popup').off().on('click', function(e) {
+            if (e.target.tagName !== 'DIALOG') { return }
+        
+            const rect = e.target.getBoundingClientRect();
+            const clickedInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height && rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+        
+            if (clickedInDialog === false) {
+                $('#played-with-against-popup')[0].close();
+                $('#played-with-against-popup')[0].remove();
+            }
+        });
+
+    });
+
     if ($('#outcome_tab_place > tr').length) {
         $('#outcome_tab_sw').trigger('click');
     }
@@ -670,7 +748,7 @@ if (stuff) { $(`#${stuff}`).trigger('click') }
 
 
 
-/*
+/* -------------------------
     Existing matches viewer
 */
 
@@ -718,7 +796,7 @@ async function showTrackedMatches(matches) {
     matches.forEach(match => {
         let map = maps[match.map].name;
         let created_at = simpleDateTime(match.created_at);
-        let outcome = _parseOutcome(match?.outcome);
+        let outcome = _parseMatchOutcome(match?.outcome);
         let akschuns = '';
 
         akschuns += `<a class="btn smol" data-show-match="${match.id}" data-type="magic">Details</a>`;
@@ -768,29 +846,6 @@ async function showTrackedMatches(matches) {
 
     });
 
-    function _parseOutcome(data) {
-        let ret = { html: '', sysid: '' };
-
-        if (!data) { return ret; }
-
-        if ((data.our_outcome + data.their_outcome) < 4) {
-            data.our_outcome = 0;
-            data.their_outcome = 0;
-            ret.sysid = 'cancelled';
-        }
-
-        if (data.our_outcome > data.their_outcome) { ret.sysid = 'won' }
-        if (data.our_outcome < data.their_outcome) { ret.sysid = 'lost' }
-        
-        ret.html = `
-            <div class="our_outcome">${data.our_outcome}</div>
-            <div class="separator">:</div>
-            <div class="their_outcome">${data.their_outcome}</div>
-        `;
-
-        return ret;
-    };
-
     async function _getMarkedCheaters() {
         if (markedCheatersCache !== undefined) {
             return markedCheatersCache.data;
@@ -817,7 +872,7 @@ async function showTrackedMatches(matches) {
                 $(this).html('<img src="/icons/check.svg" class="match_over_success" />')
                 setTimeout(() => { $(this).slideUp() }, 3_000);
 
-                let outcome = _parseOutcome(data.outcome);
+                let outcome = _parseMatchOutcome(data.outcome);
                 $(`[data-match-id="${data.matchId}"] > .outcome`).attr('data-outcome', outcome.sysid).html(outcome.html);
             }
             else {
@@ -832,6 +887,28 @@ async function showTrackedMatches(matches) {
     });
 
     return true;
+};
+function _parseMatchOutcome(data) {
+    let ret = { html: '', sysid: '' };
+
+    if (!data) { return ret; }
+
+    if ((data.our_outcome + data.their_outcome) < 4) {
+        data.our_outcome = 0;
+        data.their_outcome = 0;
+        ret.sysid = 'cancelled';
+    }
+
+    if (data.our_outcome > data.their_outcome) { ret.sysid = 'won' }
+    if (data.our_outcome < data.their_outcome) { ret.sysid = 'lost' }
+    
+    ret.html = `
+        <div class="our_outcome">${data.our_outcome}</div>
+        <div class="separator">:</div>
+        <div class="their_outcome">${data.their_outcome}</div>
+    `;
+
+    return ret;
 };
 
 async function showMatchDetails(matchId) {
@@ -860,7 +937,7 @@ function simpleDateTime(date) {
 
 
 
-/*
+/* ------------------
     New match finder
 */
 
@@ -956,7 +1033,7 @@ function findMatch(that) {
 
 
 
-/*
+/* -----------------------
     Marked players viewer
 */
 
