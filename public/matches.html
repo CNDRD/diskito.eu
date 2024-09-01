@@ -41,7 +41,7 @@
                 <div id="marked_players" class="btn" data-type="error">Marked players</div>
             </div>
             <div class="switcharoo">
-                <div id="servers_stats" class="btn" disabled data-type="warning">Servers info</div>
+                <div id="servers_stats" class="btn" data-type="warning">Servers info</div>
             </div>
         </switch>
 
@@ -183,6 +183,29 @@
                 <tbody></tbody>
             </table>
 
+        </main>
+
+        <main id="servers-stats" style="display: none;">
+            <div id="ss-created_at"></div>
+            <div id="ss-total_players_games"></div>
+            <div id="ss-stat_groups">
+                <div id="players_per_mode">
+                    <div class="header">Players per mode</div>
+                    <div class="data"></div>
+                </div>
+                <div id="games_per_mode">
+                    <div class="header">Games per mode</div>
+                    <div class="data"></div>
+                </div>
+                <div id="players_per_datacenter">
+                    <div class="header">Players per datacenter</div>
+                    <div class="data"></div>
+                </div>
+                <div id="games_per_datacenter">
+                    <div class="header">Games per datacenter</div>
+                    <div class="data"></div>
+                </div>
+            </div>
         </main>
 
     </body>
