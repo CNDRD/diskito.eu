@@ -1,7 +1,8 @@
-import { c, supabase, spinner, message, userAuth, roundTwo, addSpaces } from './main.js';
+import { c, supabase, spinner, message, userAuth, roundTwo, addSpaces, UUID } from './main.js';
 import { _getRankImageFromRankName } from './siege.js';
 
 const urlParams = new URLSearchParams(window.location.search);
+let currentUserDiscordId = UUID ? userAuth.session.user.identities[0].id : undefined;
 let matchId = urlParams.get('matchId') || undefined;
 let stuff = urlParams.get('stuff') || undefined;
 let diskitoPlayersCache = undefined;
@@ -13,6 +14,7 @@ let matchOffsetStart = 20;
 let matchOffset = matchOffsetStart;
 let matchOffsetCnt = 10;
 let matchSelectedSeason = undefined;
+let newMatchVisibleCache = currentUserDiscordId ? (await supabase.from('game_accounts').select('*', { count: 'exact', head: true }).eq('user', currentUserDiscordId)) : undefined;
 
 let maps = {
     bank:          { name: 'Bank',           src: '/images/maps/bank.png'           },
@@ -32,7 +34,6 @@ let maps = {
     themepark:     { name: 'Theme Park',     src: '/images/maps/themepark.png'      },
     villa:         { name: 'Villa',          src: '/images/maps/villa.png'          },
 };
-
 
 let availableSeasons = await supabase.from('tracked_matches_available_seasons').select('*').order('season', { ascending: false });
 availableSeasons.data.forEach((ssn, idx) => {
@@ -500,7 +501,7 @@ async function loadMatchDetails(matchId) {
             name: match.ranked_stats[player].name,
             game: matchId,
             why: why,
-            by: userAuth.session.user.identities[0].id
+            by: currentUserDiscordId
         });
 
         if (marked.status === 201) {
@@ -681,6 +682,7 @@ let stuffData = {
         div_id: 'match-tracker',
         last_loaded: null,
         data_lifetime_minutes: 1,
+        visible: newMatchVisible,
     },
     existing_matches: {
         loaded: false,
@@ -697,6 +699,7 @@ let stuffData = {
         div_id: 'marked-players',
         last_loaded: null,
         data_lifetime_minutes: 3,
+        visible: newMatchVisible,
     },
     servers_stats: {
         loaded: false,
@@ -708,6 +711,15 @@ let stuffData = {
     },
 };
 
+
+Object.keys(stuffData).forEach(async stuff => {
+    if (!stuffData[stuff]?.visible) { return }
+    if (await stuffData[stuff].visible()) { return }
+
+    $(`#${stuff}`).hide();
+    $(`#${stuff}`).remove();
+    delete stuffData[stuff];
+});
 
 
 $('#stuff-switch > .switcharoo > .btn').on('click', async function() {
@@ -949,6 +961,11 @@ function simpleDateTime(date) {
     New match finder
 */
 
+async function newMatchVisible() {
+    if (!UUID) { return false; }
+    return newMatchVisibleCache.count > 0;
+};
+
 async function loadUpPlayers() {
     if (diskitoPlayersCache) { return diskitoPlayersCache; }
 
@@ -998,7 +1015,7 @@ function findMatch(that) {
 
     let map = $('#maps > .map.selected').attr('data-sysid');
     let matchId = undefined;
-    let requestedBy = userAuth.session.user.identities[0].id;
+    let requestedBy = currentUserDiscordId;
 
     if (map === undefined) {
         $('#find-match-errors').append(message('A map has to be selected..', 'error')).show();
