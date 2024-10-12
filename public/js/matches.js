@@ -828,8 +828,20 @@ async function loadTrackedMatches() {
 };
 async function showTrackedMatches(matches) {
     let markedCheaters = await _getMarkedCheaters();
+    let previousMatch = undefined;
 
     matches.forEach(match => {
+        if (previousMatch) {
+            let prevDate = new Date(previousMatch.created_at);
+            let currDate = new Date(match.created_at);
+            let diff = prevDate - currDate;
+
+            if (diff > (60 * 60 * 2 * 1000)) {
+                $('#tracked-matches').append('<div class="dvdr"></div>');
+            }
+        }
+        previousMatch = match;
+
         let map = maps[match.map].name;
         let created_at = simpleDateTime(match.created_at);
         let outcome = _parseMatchOutcome(match?.outcome);
