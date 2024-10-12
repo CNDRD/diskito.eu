@@ -98,10 +98,12 @@ async function showStats() {
                 <td>
                     <div>${kd}</div>
                     <div class="smol-dark">${addSpaces(rank.kills)} / ${addSpaces(rank.deaths)}</div>
+                    <div class="smol-dark">${addSpaces(rank.kills + rank.deaths)}</div>
                 </td>
                 <td>
                     <div>${wl}%</div>
                     <div class="smol-dark">${addSpaces(rank.wins)} / ${addSpaces(rank.losses)}</div>
+                    <div class="smol-dark">${addSpaces(rank.wins + rank.losses)}</div>
                 </td>
                 <td class="hide-mobile">
                     ${playtime}
@@ -156,6 +158,18 @@ function _getRankCell(r, level) {
     if (level < 50) {
       return `<div class="rank-img-cell"> <span>level ${level}</span> </div>`;
     }
+
+    if (r.top_rank_position > 0) {
+        return `
+            <div class="rank-img-cell">
+                <div data-rank-pos="${r.top_rank_position}">
+                    <img style="height: 4rem;" src="https://i.imgur.com/Mz1tv4J.png" />
+                </div>
+                <img style="height: 3.5rem;" class="hide-mobile" src="${_getRankImageFromRankName(r.max_rank)}" />
+            </div>
+        `;
+    }
+
     return `
       <div class="rank-img-cell">
         <img style="height: 4rem;" src="${_getRankImageFromRankName(r.rank)}" />
@@ -213,5 +227,5 @@ export function _getRankImageFromRankName(name) {
       "champion": "fTA4VtR",
       "champions": "fTA4VtR",
     }
-    return `https://i.imgur.com/${rank_dict[name.toLowerCase()]}.png`
+    return `https://i.imgur.com/${rank_dict[name.toLowerCase()]}.png`;
 };

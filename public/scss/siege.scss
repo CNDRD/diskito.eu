@@ -1,6 +1,10 @@
 
 @import './_main.scss';
 
+@font-face {
+    font-family: 'R6Italic';
+    src: url('/fonts/r6italic.woff2') format('woff2');
+}
 
 main {
     margin-left: auto;
@@ -53,6 +57,23 @@ main {
                     &:nth-child(2) {
                         text-align: left;
                         padding-left: 1rem;
+                    }
+
+                    > .rank-img-cell {
+                        > [data-rank-pos] {
+                            position: relative;
+                            display: inline;
+
+                            &::after {
+                                content: attr(data-rank-pos);
+                                position: absolute;
+                                top: -68%;
+                                left: 47%;
+                                transform: translate(-50%, -50%);
+                                font-family: 'R6Italic', sans-serif;
+                                font-size: 1.4rem;
+                            }
+                        }
                     }
 
                     > .smol-dark {
