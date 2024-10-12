@@ -5,7 +5,6 @@
     src: url('/fonts/r6italic.woff2') format('woff2');
 }
 
-
 #stuff-switch {
     display: flex;
     flex-direction: column;
@@ -237,11 +236,15 @@
                 }
 
                 > .our_outcome {
-                    font-size: 1.8rem;
+                    font-size: 2.4rem;
                     padding-right: .2rem;
+                    font-family: "R6Italic", sans-serif;
+                    line-height: 1;
                 }
                 > .their_outcome {
+                    font-size: 2rem;
                     padding-top: .1rem;
+                    font-family: 'R6Italic', sans-serif;
                 }
 
             }
@@ -680,6 +683,9 @@
         cursor: pointer;
         user-select: none;
         transition: all .3s ease-out;
+        display: flex;
+        align-items: center;
+        gap: .5rem;
 
         &:not(:last-child) {
             border-right: none;
@@ -697,6 +703,11 @@
         }
         &.selected {
             color: $bj-gold;
+        }
+
+        > span {
+            font-size: .9rem;
+            color: $gray-border;
         }
     }
 }

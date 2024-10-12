@@ -38,7 +38,7 @@ let maps = {
 let availableSeasons = await supabase.from('tracked_matches_available_seasons').select('*').order('season', { ascending: false });
 availableSeasons.data.forEach((ssn, idx) => {
     if (idx === 0) { matchSelectedSeason = ssn.season }
-    $('#tracked-matches-seasonal-switch').append(`<div ${idx===0?'class="selected"':''} data-season="${ssn.season}">${ssn.season}</div>`);
+    $('#tracked-matches-seasonal-switch').append(`<div ${idx===0?'class="selected"':''} data-season="${ssn.season}">${ssn.season} <span>${ssn.match_count}</span></div>`);
 });
 $('#tracked-matches-seasonal-switch > [data-season]').on('click', async function() {
     $('#tracked-matches-seasonal-switch > [data-season]').removeClass('selected');
