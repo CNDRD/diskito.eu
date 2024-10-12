@@ -41,24 +41,21 @@ function _getUpdateTimeString(s) {
 
 
 
-$(document).ready(function(){
+$(document).ready(async function(){
 
     if (window.location.pathname !== '/siege') return;
 
-    $.getJSON("https://game-status-api.ubisoft.com/v1/instances", data => {
-        $.each(data, (key, val) => {
-            if (val["AppID "] === "e3d5ea9e-50bd-43b7-88bf-39794f4e3d40") {
-    
-                if (val.Maintenance != null && val.Maintenance) {
-                    return $("#siegePcStatus").replaceWith(`<span style="color: #faa05a;">Maintenance</span>`);
-                }
-        
-                let color = val.Status == "Online" ? "#32d296" : "#f0506e";
-                return $("#siegePcStatus").replaceWith(`<span style="color: ${color};">${val.Status}</span>`);
+    await fetch('https://game-status-api.ubisoft.com/v1/instances?appIds=e3d5ea9e-50bd-43b7-88bf-39794f4e3d40')
+        .then(response => response.json())
+        .then(data => {
+            if (data[0].Maintenance != null && data[0].Maintenance) {
+                return $("#siegePcStatus").replaceWith(`<span style="color: #faa05a;">Maintenance</span>`);
             }
+
+            let color = data[0].Status == "Online" ? "#32d296" : "#f0506e";
+            return $("#siegePcStatus").replaceWith(`<span style="color: ${color};">${data[0].Status}</span>`);
         });
-    });
-  
+
 });
 
 async function showStats() {
