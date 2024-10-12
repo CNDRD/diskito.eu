@@ -427,17 +427,35 @@ async function loadMatchDetails(matchId) {
         cells.name = `<td data-what="player" style="${nameTransition}"><div>${pd.name}</div>${persona}</td>`;
 
         /* Ranked cell */
-        cells.ranked = `
-            <td data-what="rank">
-                <div>
-                    <img src="${_getRankImageFromRankName(pd.rank)}" />
-                    <div class="rank_rp">
-                        <div>${pd.rank}</div>
-                        <div>${addSpaces(pd.rank_points)} <div>RP</div></div>
+        if (pd.top_rank_position) {
+            cells.ranked = `
+                <td data-what="rank">
+                    <div>
+                        <div data-rank-pos="${pd.top_rank_position}">
+                            <img src="https://i.imgur.com/Mz1tv4J.png" />
+                        </div>
+                        <div class="rank_rp">
+                            <div>${pd.rank}</div>
+                            <div>${addSpaces(pd.rank_points)} <div>RP</div></div>
+                        </div>
                     </div>
-                </div>
-            </td>
-        `;
+                </td>
+            `;
+        }
+        else {
+            cells.ranked = `
+                <td data-what="rank">
+                    <div>
+                        <img src="${_getRankImageFromRankName(pd.rank)}" />
+                        <div class="rank_rp">
+                            <div>${pd.rank}</div>
+                            <div>${addSpaces(pd.rank_points)} <div>RP</div></div>
+                        </div>
+                    </div>
+                </td>
+            `;
+        }
+        
 
         /* Stat pages links cell */
         cells.stats = `
