@@ -217,11 +217,9 @@ async function loadMatchDetails(matchId) {
 
         row += `
             <td data-what="played-with-against" data-clickable="${clickable_}">
-                ${clickable_ ? '<span class="eye">👁️</span>' : ''}
                 <span data-cnt="${with_}">${with_}</span>
                 <span> / </span>
                 <span data-cnt="${against_}">${against_}</span>
-                ${clickable_ ? '<span class="eye">👁️</span>' : ''}
             </td>
         `;
 

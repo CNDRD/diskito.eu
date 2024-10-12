@@ -464,10 +464,10 @@
                                 display: flex;
                                 flex-direction: row;
                                 align-items: center;
+                                gap: .5rem;
 
                                 > img {
                                     height: 3rem;
-                                    padding-right: .5rem;
                                 }
                                 > [data-rank-pos] {
                                     position: relative;
@@ -477,7 +477,7 @@
                                         content: attr(data-rank-pos);
                                         position: absolute;
                                         top: 52%;
-                                        left: 42%;
+                                        left: 49%;
                                         transform: translate(-50%, -50%);
                                         font-family: 'R6Italic', sans-serif;
                                         font-size: 1rem;
@@ -485,7 +485,6 @@
 
                                     > img {
                                         height: 3rem;
-                                        padding-right: .5rem;
                                     }
                                 }
 
