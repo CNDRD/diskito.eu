@@ -594,6 +594,13 @@
                                 &[data-change-positive=false] {
                                     color: $chaun-red;
                                 }
+                                &[data-change-positive]::after {
+                                    content: " RP";
+                                    color: $gray-border;
+                                    margin-left: .2rem;
+                                    font-size: .8rem;
+                                    margin-block: auto;
+                                }
                             }
 
                         }
