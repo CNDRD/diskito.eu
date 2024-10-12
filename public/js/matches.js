@@ -894,6 +894,8 @@ async function showTrackedMatches(matches) {
 
                 let outcome = _parseMatchOutcome(data.outcome);
                 $(`[data-match-id="${data.matchId}"] > .outcome`).attr('data-outcome', outcome.sysid).html(outcome.html);
+
+                delete matchDetailsCache[matchId];
             }
             else {
                 $(this).html('Ended??');
