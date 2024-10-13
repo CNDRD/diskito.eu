@@ -1054,8 +1054,9 @@ function findMatch(that) {
     let requestedBy = currentUserDiscordId;
 
     if (map === undefined) {
-        $('#find-match-errors').append(message('A map has to be selected..', 'error')).show();
-        errors = true;
+        // $('#find-match-errors').append(message('A map has to be selected..', 'error')).show();
+        // errors = true;
+        map = 'bartlett';
     }
     
     if (!errors) {
