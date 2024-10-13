@@ -585,6 +585,10 @@ async function loadMatchDetails(matchId) {
         matchesToShow.forEach(match => {
             let outcome = _parseMatchOutcome(match?.outcome);
 
+            let akschuns = '';
+            if (matchId != match.id) { akschuns = `<a class="btn smol" target="_blank" href="/matches?matchId=${match.id}" data-type="magic">Details</a>`; }
+            else { akschuns = `<div class="btn smol" data-type="note" disabled>Current</div>`; }
+
             matchesPopup += `
                 <div data-match-id="${match.id}">
                     <div class="outcome" data-outcome="${outcome.sysid}" style="--_bg-map-img: url('${maps[match.map].src}');">
@@ -604,6 +608,7 @@ async function loadMatchDetails(matchId) {
                             <div class="data">${simpleDateTime(match.created_at)}</div>
                         </div>
                     </div>
+                    <div class="actions">${akschuns}</div>
                 </div>
             `;
         });
