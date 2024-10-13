@@ -17,6 +17,7 @@ let matchSelectedSeason = undefined;
 let newMatchVisibleCache = currentUserDiscordId ? (await supabase.from('game_accounts').select('*', { count: 'exact', head: true }).eq('user', currentUserDiscordId)) : undefined;
 
 let maps = {
+    bartlett:      { name: 'Unknown',        src: '/images/maps/shooting_range.jpg' },
     bank:          { name: 'Bank',           src: '/images/maps/bank.png'           },
     border:        { name: 'Border',         src: '/images/maps/border.png'         },
     chalet:        { name: 'Chalet',         src: '/images/maps/chalet.png'         },
@@ -83,6 +84,11 @@ async function loadMatchDetails(matchId) {
     $('#match-outcome').css({ 'view-transition-name': `outcome_${matchId}` });
     $('#match-score').css({ 'view-transition-name': `score_${matchId}` });
     
+    $('#match-outcome').parent().hide();
+    $('#match-score').parent().hide();
+    $('#match-end').parent().hide();
+    $('#match-duration').parent().hide();
+
     $(`#match-details [data-what-h]`).each(function() {
         $(`#match-details [data-what-h="${this.dataset.whatH}"]`).each(function() {
             $(this).css({ 'view-transition-name': `thead_${this.dataset.whatH}_${matchId}` });
@@ -628,6 +634,54 @@ async function loadMatchDetails(matchId) {
         });
 
     });
+    
+    $('[data-action="map-change"]').off().on('click', async function() {
+        let dialogId = 'map-change-dialog';
+        $('body').append(`<dialog id="${dialogId}" class="popup"><div class="map-picker">${spinner(true)}</div></dialog>`);
+        $(`#${dialogId}`)[0].showModal();
+
+        let mapsHtml = '';
+        Object.keys(maps).forEach(map => {
+            if (map === 'bartlett') { return }
+            mapsHtml += `
+                <div class="map ${match.map == map ? 'selected' : ''}" data-sysid="${map}">
+                    <img src="${maps[map].src}" />
+                    <div>${maps[map].name}</div>
+                </div>        
+            `;
+        });
+        $(`#${dialogId} > .map-picker`).html(`<div class="maps">${mapsHtml}</div>`);
+        $(`#${dialogId}`).append(`<div class="btn" data-type="tip" data-update-map="${matchId}">Update</div>`);
+
+        $(`#${dialogId} > .map-picker > .maps > .map`).on('click', function() {
+            $(`#${dialogId} > .map-picker > .maps > .map`).removeClass('selected');
+            $(this).toggleClass('selected');
+        });
+
+        $(`#${dialogId}`).off().on('click', function(e) {
+            if (e.target.tagName !== 'DIALOG') { return }
+        
+            const rect = e.target.getBoundingClientRect();
+            const clickedInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height && rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+        
+            if (clickedInDialog === false) {
+                $(`#${dialogId}`)[0].close();
+                $(`#${dialogId}`)[0].remove();
+            }
+        });
+        $('[data-update-map]').off().on('click', async function() {
+            this.innerHTML = spinner(true);
+            let newMap = $(`#${dialogId} > .map-picker > .maps > .map.selected`)[0].dataset.sysid;
+            let matchId = this.dataset.updateMap;
+
+            let updated = await supabase.from('tracked_matches').update({ map: newMap }).eq('id', matchId);
+            if (updated.status === 204) {
+                $(`#${dialogId}`)[0].close();
+                $(`#${dialogId}`)[0].remove();
+                $('#map').text(maps[newMap].name);
+            }
+        });
+    });
 
     if ($('#outcome_tab_place > tr').length) {
         $('#outcome_tab_sw').trigger('click');
@@ -1026,6 +1080,7 @@ function loadUpMaps() {
 
     let mapsHtml = '';
     Object.keys(maps).forEach(map => {
+        if (map === 'bartlett') { return }
         mapsHtml += `
             <div class="map" data-sysid="${map}">
                 <img src="${maps[map].src}" />

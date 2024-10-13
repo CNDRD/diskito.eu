@@ -45,9 +45,9 @@
 
         <main id="match-tracker" style="display: none;">
 
-            <div id="map-picker">
+            <div id="map-picker" class="map-picker">
                 <div class="header">Map being played</div>
-                <div id="maps"></div>
+                <div id="maps" class="maps"></div>
             </div>
 
             <div id="find-match-parent">
@@ -69,6 +69,9 @@
                     <div class="thang">
                         <div class="key">Map</div>
                         <div class="value" id="map"></div>
+                        <div class="action" data-action="map-change">
+                            <img src="/icons/multiple_stop.svg" />
+                        </div>
                     </div>
                     <div class="thang">
                         <div class="key">Stack</div>
@@ -102,7 +105,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div id="details-switch" class="multiple-switch">
                 <div id="outcome_tab_sw">Outcome</div>
                 <div id="ranked_stats_sw">Stats</div>
