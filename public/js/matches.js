@@ -131,6 +131,8 @@ async function loadMatchDetails(matchId) {
         $('#match-duration').text('~' + Math.ceil(duration) + ' minutes').parent().show();
     }
 
+    $('#match-ended').toggle(match.raw_data_archived == null);
+
     if (!match?.ranked_stats_after) {
         $('#ranked_after_sw').remove();
     }
@@ -681,6 +683,24 @@ async function loadMatchDetails(matchId) {
                 $('#map').text(maps[newMap].name);
             }
         });
+    });
+    $('[data-action="map-ended"]').off().on('click', async function() {
+        $('#match-ended > .action').html(spinner());
+
+        fetch(
+            'https://api.cndrd.xyz/diskito/match_over',
+            { method: 'POST', body: JSON.stringify({ matchId }) }
+        )
+        .then(response => response.json())
+        .then(data => {
+            if (data?.matchId) {
+                location.reload();
+            }
+            else {
+                $('#match-ended > .action').html('<img src="/icons/check.svg" />');
+            }
+        });
+
     });
 
     if ($('#outcome_tab_place > tr').length) {
