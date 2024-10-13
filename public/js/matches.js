@@ -626,6 +626,7 @@ async function loadMatchDetails(matchId) {
 
     if ($('#outcome_tab_place > tr').length) {
         $('#outcome_tab_sw').trigger('click');
+        $('#details-switch').show();
     }
     else {
         $('#ranked_stats_sw').trigger('click');
