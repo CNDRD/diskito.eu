@@ -1270,6 +1270,7 @@ function getGamemodeName(gamemode) {
     return {
 
         "PVE_Bots_Game": 'PVE - Bots',
+        "PVP_Event_Game": "Event",
         "PVE_Maprun_Game": 'PVE - Maprun',
         "PVP_Casual_Game": 'Casual',
         "PVP_Ranked_Game": 'Ranked',
