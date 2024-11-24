@@ -22,13 +22,19 @@ main {
         border: 1px solid $gray-border;
         border-radius: 5px;
         padding: 1rem;
+        max-width: 45rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: .25rem;
 
         @media screen and (max-width: $mobile-threshold) {
             width: 100%;
         }
 
         > .text {
-            text-align: center;
+            text-align: end;
+            position: relative;
             
             @media screen and (max-width: $mobile-threshold) {
                 text-align: left;
@@ -37,14 +43,12 @@ main {
             &::before {
                 content: "“";
                 color: $bj-gold;
-                font-size: 2rem;
+                font-size: 3.25rem;
+                font-weight: bold;
                 line-height: 1;
-            }
-            &::after {
-                content: "”";
-                color: $bj-gold;
-                font-size: 2rem;
-                line-height: 1;
+                position: absolute;
+                left: -1.5rem;
+                top: -1.8rem;
             }
         }
 
