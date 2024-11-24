@@ -37,6 +37,8 @@ main {
         > tbody {
 
             > tr {
+                font-variant-numeric: tabular-nums;
+                
                 > td {
                     padding-inline: 1rem;
                     text-align: right;
@@ -50,6 +52,20 @@ main {
 
                     &[data-what=name] {
                         text-align: left;
+                    }
+
+                    &[data-what=more-info] {
+                        text-align: center;
+
+                        > img {
+                            height: 2rem;
+                            filter: invert(1);
+                            cursor: pointer;
+                        }
+                    }
+                    &.header {
+                        font-size: 1.15rem;
+                        font-weight: bold;
                     }
 
                 }
