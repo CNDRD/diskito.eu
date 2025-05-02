@@ -1,84 +1,106 @@
 
 @import './_main.scss';
+@import './fancySwitch.scss';
 
 
 main {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    margin-block: 3rem;
-    padding-inline: 3rem;
-    max-width: 1600px;
-    margin-left: auto;
-    margin-right: auto;
 
-    @media screen and (max-width: $mobile-threshold) {
-        padding-inline: 0;
+    > .f_switch {
+        --rows: 3;
+        --columns: 3;
+
+        > label > span {
+            font-size: .8rem;
+            font-weight: 300;
+            color: $gray-border;
+            padding-left: .3rem;
+
+            &::after {
+                content: 'x';
+            }
+        }
     }
 
-    > .quote {
-        border: 1px solid $gray-border;
-        border-radius: 5px;
-        padding: 1rem;
-        max-width: 45rem;
+    > #quotes {
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: .25rem;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-block: 3rem;
+        padding-inline: 3rem;
+        max-width: 1600px;
+        margin-left: auto;
+        margin-right: auto;
 
         @media screen and (max-width: $mobile-threshold) {
-            width: 100%;
+            padding-inline: 0;
         }
 
-        > .text {
-            text-align: end;
-            position: relative;
-            
-            @media screen and (max-width: $mobile-threshold) {
-                text-align: left;
-            }
-
-            &::before {
-                content: "“";
-                color: $bj-gold;
-                font-size: 3.25rem;
-                font-weight: bold;
-                line-height: 1;
-                position: absolute;
-                left: -1.5rem;
-                top: -1.8rem;
-            }
-        }
-
-        > .author-date {
-            width: 100%;
+        > .quote {
+            border: 1px solid $gray-border;
+            border-radius: 5px;
+            padding: 1rem;
+            max-width: 35rem;
             display: flex;
-            flex-flow: row nowrap;
-            justify-content: flex-end;
-            margin-top: .5rem;
-            gap: .2rem;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: .5rem;
 
-            > .author {
-                font-style: italic;
-                font-weight: 300;
-                color: $main-txt-dark;
+            @media screen and (max-width: $mobile-threshold) {
+                width: 100%;
+            }
+
+            > .text {
+                text-align: end;
+                position: relative;
+                flex-grow: 1;
+                display: flex;
+                align-items: center;
+                
+                @media screen and (max-width: $mobile-threshold) {
+                    text-align: left;
+                }
 
                 &::before {
-                    content: "— ";
-                }
-                &::after {
-                    content: ", ";
+                    content: "“";
+                    color: $bj-gold;
+                    font-size: 3.25rem;
+                    font-weight: bold;
+                    line-height: 1;
+                    position: absolute;
+                    left: -1.5rem;
+                    top: -1.8rem;
                 }
             }
 
-            > .date {
-                font-style: italic;
-                font-weight: 300;
-                color: $main-txt-dark;
+            > .author-date {
+                display: flex;
+                gap: .2rem;
+                width: fit-content;
+                margin-left: auto;
+
+                > .author {
+                    font-style: italic;
+                    font-weight: 300;
+                    color: $main-txt-dark;
+
+                    &::before {
+                        content: "— ";
+                    }
+                    &::after {
+                        content: ", ";
+                    }
+                }
+
+                > .date {
+                    font-style: italic;
+                    font-weight: 300;
+                    color: $main-txt-dark;
+                }
             }
+
         }
-
     }
+    
 }

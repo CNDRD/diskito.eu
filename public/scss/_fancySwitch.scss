@@ -1,0 +1,117 @@
+
+.f_switch {
+    $max-items: 12;
+
+    --rows: 3;
+    --columns: 4;
+    --cell_width: 150px;
+    --cell_height: 32px;
+    --radius: 8px;
+	--border: 4px;
+    --speed: .25s;
+    --ease: linear(
+        0, 0.1641 3.52%, 0.311 7.18%,
+        0.4413 10.99%, 0.5553 14.96%,
+        0.6539 19.12%, 0.738 23.5%,
+        0.8086 28.15%, 0.8662 33.12%,
+        0.9078 37.92%, 0.9405 43.12%,
+        0.965 48.84%, 0.9821 55.28%,
+        0.992 61.97%, 0.9976 70.09%, 1
+    );
+
+    @media screen and (max-width: $mobile-threshold) {
+        --rows: 4;
+        --columns: 3;
+    }
+
+	display: grid;
+	grid-auto-flow: row;
+    outline: 1px solid $gray-bg;
+	border-radius: var(--radius);
+	grid-template-columns: repeat(var(--columns), var(--cell_width));
+    grid-template-rows: repeat(var(--rows), var(--cell_height));
+	position: relative;
+    padding: var(--border);
+    gap: var(--border);
+    width: fit-content;
+    margin-inline: auto;
+    margin-top: 3rem;
+    box-sizing: border-box;
+
+    --col: 0;
+    --row: 0;
+
+    @for $i from 1 through ($max-items) {
+        &:has(:checked:nth-of-type(#{$i})) {
+            --col: mod((#{$i} - 1), var(--columns));
+            --row: calc(round(down, (#{$i} - 1) / var(--columns)));
+        }
+    }
+
+    > label {
+        padding-left: .1rem;
+        cursor: pointer;
+        text-align: center;
+        height: 100%;
+        display: flex;
+        border-radius: calc(var(--radius) - var(--border));
+        justify-items: start;
+        align-items: center;
+        padding-inline: .6rem;
+        color: hsl(0 0% 100% / calc(.5 + var(--highlight, 0)));
+        transition: background, color;
+        transition-duration: .25s;
+        transition-timing-function: var(--ease, ease);
+        user-select: none;
+
+        > img {
+            width: 1rem;
+            justify-self: anchor-center;
+        }
+    }
+
+    &:not(:has(:checked)) {
+        &::after{
+            background-color: transparent;
+        }
+    }
+    &::after {
+        pointer-events: none;
+        content: "";
+        background: hsl(0 0% 100%);
+        position: absolute;
+        border-radius: calc(var(--radius) - var(--border));
+        mix-blend-mode: difference;
+
+        width: var(--cell_width);
+        height: var(--cell_height);
+
+        translate:
+            calc( var(--col) * 100% + (var(--border) * (var(--col, 0) + 1)) )
+            calc( var(--row) * 100% + (var(--border) * (var(--row, 0) + 1)) )
+        ;
+
+        transition: translate, outline-color;
+        transition-duration: var(--speed);
+        transition-timing-function: var(--ease, ease);
+        outline: 2px solid transparent;
+    }
+
+    &:has(:focus-visible)::after {
+        outline-color: red;
+    }
+
+    > input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
+    :checked + label { --highlight: 1; }
+}
