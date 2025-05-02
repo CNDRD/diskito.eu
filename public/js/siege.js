@@ -41,23 +41,6 @@ function _getUpdateTimeString(s) {
 
 
 
-$(document).ready(async function(){
-
-    if (window.location.pathname !== '/siege') return;
-
-    await fetch('https://game-status-api.ubisoft.com/v1/instances?appIds=e3d5ea9e-50bd-43b7-88bf-39794f4e3d40')
-        .then(response => response.json())
-        .then(data => {
-            if (data[0].Maintenance != null && data[0].Maintenance) {
-                return $("#siegePcStatus").replaceWith(`<span style="color: #faa05a;">Maintenance</span>`);
-            }
-
-            let color = data[0].Status == "Online" ? "#32d296" : "#f0506e";
-            return $("#siegePcStatus").replaceWith(`<span style="color: ${color};">${data[0].Status}</span>`);
-        });
-
-});
-
 async function showStats() {
     $('#stats').html(spinner());
     let table = '';
@@ -114,10 +97,7 @@ async function showStats() {
 
     table = `
         <div id="above-table">
-            <div class="left">
-                <span>PC Server Status:</span>
-                <span id="siegePcStatus">${spinner(true)}</span>
-            </div>
+            <div class="left"></div>
 
             <div class="right">
                 <div>
