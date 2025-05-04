@@ -57,6 +57,8 @@ $('#game-select').on('change', function() {
 function gameCoinflip() {
     $('#game').append(`
 
+        <div id="err"></div>
+
         <div id="coin">
             <div data-side="heads"></div>
             <div data-side="tails"></div>
@@ -87,8 +89,10 @@ function gameCoinflip() {
         }
     );
     
-    function cfAlert(msg, type) {
-        console.error(type, msg);
+    function cfAlert(msg) {
+        $('#err').text(msg);
+        $('#err').addClass('show');
+        setTimeout(function() { $('#err').removeClass('show'); }, 2000);
     };
 
     function toggleInputs(onOrOff) {
@@ -106,18 +110,18 @@ function gameCoinflip() {
             bet: $('#game .bet-buttons input:checked').val(),
         };
         
-        if (!fnData.bet) {
-            cfAlert('Please select heads or tails', 'error');
-            toggleInputs(false);
-            return;
-        }
-        else if (!fnData.bet_amount) {
-            cfAlert('Please enter a bet amount', 'error');
+        if (!fnData.bet_amount) {
+            cfAlert('Please enter a bet amount');
             toggleInputs(false);
             return;
         }
         else if (fnData.bet_amount > money) {
-            cfAlert('You don\'t have enough money', 'error');
+            cfAlert('You don\'t have enough money');
+            toggleInputs(false);
+            return;
+        }
+        else if (!fnData.bet) {
+            cfAlert('Please select heads or tails');
             toggleInputs(false);
             return;
         }
@@ -127,7 +131,7 @@ function gameCoinflip() {
         gambaData = gambaData ? gambaData[0] : null;
 
         if (gambaError) {
-            cfAlert('Oh no! Something went wrong!', 'error');
+            cfAlert('Oh no! Something went wrong!');
             toggleInputs(false);
             return;
         }

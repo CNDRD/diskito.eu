@@ -92,6 +92,33 @@
     width: fit-content;
     margin-inline: auto;
     margin-block: 3rem;
+    position: relative;
+
+    > #err {
+        opacity: 0;
+        transform: translateY(.5rem);
+        position: absolute;
+        width: fit-content;
+        height: fit-content;
+        top: 23%;
+        padding: .75rem;
+        border-radius: $border-radius;
+        backdrop-filter: blur(10px);
+        background-color: #ff00002b;
+        outline: 1px solid #7b1616;
+        font-weight: bold;
+        text-shadow: 0 0 10px black;
+        color: #ff2828e0;
+        user-select: none;
+        pointer-events: none;
+        z-index: 100;
+        transition: opacity .25s ease-out, transform .25s ease-out;
+
+        &.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
     &[data-game="coinflip"] {
         display: flex;
