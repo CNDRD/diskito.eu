@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content=":D">
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+        <script src="https://unpkg.com/imask"></script>
+
+        <!-- JS & CSS -->
+        <link rel="stylesheet" href="/css/gamble.css" />
+        <script defer src="/js/navbar.js" type="module" charset="utf-8"></script>
+        <script defer src="/js/gamble.js" type="module" charset="utf-8"></script>
+
+        <title>Diskíto | Gambling</title>
+        <link rel="shortcut icon" href="/images/diskito_pfp.jpg" />
+        
+    </head>
+    <body>
+        
+        <nav>
+            <a href="/" class="logo"><span id="dvojbodka">:</span>Diskíto</a>
+            <div class="links">
+                <a href="/leaderboard">Leaderboard</a>
+                <a href="/siege">Siege</a>
+                <a href="/quotes">Quotes</a>
+                <div></div>
+                <a href="/discord" class="dscrd" target="_blank"><img src="/images/discord.svg" alt="Discord"></a>
+            </div>
+            <div id="login-popup-button" class="login-btn login">Login</div>
+            <a href="" class="toggle-mnu"><span></span></a>
+        </nav>
+        
+        <div id="top">
+            <div id="currentBalance">
+                <span>★</span>
+                <span id="balance">0</span>
+            </div>
+            <div id="game-select" class="f_switch"></div>
+        </div>
+
+        <div id="game" data-game="nothing"></div>
+
+    </body>
+</html>

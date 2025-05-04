@@ -29,7 +29,7 @@ ldrbrd.forEach(user => {
             </td>
 
             <td data-what="money" data-sort="${user.money}">
-                ₪${addSpaces(user.money, ',')}
+                ★${addSpaces(user.money, ',')}
             </td>
 
             <td data-what="yearly-voice" data-sort="${user.yearly_total_voice}">

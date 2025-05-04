@@ -4,6 +4,7 @@ export const supabase = createClient('https://leyoegxpprcdstxvtecg.supabase.co',
 
 const { data: authData } = await supabase.auth.getSession();
 export const UUID = authData.session ? authData.session.user.id : null;
+export const DISCORD_ID = authData.session ? authData.session.user.user_metadata.provider_id : null;
 export const userAuth = authData;
 
 export const c = console.log.bind(console);

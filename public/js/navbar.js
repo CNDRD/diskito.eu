@@ -9,14 +9,24 @@ function toggleLoggedIn(inOut) {
     if (inOut) {
         $(".login-btn").addClass("logout").text("Logout");
         $('html').attr('data-logged-in', true);
+        $('<a href="/gamble">Gamble</a>').insertAfter('nav > .links [href="/quotes"]');
     }
     else {
         $(".login-btn").removeClass("logout").text("Login");
         $('html').attr('data-logged-in', false);
+        $('nav > .links a[href="/gamble"]').remove();
+
+        let loginOnlyPages = ['gamble'];
+        if (loginOnlyPages.includes(window.location.pathname.split('/')[1])) {
+            window.location.href = '/';
+        }
     }
 };
 
-
+supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_OUT') { toggleLoggedIn(false); }
+    else if (event === 'SIGNED_IN') { toggleLoggedIn(true); }
+});
 
 
 

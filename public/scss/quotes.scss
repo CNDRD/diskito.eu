@@ -8,6 +8,9 @@ main {
     > .f_switch {
         --rows: 3;
         --columns: 3;
+        
+        margin-inline: auto;
+        margin-top: 3rem;
 
         > label > span {
             font-size: .8rem;

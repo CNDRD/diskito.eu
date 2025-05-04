@@ -1,0 +1,180 @@
+@import './_main.scss';
+@import './fancySwitch.scss';
+
+* {
+    box-sizing: border-box;
+}
+
+#top {
+    display: flex;
+    flex-direction: row-reverse;
+    width: fit-content;
+    margin-inline: auto;
+    gap: 2rem;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid $gray-border;
+    padding-bottom: 2rem;
+
+    > #currentBalance {
+        width: fit-content;
+        margin-inline: auto;
+        position: relative;
+        font-size: 2rem;
+        min-width: 15rem;
+
+        &::before {
+            content: 'Balance';
+            position: absolute;
+            top: -1.4rem;
+            left: .1rem;
+            font-weight: 400;
+            color: $gray-border;
+            font-size: 1rem;
+        }
+
+        > #balance {
+            font-variant-numeric: tabular-nums;
+            transition: color 1s cubic-bezier(0.4, 0, 1, 1);
+
+            &.good,
+            &.bad {
+                transition: color .2s cubic-bezier(0.42, 0, 0.28, 1.26);
+            }
+
+            &.good {
+                color: $green-txt;
+            }
+            &.bad {
+                color: $red-txt;
+            }
+        }
+    }
+    > #game-select.f_switch {
+        --rows: 2;
+        --columns: 2;
+        --cell_width: 120px;
+    
+        margin-inline: auto;
+    
+        > label {
+            text-transform: capitalize;
+    
+            &[disabled] {
+                filter: blur(3px);
+            }
+        }
+    
+        &::before {
+            content: 'Pick a game';
+            position: absolute;
+            top: -1.4rem;
+            left: .1rem;
+            font-weight: 400;
+            color: $gray-border;
+        }
+    }
+}
+
+
+
+#game {
+    width: fit-content;
+    margin-inline: auto;
+    margin-block: 3rem;
+
+    &[data-game="coinflip"] {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        align-items: center;
+
+        > #coin {
+            // https://codepen.io/seligmar/pen/RwPNQOd
+            position: relative;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+
+            &[data-disabled="true"] {
+                cursor: wait;
+            }
+
+            > div[data-side] {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                backface-visibility: hidden;
+                background-size: contain;
+                
+                &[data-side="heads"] {
+                    background-image: url('/images/diskito_pfp.jpg');
+                    transform: rotateY(0deg);
+                }
+                &[data-side="tails"] {
+                    background-image: url('/images/ass.png');
+                    transform: rotateY(180deg);
+                }
+            }
+
+            --_start_rotation: 0deg;
+
+            &[data-side="nutin"] {
+                &[data-side-before="tails"] {
+                    transform: rotateY(180deg);
+                    --_start_rotation: 180deg;
+                }
+            }
+
+            &[data-side="heads"] {
+                transform: rotateY(var(--_start_rotation));
+                animation: flip-heads 3s ease-out forwards;
+            }
+            &[data-side="tails"] {
+                transform: rotateY(var(--_start_rotation));
+                animation: flip-tails 3s ease-out forwards;
+            }
+            @keyframes flip-heads {
+                from { transform: rotateY(var(--_start_rotation)); }
+                to { transform: rotateY(1800deg); }
+            }
+            @keyframes flip-tails {
+                from { transform: rotateY(var(--_start_rotation)); }
+                to { transform: rotateY(1980deg); }
+            }
+
+        }
+
+        > input {
+            color: white;
+            background: transparent;
+            border: 1px solid $gray-bg;
+            padding: .5rem 1rem;
+            border-radius: $border-radius;
+            font-size: 1rem;
+            width: 15ch;
+
+            &:focus {
+                outline: none;
+                border: 1px solid $gray-border;
+            }
+            &:disabled {
+                cursor: not-allowed;
+            }
+        }
+
+        > .f_switch {
+            --rows: 1;
+            --columns: 2;
+            margin-inline: auto;
+
+            > label {
+                justify-content: center;
+            }
+        }
+
+    }
+
+}

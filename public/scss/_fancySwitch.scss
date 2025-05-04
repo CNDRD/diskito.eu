@@ -34,8 +34,6 @@
     padding: var(--border);
     gap: var(--border);
     width: fit-content;
-    margin-inline: auto;
-    margin-top: 3rem;
     box-sizing: border-box;
 
     --col: 0;
@@ -91,7 +89,7 @@
             calc( var(--row) * 100% + (var(--border) * (var(--row, 0) + 1)) )
         ;
 
-        transition: translate, outline-color;
+        transition: translate, outline-color, background-color;
         transition-duration: var(--speed);
         transition-timing-function: var(--ease, ease);
         outline: 2px solid transparent;
@@ -114,4 +112,5 @@
     }
 
     :checked + label { --highlight: 1; }
+    :disabled + label { cursor: not-allowed; }
 }
