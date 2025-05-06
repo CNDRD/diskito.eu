@@ -55,6 +55,29 @@ $('#game-select').on('change', function() {
 
 
 function gameCoinflip() {
+    let presetBets = [
+        { show: '1',     value:                  1, },
+        { show: '10',    value:                 10, },
+        { show: '25',    value:                 25, },
+        { show: '50',    value:                 50, },
+        { show: '100',  value:                 100, },
+        { show: '1K',   value:               1_000, },
+        { show: '10K',  value:              10_000, },
+        { show: '100K', value:             100_000, },
+        { show: '1M',   value:           1_000_000, },
+        { show: '10M',  value:          10_000_000, },
+        { show: '100M', value:         100_000_000, },
+        { show: '1B',   value:       1_000_000_000, },
+        { show: '10B',  value:      10_000_000_000, },
+        { show: '100B', value:     100_000_000_000, },
+        { show: '1T',   value:   1_000_000_000_000, },
+        { show: '10T',  value:  10_000_000_000_000, },
+        { show: '100T', value: 100_000_000_000_000, },
+    ];
+    // figure out what the max possible bet for the user is
+    // like if they have 1.5M, then the max bet from presetBets is 1M
+    
+
     $('#game').append(`
 
         <div id="err"></div>
@@ -64,7 +87,10 @@ function gameCoinflip() {
             <div data-side="tails"></div>
         </div>
 
-        <input type="text" id="betAmount" placeholder="Bet amount" />
+        <div id="betAmountParent">
+            <input type="text" id="betAmount" placeholder="Bet amount" />
+            <div id="presets"></div>
+        </div>
 
         <div class="bet-buttons f_switch">
             <input type="radio" name="bet" id="heads" value="heads" />
@@ -89,6 +115,29 @@ function gameCoinflip() {
         }
     );
     
+    function figureOutMaxPresetBets() {
+        let maxBetIndex = 0;
+        for (let i = 0; i < presetBets.length; i++) {
+            if (presetBets[i].value > money) { break; }
+            maxBetIndex = i;
+        }
+
+        // now we get the max bet and three presets before it
+        let presetBetsHtmlList = [];
+        for (let i = maxBetIndex; i >= (maxBetIndex-3); i--) {
+            if (presetBets[i].value > money) { continue; }
+            presetBetsHtmlList.push(`<div class="preset" data-value="${presetBets[i].value}">${presetBets[i].show}</div>`);
+        }
+
+        $('#presets').html(presetBetsHtmlList.reverse().join(''));
+
+        $('#presets > .preset').on('click', function() {
+            betAmountMask.unmaskedValue = this.dataset.value;
+            betAmountMask.updateValue();
+        });
+    };
+    figureOutMaxPresetBets();
+
     function cfAlert(msg) {
         $('#err').text(msg);
         $('#err').addClass('show');
@@ -139,10 +188,13 @@ function gameCoinflip() {
         $('#coin')[0].dataset.side = gambaData.flip;
 
         setTimeout(function(){
+            money = gambaData.money;
             toggleInputs(false);
             $('#coin')[0].dataset.sideBefore = $('#coin')[0].dataset.side;
             $('#coin')[0].dataset.side = 'nutin';
-            showCurrentBalance(gambaData.money, (gambaData.outcome==='W'));
+            showCurrentBalance(money, (gambaData.outcome==='W'));
+            figureOutMaxPresetBets();
+            betAmountMask.updateOptions({ mask: Number, min: 1, max: money });
         }, 3000);
     });
 

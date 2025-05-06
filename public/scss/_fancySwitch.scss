@@ -6,7 +6,7 @@
     --columns: 4;
     --cell_width: 150px;
     --cell_height: 32px;
-    --radius: 8px;
+    --radius: #{$border-radius};
 	--border: 4px;
     --speed: .25s;
     --ease: linear(
@@ -78,7 +78,8 @@
         content: "";
         background: hsl(0 0% 100%);
         position: absolute;
-        border-radius: calc(var(--radius) - var(--border));
+        // border-radius: calc(var(--radius) - var(--border));
+        border-radius: 4px;
         mix-blend-mode: difference;
 
         width: var(--cell_width);
