@@ -193,10 +193,11 @@
                 border-top-left-radius: $border-radius;
                 border-top-right-radius: $border-radius;
                 font-size: 1.4rem;
+                text-align: center;
     
                 &:focus {
                     outline: none;
-                    border: 1px solid $gray-border;
+                    border-color: $gray-bg;
                 }
                 &:disabled {
                     cursor: not-allowed;
