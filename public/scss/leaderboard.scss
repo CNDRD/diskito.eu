@@ -30,6 +30,10 @@ main {
                     font-size: 1.15rem;
                     user-select: none;
                     cursor: pointer;
+
+                    &[data-srt=pfp] {
+                        padding-inline: 0;
+                    }
                 }
             }
         }
@@ -43,11 +47,33 @@ main {
                     padding-inline: 1rem;
                     text-align: right;
 
-                    &[data-what=pfp] > img {
+                    &[data-what=pfp] {
                         padding-inline: 0;
-                        width: 2.5rem;
-                        height: 2.5rem;
-                        border-radius: 50%;
+
+                        > div {
+                            --_pfp-size: 3rem;
+                            --_pfp-deco: .25rem;
+                            position: relative;
+                            width: var(--_pfp-size);
+                            aspect-ratio: 1 / 1;
+
+                            > img {
+                                padding-inline: 0;
+                                width: calc(var(--_pfp-size) - var(--_pfp-deco) * 2);
+                                aspect-ratio: 1 / 1;
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                
+                                &[data-what=pfp] {
+                                    border-radius: 50%;
+                                    padding: var(--_pfp-deco);
+                                }
+                                &[data-what=deco] {
+                                    width: var(--_pfp-size);
+                                }
+                            }
+                        }
                     }
 
                     &[data-what=name] {

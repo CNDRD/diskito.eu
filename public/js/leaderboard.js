@@ -10,10 +10,15 @@ ldrbrd.forEach(user => {
     let username = user.username;
     if (username.slice(-2) == '#0') { username = username.slice(0, -2); }
 
+    let pfpDecoration = user.decorations?.deco ? `<img data-what="deco" src="${user.decorations.deco}" />` : '';
+
     $('main > table > tbody').append(`
         <tr>
             <td data-what="pfp">
-                <img src="${user.avatar}" />
+                <div>
+                    <img data-what="pfp" src="${user.avatar}" />
+                    ${pfpDecoration}
+                </div>
             </td>
 
             <td data-what="name" data-sort="${username}">
@@ -72,7 +77,9 @@ $('[data-srt]').on('click', function() {
 
     let what = $(this).attr('data-srt');
     let dir = $(this).attr('data-dir');
-    if (!dir) { dir = 'asc' }
+    if (!dir) { dir = 'desc' }
+
+    if (what == 'pfp') { return; } // don't sort on pfp
 
     let rows = $('main > table > tbody > tr').get();
 
