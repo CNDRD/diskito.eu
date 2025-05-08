@@ -26,18 +26,6 @@ showCurrentBalance(money);
 
 
 
-// Populate the games table
-let playableGames = ['coinflip'];
-['coinflip', 'dice', 'slots', 'blackjack'].forEach(game => {
-    let disabled = playableGames.includes(game) ? '' : 'disabled';
-    $('#game-select').append(`
-        <input type="radio" name="game" ${disabled} id="${game}" value="${game}" />
-        <label for="${game}" ${disabled}>${game}</label>
-    `);
-});
-
-
-
 $('#game-select').on('change', function() {
     $('#game').empty();
     let game = $(this).find(':checked').val();
@@ -47,6 +35,10 @@ $('#game-select').on('change', function() {
     let gameToFn = {
         coinflip: gameCoinflip,
     };
+
+    $('#currentBalance').show();
+
+    $('main')[0].dataset.game = game;
 
     if (!gameToFn[game]) { return; }
     gameToFn[game]();

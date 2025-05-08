@@ -5,16 +5,72 @@
     box-sizing: border-box;
 }
 
+main {
+    margin-inline: auto;
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    margin-top: 0;
+    transition: all .2s ease-in-out;
+
+    &[data-game="none"] {
+        margin-top: 5rem;
+    }
+}
+
+#game-select.f_switch {
+    --rows: 1;
+    --columns: 2;
+    --cell_width: 120px;
+    transition: all .2s ease-in-out;
+
+    > label {
+        text-transform: capitalize;
+        gap: .5rem;
+        padding-inline: .5rem;
+
+        &[disabled] {
+            filter: blur(3px);
+        }
+        > img {
+            width: 1.5rem;
+            filter: invert(1);
+        }
+    }
+
+    &::before {
+        content: 'Pick a game';
+        position: absolute;
+        top: -1.4rem;
+        left: .1rem;
+        font-weight: 400;
+        color: $gray-border;
+    }
+
+    &:has(input:checked) {
+        --rows: 1;
+        --columns: 1;
+        --col: 0;
+        --row: 0;
+
+        &::before {
+            content: 'Playing';
+        }
+
+        > input:not(:checked) + label {
+            display: none;
+        }
+    }
+
+}
+
 #top {
     display: flex;
-    flex-direction: row-reverse;
+    align-items: flex-start;
     width: fit-content;
     margin-inline: auto;
     gap: 2rem;
     margin-top: 3rem;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid $gray-border;
-    padding-bottom: 2rem;
 
     @media screen and (max-width: $mobile-threshold) {
         flex-direction: column;
@@ -30,8 +86,7 @@
         width: fit-content;
         margin-inline: auto;
         position: relative;
-        font-size: 2rem;
-        min-width: 15rem;
+        font-size: 1.5rem;
 
         &::before {
             content: 'Balance';
@@ -60,30 +115,7 @@
             }
         }
     }
-    > #game-select.f_switch {
-        --rows: 2;
-        --columns: 2;
-        --cell_width: 120px;
     
-        margin-inline: auto;
-    
-        > label {
-            text-transform: capitalize;
-    
-            &[disabled] {
-                filter: blur(3px);
-            }
-        }
-    
-        &::before {
-            content: 'Pick a game';
-            position: absolute;
-            top: -1.4rem;
-            left: .1rem;
-            font-weight: 400;
-            color: $gray-border;
-        }
-    }
 }
 
 

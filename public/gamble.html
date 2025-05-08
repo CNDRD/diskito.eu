@@ -33,15 +33,36 @@
             <a href="" class="toggle-mnu"><span></span></a>
         </nav>
         
-        <div id="top">
-            <div id="currentBalance">
-                <span>★</span>
-                <span id="balance">0</span>
+        <main data-game="none">
+
+            <div id="top">
+                
+                <div id="game-select" class="f_switch hover">
+
+                    <input type="radio" name="game" id="coinflip" value="coinflip" />
+                    <label for="coinflip">
+                        <img src="/icons/poker_chip.svg" />
+                        <span>Coinflip</span>
+                    </label>
+
+                    <input type="radio" name="game" id="mines" value="mines" />
+                    <label disabled for="mines">
+                        <img src="/icons/bomb.svg" />
+                        <span>Mines</span>
+                    </label>
+
+                </div>
+
+                <div id="currentBalance" style="display: none;">
+                    <span>★</span>
+                    <span id="balance">0</span>
+                </div>
+
             </div>
-            <div id="game-select" class="f_switch"></div>
-        </div>
+    
+            <div id="game" data-game="nothing"></div>
 
-        <div id="game" data-game="nothing"></div>
-
+        </main>
+        
     </body>
 </html>
