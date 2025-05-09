@@ -9,7 +9,9 @@ function toggleLoggedIn(inOut) {
     if (inOut) {
         $(".login-btn").addClass("logout").text("Logout");
         $('html').attr('data-logged-in', true);
-        $('<a href="/gamble">Gamble</a>').insertAfter('nav > .links [href="/quotes"]');
+        if (!$('nav > .links a[href="/gamble"]').length) {
+            $('<a href="/gamble">Gamble</a>').insertAfter('nav > .links [href="/quotes"]');
+        }
     }
     else {
         $(".login-btn").removeClass("logout").text("Login");
