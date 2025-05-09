@@ -227,7 +227,7 @@ function gameMines() {
             <div id="playMinesAgane" style="display: none;">Play again</div>
         </div>
 
-        <div id="mines-place">${mineDivs}</div>
+        <div id="mines-place" data-playable="false">${mineDivs}</div>
 
     `);
 
@@ -272,8 +272,6 @@ function gameMines() {
             mines_amount: parseInt($('#minesAmount').val()),
         };
 
-        c('fnData', fnData);
-
         if (!fnData.bet_amount) {
             minesAlert('Please enter a bet amount');
             toggleInputs(false);
@@ -296,9 +294,14 @@ function gameMines() {
 
         gameUUID = gambaData.game_id;
 
+        money -= fnData.bet_amount;
+        showCurrentBalance(money, false);
+
         $('#playMines')[0].dataset.disabled = true;
         $('#playMines').hide();
         $('#cashOut').show();
+        $('#cashOut')[0].dataset.cashingOut = 'false';
+        $('#mines-place')[0].dataset.playable = 'true';
     });
     $('#cashOut').on('click', async function() {
         if (this.dataset.cashingOut == 'true') { return; }
@@ -316,27 +319,44 @@ function gameMines() {
             location.reload();
         }
 
+        if (gambaData?.mine_locations) {
+            gambaData.mine_locations.forEach(mineIndex => {
+                $(`.mine[data-tile-index="${mineIndex}"]`)[0].dataset.type = 'mine';
+            });
+            $('#mines-place > .mine').each(function() {
+                if (this.dataset.type != 'mine') { this.dataset.type = 'safe'; }
+            });
+        }
+
         money = gambaData.user_money;
         showCurrentBalance(money, true);
         toggleInputs(false);
         $('#cashOut').hide();
         $('#playMinesAgane').show();
+        $('#mines-place')[0].dataset.playable = 'false';
     });
     $('#playMinesAgane').on('click', async function() {
         $('#cashOut').hide();
+        $('#cashOut')[0].dataset.cashingOut = 'false';
+        $('#cashOut').text('Cash out');
         $('#playMines')[0].dataset.disabled = false;
         $('#playMines').show();
         $('#playMinesAgane').hide();
         $('#mines-place > .mine').each(function() {
             this.dataset.type = 'none';
             this.dataset.disabled = false;
+            delete this.dataset.multiplier;
         });
+        $('#mines-place')[0].dataset.playable = 'false';
+        gameUUID = '';
+        toggleInputs(false);
     });
 
     $('#mines-place > .mine').on('click', async function() {
         if (!gameUUID) { return; }
         if (this.dataset.disabled == 'true') { return; }
         if (this.dataset.type != 'none') { return; }
+        if ($('#mines-place')[0].dataset.playable == 'false') { return; }
         
         let tileIndex = this.dataset.tileIndex;
         this.dataset.type = 'loading';
@@ -371,6 +391,7 @@ function gameMines() {
         else if (gambaData?.mine == false) {
             this.dataset.type = 'safe';
             this.dataset.disabled = true;
+            this.dataset.multiplier = roundTwo(gambaData.multiplier);
 
             $('#cashOut').show();
             $('#playMines').hide();

@@ -371,6 +371,12 @@ main {
             grid-template-rows: repeat(5, 3rem);
             gap: .5rem;
 
+            &[data-playable="false"] {
+                > .mine {
+                    opacity: .6;
+                }
+            }
+
             > .mine {
                 background-image: url('/images/shrug.png');
                 background-position: center;
@@ -381,9 +387,23 @@ main {
                 cursor: pointer;
                 transition: all .2s ease-in-out;
                 user-select: none;
+                position: relative;
 
                 &[data-disabled="true"] {
                     cursor: default;
+                }
+                &[data-multiplier] {
+                    &::after {
+                        content: attr(data-multiplier) 'x';
+                        bottom: 0;
+                        position: absolute;
+                        width: 64%;
+                        left: 18%;
+                        text-align: center;
+                        backdrop-filter: blur(2px);
+                        font-size: .8rem;
+                        color: black;
+                    }
                 }
 
                 &[data-type="loading"] {
