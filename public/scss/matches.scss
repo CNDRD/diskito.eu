@@ -81,8 +81,7 @@
                 width: fit-content;
                 margin-inline: auto;
 
-                > .datacenter,
-                > .started-at {
+                > .deet {
                     display: flex;
                     align-items: center;
                     gap: .5rem;
@@ -119,4 +118,164 @@
             }
         }
     }
+}
+
+#matchDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    width: fit-content;
+    margin-inline: auto;
+    margin-top: 2rem;
+
+    > #matchRounds {
+        display: flex;
+        gap: .5rem;
+
+        > .round-divider {
+            display: grid;
+            place-items: center;
+            filter: brightness(.5);
+            margin-inline: -.3rem;
+        }
+
+        > .round {
+            display: flex;
+            align-items: flex-start;
+            gap: .25rem;
+            background-color: $yellow-bg;
+            border-radius: $border-radius;
+            padding: .5rem;
+            flex-direction: column;
+            position: relative;
+            height: 5rem;
+            width: 5rem;
+
+            &[data-vi-von="true"] {
+                background-color: $green-bg;
+            }
+
+            > .role-icon {
+                height: 5rem;
+                position: absolute;
+                left: .25rem;
+                top: .5rem;
+                z-index: 1;
+            }
+            > .info {
+                margin-top: auto;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: .2rem;
+                z-index: 10;
+                cursor: default;
+                user-select: none;
+
+                > .time {
+                    text-align: end;
+                    padding-right: .25rem;
+                }
+
+                > .survivors {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+
+                    > .attack,
+                    > .defend {
+                        display: flex;
+                    }
+                }
+            }
+        }
+    }
+
+    > #playerStats {
+        display: flex;
+        flex-direction: column;
+        gap: .2rem;
+
+        > .team-divider {
+            background-color: $login-btn-bg;
+            height: 3px;
+            margin-block: 5px;
+        }
+
+        > .header,
+        > .player {
+            display: grid;
+            grid-template-columns: 3rem 10rem 3rem 5rem 5rem 3px 5rem 3.2rem;
+            justify-content: space-evenly;
+            gap: .5rem;
+        }
+
+        > .header {
+            justify-items: center;
+        }
+
+        > .player {
+            align-items: center;
+
+            > .avatar {
+                width: 100%;
+            }
+
+            > .name {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                > .persona {
+                    font-size: .9rem;
+                    color: $main-txt-dark;
+                }
+            }
+
+            > .rank {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                > img {
+                    width: 75%;
+                }
+                > .rank-points {
+                    font-size: .8rem;
+                    color: $main-txt-dark;
+                }
+            }
+
+            > .ranked-kd,
+            > .ranked-wl,
+            > .game-kda {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                > .main {
+                    font-weight: bold;
+                    font-style: italic;
+                }
+                > .smol-dark {
+                    font-size: .8rem;
+                    color: $main-txt-dark;
+                }
+            }
+
+            > .score {
+                text-align: end;
+                font-variant-numeric: tabular-nums;
+            }
+
+            > .divider {
+                height: 100%;
+                width: 3px;
+                background-color: $login-btn-bg;
+            }
+        }
+    }
+
 }
