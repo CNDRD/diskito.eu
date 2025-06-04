@@ -10,6 +10,11 @@
     margin-top: 3rem;
     position: relative;
 
+    @media (max-width: $mobile-threshold) {
+        grid-template-columns: repeat(2, 15rem);
+        gap: .5rem;
+    }
+
     &::before {
         content: 'Matches';
         position: absolute;
