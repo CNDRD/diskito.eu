@@ -15,11 +15,11 @@ let maps = {
     kafe:          { owId: '0000000000000000', name: 'Kafe',           src: '/images/maps/kafe.png'           },
     kanal:         { owId: '00000000570932C9', name: 'Kanal',          src: '/images/maps/kanal.png'          },
     lair:          { owId: '0000005A5AF8ECF7', name: 'Lair',           src: '/images/maps/lair.png'           },
-    nhvnlabs:      { owId: '0000000000000000', name: 'NHVN Labs',      src: '/images/maps/nighthavenlabs.png' },
+    nhvnlabs:      { owId: '00000058260EEFB3', name: 'NHVN Labs',      src: '/images/maps/nighthavenlabs.png' },
     oregon:        { owId: '00000035F2901CF4', name: 'Oregon',         src: '/images/maps/oregon.png'         },
     outback:       { owId: '0000000000000000', name: 'Outback',        src: '/images/maps/outback.png'        },
-    skyscraper:    { owId: '0000000000000000', name: 'Skyscraper',     src: '/images/maps/skyscraper.png'     },
-    themepark:     { owId: '0000000000000000', name: 'Theme Park',     src: '/images/maps/themepark.png'      },
+    skyscraper:    { owId: '0000004053835E1E', name: 'Skyscraper',     src: '/images/maps/skyscraper.png'     },
+    themepark:     { owId: '0000002E8679C826', name: 'Theme Park',     src: '/images/maps/themepark.png'      },
     villa:         { owId: '0000000000000000', name: 'Villa',          src: '/images/maps/villa.png'          },
 };
 
