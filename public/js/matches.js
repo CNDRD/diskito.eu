@@ -301,7 +301,7 @@ async function showOneMatch(mid) {
         let stats = matchData.stats[uuid];
         let rosterData = matchData.roster[uuidToRosterId[uuid]];
 
-        if (idx === 5) { $('#playerStats').append('<div class="team-divider" style="order:50000;"></div>'); }
+        if (idx === 5) { $('#playerStats').append('<div class="team-divider" style="order:60000;"></div>'); }
 
         let kdRanked = stats.ranked.deaths == 0 ? stats.ranked.kills : roundTwo(stats.ranked.kills / stats.ranked.deaths);
         let wlRanked = stats.ranked.losses == 0 ? 0 : roundTwo(stats.ranked.wins / (stats.ranked.wins + stats.ranked.losses) * 100);
