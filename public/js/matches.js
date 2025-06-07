@@ -8,7 +8,7 @@ let maps = {
     bank:          { owId: '0000000000000000', name: 'Bank',           src: '/images/maps/bank.png'           },
     border:        { owId: '0000000000000000', name: 'Border',         src: '/images/maps/border.png'         },
     chalet:        { owId: '0000003C7E4A5A5D', name: 'Chalet',         src: '/images/maps/chalet.png'         },
-    clubhouse:     { owId: '0000000000000000', name: 'Club House',     src: '/images/maps/clubhouse.png'      },
+    clubhouse:     { owId: '0000000031E6DF85', name: 'Club House',     src: '/images/maps/clubhouse.png'      },
     coastline:     { owId: '00000009CCC3D997', name: 'Coastline',      src: '/images/maps/coastline.png'      },
     consulate:     { owId: '0000000000000000', name: 'Consulate',      src: '/images/maps/consulate.png'      },
     emeraldplains: { owId: '000000550CA6FED4', name: 'Emerald Plains', src: '/images/maps/emeraldplains.png'  },
