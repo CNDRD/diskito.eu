@@ -25,9 +25,22 @@ let maps = {
 
 
 
+let rosterIdToUuid = {};
+let uuidToRosterId = {};
 let matchId = new URLSearchParams(window.location.search).get('match');
 if (matchId) {
-    await showOneMatch(matchId);
+    let { data: matchData } = await supabase.from('siege_matches').select('*').eq('id', matchId).single();
+    showOneMatch(matchData);
+
+    supabase
+        .channel(`match_updates_${matchId}`)
+        .on(
+            'postgres_changes',
+            { event: '*', schema: 'public', table: 'siege_matches', filter: `id=eq.${matchId}` },
+            (payload) => { updateOneMatch(payload.new); }
+        )
+        .subscribe()
+
 }
 else {
     await listAllMatches();
@@ -137,6 +150,144 @@ function _getRankImageFromRankId(id) {
     return rank_dict[id] ? `https://i.imgur.com/${rank_dict[id]}.png` : rank_dict[0];
 };
 
+function om_getRosterOrder(team, score) {
+    return `${team}${50_000 - score}`;
+};
+function om_drawRounds(roundsData) {
+    $('#matchRounds').empty().show();
+
+    let roundCounter = 0; // to keep track of the round number
+    roundsData.forEach((round, idx) => {
+        // only process round_end events unless the round_start is the last event
+        // that means the round is in progress
+        if (round.type !== 'round_end' && idx !== roundsData.length - 1) {
+            return;
+        }
+        roundCounter++;
+
+        let winnerRole = round.win_role;
+        let loserRole = winnerRole == 'Defender' ? 'Attacker' : 'Defender';
+
+        let imgDef = '/images/siege_def.png';
+        let imgAtk = '/images/siege_atk.png';
+
+        let viVon = round.round_won;
+        let ourRole = viVon ? winnerRole : loserRole;
+        let ourRoleImg = ourRole == 'Defender' ? imgDef : imgAtk;
+        ourRoleImg = ourRoleImg.replace('.png', '_shadow.png');
+
+        let roundTimeMinutes = 0;
+        let roundTimeSeconds = 0;
+
+        if (round.type === 'round_start') {
+            viVon = 'in_progress';
+
+            let currentTime = Math.floor((new Date() - new Date(round.time)) / 1000);
+            roundTimeMinutes = Math.floor(currentTime / 60);
+            roundTimeSeconds = currentTime % 60;
+        }
+        else {
+            let roundStart = new Date(roundsData[idx-1].time);
+            let roundEnd = new Date(round.time);
+            let roundDuration = Math.floor((roundEnd - roundStart) / 1000); // in seconds
+            roundTimeMinutes = Math.floor(roundDuration / 60);
+            roundTimeSeconds = roundDuration % 60;
+        }
+
+        // after 3rd, 6th, 7th and 8th rounds add a divider
+        if ([4, 7, 8, 9].includes(roundCounter) && round.type === 'round_end') {
+            $('#matchRounds').append(`<div class="round-divider"><img src="/icons/matches_swap.svg" /></div>`);
+        }
+
+        let bottomPart = '';
+        if (round.type === 'round_end') {
+            bottomPart = `
+                <div class="survivors" title="Survivors">
+                    <span class="attack">
+                        <img src="${imgAtk}" />
+                        <span class="atk">${round.surv_attack}</span>
+                    </span>
+                    <span class="defend">
+                        <img src="${imgDef}" />
+                        <span class="def">${round.surv_def}</span>
+                    </span>
+                </div>
+            `;
+        }
+
+        $('#matchRounds').append(`
+            <div class="round" data-vi-von="${viVon}" data-round="${idx + 1}">
+                <img src="${ourRoleImg}" class="role-icon" />
+                <div class="info">
+                    <div class="time" title="Round playtime">
+                        ${roundTimeMinutes}m ${roundTimeSeconds}s
+                    </div>
+                    ${bottomPart}
+                </div>
+            </div>
+        `);
+
+        if (round.type === 'round_start') {
+            // every second update the round time
+            let roundElement = $(`.round[data-round="${idx + 1}"]`);
+            let roundInterval = setInterval(() => {
+                if (roundElement.length === 0) {
+                    clearInterval(roundInterval);
+                    return;
+                }
+
+                let currentTime = Math.floor((new Date() - new Date(round.time)) / 1000);
+                let minutes = Math.floor(currentTime / 60);
+                let seconds = currentTime % 60;
+
+                roundElement.find('.time').text(`${minutes}m ${seconds}s`);
+            }, 1000);
+        }
+
+    });
+
+};
+function om_drawMatchInfo(matchData) {
+    c(matchData);
+
+    let matchInfoDiv = $('#matchInfo');
+    let mapInfo = getMapByOwId(matchData.info?.map);
+
+    matchInfoDiv.find('.map-name').text(mapInfo.name);
+    matchInfoDiv.find('.map-image').attr('src', mapInfo.src);
+
+    // score
+    matchInfoDiv.find('.score > .num.us').text(matchData.score.us);
+    matchInfoDiv.find('.score > .num.them').text(matchData.score.them);
+
+    // playtime
+    let lastRound = matchData.round_start_end[matchData.round_start_end.length - 1];
+    let matchStart = new Date(matchData.created_at);
+    let matchEnd = matchData.finished ? new Date(lastRound.time) : new Date();
+
+    let matchDuration = Math.floor((matchEnd - matchStart) / 1000); // in seconds
+    let matchDurationMinutes = Math.floor(matchDuration / 60);
+    let matchDurationSeconds = matchDuration % 60;
+
+    matchInfoDiv.find('.playtime').text(`${matchDurationMinutes}m ${matchDurationSeconds}s`);
+
+    if (!matchData.finished) {
+        // update the timer every second
+        setInterval(() => {
+            if (!matchData.finished) {
+                let currentTime = Math.floor((new Date() - matchStart) / 1000);
+                let minutes = Math.floor(currentTime / 60);
+                let seconds = currentTime % 60;
+                matchInfoDiv.find('.playtime').text(`${minutes}m ${seconds}s`);
+            } else {
+                clearInterval(timerInterval);
+            }
+        }, 1000);
+    }
+
+};
+
+
 async function listAllMatches() {
 
     $('#matchesList').empty().show().append(spinner());
@@ -160,9 +311,6 @@ async function listAllMatches() {
         matchTags.push(`<span class="tag match-score">${match.score.us} - ${match.score.them}</span>`);
 
         let mapInfo = getMapByOwId(match.info.map);
-        if (mapInfo.name === 'Unknown') {
-            matchTags.push(`<span class="tag unknown-map">Unknown Map</span>`);
-        }
 
         matchesHtml += `
             <div class="match">
@@ -190,78 +338,17 @@ async function listAllMatches() {
     $('#matchesList').empty().append(matchesHtml);
 
 };
-async function showOneMatch(mid) {
-    let { data: matchData } = await supabase.from('siege_matches').select('*').eq('id', mid).single();
+function showOneMatch(matchData) {
     $('#matchDetails').show();
 
-
+    om_drawMatchInfo(matchData);
 
     // Rounds info
     if (matchData.round_start_end.length > 0) {
-        let roundTimes = {};  // round_id: seconds
-
-        let lastRoundStart = null;
-        matchData.round_start_end.forEach(round => {
-            if (round.type === 'round_start') {
-                lastRoundStart = round.time;
-            }
-            if (round.type === 'round_end' && lastRoundStart) {
-                roundTimes[Object.keys(roundTimes).length + 1] = Math.floor((new Date(round.time) - new Date(lastRoundStart)) / 1000);
-                lastRoundStart = null;
-            }
-        });
-
-        let roundEnds = matchData.round_start_end.filter(round => round.type === 'round_end');
-        roundEnds.forEach((round, idx) => {
-            let winnerRole = round.win_role;
-            let loserRole = winnerRole == 'Defender' ? 'Attacker' : 'Defender';
-
-            let imgDef = '/images/siege_def.png';
-            let imgAtk = '/images/siege_atk.png';
-
-            let viVon = round.round_won;
-            let ourRole = viVon ? winnerRole : loserRole;
-            let ourRoleImg = ourRole == 'Defender' ? imgDef : imgAtk;
-            ourRoleImg = ourRoleImg.replace('.png', '_shadow.png');
-
-            let roundTimeMinutes = Math.floor(roundTimes[idx + 1] / 60);
-            let roundTimeSeconds = roundTimes[idx + 1] % 60;
-
-            // after 3rd, 6th, 7th and 8th rounds add a divider
-            if ([3, 6, 7, 8].includes(idx)) {
-                $('#matchRounds').append(`<div class="round-divider"><img src="/icons/matches_swap.svg" /></div>`);
-            }
-
-            $('#matchRounds').append(`
-                <div class="round" data-vi-von="${viVon}" data-round="${idx + 1}">
-                    <img src="${ourRoleImg}" class="role-icon" />
-                    <div class="info">
-                        <div class="time" title="Round playtime">
-                            ${roundTimeMinutes}m ${roundTimeSeconds}s
-                        </div>
-                        <div class="survivors" title="Survivors">
-                            <span class="attack">
-                                <img src="${imgAtk}" />
-                                <span class="atk">${round.surv_attack}</span>
-                            </span>
-                            <span class="defend">
-                                <img src="${imgDef}" />
-                                <span class="def">${round.surv_def}</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            `);
-
-        });
-
+        om_drawRounds(matchData.round_start_end);
     }
 
-
-
-
-
-    let rosterIdToUuid = {};
+    // figure out who from the roster is who in the match
     let allUuidsRoster = [...matchData.team_uuids_enemy, ...matchData.team_uuids_us];
     Object.entries(matchData.roster).forEach(([rosterId, rosterData]) => {
         let rosterNameParsedParsed = rosterData.name_parsed.replace(/(\[.*\])/, '').trim();
@@ -292,7 +379,6 @@ async function showOneMatch(mid) {
     }
 
     // Create a reverse mapping from UUID to roster ID
-    let uuidToRosterId = {};
     Object.entries(rosterIdToUuid).forEach(([rosterId, uuid]) => { uuidToRosterId[uuid] = rosterId; });
 
 
@@ -314,7 +400,7 @@ async function showOneMatch(mid) {
             kdGame = rosterData.kills == 0 ? 0 : roundTwo(rosterData.kills / rosterData.deaths);
             kdaGame = `${rosterData.kills} / ${rosterData.deaths} / ${rosterData.assists}`;
             scoreGame = rosterData.score || 0;
-            styleOrder = `order: ${rosterData.team}${50_000 - rosterData.score};`;
+            styleOrder = `order: ${om_getRosterOrder(rosterData.team, rosterData.score)};`;
 
             if (kdGame === Infinity) {
                 kdGame = '∞';
@@ -346,6 +432,11 @@ async function showOneMatch(mid) {
                     <span class="smol-dark">${addSpaces(stats.ranked.wins)} / ${addSpaces(stats.ranked.losses)}</span>
                 </div>
 
+                <div class="links">
+                    <a target="_blank" href="https://r6.tracker.network/r6siege/profile/ubi/${uuid}">TRN</a>
+                    <a target="_blank" href="https://stats.cc/siege/-/${uuid}">s.cc</a>
+                </div>
+
                 <div class="divider"></div>
 
                 <div class="game-kda">
@@ -363,4 +454,38 @@ async function showOneMatch(mid) {
     });
 
 };
+
+function updateOneMatch(matchData) {
+
+    om_drawMatchInfo(matchData);
+
+    if (matchData.round_start_end) {
+        om_drawRounds(matchData.round_start_end);
+    }
+
+    if (matchData.roster) {
+        [...matchData.team_uuids_enemy, ...matchData.team_uuids_us].forEach(uuid => {
+            let playerRow = $(`.player[data-player-stats="${uuid}"]`);
+            if (playerRow.length === 0) return; // Player row not found, skip
+
+            let rosterStats = matchData.roster[uuidToRosterId[uuid]];
+
+            let kdGame = rosterStats.kills == 0 ? 0 : roundTwo(rosterStats.kills / rosterStats.deaths);
+            if (kdGame === Infinity) { kdGame = '∞'; }
+
+            let kdaGame = `${rosterStats.kills || 0} / ${rosterStats.deaths || 0} / ${rosterStats.assists || 0}`;
+
+
+
+            playerRow.find('.game-kda > .main').text(kdGame);
+            playerRow.find('.game-kda > .smol-dark').text(kdaGame);
+
+            playerRow.find('.score').text(addSpaces(rosterStats.score || 0, ','));
+
+            playerRow.css('order', om_getRosterOrder(rosterStats.team, rosterStats.score));
+        });
+    }
+
+};
+
 

@@ -128,11 +128,52 @@
 #matchDetails {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     align-items: center;
     width: fit-content;
     margin-inline: auto;
-    margin-top: 2rem;
+    margin-block: 2rem 5rem;
+
+    > #matchInfo {
+        width: 25rem;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1rem;
+        background-color: $gray-bg;
+        border-radius: 7px;
+
+        > .map-image {
+            width: 100%;
+            border-radius: 7px;
+        }
+
+        > .data {
+            padding: .7rem;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            > .score {
+                display: flex;
+                align-items: center;
+                gap: .3rem;
+
+                > .num {
+                    font-size: 3rem;
+                    font-weight: bold;
+                    font-style: italic;
+                }
+                > .dvdr {
+                    font-size: 2rem;
+                    font-weight: bold;
+                    font-style: italic;
+                    color: $main-txt-dark;
+                }
+            }
+        }
+    }
 
     > #matchRounds {
         display: flex;
@@ -154,17 +195,20 @@
             padding: .5rem;
             flex-direction: column;
             position: relative;
-            height: 5rem;
-            width: 5rem;
+            height: 4rem;
+            width: 4rem;
 
             &[data-vi-von="true"] {
-                background-color: $green-bg;
+                background-color: #10281b;
+            }
+            &[data-vi-von="false"] {
+                background-color: #2e1212;
             }
 
             > .role-icon {
-                height: 5rem;
+                height: 4rem;
                 position: absolute;
-                left: .25rem;
+                left: .3rem;
                 top: .5rem;
                 z-index: 1;
             }
@@ -180,7 +224,7 @@
 
                 > .time {
                     text-align: end;
-                    padding-right: .25rem;
+                    font-size: .9rem;
                 }
 
                 > .survivors {
@@ -211,13 +255,24 @@
         > .header,
         > .player {
             display: grid;
-            grid-template-columns: 3rem 10rem 3rem 5rem 5rem 3px 5rem 3.2rem;
+            grid-template-columns: 3rem 10rem 3rem 5rem 5rem 5rem 3px 5rem 3.2rem;
             justify-content: space-evenly;
             gap: .5rem;
         }
 
         > .header {
             justify-items: center;
+
+            > span {
+                color: $main-txt-dark;
+                font-style: italic;
+                text-transform: uppercase;
+                text-align: start;
+
+                &:nth-of-type(2) {
+                    justify-self: start;
+                }
+            }
         }
 
         > .player {
@@ -267,6 +322,24 @@
                 > .smol-dark {
                     font-size: .8rem;
                     color: $main-txt-dark;
+                }
+            }
+
+            > .links {
+                display: flex;
+                flex-wrap: wrap;
+                font-size: .8rem;
+                flex-direction: column;
+                align-items: center;
+
+                > a {
+                    color: $main-txt-dark;
+                    text-decoration: none;
+                    transition: color .2s;
+
+                    &:hover {
+                        color: $main-txt-hover;
+                    }
                 }
             }
 
