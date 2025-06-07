@@ -39,11 +39,20 @@ if (matchId) {
             { event: '*', schema: 'public', table: 'siege_matches', filter: `id=eq.${matchId}` },
             (payload) => { updateOneMatch(payload.new); }
         )
-        .subscribe()
+        .subscribe();
 
 }
 else {
     await listAllMatches();
+
+    supabase
+        .channel(`match_updates_all`)
+        .on(
+            'postgres_changes',
+            { event: '*', schema: 'public', table: 'siege_matches' },
+            (payload) => { updateOneMatchInList(payload); }
+        )
+        .subscribe();
 }
 
 
@@ -313,14 +322,14 @@ async function listAllMatches() {
         let mapInfo = getMapByOwId(match.info.map);
 
         matchesHtml += `
-            <div class="match">
-                <img src="${mapInfo.src}" />
+            <div class="match" data-match-id="${match.id}">
+                <img class="map-image" src="${mapInfo.src}" />
                 <div class="match-info">
                     <div class="tags">${matchTags.join('')}</div>
                     <div class="match-details">
                         <div class="deet">
                             <img src="/icons/matches_globe.svg" />
-                            <span>${mapInfo.name}</span>
+                            <span class="map-name">${mapInfo.name}</span>
                         </div>
                         <div class="deet">
                             <img src="/icons/matches_clock.svg" />
@@ -337,7 +346,38 @@ async function listAllMatches() {
     });
     $('#matchesList').empty().append(matchesHtml);
 
+}
+function updateOneMatchInList(payload) {
+
+    if (payload.eventType === 'INSERT') {
+        // am lazy, just reload the page
+        window.location.reload();
+    }
+    if (payload.eventType === 'DELETE') {
+        // we dont care about deletes
+        return;
+    }
+
+    let matchData = payload.new;
+    if (!matchData.id) { return; }
+
+    let matchElement = $(`.match[data-match-id="${matchData.id}"]`);
+
+    matchElement.find('.match-info > .tags > .match-score').text(`${matchData.score.us} - ${matchData.score.them}`);
+    matchElement.find('.map-image').attr('src', getMapByOwId(matchData.info.map).src);
+    matchElement.find('.map-name').text(getMapByOwId(matchData.info.map).name);
+
+    let inProgressTagExists = matchElement.find('.match-info > .tags > .match-in-progress').length > 0;
+
+    if (matchData.finished && inProgressTagExists) {
+        // match has just finished
+        let viVon = matchData.score.us > matchData.score.them;
+        matchElement.find('.match-info > .tags > .match-in-progress').remove();
+        matchElement.find('.match-info > .tags').append(`<span class="tag ${viVon ? 'match-won' : 'match-lost'}">${viVon ? 'Won' : 'Lost'}</span>`);
+    }
+
 };
+
 function showOneMatch(matchData) {
     $('#matchDetails').show();
 
@@ -487,5 +527,3 @@ function updateOneMatch(matchData) {
     }
 
 };
-
-
