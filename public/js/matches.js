@@ -6,7 +6,7 @@ import { _getRankImageFromRankName } from './siege.js';
 let maps = {
     bartlett:      { owId: '0000000000000000', name: 'Unknown',        src: '/images/maps/shooting_range.jpg' },
     bank:          { owId: '00000052C53F0506', name: 'Bank',           src: '/images/maps/bank.png'           },
-    border:        { owId: '0000000000000000', name: 'Border',         src: '/images/maps/border.png'         },
+    border:        { owId: '000000473DCA77EF', name: 'Border',         src: '/images/maps/border.png'         },
     chalet:        { owId: '0000003C7E4A5A5D', name: 'Chalet',         src: '/images/maps/chalet.png'         },
     clubhouse:     { owId: '0000000031E6DF85', name: 'Club House',     src: '/images/maps/clubhouse.png'      },
     coastline:     { owId: '00000009CCC3D997', name: 'Coastline',      src: '/images/maps/coastline.png'      },
