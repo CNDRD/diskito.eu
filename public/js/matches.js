@@ -5,7 +5,7 @@ import { _getRankImageFromRankName } from './siege.js';
 
 let maps = {
     bartlett:      { owId: '0000000000000000', name: 'Unknown',        src: '/images/maps/shooting_range.jpg' },
-    bank:          { owId: '0000000000000000', name: 'Bank',           src: '/images/maps/bank.png'           },
+    bank:          { owId: '00000052C53F0506', name: 'Bank',           src: '/images/maps/bank.png'           },
     border:        { owId: '0000000000000000', name: 'Border',         src: '/images/maps/border.png'         },
     chalet:        { owId: '0000003C7E4A5A5D', name: 'Chalet',         src: '/images/maps/chalet.png'         },
     clubhouse:     { owId: '0000000031E6DF85', name: 'Club House',     src: '/images/maps/clubhouse.png'      },
@@ -17,7 +17,7 @@ let maps = {
     lair:          { owId: '0000005A5AF8ECF7', name: 'Lair',           src: '/images/maps/lair.png'           },
     nhvnlabs:      { owId: '00000058260EEFB3', name: 'NHVN Labs',      src: '/images/maps/nighthavenlabs.png' },
     oregon:        { owId: '00000035F2901CF4', name: 'Oregon',         src: '/images/maps/oregon.png'         },
-    outback:       { owId: '0000000000000000', name: 'Outback',        src: '/images/maps/outback.png'        },
+    outback:       { owId: '000000546CF2DD4F', name: 'Outback',        src: '/images/maps/outback.png'        },
     skyscraper:    { owId: '0000004053835E1E', name: 'Skyscraper',     src: '/images/maps/skyscraper.png'     },
     themepark:     { owId: '0000002E8679C826', name: 'Theme Park',     src: '/images/maps/themepark.png'      },
     villa:         { owId: '0000000000000000', name: 'Villa',          src: '/images/maps/villa.png'          },
