@@ -383,10 +383,10 @@ async function showOneMatch(matchData) {
     $('#matchDetails').show();
 
     let bothTeamUuids = [...matchData.team_uuids_enemy, ...matchData.team_uuids_us];
-    let { data: markedPlayersDb } = await supabase.from('siege_marked_players').select('player, type').in('player', bothTeamUuids).select('*')
+    let { data: markedPlayersDb } = await supabase.from('siege_marked_players').select('id, player, type').in('player', bothTeamUuids).select('*')
     let markedPlayers = {};
-    bothTeamUuids.forEach(uuid => { markedPlayers[uuid] = []; }); // initialize all players with empty array
-    markedPlayersDb.forEach(markedPlayer => { markedPlayers[markedPlayer.player].push(markedPlayer.type); });
+    bothTeamUuids.forEach(uuid => { markedPlayers[uuid] = {}; }); // initialize all players with empty array
+    markedPlayersDb.forEach(markedPlayer => { markedPlayers[markedPlayer.player][markedPlayer.type] = markedPlayer.id; });
 
     om_drawMatchInfo(matchData);
 
@@ -463,9 +463,9 @@ async function showOneMatch(matchData) {
             markHtml = `
                 <div class="divider"></div>
                 <div class="mark" data-mark-uuid="${uuid}">
-                    <img data-mark-type="cheater" data-marked="${markedPlayers[uuid]?.includes('cheater')}" src="/icons/matches_flag.svg" />
-                    <img data-mark-type="stoopid" data-marked="${markedPlayers[uuid]?.includes('stoopid')}" src="/icons/matches_intelligence.svg" />
-                    <img data-mark-type="good"    data-marked="${markedPlayers[uuid]?.includes('good')}"    src="/icons/matches_heart.svg" />
+                    <img data-mark-type="cheater" data-marked="${'cheater' in markedPlayers[uuid]}" data-marked-id="${markedPlayers[uuid]?.cheater || 0}" src="/icons/matches_flag.svg" />
+                    <img data-mark-type="stoopid" data-marked="${'stoopid' in markedPlayers[uuid]}" data-marked-id="${markedPlayers[uuid]?.stoopid || 0}" src="/icons/matches_intelligence.svg" />
+                    <img data-mark-type="good"    data-marked="${'good' in markedPlayers[uuid]}"    data-marked-id="${markedPlayers[uuid]?.good || 0}"    src="/icons/matches_heart.svg" />
                 </div>
             `;
         }
@@ -526,8 +526,29 @@ async function showOneMatch(matchData) {
             this.dataset.marked = 'loading';
             
             let { data: changeMarkData } = await supabase.rpc('sm_mark_player', { prm_player: this.parentElement.dataset.markUuid, prm_type: this.dataset.markType });
-            this.dataset.marked = changeMarkData.ok ? changeMarkData.added : datasetBefore;
+            
+            // only handle the error, the rest is handled by the realtime listener
+            if (!changeMarkData.ok) { this.dataset.marked = datasetBefore; }
         });
+
+        // also create a realtime listener for marked players and update the UI accordingly
+        supabase
+            .channel(`marked_players_match_${matchData.id}`)
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'siege_marked_players' },
+                (payload) => {
+                    if (payload.eventType === 'DELETE') {
+                        $(`[data-mark-type][data-marked-id="${payload.old.id}"]`)[0].dataset.marked = 'false';
+                    }
+                    else if (payload.eventType === 'INSERT') {
+                        let markImg = $(`[data-mark-uuid="${payload.new.player}"] > [data-mark-type="${payload.new.type}"]`)[0];
+                        markImg.dataset.marked = 'true';
+                        markImg.dataset.markedId = payload.new.id || 0;
+                    }
+                }
+            )
+            .subscribe();
     }
 
 };
