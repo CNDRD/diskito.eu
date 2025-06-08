@@ -24,11 +24,14 @@ let maps = {
 };
 
 
-
+let hasAccInDiskito = null;
 let rosterIdToUuid = {};
 let uuidToRosterId = {};
 let matchId = new URLSearchParams(window.location.search).get('match');
 if (matchId) {
+    let { data: hasAcc } = await supabase.rpc('sm_has_game_acc');
+    hasAccInDiskito = hasAcc;
+
     let { data: matchData } = await supabase.from('siege_matches').select('*').eq('id', matchId).single();
     showOneMatch(matchData);
 
@@ -421,6 +424,10 @@ function showOneMatch(matchData) {
 
 
     // Player Stats
+    if (hasAccInDiskito) {
+        $('#playerStats').addClass('auth');
+        $('#playerStats > .header').append('<span></span><span>Mark</span>');
+    }
     [...matchData.team_uuids_enemy, ...matchData.team_uuids_us].forEach((uuid, idx) => {
         let stats = matchData.stats[uuid];
         let rosterData = matchData.roster[uuidToRosterId[uuid]];
@@ -443,6 +450,18 @@ function showOneMatch(matchData) {
             if (kdGame === Infinity) {
                 kdGame = '∞';
             }
+        }
+
+        let markHtml = '';
+        if (hasAccInDiskito) {
+            markHtml = `
+                <div class="divider"></div>
+                <div class="mark" data-mark-uuid="${uuid}">
+                    <img data-mark-type="cheater" data-marked="false" src="/icons/matches_flag.svg" />
+                    <img data-mark-type="stoopid" data-marked="false" src="/icons/matches_intelligence.svg" />
+                    <img data-mark-type="good"    data-marked="false" src="/icons/matches_heart.svg" />
+                </div>
+            `;
         }
 
         $('#playerStats').append(`
@@ -486,13 +505,23 @@ function showOneMatch(matchData) {
                     ${addSpaces(scoreGame, ',')}
                 </div>
 
+                ${markHtml}
+
             </div>
         `)
 
     });
 
-};
+    if (hasAccInDiskito) {
+        $('[data-mark-type]').on('click', async function() {
+            if (this.dataset.marked == 'loading') return;
+            let datasetBefore = this.dataset.marked == 'true';
+            this.dataset.marked = 'loading';
+            setTimeout(() => { this.dataset.marked = !datasetBefore; }, 1000);
+        });
+    }
 
+};
 function updateOneMatch(matchData) {
 
     om_drawMatchInfo(matchData);

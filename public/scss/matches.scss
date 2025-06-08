@@ -132,7 +132,7 @@
     align-items: center;
     width: fit-content;
     margin-inline: auto;
-    margin-block: 2rem 5rem;
+    margin-block: 5px 2rem;
 
     > #matchInfo {
         width: 25rem;
@@ -252,10 +252,20 @@
             margin-block: 5px;
         }
 
+        --_grid_cols: 3rem 10rem 3rem 5rem 5rem 5rem 3px 5rem 3.7rem;
+        --_grid_cols_auth: var(--_grid_cols) 3px 5rem;
+
+        &.auth {
+            > .header,
+            > .player {
+                grid-template-columns: var(--_grid_cols_auth);
+            }
+        }
+
         > .header,
         > .player {
             display: grid;
-            grid-template-columns: 3rem 10rem 3rem 5rem 5rem 5rem 3px 5rem 3.2rem;
+            grid-template-columns: var(--_grid_cols);
             justify-content: space-evenly;
             gap: .5rem;
         }
@@ -346,6 +356,43 @@
             > .score {
                 text-align: end;
                 font-variant-numeric: tabular-nums;
+                padding-right: .3rem;
+            }
+
+            > .mark {
+                display: flex;
+                justify-content: center;
+
+                > img {
+                    cursor: pointer;
+                    transition: all .2s;
+                    width: 24px;
+                    box-sizing: border-box;
+                    overflow: hidden;
+
+                    &[data-marked="false"] {
+                        filter: opacity(.5);
+                        &:hover {
+                            filter: opacity(1);
+                        }
+                        &:active {
+                            filter: opacity(.7);
+                        }
+                    }
+                    &[data-marked="loading"] {
+                        background: url(/images/box.gif) no-repeat;
+                        background-size: contain;
+                        display: block;
+                        padding-left: 24px;
+                    }
+                    &[data-marked="true"] {
+                        filter: brightness(0) saturate(100%) invert(32%) sepia(100%) saturate(3973%) hue-rotate(337deg) brightness(90%) contrast(92%);
+                        &:hover {
+                            opacity: .6;
+                        }
+                    }
+
+                }
             }
 
             > .divider {
