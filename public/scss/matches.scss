@@ -383,7 +383,8 @@
                         background: url(/images/box.gif) no-repeat;
                         background-size: contain;
                         display: block;
-                        padding-left: 24px;
+                        padding-left: 12px;
+                        padding-right: 12px;
                     }
                     &[data-marked="true"] {
                         filter: brightness(0) saturate(100%) invert(32%) sepia(100%) saturate(3973%) hue-rotate(337deg) brightness(90%) contrast(92%);
