@@ -521,6 +521,8 @@ async function showOneMatch(matchData) {
     if (hasAccInDiskito) {
         $('[data-mark-type]').on('click', async function() {
             if (this.dataset.marked == 'loading') return;
+            
+            let datasetBefore = this.dataset.marked == 'true';
             this.dataset.marked = 'loading';
             
             let { data: changeMarkData } = await supabase.rpc('sm_mark_player', { prm_player: this.parentElement.dataset.markUuid, prm_type: this.dataset.markType });
