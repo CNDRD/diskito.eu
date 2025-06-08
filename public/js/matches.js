@@ -20,7 +20,7 @@ let maps = {
     outback:       { owId: '000000546CF2DD4F', name: 'Outback',        src: '/images/maps/outback.png'        },
     skyscraper:    { owId: '0000004053835E1E', name: 'Skyscraper',     src: '/images/maps/skyscraper.png'     },
     themepark:     { owId: '0000002E8679C826', name: 'Theme Park',     src: '/images/maps/themepark.png'      },
-    villa:         { owId: '0000000000000000', name: 'Villa',          src: '/images/maps/villa.png'          },
+    villa:         { owId: '00000014839B2B18', name: 'Villa',          src: '/images/maps/villa.png'          },
 };
 
 
