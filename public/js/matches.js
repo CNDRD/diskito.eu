@@ -257,8 +257,6 @@ function om_drawRounds(roundsData) {
 
 };
 function om_drawMatchInfo(matchData) {
-    c(matchData);
-
     let matchInfoDiv = $('#matchInfo');
     let mapInfo = getMapByOwId(matchData.info?.map);
 
@@ -280,18 +278,18 @@ function om_drawMatchInfo(matchData) {
 
     matchInfoDiv.find('.playtime').text(`${matchDurationMinutes}m ${matchDurationSeconds}s`);
 
+    let timerInterval = null;
     if (!matchData.finished) {
         // update the timer every second
-        setInterval(() => {
-            if (!matchData.finished) {
-                let currentTime = Math.floor((new Date() - matchStart) / 1000);
-                let minutes = Math.floor(currentTime / 60);
-                let seconds = currentTime % 60;
-                matchInfoDiv.find('.playtime').text(`${minutes}m ${seconds}s`);
-            } else {
-                clearInterval(timerInterval);
-            }
+        timerInterval = setInterval(() => {
+            let currentTime = Math.floor((new Date() - matchStart) / 1000);
+            let minutes = Math.floor(currentTime / 60);
+            let seconds = currentTime % 60;
+            matchInfoDiv.find('.playtime').text(`${minutes}m ${seconds}s`);
         }, 1000);
+    }
+    else {
+        clearInterval(timerInterval);
     }
 
 };
