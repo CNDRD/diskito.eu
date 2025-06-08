@@ -33,7 +33,7 @@ if (matchId) {
     hasAccInDiskito = hasAcc;
 
     let { data: matchData } = await supabase.from('siege_matches').select('*').eq('id', matchId).single();
-    showOneMatch(matchData);
+    await showOneMatch(matchData);
 
     supabase
         .channel(`match_updates_${matchId}`)
@@ -379,8 +379,14 @@ function updateOneMatchInList(payload) {
 
 };
 
-function showOneMatch(matchData) {
+async function showOneMatch(matchData) {
     $('#matchDetails').show();
+
+    let bothTeamUuids = [...matchData.team_uuids_enemy, ...matchData.team_uuids_us];
+    let { data: markedPlayersDb } = await supabase.from('siege_marked_players').select('player, type').in('player', bothTeamUuids).select('*')
+    let markedPlayers = {};
+    bothTeamUuids.forEach(uuid => { markedPlayers[uuid] = []; }); // initialize all players with empty array
+    markedPlayersDb.forEach(markedPlayer => { markedPlayers[markedPlayer.player].push(markedPlayer.type); });
 
     om_drawMatchInfo(matchData);
 
@@ -457,9 +463,9 @@ function showOneMatch(matchData) {
             markHtml = `
                 <div class="divider"></div>
                 <div class="mark" data-mark-uuid="${uuid}">
-                    <img data-mark-type="cheater" data-marked="false" src="/icons/matches_flag.svg" />
-                    <img data-mark-type="stoopid" data-marked="false" src="/icons/matches_intelligence.svg" />
-                    <img data-mark-type="good"    data-marked="false" src="/icons/matches_heart.svg" />
+                    <img data-mark-type="cheater" data-marked="${markedPlayers[uuid]?.includes('cheater')}" src="/icons/matches_flag.svg" />
+                    <img data-mark-type="stoopid" data-marked="${markedPlayers[uuid]?.includes('stoopid')}" src="/icons/matches_intelligence.svg" />
+                    <img data-mark-type="good"    data-marked="${markedPlayers[uuid]?.includes('good')}"    src="/icons/matches_heart.svg" />
                 </div>
             `;
         }
@@ -515,9 +521,10 @@ function showOneMatch(matchData) {
     if (hasAccInDiskito) {
         $('[data-mark-type]').on('click', async function() {
             if (this.dataset.marked == 'loading') return;
-            let datasetBefore = this.dataset.marked == 'true';
             this.dataset.marked = 'loading';
-            setTimeout(() => { this.dataset.marked = !datasetBefore; }, 1000);
+            
+            let { data: changeMarkData } = await supabase.rpc('sm_mark_player', { prm_player: this.parentElement.dataset.markUuid, prm_type: this.dataset.markType });
+            this.dataset.marked = changeMarkData.ok ? changeMarkData.added : datasetBefore;
         });
     }
 
