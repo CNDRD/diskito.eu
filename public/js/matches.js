@@ -448,7 +448,7 @@ function showOneMatch(matchData) {
             styleOrder = `order: ${om_getRosterOrder(rosterData.team, rosterData.score)};`;
 
             if (kdGame === Infinity) {
-                kdGame = '∞';
+                kdGame = rosterData.kills;
             }
         }
 
