@@ -24,6 +24,7 @@ let maps = {
 };
 
 
+let lastRoundShownTime = null;
 let hasAccInDiskito = null;
 let rosterIdToUuid = {};
 let uuidToRosterId = {};
@@ -166,6 +167,11 @@ function om_getRosterOrder(team, score) {
     return `${team}${50_000 - score}`;
 };
 function om_drawRounds(roundsData) {
+
+    let lastRound = roundsData[roundsData.length - 1];
+    if (lastRoundShownTime === lastRound.time) { return; } // no new rounds, do not redraw
+    lastRoundShownTime = lastRound.time;
+
     $('#matchRounds').empty().show();
 
     let roundCounter = 0; // to keep track of the round number
