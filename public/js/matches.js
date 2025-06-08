@@ -10,7 +10,7 @@ let maps = {
     chalet:        { owId: '0000003C7E4A5A5D', name: 'Chalet',         src: '/images/maps/chalet.png'         },
     clubhouse:     { owId: '0000000031E6DF85', name: 'Club House',     src: '/images/maps/clubhouse.png'      },
     coastline:     { owId: '00000009CCC3D997', name: 'Coastline',      src: '/images/maps/coastline.png'      },
-    consulate:     { owId: '0000000000000000', name: 'Consulate',      src: '/images/maps/consulate.png'      },
+    consulate:     { owId: '000000584B31FC7D', name: 'Consulate',      src: '/images/maps/consulate.png'      },
     emeraldplains: { owId: '000000550CA6FED4', name: 'Emerald Plains', src: '/images/maps/emeraldplains.png'  },
     kafe:          { owId: '00000000522587EA', name: 'Kafe',           src: '/images/maps/kafe.png'           },
     kanal:         { owId: '00000000570932C9', name: 'Kanal',          src: '/images/maps/kanal.png'          },
