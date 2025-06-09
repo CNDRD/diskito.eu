@@ -12,6 +12,12 @@ main {
     align-items: center;
     justify-items: center;
 
+    @media screen and (max-width: $mobile-threshold) {
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+    }
+
     > #hero {
         > img {
             height: 30rem;
