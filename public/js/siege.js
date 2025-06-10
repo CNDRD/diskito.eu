@@ -6,12 +6,14 @@ import { c, supabase, spinner, addSpaces, roundTwo, settings } from './main.js';
 await showStats();
 
 await settings('last_siege_update').then(data => {
-    $("#lastUpdated").attr("aria-label", _getTimeString(data.value));
-  
+    $("#lastUpdated")
+        .attr("aria-label", _getTimeString(data.value))
+        .text(_getUpdateTimeString(parseInt(Date.now() / 1000) - data.value));
+
     setInterval(() => {
         let now = parseInt(Date.now() / 1000);
         $("#lastUpdated").text(_getUpdateTimeString(now - data.value));
-    }, 1000);
+    }, 1000 * 60); // update every minute
 });
 function _getTimeString(ts) {
     let options = {
@@ -22,12 +24,13 @@ function _getTimeString(ts) {
     return new Date(ts*1000).toLocaleDateString("en-US", options);
 };
 function _getUpdateTimeString(s) {
+    if (s < 60) { return `less than a minute`; }
+
     let hours = Math.floor(s / 3600);
     s %= 3600;
     let minutes = Math.floor(s / 60);
-    let seconds = s % 60;
-    
-    let msg = hours == 0 ? `${seconds} second${seconds == 1 ? "" : "s"}` : "";
+
+    let msg = "";
     
     if (parseInt(minutes) != 0) {
         msg = `${minutes} minute${minutes == 1 ? "" : "s"} ${msg}`
@@ -35,7 +38,7 @@ function _getUpdateTimeString(s) {
     if (parseInt(hours) != 0) {
         msg = `${hours} hour${hours == 1 ? "" : "s"} ${msg}`
     }
-    
+
     return msg
 };
 
@@ -46,11 +49,20 @@ async function showStats() {
     let table = '';
     let rows = '';
 
-    const { data: siegeData } = await supabase.from('siege_stats').select('ubi_id, name, playtime, ranked');
+    const { data: siegeData } = await supabase.from('siege_stats').select('*');
 
     let orderedSiegeData = siegeData.sort((a, b) => b.ranked.rank_points - a.ranked.rank_points);
 
+    // rank_points can be all the same, in that case sort by kills
+    orderedSiegeData.sort((a, b) => {
+        if (a.ranked.rank_points === b.ranked.rank_points) {
+            return b.ranked.kills - a.ranked.kills;
+        }
+        return b.ranked.rank_points - a.ranked.rank_points;
+    });
+
     orderedSiegeData.forEach(player => {
+        c(player);
         let rank = player.ranked;
         let pfpLink = `https://ubisoft-avatars.akamaized.net/${player.ubi_id}/default_256_256.png`;
 
@@ -61,35 +73,59 @@ async function showStats() {
         let wl = rank.losses == 0 ? 0 : roundTwo(rank.wins / (rank.wins + rank.losses) * 100);
         let rankCell = _getRankCell(rank, player.playtime.level);
 
+
+
+        let df = player.dual_front;
+        let df_kd = df.deaths == 0 ? df.kills : roundTwo(df.kills / df.deaths);
+        let df_wl = df.losses == 0 ? 0 : roundTwo(df.wins / (df.wins + df.losses) * 100);
+
         rows += `
             <tr>
-                <td class="hide-mobile">
-                    <img style="height: 4rem;" src="${pfpLink}" />
+                <td data-what="pfp">
+                    <img src="${pfpLink}" />
                 </td>
-                <td class="name" style="min-width: 5rem;">
-                    ${player.name}
+                <td data-what="name" style="min-width: 5rem;">
+                    <div>
+                        <span class="name">${player.name}</span>
+                        ${player.persona ? `<span class="persona">${player.persona}</span>` : ''}
+                    </div>
                 </td>
-                <td>
+
+                <td data-mode="ranked" data-what="rank_images">
                     ${rankCell}
                 </td>
-                <td class="hide-mobile">
+                <td data-mode="ranked" data-what="rank_points">
                     <div>
                         <span style="font-size: 1.5rem;">${addSpaces(parseInt(rank.rank_points) % 100)}</span>
                     </div>
                     <div class="smol-dark">${addSpaces(rank.rank_points)}</div>
                 </td>
-                <td>
+                <td data-mode="ranked" data-what="ranked_kd">
                     <div>${kd}</div>
                     <div class="smol-dark">${addSpaces(rank.kills)} / ${addSpaces(rank.deaths)}</div>
                     <div class="smol-dark">${addSpaces(rank.kills + rank.deaths)}</div>
                 </td>
-                <td>
+                <td data-mode="ranked" data-what="ranked_wl">
                     <div>${wl}%</div>
                     <div class="smol-dark">${addSpaces(rank.wins)} / ${addSpaces(rank.losses)}</div>
                     <div class="smol-dark">${addSpaces(rank.wins + rank.losses)}</div>
                 </td>
-                <td class="hide-mobile">
-                    ${playtime}
+                <td data-mode="ranked" data-what="playtime">
+                    <div>
+                        <span class="level">${addSpaces(player.playtime.level, ',')} lvl</span>
+                        <span class="playtime">${playtime}</span>
+                    </div>
+                </td>
+
+                <td data-mode="dual_front" data-what="df_kd">
+                    <div>${df_kd}</div>
+                    <div class="smol-dark">${addSpaces(df.kills)} / ${addSpaces(df.deaths)}</div>
+                    <div class="smol-dark">${addSpaces(df.kills + df.deaths)}</div>
+                </td>
+                <td data-mode="dual_front" data-what="df_wl">
+                    <div>${df_wl}%</div>
+                    <div class="smol-dark">${addSpaces(df.wins)} / ${addSpaces(df.losses)}</div>
+                    <div class="smol-dark">${addSpaces(df.wins + df.losses)}</div>
                 </td>
             </tr>
         `;
@@ -100,22 +136,22 @@ async function showStats() {
             <div class="left"></div>
 
             <div class="right">
-                <div>
-                    Last update: <span id="lastUpdated">${spinner(true)}</span> ago
-                </div>
+                Last update: <span id="lastUpdated">${spinner(true)}</span> ago
             </div>
         </div>
 
-        <table id="siege-stats" class="sortable">
+        <table id="siege-stats" data-mode-selected="ranked">
             <thead>
                 <tr>
-                    <th class="hide-mobile">🖼️</th>
-                    <th>Peep</th>
-                    <th>Rank (max)</th>
-                    <th class="hide-mobile">MMR</th>
-                    <th>K/D</th>
-                    <th>W/L</th>
-                    <th class="hide-mobile">Time Played</th>
+                    <th data-what="pfp">🖼️</th>
+                    <th data-what="name">Peep</th>
+                    <th data-mode="ranked" data-what="rank_images">Rank<span class="hide-mobile"> (max)</span></th>
+                    <th data-mode="ranked" data-what="rank_points">MMR</th>
+                    <th data-mode="ranked" data-what="ranked_kd">K/D</th>
+                    <th data-mode="ranked" data-what="ranked_wl">W/L</th>
+                    <th data-mode="ranked" data-what="playtime">Time Played</th>
+                    <th data-mode="dual_front" data-what="dual_front_kd">K/D</th>
+                    <th data-mode="dual_front" data-what="dual_front_wl">W/L</th>
                 </tr>
             </thead>
             <tbody>
@@ -125,6 +161,13 @@ async function showStats() {
     `;
 
     $('#stats').html(table);
+
+    function toggleMode(showModeSysid) {
+        $(`#siege-stats [data-mode]`).hide();
+        $(`#siege-stats [data-mode="${showModeSysid}"]`).show();
+    };
+    $('#mode-select > label').on('click', function() { toggleMode($(this).attr('for')) });
+    toggleMode('ranked');
 };
 
 function _getPlaytime(s) {

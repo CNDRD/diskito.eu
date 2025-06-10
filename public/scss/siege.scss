@@ -1,16 +1,27 @@
 
 @import './_main.scss';
+@import './fancySwitch.scss';
 
 @font-face {
     font-family: 'R6Italic';
     src: url('/fonts/r6italic.woff2') format('woff2');
 }
 
+
+.f_switch {
+    --rows: 1;
+    --columns: 2;
+    --cell_width: 120px;
+
+    margin-top: 2rem;
+    margin-inline: auto;
+}
+
 main {
     margin-left: auto;
     margin-right: auto;
     width: fit-content;
-    margin-top: 3rem;
+    margin-top: 1rem;
 
     > #above-table {
         display: flex;
@@ -19,13 +30,21 @@ main {
         justify-content: space-between;
         margin-bottom: 1rem;
 
-        #siegePcStatus {
-            > .spinner {
-                height: 1rem;
-            }
+        > .right {
+            display: flex;
+            gap: .2rem;
+            align-items: center;
+            color: $main-txt-dark;
         }
 
         #lastUpdated {
+            color: $main-txt-dark;
+            font-variant-numeric: tabular-nums;
+
+            &:has(.spinner) {
+                height: 1rem;
+            }
+
             > .spinner {
                 height: 1rem;
             }
@@ -43,6 +62,11 @@ main {
                 > th {
                     padding: .2rem 1rem .2rem 1rem;
                     font-size: 1.15rem;
+
+                    > span {
+                        font-weight: lighter;
+                        color: $main-txt-dark;
+                    }
                 }
             }
         }
@@ -53,10 +77,41 @@ main {
                     text-align: center;
                     vertical-align: middle;
 
-                    // Name
-                    &:nth-child(2) {
+                    &[data-what="pfp"] {
+                        > img {
+                            height: 4rem;
+                            border-radius: 5px;
+                        }
+                    }
+
+                    &[data-what="name"] {
                         text-align: left;
                         padding-left: 1rem;
+
+                        > div {
+                            display: flex;
+                            flex-direction: column;
+
+                            > .persona {
+                                font-size: .9rem;
+                                color: $main-txt-dark;
+                            }
+                        }
+                    }
+
+                    &[data-what="playtime"] {
+                        > div {
+                            display: flex;
+                            flex-direction: column;
+
+                            font-variant-numeric: tabular-nums;
+                            text-align: right;
+
+                            > .level {
+                                font-size: .9rem;
+                                color: $main-txt-dark;
+                            }
+                        }
                     }
 
                     > .rank-img-cell {
@@ -86,10 +141,18 @@ main {
 
         @media screen and (max-width: $mobile-threshold) {
 
+            td, th {
+                &[data-what="pfp"],
+                &[data-what="rank_points"],
+                &[data-what="playtime"] {
+                    display: none;
+                }
+            }
+
             .hide-mobile {
                 display: none;
             }
-
+            
         }
 
     }
