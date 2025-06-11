@@ -404,6 +404,7 @@ async function showOneMatch(matchData) {
     // figure out who from the roster is who in the match
     let allUuidsRoster = [...matchData.team_uuids_enemy, ...matchData.team_uuids_us];
     Object.entries(matchData.roster).forEach(([rosterId, rosterData]) => {
+        if (!Object.keys(rosterData).length) { return; } // skip empty rosters because thats a thing...
         let rosterNameParsedParsed = rosterData.name_parsed.replace(/(\[.*\])/, '').trim();
         allUuidsRoster.forEach(uuid => {
             let profileData = matchData.stats[uuid];
