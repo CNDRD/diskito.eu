@@ -10,8 +10,6 @@ let countUps = {
     total_users: stats.users_count,
     total_messages: stats.messages,
     total_voice: roundTwo(Math.floor(stats.voice / 3600)),
-    // total_voice_minutes: Math.floor(stats.voice / 60),
-    // total_voice_seconds: stats.voice,
     tv_years: Math.floor(stats.voice / (3600 * 24 * 365)),
     tv_days: Math.floor((stats.voice % (3600 * 24 * 365)) / (3600 * 24)),
     tv_hours: Math.floor((stats.voice % (3600 * 24)) / 3600),
