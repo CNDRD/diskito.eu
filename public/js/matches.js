@@ -291,8 +291,12 @@ function om_drawMatchInfo(matchData) {
     let matchInfoDiv = $('#matchInfo');
     let mapInfo = getMapByOwId(matchData.info?.map);
 
-    matchInfoDiv.find('.map-name').text(mapInfo.name);
-    matchInfoDiv.find('.map-image').attr('src', mapInfo.src);
+    if (matchInfoDiv[0].dataset.mapId != mapInfo.owId || !matchInfoDiv[0].dataset?.mapId) {
+        matchInfoDiv[0].dataset.mapId = mapInfo.owId;
+        
+        matchInfoDiv.find('.map-name').text(mapInfo.name);
+        matchInfoDiv.find('.map-image').attr('src', mapInfo.src);
+    }
 
     // score
     matchInfoDiv.find('.score > .num.us').text(matchData.score.us);
@@ -310,6 +314,7 @@ function om_drawMatchInfo(matchData) {
     matchInfoDiv.find('.playtime').text(`${matchDurationMinutes}m ${matchDurationSeconds}s`);
 
     let timerInterval = null;
+    clearInterval(timerInterval);
     if (!matchData.finished) {
         // update the timer every second
         timerInterval = setInterval(() => {
