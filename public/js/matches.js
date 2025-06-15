@@ -359,14 +359,13 @@ async function listAllMatches() {
 
         matchesHtml += `
             <div class="match" data-match-id="${match.id}">
-                <img class="map-image" src="${mapInfo.src}" />
+                <div class="map-group">
+                    <img class="map-image" src="${mapInfo.src}" />
+                    <div class="map-name">${mapInfo.name}</div>
+                </div>
                 <div class="match-info">
                     <div class="tags">${matchTags.join('')}</div>
                     <div class="match-details">
-                        <div class="deet">
-                            <img src="/icons/matches_globe.svg" />
-                            <span class="map-name">${mapInfo.name}</span>
-                        </div>
                         <div class="deet">
                             <img src="/icons/matches_clock.svg" />
                             <span>${new Date(match.created_at).toLocaleString()}</span>

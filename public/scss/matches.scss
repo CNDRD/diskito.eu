@@ -24,23 +24,70 @@
     }
 
     > .match {
-        background-color: $gray-bg;
+        --border-radius: .4rem;
+        --card-background-color: #{$gray-bg};
+
+        background-color: var(--card-background-color);
         border-radius: 10px;
         display: flex;
         flex-direction: column;
         cursor: default;
 
-        > img {
-            width: 100%;
-            object-fit: cover;
-            border-radius: calc(10px + .3rem);
-            padding: .3rem;
-            box-sizing: border-box;
-            pointer-events: none;
+        &:hover {
+            > .map-group {
+                padding: var(--border-radius);
+                padding-bottom: calc(var(--border-radius) + .81px);
+            }
         }
 
+        > .map-group {
+            display: grid;
+            grid-template-areas:
+                "img img"
+                "mapname imgtail";
+            padding: 0 0 var(--border-radius) 0;
+            transition: all .1s ease-in-out;
+
+            > .map-image {
+                grid-area: img / img / imgtail / imgtail;
+                width: 100%;
+                border-radius: var(--border-radius);
+            }
+            > .map-name {
+                grid-area: mapname;
+                position: relative;
+                background: var(--card-background-color);
+                border-top-right-radius: var(--border-radius);
+                padding: 6px 10px 5px 8px;
+                z-index: 1;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    bottom: 100%;
+                    width: var(--border-radius);
+                    height: 36px;
+                    border-bottom-left-radius: var(--border-radius);
+                    box-shadow: 0 var(--border-radius) 0 var(--card-background-color);
+                }
+                &::after {
+                    content: "";
+                    position: absolute;
+                    left: 100%;
+                    bottom: 0;
+                    width: 36px;
+                    height: var(--border-radius);
+                    border-bottom-left-radius: var(--border-radius);
+                    box-shadow: calc(-1 * var(--border-radius)) 0 0 var(--card-background-color);
+                }
+            }
+        }
+
+        
+
         > .match-info {
-            padding: .4rem;
+            padding: var(--border-radius);
             padding-top: .1rem;
             display: flex;
             flex-direction: column;
