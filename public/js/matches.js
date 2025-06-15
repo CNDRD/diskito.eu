@@ -289,10 +289,10 @@ function om_drawRounds(roundsData) {
 };
 function om_drawMatchInfo(matchData) {
     let matchInfoDiv = $('#matchInfo');
-    let mapInfo = getMapByOwId(matchData.info?.map);
+    let mapInfo = matchData.info?.manualMap ? maps[matchData.info.manualMap] : getMapByOwId(matchData.info?.map);
 
-    if (matchInfoDiv[0].dataset.mapId != mapInfo.owId || !matchInfoDiv[0].dataset?.mapId) {
-        matchInfoDiv[0].dataset.mapId = mapInfo.owId;
+    if (matchInfoDiv[0].dataset.mapId != matchData.info.map || !matchInfoDiv[0].dataset?.mapId) {
+        matchInfoDiv[0].dataset.mapId = matchData.info.map;
         
         matchInfoDiv.find('.map-name').text(mapInfo.name);
         matchInfoDiv.find('.map-image').attr('src', mapInfo.src);
@@ -315,6 +315,7 @@ function om_drawMatchInfo(matchData) {
 
     let timerInterval = null;
     clearInterval(timerInterval);
+
     if (!matchData.finished) {
         // update the timer every second
         timerInterval = setInterval(() => {
@@ -353,7 +354,7 @@ async function listAllMatches() {
         }
         matchTags.push(`<span class="tag match-score">${match.score.us} - ${match.score.them}</span>`);
 
-        let mapInfo = getMapByOwId(match.info.map);
+        let mapInfo = match.info?.manualMap ? maps[match.info.manualMap] : getMapByOwId(match.info?.map);
 
         matchesHtml += `
             <div class="match" data-match-id="${match.id}">
@@ -553,6 +554,51 @@ async function showOneMatch(matchData) {
     });
 
     if (hasAccInDiskito) {
+        // show the edit button
+        $('#edit-match-data')[0].style.display = 'flex';
+        $('#edit-match-data').on('click', function() {
+            let currentMapData = matchData.info?.manualMap ? maps[matchData.info.manualMap] : getMapByOwId(matchData.info?.map);
+
+            let mapsHtml = '';
+            Object.entries(maps).forEach(([key, map]) => {
+                if (key === 'bartlett') return;
+
+                mapsHtml += `
+                    <label for="emm-map-${key}">
+                        <input type="radio" name="emm-map" id="emm-map-${key}" value="${key}" ${currentMapData.src === map.src ? 'checked' : ''} />
+                        <img src="${map.src}" alt="${map.name}" />
+                        <span>${map.name}</span>
+                    </label>
+                `;
+            });
+
+            let dialog = $(`
+                <dialog id="editMatchDialog">
+                    <div class="dialog-content">
+                        <div id="emm-map">${mapsHtml}</div>
+                    </div>
+                </dialog>
+            `);
+
+            $('body').append(dialog);
+            dialog[0].showModal();
+
+            dialog.find('input[name="emm-map"]').on('change', async function() {
+                let selectedMap = this.value;
+                await supabase.rpc('sm_manual_map', { prm_match_id: matchData.id, prm_map: selectedMap });
+
+                dialog[0].close();
+                dialog.remove();
+                window.location.reload();
+            });
+
+            dialog.on('click', function(e) {
+                if (e.target !== dialog[0]) { return; }
+                dialog[0].close();
+                dialog.remove();
+            });
+        });
+
         $('[data-mark-type]').on('click', async function() {
             if (this.dataset.marked == 'loading') return;
             
