@@ -1,6 +1,12 @@
 @import './_main.scss';
 
 
+@font-face {
+    font-family: 'R6Italic';
+    src: url('/fonts/r6italic.woff2') format('woff2');
+}
+
+
 #matchesList {
     width: fit-content;
     margin-inline: auto;
@@ -58,8 +64,10 @@
                 position: relative;
                 background: var(--card-background-color);
                 border-top-right-radius: var(--border-radius);
-                padding: 6px 10px 5px 8px;
-                z-index: 1;
+                padding: 0px 10px 3px 11px;
+                font-family: 'R6ITALIC';
+                font-size: 1.3rem;
+                letter-spacing: 1px;
 
                 &::before {
                     content: "";
