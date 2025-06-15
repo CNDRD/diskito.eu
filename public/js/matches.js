@@ -3,24 +3,47 @@ import { c, supabase, spinner, roundTwo, addSpaces, _getRankImageFromRankName } 
 
 
 let maps = {
-    bartlett:      { owId: '0000000000000000', name: 'Unknown',        src: '/images/maps/shooting_range.jpg' },
-    bank:          { owId: '00000052C53F0506', name: 'Bank',           src: '/images/maps/bank.png'           },
-    border:        { owId: '000000473DCA77EF', name: 'Border',         src: '/images/maps/border.png'         },
-    chalet:        { owId: '0000003C7E4A5A5D', name: 'Chalet',         src: '/images/maps/chalet.png'         },
-    clubhouse:     { owId: '0000000031E6DF85', name: 'Club House',     src: '/images/maps/clubhouse.png'      },
-    coastline:     { owId: '00000009CCC3D997', name: 'Coastline',      src: '/images/maps/coastline.png'      },
-    consulate:     { owId: '000000584B31FC7D', name: 'Consulate',      src: '/images/maps/consulate.png'      },
-    emeraldplains: { owId: '000000550CA6FED4', name: 'Emerald Plains', src: '/images/maps/emeraldplains.png'  },
-    kafe:          { owId: '00000000522587EA', name: 'Kafe',           src: '/images/maps/kafe.png'           },
-    kanal:         { owId: '00000000570932C9', name: 'Kanal',          src: '/images/maps/kanal.png'          },
-    lair:          { owId: '0000005A5AF8ECF7', name: 'Lair',           src: '/images/maps/lair.png'           },
-    nhvnlabs:      { owId: '00000058260EEFB3', name: 'NHVN Labs',      src: '/images/maps/nighthavenlabs.png' },
-    oregon:        { owId: '00000035F2901CF4', name: 'Oregon',         src: '/images/maps/oregon.png'         },
-    outback:       { owId: '000000546CF2DD4F', name: 'Outback',        src: '/images/maps/outback.png'        },
-    skyscraper:    { owId: '0000004053835E1E', name: 'Skyscraper',     src: '/images/maps/skyscraper.png'     },
-    themepark:     { owId: '0000002E8679C826', name: 'Theme Park',     src: '/images/maps/themepark.png'      },
-    villa:         { owId: '00000014839B2B18', name: 'Villa',          src: '/images/maps/villa.png'          },
+    bartlett:      { name: 'Unknown',        src: '/images/maps/shooting_range.jpg' },
+    bank:          { name: 'Bank',           src: '/images/maps/bank.png'           },
+    border:        { name: 'Border',         src: '/images/maps/border.png'         },
+    chalet:        { name: 'Chalet',         src: '/images/maps/chalet.png'         },
+    clubhouse:     { name: 'Club House',     src: '/images/maps/clubhouse.png'      },
+    coastline:     { name: 'Coastline',      src: '/images/maps/coastline.png'      },
+    consulate:     { name: 'Consulate',      src: '/images/maps/consulate.png'      },
+    emeraldplains: { name: 'Emerald Plains', src: '/images/maps/emeraldplains.png'  },
+    kafe:          { name: 'Kafe',           src: '/images/maps/kafe.png'           },
+    kanal:         { name: 'Kanal',          src: '/images/maps/kanal.png'          },
+    lair:          { name: 'Lair',           src: '/images/maps/lair.png'           },
+    nhvnlabs:      { name: 'NHVN Labs',      src: '/images/maps/nighthavenlabs.png' },
+    oregon:        { name: 'Oregon',         src: '/images/maps/oregon.png'         },
+    outback:       { name: 'Outback',        src: '/images/maps/outback.png'        },
+    skyscraper:    { name: 'Skyscraper',     src: '/images/maps/skyscraper.png'     },
+    themepark:     { name: 'Theme Park',     src: '/images/maps/themepark.png'      },
+    villa:         { name: 'Villa',          src: '/images/maps/villa.png'          },
 };
+let owIdToMap = {
+    '0000000000000000': maps.bartlett,
+    '00000052C53F0506': maps.bank,
+    '000000473DCA77EF': maps.border,
+    '0000005EFDED1B28': maps.border, // siege x
+    '0000003C7E4A5A5D': maps.chalet,
+    '0000005EE462F670': maps.chalet, // siege x
+    '0000000031E6DF85': maps.clubhouse,
+    '00000009CCC3D997': maps.coastline,
+    '000000584B31FC7D': maps.consulate,
+    '000000550CA6FED4': maps.emeraldplains,
+    '00000000522587EA': maps.kafe,
+    '000000605B1BF70C': maps.kafe, // siege x
+    '00000000570932C9': maps.kanal,
+    '0000005A5AF8ECF7': maps.lair,
+    '00000058260EEFB3': maps.nhvnlabs,
+    '00000035F2901CF4': maps.oregon,
+    '000000546CF2DD4F': maps.outback,
+    '0000004053835E1E': maps.skyscraper,
+    '0000002E8679C826': maps.themepark,
+    '00000014839B2B18': maps.villa,
+};
+
 
 
 let lastRoundShownTime = null;
@@ -62,7 +85,7 @@ else {
 
 function getMapByOwId(owId) {
     if (owId === '0000000000000000') return maps.bartlett; // Default to Bartlett if no map is specified
-    return Object.values(maps).find(map => map.owId === owId) || maps.bartlett;
+    return owIdToMap[owId] || maps.bartlett;
 };
 function getServerName(server) {
     if (!server) { return 'Unknown' }
