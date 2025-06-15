@@ -1,5 +1,4 @@
-import { c, supabase, spinner, message, userAuth, roundTwo, addSpaces, UUID } from './main.js';
-import { _getRankImageFromRankName } from './siege.js';
+import { c, supabase, spinner, roundTwo, addSpaces, _getRankImageFromRankName } from './main.js';
 
 
 
