@@ -338,7 +338,7 @@ async function listAllMatches() {
 
     let { data: matchesData } = await supabase
         .from('siege_matches')
-        .select('id, score, info, finished, created_at')
+        .select('id, score, info, finished, created_at, season(name, code, color)')
         .order('created_at', { ascending: false });
 
     let matchesHtml = '';
@@ -353,6 +353,7 @@ async function listAllMatches() {
             matchTags.push(`<span class="tag match-in-progress">In Progress</span>`);
         }
         matchTags.push(`<span class="tag match-score">${match.score.us} - ${match.score.them}</span>`);
+        matchTags.push(`<span class="tag match-season" style="color: #${match.season.color}" title="${match.season.name}">${match.season.code}</span>`);
 
         let mapInfo = match.info?.manualMap ? maps[match.info.manualMap] : getMapByOwId(match.info?.map);
 
