@@ -36,6 +36,7 @@
             border-radius: calc(10px + .3rem);
             padding: .3rem;
             box-sizing: border-box;
+            pointer-events: none;
         }
 
         > .match-info {
