@@ -29,6 +29,7 @@ let owIdToMap = {
     '0000003C7E4A5A5D': maps.chalet,
     '0000005EE462F670': maps.chalet, // siege x
     '0000000031E6DF85': maps.clubhouse,
+    '0000005ECEA239AD': maps.clubhouse, // siege x
     '00000009CCC3D997': maps.coastline,
     '000000584B31FC7D': maps.consulate,
     '000000550CA6FED4': maps.emeraldplains,
