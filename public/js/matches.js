@@ -24,6 +24,7 @@ let maps = {
 let owIdToMap = {
     '0000000000000000': maps.bartlett,
     '00000052C53F0506': maps.bank,
+    '00000060572F1446': maps.bank, // siege x
     '000000473DCA77EF': maps.border,
     '0000005EFDED1B28': maps.border, // siege x
     '0000003C7E4A5A5D': maps.chalet,
