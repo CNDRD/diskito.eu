@@ -32,6 +32,7 @@ $('#game-select > label').on('click', function() {
     
     if (game == $('main')[0].dataset.game) {
         $('#currentBalance').hide();
+        $('#gambledMoney').hide();
         $('main')[0].dataset.game = 'none';
         $('#game')[0].dataset.game = 'nothing';
         setTimeout(function() { $('#game-select > input').prop('checked', false); }, 1);
@@ -39,6 +40,7 @@ $('#game-select > label').on('click', function() {
     }
 
     $('#currentBalance').show();
+    $('#gambledMoney').show();
     $('main')[0].dataset.game = game;
     $('#game')[0].dataset.game = game;
 
@@ -50,6 +52,53 @@ $('#game-select > label').on('click', function() {
     if (!gameToFn[game]) { return; }
     gameToFn[game]();
 });
+
+
+
+let gambledCountUps = {
+    tsTotal:  new CountUp( 'tsTotal',  0, { duration: 1 } ),
+    tsWon:    new CountUp( 'tsWon',    0, { duration: 1 } ),
+    tsLost:   new CountUp( 'tsLost',   0, { duration: 1 } ),
+    tsProfit: new CountUp( 'tsProfit', 0, { duration: 1 } ),
+};
+
+function placedBet(amount) {
+    let currentGambled = parseInt($('#tsTotal')[0].dataset.value) || 0;
+    currentGambled += amount;
+    $('#tsTotal')[0].dataset.value = currentGambled;
+    gambledCountUps.tsTotal.update(currentGambled);
+};
+function betOutcome(amount, isWin) {
+    let currentWon = parseInt($('#tsWon')[0].dataset.value) || 0;
+    let currentLost = parseInt($('#tsLost')[0].dataset.value) || 0;
+    let currentProfit = parseInt($('#tsProfit')[0].dataset.value) || 0;
+    
+    if (isWin) {
+        currentWon += amount;
+        currentProfit += amount;
+    }
+    else {
+        currentLost += amount;
+        currentProfit -= amount;
+    }
+
+    $('#tsWon')[0].dataset.value = currentWon;
+    $('#tsLost')[0].dataset.value = currentLost;
+    $('#tsProfit')[0].dataset.value = currentProfit;
+
+    gambledCountUps.tsWon.update(currentWon);
+    gambledCountUps.tsLost.update(currentLost);
+    gambledCountUps.tsProfit.update(currentProfit);
+
+    if (currentProfit >= 0) {
+        $('#tsProfit').removeClass('negative').addClass('positive');
+    }
+    else {
+        $('#tsProfit').removeClass('positive').addClass('negative');
+    }
+};
+
+
 
 
 
@@ -178,6 +227,8 @@ function gameCoinflip() {
         let { data: gambaData, error: gambaError } = await supabase.rpc('gamba_coinflip', fnData);
         gambaData = gambaData ? gambaData[0] : null;
 
+        placedBet(parseInt(fnData.bet_amount));
+
         if (gambaError) {
             cfAlert('Oh no! Something went wrong!');
             toggleInputs(false);
@@ -187,11 +238,13 @@ function gameCoinflip() {
         $('#coin')[0].dataset.side = gambaData.flip;
 
         setTimeout(function(){
+            let isWin = (gambaData.outcome === 'W');
+            betOutcome(parseInt(fnData.bet_amount), isWin);
             money = gambaData.money;
             toggleInputs(false);
             $('#coin')[0].dataset.sideBefore = $('#coin')[0].dataset.side;
             $('#coin')[0].dataset.side = 'nutin';
-            showCurrentBalance(money, (gambaData.outcome==='W'));
+            showCurrentBalance(money, isWin);
             figureOutMaxPresetBets();
             betAmountMask.updateOptions({ mask: Number, min: 1, max: money });
         }, 3000);
@@ -205,6 +258,7 @@ function gameMines() {
     // https://www.youtube.com/watch?v=94ylCzrVY90
 
     let gameUUID = '';
+    let lastBetAmount = 0;
 
     let mineDivs = '';
     for (let i = 1; i <= 25; i++) { mineDivs += `<div class="mine" data-type="none" data-tile-index="${i}"></div>`; }
@@ -297,6 +351,9 @@ function gameMines() {
         money -= fnData.bet_amount;
         showCurrentBalance(money, false);
 
+        lastBetAmount = parseInt(fnData.bet_amount);
+        placedBet(lastBetAmount);
+
         $('#playMines')[0].dataset.disabled = true;
         $('#playMines').hide();
         $('#cashOut').show();
@@ -327,6 +384,9 @@ function gameMines() {
                 if (this.dataset.type != 'mine') { this.dataset.type = 'safe'; }
             });
         }
+
+        let wonAmount = parseInt(gambaData.user_money) - money;
+        betOutcome(wonAmount, true);
 
         money = gambaData.user_money;
         showCurrentBalance(money, true);
@@ -377,7 +437,7 @@ function gameMines() {
             location.reload();
         }
 
-        // mine_locations means the game is over
+        // mine_locations means the game is over - hit a mine
         if (gambaData?.mine_locations && !gambaData?.done) {
             JSON.parse(gambaData.mine_locations).forEach(mineIndex => {
                 $(`.mine[data-tile-index="${mineIndex}"]`)[0].dataset.type = 'mine';
@@ -387,6 +447,8 @@ function gameMines() {
             });
             $('#cashOut').hide();
             $('#playMinesAgane').show();
+            
+            betOutcome(lastBetAmount, false);
         }
         else if (gambaData?.mine == false) {
             this.dataset.type = 'safe';
@@ -398,6 +460,7 @@ function gameMines() {
             $('#cashOut').text(`Cash out ★ ${addSpaces(roundTwo(gambaData.cashout),',')}`);
         }
 
+        // cleared all safe tiles - auto cashout
         if (gambaData?.done) {
             gambaData.mine_locations.forEach(mineIndex => {
                 $(`.mine[data-tile-index="${mineIndex}"]`)[0].dataset.type = 'mine';
@@ -405,6 +468,8 @@ function gameMines() {
             $('#mines-place > .mine[data-type="none"]').each(function() {
                 this.dataset.type = 'safe';
             });
+
+            betOutcome(roundTwo(gambaData.cashout), true);
 
             $('#cashOut').trigger('click');
         }
