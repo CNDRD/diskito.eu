@@ -1,0 +1,7 @@
+{
+    "scripts": {
+        "sass-watch": "sass /public/scss/index.scss:/public/css/index.css --watch",
+        "serve": "npx http-server public -c-1",
+        "dev": "concurrently \"npm run sass-watch\" \"npm run serve\""
+    }
+}
