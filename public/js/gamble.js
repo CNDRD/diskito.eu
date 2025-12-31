@@ -96,13 +96,21 @@ function betOutcome(amount, isWin) {
     else {
         $('#tsProfit').removeClass('positive').addClass('negative');
     }
+
+    figureOutMaxPresetBets();
 };
 
+let betAmountMask = null;
+function getBetAmountInput(gameName) {
+    return `
+        <div data-bet-amount-parent="${gameName}">
+            <input type="text" data-bet-amount-input placeholder="Bet amount" />
+            <div data-bet-amount-presets id="presets"></div>
+        </div>
 
-
-
-
-function gameCoinflip() {
+    `;
+};
+function figureOutMaxPresetBets() {
     let presetBets = [
         { show: '1',     value:                  1, },
         { show: '10',    value:                 10, },
@@ -122,35 +130,21 @@ function gameCoinflip() {
         { show: '10T',  value:  10_000_000_000_000, },
         { show: '100T', value: 100_000_000_000_000, },
     ];
-    // figure out what the max possible bet for the user is
-    // like if they have 1.5M, then the max bet from presetBets is 1M
-    
+    let maxBetIndex = 0;
+    for (let i = 0; i < presetBets.length; i++) {
+        if (presetBets[i].value > money) { break; }
+        maxBetIndex = i;
+    }
 
-    $('#game').append(`
+    // now we get the max bet and three presets before it
+    let presetBetsHtmlList = [];
+    for (let i = maxBetIndex; i >= (maxBetIndex-3); i--) {
+        if (presetBets[i].value > money) { continue; }
+        presetBetsHtmlList.push(`<div class="preset" data-value="${presetBets[i].value}">${presetBets[i].show}</div>`);
+    }
 
-        <div id="err"></div>
-
-        <div id="coin">
-            <div data-side="heads"></div>
-            <div data-side="tails"></div>
-        </div>
-
-        <div id="betAmountParent">
-            <input type="text" id="betAmount" placeholder="Bet amount" />
-            <div id="presets"></div>
-        </div>
-
-        <div class="bet-buttons f_switch">
-            <input type="radio" name="bet" id="heads" value="heads" />
-            <label for="heads">Heads</label>
-            <input type="radio" name="bet" id="tails" value="tails" />
-            <label for="tails">Tails</label>
-        </div>
-
-    `);
-
-    let betAmountMask = IMask(
-        document.getElementById('betAmount'),
+    betAmountMask = IMask(
+        document.querySelector('[data-bet-amount-parent] [data-bet-amount-input]'),
         {
             mask: Number,
             min: 1,
@@ -162,28 +156,38 @@ function gameCoinflip() {
             max: money,
         }
     );
-    
-    function figureOutMaxPresetBets() {
-        let maxBetIndex = 0;
-        for (let i = 0; i < presetBets.length; i++) {
-            if (presetBets[i].value > money) { break; }
-            maxBetIndex = i;
-        }
 
-        // now we get the max bet and three presets before it
-        let presetBetsHtmlList = [];
-        for (let i = maxBetIndex; i >= (maxBetIndex-3); i--) {
-            if (presetBets[i].value > money) { continue; }
-            presetBetsHtmlList.push(`<div class="preset" data-value="${presetBets[i].value}">${presetBets[i].show}</div>`);
-        }
+    $('[data-bet-amount-parent] [data-bet-amount-presets]').html(presetBetsHtmlList.reverse().join(''));
+    $('[data-bet-amount-parent] [data-bet-amount-presets] > .preset').off('click').on('click', function() {
+        betAmountMask.unmaskedValue = this.dataset.value;
+        betAmountMask.updateValue();
+    });
+};
 
-        $('#presets').html(presetBetsHtmlList.reverse().join(''));
 
-        $('#presets > .preset').on('click', function() {
-            betAmountMask.unmaskedValue = this.dataset.value;
-            betAmountMask.updateValue();
-        });
-    };
+
+
+
+function gameCoinflip() {
+    $('#game').append(`
+
+        <div id="err"></div>
+
+        <div id="coin">
+            <div data-side="heads"></div>
+            <div data-side="tails"></div>
+        </div>
+
+        ${getBetAmountInput('coinflip')}
+
+        <div class="bet-buttons f_switch">
+            <input type="radio" name="bet" id="heads" value="heads" />
+            <label for="heads">Heads</label>
+            <input type="radio" name="bet" id="tails" value="tails" />
+            <label for="tails">Tails</label>
+        </div>
+
+    `);
     figureOutMaxPresetBets();
 
     function cfAlert(msg) {
@@ -194,7 +198,7 @@ function gameCoinflip() {
 
     function toggleInputs(onOrOff) {
         $('#coin')[0].dataset.disabled = onOrOff;
-        $('#betAmount')[0].disabled = onOrOff;
+        $('[data-bet-amount-input]')[0].disabled = onOrOff;
         $('#heads, #tails').each(function() { this.disabled = onOrOff; });
     };
 
@@ -245,7 +249,6 @@ function gameCoinflip() {
             $('#coin')[0].dataset.sideBefore = $('#coin')[0].dataset.side;
             $('#coin')[0].dataset.side = 'nutin';
             showCurrentBalance(money, isWin);
-            figureOutMaxPresetBets();
             betAmountMask.updateOptions({ mask: Number, min: 1, max: money });
         }, 3000);
     });
@@ -268,7 +271,7 @@ function gameMines() {
         <div id="err"></div>
 
         <div class="setup">
-            <input type="text" id="betAmount" placeholder="Bet amount" />
+            ${getBetAmountInput('mines')}
             <div id="minesAmountParent">
                 <div>
                     <div id="minesAmountShow">1</div>
@@ -284,28 +287,15 @@ function gameMines() {
         <div id="mines-place" data-playable="false">${mineDivs}</div>
 
     `);
+    figureOutMaxPresetBets();
 
     $('#minesAmount').on('input', function() { $('#minesAmountShow').text(this.value); });
 
 
 
-    let betAmountMask = IMask(
-        document.getElementById('betAmount'),
-        {
-            mask: Number,
-            min: 1,
-            thousandsSeparator: ',',
-            scale: 0,
-            autofix: true,
-            normalizeZeros: true,
-            min: 1,
-            max: money,
-        }
-    );
-
     function toggleInputs(onOrOff) {
         $('#mines-place')[0].dataset.disabled = onOrOff;
-        $('#betAmount')[0].disabled = onOrOff;
+        $('[data-bet-amount-input]')[0].disabled = onOrOff;
         $('#minesAmount').prop('disabled', onOrOff);
         $('#playMines').prop('disabled', onOrOff);
     };

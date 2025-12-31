@@ -777,48 +777,6 @@ main[data-game=none] > #noting-selected {
     transform: rotateY(1980deg);
   }
 }
-#game[data-game=coinflip] > #betAmountParent > input {
-  color: white;
-  background: transparent;
-  border: 1px solid #2e2e2e;
-  padding: 0.5rem 1rem;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  font-size: 1.4rem;
-  text-align: center;
-}
-#game[data-game=coinflip] > #betAmountParent > input:focus {
-  outline: none;
-  border-color: #2e2e2e;
-}
-#game[data-game=coinflip] > #betAmountParent > input:disabled {
-  cursor: not-allowed;
-}
-#game[data-game=coinflip] > #betAmountParent > #presets {
-  color: white;
-  background: transparent;
-  border: 1px solid #2e2e2e;
-  border-top: none;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  display: flex;
-}
-#game[data-game=coinflip] > #betAmountParent > #presets > div {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  color: hsl(0, 0%, 50%);
-  padding: 0.3rem;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  user-select: none;
-}
-#game[data-game=coinflip] > #betAmountParent > #presets > div:not(:last-of-type) {
-  border-right: 1px solid #2e2e2e;
-}
-#game[data-game=coinflip] > #betAmountParent > #presets > div:hover {
-  color: hsl(0, 0%, 100%);
-}
 #game[data-game=coinflip] > .f_switch {
   --rows: 1;
   --columns: 2;
@@ -988,6 +946,50 @@ main[data-game=none] > #noting-selected {
 }
 #game[data-game=stats] > [data-w]:not([data-header])[data-w=losses], #game[data-game=stats] > [data-w]:not([data-header])[data-w=lost-money] {
   color: hsl(from #ff6369 h s 85%);
+}
+#game [data-bet-amount-parent] > input {
+  color: white;
+  background: transparent;
+  border: 1px solid #2e2e2e;
+  padding: 0.5rem 1rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  font-size: 1.4rem;
+  text-align: center;
+  width: 100%;
+}
+#game [data-bet-amount-parent] > input:focus {
+  outline: none;
+  border-color: #2e2e2e;
+}
+#game [data-bet-amount-parent] > input:disabled {
+  cursor: not-allowed;
+}
+#game [data-bet-amount-parent] > [data-bet-amount-presets] {
+  color: white;
+  background: transparent;
+  border: 1px solid #2e2e2e;
+  border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  display: flex;
+  width: 100%;
+}
+#game [data-bet-amount-parent] > [data-bet-amount-presets] > div {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  color: hsl(0, 0%, 50%);
+  padding: 0.3rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+}
+#game [data-bet-amount-parent] > [data-bet-amount-presets] > div:not(:last-of-type) {
+  border-right: 1px solid #2e2e2e;
+}
+#game [data-bet-amount-parent] > [data-bet-amount-presets] > div:hover {
+  color: hsl(0, 0%, 100%);
 }
 
 /*# sourceMappingURL=gamble.css.map */

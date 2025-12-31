@@ -299,56 +299,6 @@ main {
 
         }
 
-        > #betAmountParent {
-
-            > input {
-                color: white;
-                background: transparent;
-                border: 1px solid $gray-bg;
-                padding: .5rem 1rem;
-                border-top-left-radius: $border-radius;
-                border-top-right-radius: $border-radius;
-                font-size: 1.4rem;
-                text-align: center;
-    
-                &:focus {
-                    outline: none;
-                    border-color: $gray-bg;
-                }
-                &:disabled {
-                    cursor: not-allowed;
-                }
-            }
-            > #presets {
-                color: white;
-                background: transparent;
-                border: 1px solid $gray-bg;
-                border-top: none;
-                border-bottom-left-radius: $border-radius;
-                border-bottom-right-radius: $border-radius;
-                display: flex;
-
-                > div {
-                    flex-grow: 1;
-                    display: flex;
-                    justify-content: center;
-                    color: hsl(0 0% 50%);
-                    padding: .3rem;
-                    cursor: pointer;
-                    transition: all .2s ease-in-out;
-                    user-select: none;
-
-                    &:not(:last-of-type) {
-                        border-right: 1px solid $gray-bg;
-                    }
-                    &:hover {
-                        color: hsl(0 0% 100%);
-                    }
-                }
-            }
-    
-        }
-
         > .f_switch {
             --rows: 1;
             --columns: 2;
@@ -546,6 +496,58 @@ main {
             &[data-w="losses"],
             &[data-w="lost-money"] {
                 color: hsl( from #{$red-txt} h s 85% );
+            }
+        }
+
+    }
+
+    [data-bet-amount-parent] {
+
+        > input {
+            color: white;
+            background: transparent;
+            border: 1px solid $gray-bg;
+            padding: .5rem 1rem;
+            border-top-left-radius: $border-radius;
+            border-top-right-radius: $border-radius;
+            font-size: 1.4rem;
+            text-align: center;
+            width: 100%;
+
+            &:focus {
+                outline: none;
+                border-color: $gray-bg;
+            }
+            &:disabled {
+                cursor: not-allowed;
+            }
+        }
+        > [data-bet-amount-presets] {
+            color: white;
+            background: transparent;
+            border: 1px solid $gray-bg;
+            border-top: none;
+            border-bottom-left-radius: $border-radius;
+            border-bottom-right-radius: $border-radius;
+            display: flex;
+            width: 100%;
+
+            > div {
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                color: hsl(0 0% 50%);
+                padding: .3rem;
+                cursor: pointer;
+                transition: all .2s ease-in-out;
+                user-select: none;
+
+                &:not(:last-of-type) {
+                    border-right: 1px solid $gray-bg;
+                }
+                &:hover {
+                    color: hsl(0 0% 100%);
+                }
             }
         }
 
