@@ -36,39 +36,46 @@
 
             <div id="top">
                 
-                <div id="game-select" class="f_switch">
+                <div data-part="gameSelect" id="game-select">
 
-                    <input type="radio" name="game" id="coinflip" value="coinflip" />
-                    <label for="coinflip">
-                        <img src="/icons/poker_chip.svg" />
+                    <div data-item="coinflip" data-selected="false">
+                        <img src="/icons/l/hand-coins.svg" />
                         <span>Coinflip</span>
-                    </label>
-
-                    <input type="radio" name="game" id="mines" value="mines" />
-                    <label for="mines">
-                        <img src="/icons/bomb.svg" />
+                    </div>
+                    <div data-item="mines" data-selected="false">
+                        <img src="/icons/l/bomb.svg" />
                         <span>Mines</span>
-                    </label>
+                    </div>
+
+                    <div data-divider></div>
+
+                    <div data-item="stats" data-selected="false">
+                        <img src="/icons/l/chart-spline.svg" />
+                        <span>Stats</span>
+                    </div>
 
                 </div>
 
-                <div id="currentBalance" style="display: none;">
-                    <span>★</span>
+                <div data-part="currentBalance">
+                    <span data-label>Balance</span>
                     <span id="balance">0</span>
                 </div>
 
-                <div id="gambledMoney" style="display: none;">
-                    <div id="thisSession">
-                        <div id="tsTotal">0</div>
-                        <div id="tsWon">0</div>
-                        <div id="tsLost">0</div>
-                        <div id="tsProfit">0</div>
-                    </div>
+                <div data-part="gambledMoney">
+                    <span data-label>Session</span>
+                    <div data-txt="total" id="tsTotal">0</div>
+                    <div data-txt="won" id="tsWon">0</div>
+                    <div data-txt="lost" id="tsLost">0</div>
+                    <div data-txt="profit" id="tsProfit">0</div>
                 </div>
 
             </div>
     
             <div id="game" data-game="nothing"></div>
+            <div id="noting-selected">
+                <h2>Nothing selected</h2>
+                <p>Select a game to gamble your savings away!</p>
+            </div>
 
         </main>
         

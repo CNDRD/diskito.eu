@@ -25,32 +25,32 @@ let money = userInfo.money;
 showCurrentBalance(money);
 
 
-
-$('#game-select > label').on('click', function() {
+$('#game-select > [data-item]').on('click', async function() {
+    $('#game-select > [data-item]').attr('data-selected', 'false');
     $('#game').empty();
-    let game = $(this).attr('for');
-    
+    let game = this.dataset.item;
+
     if (game == $('main')[0].dataset.game) {
-        $('#currentBalance').hide();
-        $('#gambledMoney').hide();
         $('main')[0].dataset.game = 'none';
         $('#game')[0].dataset.game = 'nothing';
-        setTimeout(function() { $('#game-select > input').prop('checked', false); }, 1);
         return;
     }
 
-    $('#currentBalance').show();
-    $('#gambledMoney').show();
+    $(this).attr('data-selected', 'true');
+
+    let itemFunctions = {
+        coinflip: gameCoinflip,
+        mines: gameMines,
+        stats: doStats, // async
+    };
+
     $('main')[0].dataset.game = game;
     $('#game')[0].dataset.game = game;
 
-    let gameToFn = {
-        coinflip: gameCoinflip,
-        mines: gameMines,
-    };
-
-    if (!gameToFn[game]) { return; }
-    gameToFn[game]();
+    if (!itemFunctions[game]) { return; }
+    
+    let ret = itemFunctions[game]();
+    if (ret instanceof Promise) { await ret; }
 });
 
 
@@ -478,3 +478,99 @@ function gameMines() {
 
 };
 
+
+
+$('#game-select > [data-item="stats"]').trigger('click');
+async function doStats() {
+    let stats = {
+        mines: {
+            played: 0,
+            won: 0,
+            lost: 0,
+            wonMoney: 0,
+            lostMoney: 0,
+        },
+        coinflip: {
+            played: 0,
+            won: 0,
+            lost: 0,
+            wonMoney: 0,
+            lostMoney: 0,
+        },
+    };
+    let totals = {
+        played: 0,
+        won: 0,
+        lost: 0,
+        wonMoney: 0,
+        lostMoney: 0,
+    };
+
+    let { data: minesStats } = await supabase.from('g_stats_mines').select('*').eq('player', DISCORD_ID);
+    let minesWonRow = minesStats.find(x => x.did_win === true);
+    let minesLostRow = minesStats.find(x => x.did_win === false);
+    if (minesWonRow) {
+        stats.mines.played += minesWonRow.cnt;
+        stats.mines.won += minesWonRow.cnt;
+        stats.mines.wonMoney += minesWonRow.sum;
+    }
+    if (minesLostRow) {
+        stats.mines.played += minesLostRow.cnt;
+        stats.mines.lost += minesLostRow.cnt;
+        stats.mines.lostMoney += minesLostRow.sum;
+    }
+
+    let { data: coinflipStats } = await supabase.from('g_stats_coinflip').select('*').eq('player', DISCORD_ID);
+    let cfWonRow = coinflipStats.find(x => x.win_loss === 'W');
+    let cfLostRow = coinflipStats.find(x => x.win_loss === 'L');
+    if (cfWonRow) {
+        stats.coinflip.played += cfWonRow.cnt;
+        stats.coinflip.won += cfWonRow.cnt;
+        stats.coinflip.wonMoney += cfWonRow.sum;
+    }
+    if (cfLostRow) {
+        stats.coinflip.played += cfLostRow.cnt;
+        stats.coinflip.lost += cfLostRow.cnt;
+        stats.coinflip.lostMoney += cfLostRow.sum;
+    }
+    
+    $('#game').html(`
+        <div data-header data-w="game">Game</div>
+        <div data-header data-w="plays">Plays</div>
+        <div data-header data-w="wins">Wins</div>
+        <div data-header data-w="losses">Losses</div>
+        <div data-header data-w="won-money">Won Money</div>
+        <div data-header data-w="lost-money">Lost Money</div>
+        <div data-divider></div>
+    `);
+
+    Object.keys(stats).forEach(gameKey => {
+        let gameStats = stats[gameKey];
+
+        totals.played += gameStats.played;
+        totals.won += gameStats.won;
+        totals.lost += gameStats.lost;
+        totals.wonMoney += gameStats.wonMoney;
+        totals.lostMoney += gameStats.lostMoney;
+
+        $('#game').append(`
+            <div data-g="${gameKey}" data-w="game">${gameKey.charAt(0).toUpperCase() + gameKey.slice(1)}</div>
+            <div data-g="${gameKey}" data-w="plays">${addSpaces(gameStats.played,',')}</div>
+            <div data-g="${gameKey}" data-w="wins">${addSpaces(gameStats.won,',')}</div>
+            <div data-g="${gameKey}" data-w="losses">${addSpaces(gameStats.lost,',')}</div>
+            <div data-g="${gameKey}" data-w="won-money">${addSpaces(gameStats.wonMoney,',')}</div>
+            <div data-g="${gameKey}" data-w="lost-money">${addSpaces(gameStats.lostMoney,',')}</div>
+        `);
+    });
+
+    $('#game').append(`
+        <div data-divider></div>
+        <div data-total data-w="game">Total</div>
+        <div data-total data-w="plays">${addSpaces(totals.played,',')}</div>
+        <div data-total data-w="wins">${addSpaces(totals.won,',')}</div>
+        <div data-total data-w="losses">${addSpaces(totals.lost,',')}</div>
+        <div data-total data-w="won-money">${addSpaces(totals.wonMoney,',')}</div>
+        <div data-total data-w="lost-money">${addSpaces(totals.lostMoney,',')}</div>
+    `);
+
+};
