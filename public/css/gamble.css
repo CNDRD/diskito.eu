@@ -560,6 +560,9 @@ main[data-game] > #noting-selected {
 main[data-game] > #noting-selected > * {
   margin: 0;
 }
+main[data-game] > #noting-selected > img {
+  width: 40%;
+}
 main[data-game=none] > #noting-selected {
   display: flex;
 }
@@ -595,7 +598,7 @@ main[data-game=none] > #noting-selected {
 }
 #game-select > [data-divider] {
   height: 1px;
-  background-color: #888888;
+  background-color: #3c3c3c;
   margin: 0.25rem 0;
 }
 

@@ -34,6 +34,10 @@ main {
             > * {
                 margin: 0;
             }
+
+            > img {
+                width: 40%;
+            }
         }
     }
     &[data-game="none"] {
@@ -80,7 +84,7 @@ main {
 
     > [data-divider]{
         height: 1px;
-        background-color: $gray-border;
+        background-color: darken($gray-border, 30%);
         margin: .25rem 0;
     }
 

@@ -480,7 +480,6 @@ function gameMines() {
 
 
 
-$('#game-select > [data-item="stats"]').trigger('click');
 async function doStats() {
     let stats = {
         mines: {
