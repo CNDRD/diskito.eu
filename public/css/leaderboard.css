@@ -494,7 +494,7 @@ main > #switcharoo > [data-bg-slider] {
   background: #343434;
   width: calc(100% / var(--cols) - var(--gap) * 2);
   height: calc(100% - var(--gap) * 2);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.15s ease-in-out;
   transform: translateX(calc((100% + var(--gap) * 2) * (attr(data-pos number))));
   will-change: transform;
   position: absolute;
