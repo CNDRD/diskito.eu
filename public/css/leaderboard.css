@@ -462,6 +462,7 @@ main > #top3 > [data-top3] > [data-rank] > [data-pfp-imgs] > img[data-main] {
 main > #top3 > [data-top3] > [data-name] {
   font-size: 1.3rem;
   color: hsl(from var(--_bg-clr) h s l/1);
+  font-weight: bold;
 }
 main > #top3 > [data-top3] > [data-stat-value] {
   color: hsl(from var(--_bg-clr) h s l/0.5);

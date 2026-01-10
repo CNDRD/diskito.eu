@@ -91,6 +91,7 @@ main {
             > [data-name] {
                 font-size: 1.3rem;
                 color: hsl(from var(--_bg-clr) h s l / 1);
+                font-weight: bold;
             }
 
             > [data-stat-value] {
