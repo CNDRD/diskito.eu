@@ -547,18 +547,9 @@ main {
   }
 }
 main[data-game] > #noting-selected {
-  display: none;
-  font-size: 1.3rem;
-  color: #ededed;
-  text-align: center;
   align-items: center;
-  flex-direction: column;
   justify-content: center;
-  gap: 1rem;
   width: 100%;
-}
-main[data-game] > #noting-selected > * {
-  margin: 0;
 }
 main[data-game] > #noting-selected > img {
   width: 40%;
