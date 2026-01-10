@@ -10,30 +10,29 @@ $('[data-switcharoo="voice_yr"]').append(`<span data-detail>'${yearTwoDigits}</s
 
 
 async function makeLeaderboard(what) {
-    let queryCol = 'xp';
-    let statNameBefore = '';
-    let statNameAfter = '';
 
-    if (what === 'xp') {
-        statNameAfter = 'XP';
-        queryCol = 'xp';
-    }
-    else if (what === 'balance') {
-        statNameBefore = '★';
-        queryCol = 'money';
-    }
-    else if (what === 'messages') {
-        statNameAfter = 'msgs';
-        queryCol = 'messages';
-    }
-    else if (what === 'voice') {
-        queryCol = 'total_voice';
-    }
-    else if (what === 'voice_yr') {
-        queryCol = 'yearly_total_voice';
-    }
+    let w = {
+        'xp': {
+            nAfter: 'XP',
+            col: 'xp',
+        },
+        'balance': {
+            nBefore: '★',
+            col: 'money',
+        },
+        'messages': {
+            nAfter: 'msgs',
+            col: 'messages',
+        },
+        'voice': {
+            col: 'total_voice',
+        },
+        'voice_yr': {
+            col: 'yearly_total_voice',
+        },
+    };
 
-    let { data: ldrbrd } = await supabase.from('leaderboards').select('*').gt(queryCol, 0).order(queryCol, { ascending: false });
+    let { data: ldrbrd } = await supabase.from('leaderboards').select('*').gt(w[what].col, 0).order(w[what].col, { ascending: false });
 
 
 
@@ -47,7 +46,7 @@ async function makeLeaderboard(what) {
         top3.find('[data-rank]').html(`<div data-pfp-imgs>${pfpStack}</div>`);
         top3.find('[data-name]').text(user.username);
 
-        let statValue = user[queryCol];
+        let statValue = user[w[what].col];
         if (what === 'voice' || what === 'voice_yr') {
             statValue = parseVoiceTime(statValue);
         }
@@ -57,8 +56,8 @@ async function makeLeaderboard(what) {
 
         top3.find('[data-stat-value]')
             .text(statValue)
-            .attr('data-stat-value-before', statNameBefore)
-            .attr('data-stat-value-after', statNameAfter)
+            .attr('data-stat-value-before', w[what]?.nBefore || '')
+            .attr('data-stat-value-after', w[what]?.nAfter || '')
         ;
     });
 
