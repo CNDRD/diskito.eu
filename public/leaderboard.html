@@ -32,23 +32,44 @@
         </nav>
         
         <main>
-            <div class="header">Leaderboard</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th data-srt="pfp">🗿</th>
-                        <th data-srt="name">Name</th>
-                        <th data-srt="lvl">Lvl</th>
-                        <th data-srt="messages">Messages</th>
-                        <th data-srt="money">Money</th>
-                        <th data-srt="yearly-voice" data-current-year> Voice</th>
-                        <th data-srt="total-voice">Total Voice</th>
-                        <th>More</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </main>
 
+            
+            <div id="top3">
+                <div data-top3="2">
+                    <div data-rank="2">
+                        <div data-pfp-imgs></div>
+                    </div>
+                    <div data-name></div>
+                    <div data-stat-value></div>
+                </div>
+                <div data-top3="1">
+                    <div data-rank="1">
+                        <div data-pfp-imgs></div>
+                    </div>
+                    <div data-name></div>
+                    <div data-stat-value></div>
+                </div>
+                <div data-top3="3">
+                    <div data-rank="3">
+                        <div data-pfp-imgs></div>
+                    </div>
+                    <div data-name></div>
+                    <div data-stat-value></div>
+                </div>
+            </div>
+
+            <div id="switcharoo">
+                <div data-bg-slider data-pos="0"></div>
+                <div data-p="0" data-switcharoo="xp" data-active="false">XP</div>
+                <div data-p="1" data-switcharoo="balance" data-active="false">Balance</div>
+                <div data-p="2" data-switcharoo="messages" data-active="false">Messages</div>
+                <div data-p="3" data-switcharoo="voice" data-active="false">Voice <span data-detail>total</span></div>
+                <div data-p="4" data-switcharoo="voice_yr" data-active="false">Voice</div>
+            </div>
+
+            <div id="full"></div>
+
+        </main>
+        
     </body>
 </html>

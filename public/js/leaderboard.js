@@ -2,57 +2,116 @@ import { c, supabase, spinner, addSpaces } from './main.js';
 
 
 
-let { data: ldrbrd } = await supabase.from('leaderboards').select('*').order('xp', { ascending: false });
+let currentYear = new Date().getFullYear();
+let yearTwoDigits = currentYear.toString().slice(-2);
 
-$('[data-current-year]').prepend(new Date().getFullYear());
+$('[data-switcharoo="voice_yr"]').append(`<span data-detail>'${yearTwoDigits}</span>`);
 
-ldrbrd.forEach(user => {
-    let username = user.username;
-    if (username.slice(-2) == '#0') { username = username.slice(0, -2); }
 
-    let pfpDecoration = user.decorations?.deco ? `<img data-what="deco" src="${user.decorations.deco}" />` : '';
 
-    $('main > table > tbody').append(`
-        <tr>
-            <td data-what="pfp">
-                <div>
-                    <img data-what="pfp" src="${user.avatar}" />
-                    ${pfpDecoration}
+async function makeLeaderboard(what) {
+    let queryCol = 'xp';
+    let statNameBefore = '';
+    let statNameAfter = '';
+
+    if (what === 'xp') {
+        statNameAfter = 'XP';
+        queryCol = 'xp';
+    }
+    else if (what === 'balance') {
+        statNameBefore = '★';
+        queryCol = 'money';
+    }
+    else if (what === 'messages') {
+        statNameAfter = 'msgs';
+        queryCol = 'messages';
+    }
+    else if (what === 'voice') {
+        queryCol = 'total_voice';
+    }
+    else if (what === 'voice_yr') {
+        queryCol = 'yearly_total_voice';
+    }
+
+    let { data: ldrbrd } = await supabase.from('leaderboards').select('*').gt(queryCol, 0).order(queryCol, { ascending: false });
+
+
+
+    // do the top 3 thing
+    ldrbrd.slice(0, 3).forEach((user, index) => {
+        let top3 = $(`#top3 > [data-top3="${index + 1}"]`);
+    
+        let pfpStack = `<img data-main src="${user.avatar}" alt="Profile Picture">`;
+        if (user.decorations?.deco) { pfpStack += `<img data-deco src="${user.decorations.deco}" alt="Decoration">`; }
+    
+        top3.find('[data-rank]').html(`<div data-pfp-imgs>${pfpStack}</div>`);
+        top3.find('[data-name]').text(user.username);
+
+        let statValue = user[queryCol];
+        if (what === 'voice' || what === 'voice_yr') {
+            statValue = parseVoiceTime(statValue);
+        }
+        else {
+            statValue = addSpaces(statValue, ',');
+        }
+
+        top3.find('[data-stat-value]')
+            .text(statValue)
+            .attr('data-stat-value-before', statNameBefore)
+            .attr('data-stat-value-after', statNameAfter)
+        ;
+    });
+
+
+
+    // now do the full table
+    $('#full').empty();
+
+    ldrbrd.forEach((user, index) => {
+
+        let pfpStack = `<img data-main src="${user.avatar}" alt="Profile Picture">`;
+        if (user.decorations?.deco) { pfpStack += `<img data-deco src="${user.decorations.deco}" alt="Decoration">`; }
+
+        $('#full').append(`
+            <div data-entry data-r="${index + 1}">
+                <div data-h="rank">
+                    <span data-before="#">${index + 1}</span>
                 </div>
-            </td>
+                <div data-h="pfp">
+                    ${pfpStack}
+                </div>
+                <div data-h="name">
+                    ${user.username}
+                </div>
+                <div data-h="xp">
+                    <span data-before="level">${addSpaces(user.level, ',')}</span>
+                    <span data-before="xp">${addSpaces(user.xp, ',')}</span>
+                </div>
+                <div data-h="messages">
+                    <span data-before="msgs">${addSpaces(user.messages, ',')}</span>
+                </div>
+                <div data-h="money">
+                    <span data-before="★">${addSpaces(user.money, ',')}</span>
+                </div>
+                <div data-h="voice">
+                    <span data-before="${currentYear}">${parseVoiceTime(user.yearly_total_voice)}</span>
+                    <span data-before="total">${parseVoiceTime(user.total_voice)}</span>
+                </div>
+                <div data-h="more" style="display:none;">
+                    <div data-open-modal data-user-id="${user.id}">
+                        <img src="icons/l/file-user.svg" />
+                    </div>
+                <div>
+            </div>
+        `);
 
-            <td data-what="name" data-sort="${username}">
-                ${username}
-            </td>
+        if (index < ldrbrd.length - 1) {
+            $('#full').append(`<div data-separator></div>`);
+        }
 
-            <td data-what="lvl" data-sort="${user.level}">
-                ${user.level}
-            </td>
+    });
 
-            <td data-what="messages" data-sort="${user.messages}">
-                ${addSpaces(user.messages, ',')}
-            </td>
-
-            <td data-what="money" data-sort="${user.money}">
-                ★${addSpaces(user.money, ',')}
-            </td>
-
-            <td data-what="yearly-voice" data-sort="${user.yearly_total_voice}">
-                ${parseVoiceTime(user.yearly_total_voice)}
-            </td>
-
-            <td data-what="total-voice" data-sort="${user.total_voice}">
-                ${parseVoiceTime(user.total_voice)}
-            </td>
-
-            <td data-what="more-info" data-id="${user.id}">
-                <img src="icons/data_exploration.svg" />
-            </td>
-        </tr>
-    `);
-
-});
-
+};
 function parseVoiceTime(seconds, fixedWidth=false) {
     let h = Math.floor(seconds / 3600);
     let m = Math.floor((seconds % 3600) / 60);
@@ -73,74 +132,17 @@ function parseVoiceTime(seconds, fixedWidth=false) {
     return str;
 };
 
-$('[data-srt]').on('click', function() {
 
-    let what = $(this).attr('data-srt');
-    let dir = $(this).attr('data-dir');
-    if (!dir) { dir = 'desc' }
 
-    if (what == 'pfp') { return; } // don't sort on pfp
+$('#switcharoo > [data-switcharoo]').on('click', async function() {
+    if (this.dataset.active === 'true') return;
 
-    let rows = $('main > table > tbody > tr').get();
+    $('#switcharoo > [data-bg-slider]').attr('data-pos', this.dataset.p);
+    $('#switcharoo > [data-switcharoo]').attr('data-active', 'false');
+    this.dataset.active = 'true';
 
-    rows.sort((a, b) => {
-
-        let A = $(a).children(`[data-what="${what}"]`).attr('data-sort');
-        let B = $(b).children(`[data-what="${what}"]`).attr('data-sort');
-
-        A = isNaN(A) ? 0 : parseInt(A);
-        B = isNaN(B) ? 0 : parseInt(B);
-
-        if (A < B) { return dir == 'asc' ? -1 : 1; }
-        if (A > B) { return dir == 'asc' ? 1 : -1; }
-
-        return 0;
-    });
-
-    rows.forEach(row => {
-        $('main > table > tbody').append(row);
-    });
-
-    $('[data-srt]').attr('data-dir', 'asc');
-    $(this).attr('data-dir', dir == 'asc' ? 'desc' : 'asc');
-
+    await makeLeaderboard(this.dataset.switcharoo);
 });
 
+await makeLeaderboard('xp');
 
-
-$('[data-what="more-info"]').on('click', async function() { await showIndividualInfo(this); });
-
-async function showIndividualInfo(that) {
-    $(`[data-spec-row="${that.dataset.id}"]`).toggle($(`[data-spec-row="${that.dataset.id}"]`).css('display') == 'none');
-
-    $(that).find('img').remove();
-    $(that).append(spinner());
-
-    if (!$(`[data-spec-row="${that.dataset.id}"]`).length) {
-        let yearlyVoice = await supabase.from('yearly_voice').select('year, total, longest').eq('id', that.dataset.id).order('year', { ascending: false });
-        let yvData = `
-            <tr data-spec-row="${that.dataset.id}">
-                <td class="header" colspan="4">Year</td>
-                <td class="header">Total</td>
-                <td class="header">Longest</td>
-            </tr>
-        `;
-
-        yearlyVoice.data.forEach(yv => {
-            yvData += `
-                <tr data-spec-row="${that.dataset.id}">
-                    <td colspan="4">${yv.year}</td>
-                    <td>${parseVoiceTime(yv.total, true)}</td>
-                    <td>${parseVoiceTime(yv.longest, true)}</td>
-                </tr>
-            `;
-        });
-        
-        $(that).parent().after(yvData);
-    }
-
-    $(that).find('svg').remove();
-    $(that).append(`<img src="icons/data_exploration.svg" />`);
-
-    $(`[data-spec-row]:not([data-spec-row="${that.dataset.id}"])`).hide();
-};
