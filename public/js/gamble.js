@@ -478,6 +478,7 @@ async function doStats() {
             lost: 0,
             wonMoney: 0,
             lostMoney: 0,
+            net: 0,
         },
         coinflip: {
             played: 0,
@@ -485,6 +486,7 @@ async function doStats() {
             lost: 0,
             wonMoney: 0,
             lostMoney: 0,
+            net: 0,
         },
     };
     let totals = {
@@ -493,6 +495,7 @@ async function doStats() {
         lost: 0,
         wonMoney: 0,
         lostMoney: 0,
+        net: 0,
     };
 
     let { data: minesStats } = await supabase.from('g_stats_mines').select('*').eq('player', DISCORD_ID);
@@ -502,11 +505,13 @@ async function doStats() {
         stats.mines.played += minesWonRow.cnt;
         stats.mines.won += minesWonRow.cnt;
         stats.mines.wonMoney += minesWonRow.sum;
+        stats.mines.net += minesWonRow.sum;
     }
     if (minesLostRow) {
         stats.mines.played += minesLostRow.cnt;
         stats.mines.lost += minesLostRow.cnt;
         stats.mines.lostMoney += minesLostRow.sum;
+        stats.mines.net -= minesLostRow.sum;
     }
 
     let { data: coinflipStats } = await supabase.from('g_stats_coinflip').select('*').eq('player', DISCORD_ID);
@@ -516,11 +521,13 @@ async function doStats() {
         stats.coinflip.played += cfWonRow.cnt;
         stats.coinflip.won += cfWonRow.cnt;
         stats.coinflip.wonMoney += cfWonRow.sum;
+        stats.coinflip.net += cfWonRow.sum;
     }
     if (cfLostRow) {
         stats.coinflip.played += cfLostRow.cnt;
         stats.coinflip.lost += cfLostRow.cnt;
         stats.coinflip.lostMoney += cfLostRow.sum;
+        stats.coinflip.net -= cfLostRow.sum;
     }
     
     $('#game').html(`
@@ -530,6 +537,7 @@ async function doStats() {
         <div data-header data-w="losses">Losses</div>
         <div data-header data-w="won-money">Won Money</div>
         <div data-header data-w="lost-money">Lost Money</div>
+        <div data-header data-w="net">Net</div>
         <div data-divider></div>
     `);
 
@@ -541,6 +549,7 @@ async function doStats() {
         totals.lost += gameStats.lost;
         totals.wonMoney += gameStats.wonMoney;
         totals.lostMoney += gameStats.lostMoney;
+        totals.net += gameStats.net;
 
         $('#game').append(`
             <div data-g="${gameKey}" data-w="game">${gameKey.charAt(0).toUpperCase() + gameKey.slice(1)}</div>
@@ -549,6 +558,7 @@ async function doStats() {
             <div data-g="${gameKey}" data-w="losses">${addSpaces(gameStats.lost,',')}</div>
             <div data-g="${gameKey}" data-w="won-money">${addSpaces(gameStats.wonMoney,',')}</div>
             <div data-g="${gameKey}" data-w="lost-money">${addSpaces(gameStats.lostMoney,',')}</div>
+            <div data-g="${gameKey}" data-w="net" data-positive=${totals.net > 0}>${addSpaces(gameStats.net,',')}</div>
         `);
     });
 
@@ -560,6 +570,7 @@ async function doStats() {
         <div data-total data-w="losses">${addSpaces(totals.lost,',')}</div>
         <div data-total data-w="won-money">${addSpaces(totals.wonMoney,',')}</div>
         <div data-total data-w="lost-money">${addSpaces(totals.lostMoney,',')}</div>
+        <div data-total data-w="net" data-positive=${totals.net > 0}>${addSpaces(totals.net,',')}</div>
     `);
 
 };

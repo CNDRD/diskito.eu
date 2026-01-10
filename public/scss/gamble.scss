@@ -460,7 +460,7 @@ main {
 
     &[data-game="stats"] {
         display: grid;
-        grid-template-columns: repeat(6, auto);
+        grid-template-columns: repeat(7, auto);
         gap: .5rem;
         height: fit-content;
 
@@ -490,11 +490,13 @@ main {
                 padding-inline: .25rem;
             }
             &[data-w="wins"],
-            &[data-w="won-money"] {
+            &[data-w="won-money"],
+            &[data-positive="true"] {
                 color: hsl( from #{$green-txt} h s 75% );
             }
             &[data-w="losses"],
-            &[data-w="lost-money"] {
+            &[data-w="lost-money"],
+            &[data-positive="false"] {
                 color: hsl( from #{$red-txt} h s 85% );
             }
         }

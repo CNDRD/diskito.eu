@@ -916,7 +916,7 @@ main[data-game=none] > #noting-selected {
 }
 #game[data-game=stats] {
   display: grid;
-  grid-template-columns: repeat(6, auto);
+  grid-template-columns: repeat(7, auto);
   gap: 0.5rem;
   height: fit-content;
 }
@@ -941,10 +941,10 @@ main[data-game=none] > #noting-selected {
   text-align: end;
   padding-inline: 0.25rem;
 }
-#game[data-game=stats] > [data-w]:not([data-header])[data-w=wins], #game[data-game=stats] > [data-w]:not([data-header])[data-w=won-money] {
+#game[data-game=stats] > [data-w]:not([data-header])[data-w=wins], #game[data-game=stats] > [data-w]:not([data-header])[data-w=won-money], #game[data-game=stats] > [data-w]:not([data-header])[data-positive=true] {
   color: hsl(from #4cc48a h s 75%);
 }
-#game[data-game=stats] > [data-w]:not([data-header])[data-w=losses], #game[data-game=stats] > [data-w]:not([data-header])[data-w=lost-money] {
+#game[data-game=stats] > [data-w]:not([data-header])[data-w=losses], #game[data-game=stats] > [data-w]:not([data-header])[data-w=lost-money], #game[data-game=stats] > [data-w]:not([data-header])[data-positive=false] {
   color: hsl(from #ff6369 h s 85%);
 }
 #game [data-bet-amount-parent] > input {
