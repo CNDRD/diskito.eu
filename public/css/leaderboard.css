@@ -568,6 +568,38 @@ main > #full > [data-entry][data-r="1"], main > #full > [data-entry][data-r="2"]
 main > #full > [data-entry][data-r="1"] > [data-h=rank], main > #full > [data-entry][data-r="2"] > [data-h=rank], main > #full > [data-entry][data-r="3"] > [data-h=rank] {
   text-shadow: 0px 0px 7px #000000;
 }
+@media screen and (max-width: 1000px) {
+  main > #full > [data-entry] {
+    grid-template-rows: auto auto;
+    grid-template-columns: subgrid;
+    grid-column: span 4;
+    grid-template-areas: "rank pfp xp messages" "rank name money voice";
+  }
+  main > #full > [data-entry] > [data-h=rank] {
+    grid-area: rank;
+  }
+  main > #full > [data-entry] > [data-h=pfp] {
+    grid-area: pfp;
+  }
+  main > #full > [data-entry] > [data-h=name] {
+    grid-area: name;
+  }
+  main > #full > [data-entry] > [data-h=xp] {
+    grid-area: xp;
+  }
+  main > #full > [data-entry] > [data-h=messages] {
+    grid-area: messages;
+  }
+  main > #full > [data-entry] > [data-h=money] {
+    grid-area: money;
+  }
+  main > #full > [data-entry] > [data-h=voice] {
+    grid-area: voice;
+  }
+  main > #full > [data-entry] > [data-h=more] {
+    grid-area: more;
+  }
+}
 main > #full > [data-entry] > [data-h] {
   padding-inline: 0.5rem;
 }

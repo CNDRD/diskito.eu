@@ -159,6 +159,25 @@ main {
                 }
             }
 
+            @media screen and (max-width: $mobile-threshold) {
+                grid-template-rows: auto auto;
+                grid-template-columns: subgrid;
+                grid-column: span 4;
+                grid-template-areas:
+                    "rank pfp xp messages"
+                    "rank name money voice"
+                ;
+                
+                > [data-h="rank"]     { grid-area: rank; }
+                > [data-h="pfp"]      { grid-area: pfp; }
+                > [data-h="name"]     { grid-area: name; }
+                > [data-h="xp"]       { grid-area: xp; }
+                > [data-h="messages"] { grid-area: messages; }
+                > [data-h="money"]    { grid-area: money; }
+                > [data-h="voice"]    { grid-area: voice; }
+                > [data-h="more"]     { grid-area: more; }
+            }
+
             > [data-h] {
                 padding-inline: .5rem;
                 
