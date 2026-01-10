@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content=":D">
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+        <!-- JS & CSS -->
+        <link rel="stylesheet" href="/css/stats.css" />
+        <script defer src="/js/navbar.js" type="module" charset="utf-8"></script>
+        <script defer src="/js/stats.js" type="module" charset="utf-8"></script>
+
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <title>Diskíto | Stats</title>
+        <link rel="shortcut icon" href="/images/diskito_pfp.jpg" />
+        
+    </head>
+    <body>
+        
+        <nav>
+            <a href="/" class="logo"><span id="dvojbodka">:</span>Diskíto</a>
+            <div class="links">
+                <a href="/leaderboard">Leaderboard</a>
+                <a href="/quotes">Quotes</a>
+                <div></div>
+                <a href="/discord" class="dscrd" target="_blank"><img src="/images/discord.svg" alt="Discord"></a>
+            </div>
+            <div id="login-popup-button" class="login-btn login">Login</div>
+            <a href="" class="toggle-mnu"><span></span></a>
+        </nav>
+        
+        <main>
+            
+            <div class="stats-container" data-stat="daily-voice-per-year">
+                <div class="header">
+                    Daily voice <span>minutes</span>
+                </div>
+                <div class="chart">
+                    <canvas id="dailyVoicePerYearChart"></canvas>
+                </div>
+                <div class="switcharoo">
+                    <div data-bg-slider></div>
+                </div>
+            </div>
+
+        </main>
+        
+    </body>
+</html>
