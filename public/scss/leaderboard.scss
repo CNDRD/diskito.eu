@@ -1,7 +1,6 @@
 
 @import './_main.scss';
-
-
+@import './_switch.scss';
 
 main {
     margin-inline: auto;
@@ -111,57 +110,7 @@ main {
     }
 
     > #switcharoo {
-        --gap: .2rem;
-        --cols: 5;
-
-        display: grid;
-        grid-template-columns: repeat(var(--cols), 6.9rem);
-        gap: var(--gap);
-        border: 1px solid $login-bg;
-        padding: var(--gap);
-        border-radius: 1rem;
-        corner-shape: squircle;
-        position: relative;
-
-        > [data-bg-slider],
-        > [data-switcharoo] {
-            border-radius: 1rem;
-            corner-shape: squircle;
-        }
-
-        > [data-bg-slider] {
-            background: $login-btn-bg-hover;
-            width: calc((100% / var(--cols)) - (var(--gap) * 2));
-            height: calc(100% - (var(--gap) * 2));
-            transition: transform .15s ease-in-out;
-            transform: translateX(calc((100% + (var(--gap) * 2)) * (attr(data-pos number))));
-            will-change: transform;
-            position: absolute;
-            z-index: 0;
-            top: var(--gap);
-            left: var(--gap);
-        }
-
-        > [data-switcharoo] {
-            background-color: transparent;
-            padding: .3rem .5rem;
-            line-height: 1;
-            font-weight: bold;
-            color: $main-txt;
-            z-index: 1;
-            cursor: pointer;
-            user-select: none;
-            text-align: center;
-
-            > [data-detail] {
-                color: hsl(from #{$main-txt-dark} h s l / .5);
-                font-weight: 500;
-                font-style: italic;
-                font-size: 0.9rem;
-                line-height: 1;
-                margin-left: .2rem;
-            }
-        }
+        @include switch;
     }
 
     > #full {

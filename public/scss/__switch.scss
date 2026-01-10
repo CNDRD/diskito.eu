@@ -1,0 +1,72 @@
+@use './_variables.scss';
+
+@mixin switch {
+    --gap: .2rem;
+
+    --col_width: 6.9rem;
+    --row_height: 1.7rem;
+
+    --cols_attr: attr(data-cols number);
+    --rows_attr: attr(data-rows number);
+    --cols: var(--cols_attr, 3);
+    --rows: var(--rows_attr, 2);
+
+    @media screen and (max-width: $mobile-threshold) {
+        --cols_attr: attr(data-cols-m number);
+        --rows_attr: attr(data-rows-m number);
+    }
+
+    display: grid;
+    grid-template-columns: repeat(var(--cols), var(--col_width));
+    grid-template-rows: repeat(var(--rows), var(--row_height));
+    gap: var(--gap);
+    border: 1px solid $login-bg;
+    padding: var(--gap);
+    border-radius: 1rem;
+    corner-shape: squircle;
+    position: relative;
+
+    > [data-bg-slider] {
+        border-radius: 1rem;
+        corner-shape: squircle;
+    }
+
+    > [data-bg-slider] {
+        background: $login-btn-bg-hover;
+        width: var(--col_width);
+        height: var(--row_height);
+        transition: transform .15s ease-in-out;
+
+        --_tmp_clc: calc(round(down, (attr(data-pos number) / var(--cols))));
+        transform:
+            translateX(calc((100% + var(--gap)) * mod(attr(data-pos number), var(--cols))))
+            translateY(calc((100% + var(--gap)) * var(--_tmp_clc)))
+        ;
+
+        will-change: transform;
+        position: absolute;
+        z-index: 0;
+        top: var(--gap);
+        left: var(--gap);
+    }
+
+    > [data-switcharoo] {
+        background-color: transparent;
+        padding: .3rem .5rem;
+        font-weight: bold;
+        color: $main-txt;
+        z-index: 1;
+        cursor: pointer;
+        user-select: none;
+        text-align: center;
+
+        > [data-detail] {
+            color: hsl(from #{$main-txt-dark} h s l / .5);
+            font-weight: 500;
+            font-style: italic;
+            font-size: .9rem;
+            line-height: 1;
+            margin-left: .2rem;
+        }
+    }
+}

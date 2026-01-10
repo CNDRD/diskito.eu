@@ -476,9 +476,15 @@ main > #top3 > [data-top3] > [data-stat-value][data-stat-value-after]:not([data-
 }
 main > #switcharoo {
   --gap: .2rem;
-  --cols: 5;
+  --col_width: 6.9rem;
+  --row_height: 1.7rem;
+  --cols_attr: attr(data-cols number);
+  --rows_attr: attr(data-rows number);
+  --cols: var(--cols_attr, 3);
+  --rows: var(--rows_attr, 2);
   display: grid;
-  grid-template-columns: repeat(var(--cols), 6.9rem);
+  grid-template-columns: repeat(var(--cols), var(--col_width));
+  grid-template-rows: repeat(var(--rows), var(--row_height));
   gap: var(--gap);
   border: 1px solid hsl(0, 0%, 14%);
   padding: var(--gap);
@@ -486,17 +492,23 @@ main > #switcharoo {
   corner-shape: squircle;
   position: relative;
 }
-main > #switcharoo > [data-bg-slider],
-main > #switcharoo > [data-switcharoo] {
+@media screen and (max-width: 1000px) {
+  main > #switcharoo {
+    --cols_attr: attr(data-cols-m number);
+    --rows_attr: attr(data-rows-m number);
+  }
+}
+main > #switcharoo > [data-bg-slider] {
   border-radius: 1rem;
   corner-shape: squircle;
 }
 main > #switcharoo > [data-bg-slider] {
   background: #343434;
-  width: calc(100% / var(--cols) - var(--gap) * 2);
-  height: calc(100% - var(--gap) * 2);
+  width: var(--col_width);
+  height: var(--row_height);
   transition: transform 0.15s ease-in-out;
-  transform: translateX(calc((100% + var(--gap) * 2) * (attr(data-pos number))));
+  --_tmp_clc: calc(round(down, (attr(data-pos number) / var(--cols))));
+  transform: translateX(calc((100% + var(--gap)) * mod(attr(data-pos number), var(--cols)))) translateY(calc((100% + var(--gap)) * var(--_tmp_clc)));
   will-change: transform;
   position: absolute;
   z-index: 0;
@@ -506,7 +518,6 @@ main > #switcharoo > [data-bg-slider] {
 main > #switcharoo > [data-switcharoo] {
   background-color: transparent;
   padding: 0.3rem 0.5rem;
-  line-height: 1;
   font-weight: bold;
   color: hsl(0, 0%, 100%);
   z-index: 1;
