@@ -417,5 +417,25 @@ main > #stats > .thing > .addit {
   font-style: italic;
   color: hsl(0, 0%, 60%);
 }
+main > #stats > a#join-discord-btn {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.7rem 1.2rem;
+  width: fit-content;
+  background-color: hsl(48, 37%, 62%);
+  color: hsl(225, 3%, 11%);
+  font-weight: bold;
+  border-radius: 69px;
+  corner-shape: squircle;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+main > #stats > a#join-discord-btn:hover {
+  background-color: #b2a057;
+}
+main > #stats > a#join-discord-btn > img {
+  height: 1.3rem;
+}
 
 /*# sourceMappingURL=index.css.map */

@@ -43,6 +43,31 @@ main {
                 color: $main-txt-dark;
             }
         }
+
+        > a#join-discord-btn {
+            display: flex;
+            gap: .7rem;
+            padding: .7rem 1.2rem;
+            width: fit-content;
+            background-color: $bj-gold;
+            color: $main-bg;
+            font-weight: bold;
+            border-radius: 69px;
+            corner-shape: squircle;
+            text-decoration: none;
+            transition: background-color .3s ease;
+            user-select: none;
+
+            &:hover {
+                background-color: darken($bj-gold, 10%);
+            }
+
+            > img {
+                height: 1.3rem;
+            }
+
+        }
+
     }
 
 }
