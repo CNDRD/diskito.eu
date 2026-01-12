@@ -5,11 +5,27 @@ main {
     margin-inline: auto;
     margin-bottom: 6rem;
     margin-top: 3rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+
+    --cols: 2;
+    --gap: 1rem;
+    --width: 95vw;
+
+    width: var(--width);
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: repeat(var(--cols), calc((var(--width) / var(--cols)) - (var(--cols) - 1) * var(--gap) ));
+    grid-template-areas:
+        "dailyVoicePerYearChart dailyVoicePerYearChart"
+        "yearlyVoicePerUserChart yearlyVoicePerUserChart" // prep for two charts side by side
+    ;
+
+    @media screen and (max-width: $mobile-threshold) {
+        grid-template-columns: var(--width);
+        grid-template-areas:
+            "dailyVoicePerYearChart"
+            "yearlyVoicePerUserChart"
+        ;
+    }
 
     > .stats-container {
         border: 1px solid hsl(0, 0%, 14%);
@@ -20,6 +36,9 @@ main {
         flex-direction: column;
         align-items: center;
         gap: .5rem;
+
+        &[data-stat="daily-voice-per-year"]  { grid-area: dailyVoicePerYearChart; }
+        &[data-stat="yearly-voice-per-user"] { grid-area: yearlyVoicePerUserChart; }
 
         > .header {
             font-size: 1.3rem;
@@ -35,7 +54,7 @@ main {
 
         > .chart {
             height: 25rem;
-            width: 95vw;        
+            width: 100%;       
         }
 
         > .switcharoo {

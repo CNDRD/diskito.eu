@@ -386,11 +386,20 @@ main {
   margin-inline: auto;
   margin-bottom: 6rem;
   margin-top: 3rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  --cols: 2;
+  --gap: 1rem;
+  --width: 95vw;
+  width: var(--width);
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: repeat(var(--cols), calc(var(--width) / var(--cols) - (var(--cols) - 1) * var(--gap)));
+  grid-template-areas: "dailyVoicePerYearChart dailyVoicePerYearChart" "yearlyVoicePerUserChart yearlyVoicePerUserChart";
+}
+@media screen and (max-width: 1000px) {
+  main {
+    grid-template-columns: var(--width);
+    grid-template-areas: "dailyVoicePerYearChart" "yearlyVoicePerUserChart";
+  }
 }
 main > .stats-container {
   border: 1px solid hsl(0, 0%, 14%);
@@ -401,6 +410,12 @@ main > .stats-container {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+}
+main > .stats-container[data-stat=daily-voice-per-year] {
+  grid-area: dailyVoicePerYearChart;
+}
+main > .stats-container[data-stat=yearly-voice-per-user] {
+  grid-area: yearlyVoicePerUserChart;
 }
 main > .stats-container > .header {
   font-size: 1.3rem;
@@ -414,7 +429,7 @@ main > .stats-container > .header > span {
 }
 main > .stats-container > .chart {
   height: 25rem;
-  width: 95vw;
+  width: 100%;
 }
 main > .stats-container > .switcharoo {
   --gap: .2rem;
