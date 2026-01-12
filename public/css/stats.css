@@ -414,7 +414,7 @@ main > .stats-container > .header > span {
 }
 main > .stats-container > .chart {
   height: 25rem;
-  width: 50rem;
+  width: 95vw;
 }
 main > .stats-container > .switcharoo {
   --gap: .2rem;
