@@ -16,7 +16,7 @@ main {
     grid-template-columns: repeat(var(--cols), calc((var(--width) / var(--cols)) - (var(--cols) - 1) * var(--gap) ));
     grid-template-areas:
         "dailyVoicePerYearChart dailyVoicePerYearChart"
-        "yearlyVoicePerUserChart yearlyVoicePerUserChart" // prep for two charts side by side
+        "yearlyVoicePerUserChart totalMessagesPerUserChart"
     ;
 
     @media screen and (max-width: $mobile-threshold) {
@@ -24,6 +24,7 @@ main {
         grid-template-areas:
             "dailyVoicePerYearChart"
             "yearlyVoicePerUserChart"
+            "totalMessagesPerUserChart"
         ;
     }
 
@@ -37,8 +38,15 @@ main {
         align-items: center;
         gap: .5rem;
 
-        &[data-stat="daily-voice-per-year"]  { grid-area: dailyVoicePerYearChart; }
-        &[data-stat="yearly-voice-per-user"] { grid-area: yearlyVoicePerUserChart; }
+        &:not(:has(.switcharoo)) {
+            > .chart {
+                height: 27rem;
+            }
+        }
+
+        &[data-stat="daily-voice-per-year"]    { grid-area: dailyVoicePerYearChart; }
+        &[data-stat="yearly-voice-per-user"]   { grid-area: yearlyVoicePerUserChart; }
+        &[data-stat="total-messages-per-user"] { grid-area: totalMessagesPerUserChart; }
 
         > .header {
             font-size: 1.3rem;

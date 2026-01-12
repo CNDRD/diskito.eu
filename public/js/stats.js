@@ -9,7 +9,7 @@ async function loadUniqueYears() {
     latestYear = uniqueYears[uniqueYears.length - 1].year;
 };
 
-// daily voice per year
+
 async function statsDailyUniqueVoice() {
 
     // add 'all-time' option to uniqueYears
@@ -149,8 +149,6 @@ async function statsDailyUniqueVoice() {
     await doChartForYear(latestYear);
 };
 
-
-
 async function statsYearlyVoicePerUser() {
 
     let uniqYearsCopy = JSON.parse(JSON.stringify(uniqueYears));
@@ -277,6 +275,49 @@ async function statsYearlyVoicePerUser() {
 
 };
 
+async function statsTotalMessagesPerUser() {
+    let totalMessagesPerUserChart = new Chart(
+        document.getElementById('totalMessagesPerUserChart'),
+        {
+            type: 'doughnut',
+            data: {
+                labels: [],
+                datasets: [{
+                    data: [],
+                    backgroundColor: [],
+                    borderWidth: 0,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 8,
+                        }
+                    },
+                },
+            }
+        }
+    );
+
+    let { data: totalMessagesDb } = await supabase.from('users').select('username, messages').eq('in_server', true).gte('messages', 100).order('messages', { ascending: false }).limit(30);
+    
+    let colors = [];
+    for (let i = 0; i < totalMessagesDb.length; i++) {
+        colors.push(`hsl(${Math.floor((i / totalMessagesDb.length) * 360)}, 40%, 50%)`);
+    };
+    colors = colors.sort(() => Math.random() - .5);
+
+    totalMessagesPerUserChart.data.labels = totalMessagesDb.map(d => d.username);
+    totalMessagesPerUserChart.data.datasets[0].data = totalMessagesDb.map(d => d.messages);
+    totalMessagesPerUserChart.data.datasets[0].backgroundColor = colors;
+    totalMessagesPerUserChart.update();
+
+};
 
 
 await loadUniqueYears()
@@ -284,5 +325,6 @@ await loadUniqueYears()
         Promise.all([
             statsDailyUniqueVoice(),
             statsYearlyVoicePerUser(),
+            statsTotalMessagesPerUser(),
         ])
     });
