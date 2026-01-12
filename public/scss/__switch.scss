@@ -8,8 +8,8 @@
 
     --cols_attr: attr(data-cols number);
     --rows_attr: attr(data-rows number);
-    --cols: var(--cols_attr, 3);
-    --rows: var(--rows_attr, 2);
+    --cols: var(--cols_attr, 1);
+    --rows: var(--rows_attr, 1);
 
     @media screen and (max-width: $mobile-threshold) {
         --cols_attr: attr(data-cols-m number);
@@ -25,7 +25,9 @@
     border-radius: 1rem;
     corner-shape: squircle;
     position: relative;
-    width: fit-content;
+    transition: all .2s ease-in-out;
+    width: calc(var(--col_width) * var(--cols) + (var(--gap) * var(--cols)) - var(--gap));
+    height: calc(var(--row_height) * var(--rows) + (var(--gap) * var(--rows)) - var(--gap));
 
     > [data-bg-slider] {
         border-radius: 1rem;

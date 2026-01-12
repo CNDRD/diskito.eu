@@ -480,8 +480,8 @@ main > #switcharoo {
   --row_height: 1.7rem;
   --cols_attr: attr(data-cols number);
   --rows_attr: attr(data-rows number);
-  --cols: var(--cols_attr, 3);
-  --rows: var(--rows_attr, 2);
+  --cols: var(--cols_attr, 1);
+  --rows: var(--rows_attr, 1);
   display: grid;
   grid-template-columns: repeat(var(--cols), var(--col_width));
   grid-template-rows: repeat(var(--rows), var(--row_height));
@@ -491,7 +491,9 @@ main > #switcharoo {
   border-radius: 1rem;
   corner-shape: squircle;
   position: relative;
-  width: fit-content;
+  transition: all 0.2s ease-in-out;
+  width: calc(var(--col_width) * var(--cols) + var(--gap) * var(--cols) - var(--gap));
+  height: calc(var(--row_height) * var(--rows) + var(--gap) * var(--rows) - var(--gap));
 }
 @media screen and (max-width: 1000px) {
   main > #switcharoo {
