@@ -110,9 +110,9 @@ async function statsDailyUniqueVoice() {
                 {
                     type: 'line',
                     data: {
-                        labels: yearlyData.map(d => d.date),
+                        labels: [],
                         datasets: [{
-                            data: yearlyData.map(d => d.time),
+                            data: [],
                             fill: true,
                             borderColor: 'rgb(255, 255, 255)',
                             tension: .3,
