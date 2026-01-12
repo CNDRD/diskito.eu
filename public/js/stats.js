@@ -86,24 +86,22 @@ async function statsDailyUniqueVoice() {
 
         let yearsToFetch = [];
         if (year === 'All') {
-            yearsToFetch = uniqueYears.filter(y => y.year !== 'All').map(y => y.year);
+            yearsToFetch = uniqueYears.map(y => y.year);
         }
         else {
             yearsToFetch = [year];
         }
 
         // fetch data for all required years
-        for (let y of yearsToFetch) {
-            await getDataForYear(y);
-        }
-        // combine data for all years
+        for (let y of yearsToFetch) { await getDataForYear(y); }
         let yearlyData = yearsToFetch.flatMap(y => dataCache[y]);
-
-
+        
+        let yearsColorMap = {};
+        uniqueYears.forEach((y, index) => { yearsColorMap[y.year] = `hsl(${Math.floor((index / uniqueYears.length) * 360)}, 70%, 50%)`; });
 
         // create the chart if it doesn't exist yet, but without data
         if (!dailyVoicePerYearChart) {
-            const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
+            const customBorderColor = (ctx) => yearsColorMap[ctx.p0.raw.date.slice(0, 4)] || 'rgb(255, 255, 255)';
 
             dailyVoicePerYearChart = new Chart(
                 document.getElementById('dailyVoicePerYearChart'),
@@ -114,17 +112,21 @@ async function statsDailyUniqueVoice() {
                         datasets: [{
                             data: [],
                             fill: true,
-                            borderColor: 'rgb(255, 255, 255)',
+                            backgroundColor: 'rgba(255, 255, 255, .1)',
                             tension: .3,
                             pointRadius: 1,
                             borderWidth: 1,
                             spanGaps: true,
                             segment: {
-                                borderDash: ctx => skipped(ctx, [6, 6]),
+                                borderColor: ctx => customBorderColor(ctx),
                             },
                         }]
                     },
                     options: {
+                        parsing: {
+                            xAxisKey: 'date',
+                            yAxisKey: 'time',
+                        },
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: { legend: { display: false } },
@@ -135,9 +137,11 @@ async function statsDailyUniqueVoice() {
     
         }
 
+        let datasetData = [];
+        yearlyData.forEach(d => { datasetData.push({ date: d.date, time: d.time }); });
+
         // update the chart with new data
-        dailyVoicePerYearChart.data.labels = yearlyData.map(d => d.date.slice(5));
-        dailyVoicePerYearChart.data.datasets[0].data = yearlyData.map(d => d.time);
+        dailyVoicePerYearChart.data.datasets[0].data = datasetData;
         dailyVoicePerYearChart.update();
 
     };
