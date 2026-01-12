@@ -1,30 +1,35 @@
 import { c, supabase, spinner, addSpaces } from './main.js';
 
+let uniqueYears = [];
+let latestYear = null;
 
+async function loadUniqueYears() {
+    let { data: yearsData } = await supabase.from('s_daily_avail_years').select('*').order('year', { ascending: true });
+    uniqueYears = yearsData;
+    latestYear = uniqueYears[uniqueYears.length - 1].year;
+};
 
 // daily voice per year
-
 async function statsDailyUniqueVoice() {
-    let { data: uniqueYears } = await supabase.from('s_daily_avail_years').select('*').order('year', { ascending: true });
-    let latestYear = uniqueYears[uniqueYears.length - 1].year;
 
     // add 'all-time' option to uniqueYears
-    uniqueYears.push({ year: 'All' });
+    let uniqYearsCopy = JSON.parse(JSON.stringify(uniqueYears));
+    uniqYearsCopy.push({ year: 'All' });
 
-    uniqueYears.forEach((obj, index) => {
+    uniqYearsCopy.forEach((obj, index) => {
         $('[data-stat="daily-voice-per-year"] > .switcharoo').append(`
             <div data-p="${index}" data-switcharoo="${obj.year}" data-active="false">${obj.year}</div>
         `);
     });
 
     $('[data-stat="daily-voice-per-year"] > .switcharoo')
-        .attr('data-cols', Math.min(8, uniqueYears.length))
-        .attr('data-rows', Math.ceil(uniqueYears.length / 8))
+        .attr('data-cols', Math.min(8, uniqYearsCopy.length))
+        .attr('data-rows', Math.ceil(uniqYearsCopy.length / 8))
         .attr('data-cols-m', 4)
-        .attr('data-rows-m', Math.ceil(uniqueYears.length / 4))
+        .attr('data-rows-m', Math.ceil(uniqYearsCopy.length / 4))
         .css('--col_width', '4rem')
     ;
-    $('[data-stat="daily-voice-per-year"] > .switcharoo > [data-bg-slider]').attr('data-pos', uniqueYears.length-2);
+    $('[data-stat="daily-voice-per-year"] > .switcharoo > [data-bg-slider]').attr('data-pos', uniqYearsCopy.length-2);
 
     $('[data-stat="daily-voice-per-year"] > .switcharoo > [data-switcharoo]').on('click', async function() {
         if (this.dataset.active === 'true') return;
@@ -142,9 +147,138 @@ async function statsDailyUniqueVoice() {
 
 
 
-Promise.all([
-    statsDailyUniqueVoice(),
-]).then(() => {
-    c('Stats module loaded');
-});
+async function statsYearlyVoicePerUser() {
 
+    let uniqYearsCopy = JSON.parse(JSON.stringify(uniqueYears));
+    uniqYearsCopy.push({ year: 'All' });
+
+    uniqYearsCopy.forEach((obj, index) => {
+        $('[data-stat="yearly-voice-per-user"] > .switcharoo').append(`
+            <div data-p="${index}" data-switcharoo="${obj.year}" data-active="false">${obj.year}</div>
+        `);
+    });
+
+    $('[data-stat="yearly-voice-per-user"] > .switcharoo')
+        .attr('data-cols', Math.min(8, uniqYearsCopy.length))
+        .attr('data-rows', Math.ceil(uniqYearsCopy.length / 8))
+        .attr('data-cols-m', 4)
+        .attr('data-rows-m', Math.ceil(uniqYearsCopy.length / 4))
+        .css('--col_width', '4rem')
+    ;
+    $('[data-stat="yearly-voice-per-user"] > .switcharoo > [data-bg-slider]').attr('data-pos', uniqYearsCopy.length-2);
+
+    $('[data-stat="yearly-voice-per-user"] > .switcharoo > [data-switcharoo]').on('click', async function() {
+        if (this.dataset.active === 'true') return;
+        $('[data-stat="yearly-voice-per-user"] > .switcharoo > [data-bg-slider]').attr('data-pos', this.dataset.p);
+        $('[data-stat="yearly-voice-per-user"] > .switcharoo > [data-switcharoo]').attr('data-active', 'false');
+        this.dataset.active = 'true';
+        await doChartForYear($(this).attr('data-switcharoo'));
+    });
+    
+    let dataCache = {}; // year: data
+    let yearlyVoicePerUserChart = null;
+
+    async function getDataForYear(year) {
+        if (dataCache[year]) { return dataCache[year]; }
+
+        let { data: yearlyVoiceDb } = await supabase.from('yearly_voice').select('id(id,username), total').eq('year', year);
+
+        let formattedData = yearlyVoiceDb.map(entry => ({
+            id: entry.id.id,
+            username: entry.id.username,
+            total: entry.total / 60, // convert to minutes
+        }));
+
+        dataCache[year] = formattedData;
+    };
+
+    async function doChartForYear(year) {
+
+        let yearsToFetch = [];
+        if (year === 'All') {
+            yearsToFetch = uniqueYears.filter(y => y.year !== 'All').map(y => y.year);
+        }
+        else {
+            yearsToFetch = [year];
+        }
+
+        // fetch data for all required years
+        for (let y of yearsToFetch) {
+            await getDataForYear(y);
+        }
+        // combine data for all years
+        let yearlyData = yearsToFetch.flatMap(y => dataCache[y]);
+
+        // now group by id and sum totals
+        let groupedData = {};
+        yearlyData.forEach(entry => {
+            if (!groupedData[entry.id]) { groupedData[entry.id] = { username: entry.username, total: 0 }; }
+            groupedData[entry.id].total += entry.total;
+        });
+
+        // sort by total descending
+        let sortedData = Object.entries(groupedData)
+            .map(([id, data]) => ({ id, username: data.username, total: data.total }))
+            .sort((a, b) => b.total - a.total)
+            .slice(0, 15); // top 100
+        
+        // based on sortedData.length get appropriate colors
+        let colorCount = sortedData.length;
+        let colors = [];
+        for (let i = 0; i < colorCount; i++) {
+            let hue = Math.floor((i / colorCount) * 360);
+            colors.push(`hsl(${hue}, 40%, 50%)`);
+        };
+
+        // create the chart if it doesn't exist yet, but without data
+        if (!yearlyVoicePerUserChart) {
+            // doughnut chart
+            yearlyVoicePerUserChart = new Chart(
+                document.getElementById('yearlyVoicePerUserChart'),
+                {
+                    type: 'doughnut',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            data: [],
+                            backgroundColor: colors,
+                            borderWidth: 0,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                                labels: {
+                                    boxWidth: 12,
+                                    padding: 8,
+                                }
+                            },
+                        },
+                    }
+                }
+            );
+        }
+
+        // update the chart with new data
+        yearlyVoicePerUserChart.data.labels = sortedData.map(d => d.username);
+        yearlyVoicePerUserChart.data.datasets[0].data = sortedData.map(d => d.total.toFixed(1));
+        yearlyVoicePerUserChart.update();
+
+    };
+
+    await doChartForYear(latestYear);
+
+};
+
+
+
+await loadUniqueYears()
+    .then(() => {
+        Promise.all([
+            statsDailyUniqueVoice(),
+            statsYearlyVoicePerUser(),
+        ])
+    });
