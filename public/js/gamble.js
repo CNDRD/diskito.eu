@@ -41,7 +41,8 @@ $('#game-select > [data-item]').on('click', async function() {
     let itemFunctions = {
         coinflip: gameCoinflip,
         mines: gameMines,
-        stats: doStats, // async
+        slots: gameSlots,
+        stats: doStats,
     };
 
     $('main')[0].dataset.game = game;
@@ -72,7 +73,7 @@ function betOutcome(amount, isWin) {
     let currentWon = parseInt($('#tsWon')[0].dataset.value) || 0;
     let currentLost = parseInt($('#tsLost')[0].dataset.value) || 0;
     let currentProfit = parseInt($('#tsProfit')[0].dataset.value) || 0;
-    
+
     if (isWin) {
         currentWon += amount;
         currentProfit += amount;
@@ -90,7 +91,10 @@ function betOutcome(amount, isWin) {
     gambledCountUps.tsLost.update(currentLost);
     gambledCountUps.tsProfit.update(currentProfit);
 
-    if (currentProfit >= 0) {
+    if (currentProfit === 0) {
+        $('#tsProfit').removeClass('positive negative');
+    }
+    else if (currentProfit > 0) {
         $('#tsProfit').removeClass('negative').addClass('positive');
     }
     else {
@@ -279,9 +283,9 @@ function gameMines() {
                 </div>
                 <input type="range" id="minesAmount" min="1" max="24" steps="1" value="1" />
             </div>
-            <div id="playMines">Start game</div>
-            <div id="cashOut" style="display: none;">Cash out</div>
-            <div id="playMinesAgane" style="display: none;">Play again</div>
+            <div class="button" id="playMines">Start game</div>
+            <div class="button" id="cashOut" style="display: none;">Cash out</div>
+            <div class="button" id="playMinesAgane" style="display: none;">Play again</div>
         </div>
 
         <div id="mines-place" data-playable="false">${mineDivs}</div>
@@ -470,6 +474,150 @@ function gameMines() {
 
 
 
+async function gameSlots() {
+    $('#game').append(`
+
+        <div id="err"></div>
+        <div id="win"></div>
+
+        <div id="slots" data-state="idle">
+            <div data-reel="1"></div>
+            <div data-reel="2"></div>
+            <div data-reel="3"></div>
+        </div>
+
+        ${getBetAmountInput('slots')}
+
+        <div class="button" id="playSlots">Spin</div>
+
+    `);
+    figureOutMaxPresetBets();
+
+    let { data: slotsPayoutsDb } = await supabase.from('g_slots_payouts').select('*');
+    let reelOrders = [];
+
+    // Populate reels with symbols randomly but each reel has its own symbol once
+    function populateReels() {
+        let symbols = slotsPayoutsDb.map(x => x.what);
+        for (let i = 1; i <=3; i++) {
+            let reelSymbols = [...symbols];
+            reelSymbols.sort(() => Math.random() - .5);
+            reelOrders[i-1] = [...reelSymbols];
+            let reelHtml = '';
+            reelSymbols.forEach(sym => {
+                let symData = slotsPayoutsDb.find(x => x.what == sym);
+                reelHtml += `<div data-id="${symData.id}" data-symbol="${sym}" data-emoji="${symData.emoji}">${symData.emoji}</div>`;
+            });
+            // Duplicate for infinite scroll
+            reelSymbols.forEach(sym => {
+                let symData = slotsPayoutsDb.find(x => x.what == sym);
+                reelHtml += `<div data-id="${symData.id}" data-symbol="${sym}" data-emoji="${symData.emoji}">${symData.emoji}</div>`;
+            });
+            $(`#slots > [data-reel="${i}"]`).html(`<div class="reel-container">${reelHtml}</div>`);
+        }
+    };
+    populateReels();
+
+    function slotsAlert(msg) {
+        $('#err').text(msg);
+        $('#err').addClass('show');
+        setTimeout(function() { $('#err').removeClass('show'); }, 2000);
+    };
+    function slotsWin(msg) {
+        $('#win').html(msg);
+        $('#win').addClass('show');
+        setTimeout(function() { $('#win').removeClass('show'); }, 2000);
+    };
+
+    $('#playSlots').on('click', async function() {
+        let betAmount = betAmountMask.unmaskedValue;
+        if (!betAmount) {
+            slotsAlert('Please enter a bet amount');
+            return;
+        }
+        if (betAmount > money) {
+            slotsAlert('You don\'t have enough money');
+            return;
+        }
+        if ($('#slots')[0].dataset.state == 'spinning') {
+            return;
+        }
+
+        // Call the supabase function
+        let { data: spinData, error: spinError } = await supabase.rpc('gamba_slots', { bet_amount: betAmount });
+        
+        if (spinError) {
+            slotsAlert('Oh no! Something went wrong!');
+            return;
+        }
+
+        placedBet(parseInt(betAmount));
+        showCurrentBalance((money - betAmount), false);
+
+        // Start spinning
+        $('#slots')[0].dataset.state = 'spinning';
+        $('.reel-container').addClass('spinning');
+
+        setTimeout(() => {
+            // Map reel IDs to symbol names
+            let outcomeSymbols = spinData.reels.map(id => slotsPayoutsDb.find(x => x.id == id).what);
+
+            // Calculate final positions
+            let finalYs = outcomeSymbols.map((sym, i) => {
+                let p = reelOrders[i].indexOf(sym);
+                let index = p <= 2 ? p + 6 : p; // Choose position to ensure symbols above and below
+                return 3 - (index * 4); // Adjust to center the symbol
+            });
+
+            // Stop reels staggered
+            $(`#slots > [data-reel="1"] > .reel-container`).removeClass('spinning').css('transform', `translateY(${finalYs[0]}rem)`);
+
+            setTimeout(() => {
+                $(`#slots > [data-reel="2"] > .reel-container`).removeClass('spinning').css('transform', `translateY(${finalYs[1]}rem)`);
+
+                setTimeout(() => {
+                    $(`#slots > [data-reel="3"] > .reel-container`).removeClass('spinning').css('transform', `translateY(${finalYs[2]}rem)`);
+
+                    // All stopped, update state and balance
+                    $('#slots')[0].dataset.state = 'completed';
+
+                    if (spinData.did_win) {
+                        slotsWin(`
+                            <div class="big-text">${spinData.multiplier}x</div>
+                            <div>You won ★ ${addSpaces(spinData.payout_amount,',')}</div>
+                        `);
+                    }
+
+                    // now the betOutcome only accepts either a win or a loss
+                    // but here we want to reflect the actual payout which can be less than the bet amount
+                    // so we need to do two calls possibly
+                    // if the spinData.multiplier > 1, it's just a plain win
+                    if (spinData.multiplier > 1) {
+                        betOutcome(parseInt(spinData.payout_amount), true);
+                    }
+                    // if the spinData.multiplier is .5 its a partial loss (lose half the bet)
+                    // so we do two calls: one for the loss of half the bet, one for the win of half the bet
+                    else if (spinData.multiplier < 1) {
+                        let lostAmount = parseInt(betAmount) - parseInt(spinData.payout_amount);
+                        betOutcome(lostAmount, false);
+                        betOutcome(parseInt(spinData.payout_amount), true);
+                    }
+                    // and i know this is a lot of comments but its late, im tired and i want to make sure i remember this logic later
+                    // because i have already spent too much time on this shit already
+
+                    money = spinData.user_money;
+                    showCurrentBalance(money, spinData.did_win);
+                    betAmountMask.updateOptions({ mask: Number, min: 1, max: money });
+                }, 500);
+            }, 500);
+        }, 2000);
+    });
+
+};
+$('[data-item="slots"]').trigger('click');
+
+
+
 async function doStats() {
     let stats = {
         mines: {
@@ -488,6 +636,14 @@ async function doStats() {
             lostMoney: 0,
             net: 0,
         },
+        // slots: {
+        //     played: 0,
+        //     won: 0,
+        //     lost: 0,
+        //     wonMoney: 0,
+        //     lostMoney: 0,
+        //     net: 0,
+        // },
     };
     let totals = {
         played: 0,
@@ -529,6 +685,23 @@ async function doStats() {
         stats.coinflip.lostMoney += cfLostRow.sum;
         stats.coinflip.net -= cfLostRow.sum;
     }
+
+    //? this is wrong because if you lose half your bet it counts as a win, but it should count as a loss too.. halfsies..
+    // let { data: slotsStats } = await supabase.from('g_stats_slots').select('*').eq('player', DISCORD_ID);
+    // let slotsWonRow = slotsStats.find(x => x.did_win === true);
+    // let slotsLostRow = slotsStats.find(x => x.did_win === false);
+    // if (slotsWonRow) {
+    //     stats.slots.played += slotsWonRow.cnt;
+    //     stats.slots.won += slotsWonRow.cnt;
+    //     stats.slots.wonMoney += slotsWonRow.sum;
+    //     stats.slots.net += slotsWonRow.sum;
+    // }
+    // if (slotsLostRow) {
+    //     stats.slots.played += slotsLostRow.cnt;
+    //     stats.slots.lost += slotsLostRow.cnt;
+    //     stats.slots.lostMoney += slotsLostRow.sum;
+    //     stats.slots.net -= slotsLostRow.sum;
+    // }
     
     $('#game').html(`
         <div data-header data-w="game">Game</div>

@@ -195,6 +195,7 @@ main {
     margin-top: 1rem;
     position: relative;
 
+    > #win,
     > #err {
         opacity: 0;
         transform: translateY(.5rem);
@@ -219,6 +220,16 @@ main {
         &.show {
             opacity: 1;
             transform: translateY(0);
+            z-index: 9999999999999;
+        }
+    }
+    > #win {
+        background-color: #00ff002b;
+        outline: 1px solid #167b16;
+
+        > .big-text {
+            font-size: 2rem;
+            font-weight: bold;
         }
     }
 
@@ -361,31 +372,6 @@ main {
                 }
             }
 
-            > #playMines,
-            > #playMinesAgane,
-            > #cashOut {
-                border: 1px solid $gray-bg;
-                padding: .5rem 1rem;
-                border-radius: 5px;
-                font-size: 1rem;
-                text-align: center;
-                cursor: pointer;
-                transition: all .2s ease-in-out;
-                margin-top: .5rem;
-                user-select: none;
-                font-weight: bold;
-
-                &:hover {
-                    border-color: $bj-gold;
-                    color: $bj-gold;
-
-                    &:active {
-                        background-color: $bj-gold;
-                        color: $main-bg;
-                    }
-                }
-            }
-
         }
 
         > #mines-place {
@@ -449,6 +435,83 @@ main {
         }
     }
 
+    &[data-game="slots"] {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        > #slots {
+            height: 10rem;
+            outline: 1px solid $gray-bg;
+            border-radius: $border-radius;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            position: relative;
+
+            &::before {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                z-index: 999999;
+                border-radius: $border-radius;
+                background: linear-gradient(
+                    to bottom,
+                    rgb(10 10 10) 0%,
+                    rgb(0 0 0 / 0) 20%,
+                    rgb(0 0 0 / 0) 80%,
+                    rgb(10 10 10) 100%
+                );
+                backdrop-filter: blur(5px);
+                mask: linear-gradient(
+                    to bottom,
+                    rgb(0 0 0) 0%,
+                    rgb(0 0 0 / 0) 20%,
+                    rgb(0 0 0 / 0) 80%,
+                    rgb(0 0 0) 100%
+                );
+            }
+
+            &[data-state="idle"] {
+                > [data-reel] > .reel-container {
+                    animation: scrollUp 6.9s linear infinite;
+                }
+                > [data-reel="2"] > .reel-container {
+                    animation-delay: -1.6s;
+                }
+                > [data-reel="3"] > .reel-container {
+                    animation-delay: -2s;
+                }
+            }
+
+            &[data-state="completed"] {
+                > [data-reel] > .reel-container {
+                    animation: none;
+                }
+            }
+
+            > [data-reel] {
+                border-right: 1px solid $gray-bg;
+                overflow: hidden;
+                position: relative;
+                &:last-of-type {
+                    border-right: none;
+                }
+
+                > .reel-container {
+                    > div {
+                        height: 4rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 2rem;
+                    }
+                }
+            }
+        }
+
+    }
+
     &[data-game="stats"] {
         display: grid;
         grid-template-columns: repeat(7, auto);
@@ -493,6 +556,8 @@ main {
         }
 
     }
+
+    // Shared stuff
 
     [data-bet-amount-parent] {
 
@@ -546,4 +611,35 @@ main {
 
     }
 
+    .button {
+        border: 1px solid $gray-bg;
+        padding: .5rem 1rem;
+        border-radius: 5px;
+        font-size: 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all .2s ease-in-out;
+        user-select: none;
+        font-weight: bold;
+
+        &:hover {
+            border-color: $bj-gold;
+            color: $bj-gold;
+
+            &:active {
+                background-color: $bj-gold;
+                color: $main-bg;
+            }
+        }
+    }
+
+}
+
+@keyframes scrollUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+}
+
+.spinning {
+    animation: scrollUp 0.2s linear infinite;
 }
