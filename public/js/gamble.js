@@ -614,7 +614,6 @@ async function gameSlots() {
     });
 
 };
-$('[data-item="slots"]').trigger('click');
 
 
 
