@@ -388,6 +388,7 @@ function gameMines() {
         $('#cashOut').hide();
         $('#playMinesAgane').show();
         $('#mines-place')[0].dataset.playable = 'false';
+        betAmountMask.updateOptions({ mask: Number, min: 1, max: money });
     });
     $('#playMinesAgane').on('click', async function() {
         $('#cashOut').hide();
